@@ -3,7 +3,7 @@
 	xmlns="com.anotherflexdev.diagrammer.*" 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:buttons="com.anotherflexdev.ui.buttons.*"  
-	width="28" height="156"
+	width="25" height="164"
 	verticalScrollPolicy="off" horizontalScrollPolicy="off" 
 	rollOut="this.currentState=null" 
 	backgroundColor="#F7F7F2"  themeColor="#4DD2CA" alpha="0.64"
@@ -37,12 +37,13 @@
 		</mx:State>
 	</states>
 	
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="4" click="handleRemoveClick(event)" right="0"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-link.png')" glowColor="#000000" click="dispatchEvent(new BeginLinkEvent('linkNode', InheritanceLink, event))" right="0" width="25" y="33"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="93" click="dispatchEvent(new BeginLinkEvent('linkNode', AssociationLink, event))" right="0"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-implements.png')" glowColor="#000000" y="63" click="dispatchEvent(new BeginLinkEvent('linkNode', ImplementsLink, event))" right="0"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-label.png')" glowColor="#000000" y="123" click="" right="0"/>
-	
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="handleRemoveClick(event)" right="-1" toolTip="Delete" width="22"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-link.png')" glowColor="#000000" click="dispatchEvent(new BeginLinkEvent('linkNode', InheritanceLink, event))" right="0" width="22" y="23" toolTip="Link"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="67" click="dispatchEvent(new BeginLinkEvent('linkNode', AssociationLink, event))" right="0" toolTip="Beziehung" width="22"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-implements.png')" glowColor="#000000" y="46" click="dispatchEvent(new BeginLinkEvent('linkNode', ImplementsLink, event))" right="1" toolTip="Implementiert" width="20" height="20"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-label.png')" glowColor="#000000" y="91" click="" right="0" toolTip="Umbenennen" width="22"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-emet.png')" glowColor="#000000" y="114" click="" right="0" toolTip="Methode umbenennen" width="22"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="137" click="" right="0" toolTip="Attribut umbenennen" width="22"/>
 	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>
 </GenericNodeContextPanel>
 
