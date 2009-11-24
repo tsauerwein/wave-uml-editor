@@ -39,7 +39,7 @@
 	
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="4" click="handleRemoveClick(event)" right="0"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-link.png')" glowColor="#000000" click="dispatchEvent(new BeginLinkEvent('linkNode', InheritanceLink, event))" right="0" width="25" y="33"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="93" click="dispatchEvent(new BeginLinkEvent('linkNode', AssoziationLink, event))" right="0"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="93" click="dispatchEvent(new BeginLinkEvent('linkNode', AssociationLink, event))" right="0"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-implements.png')" glowColor="#000000" y="63" click="dispatchEvent(new BeginLinkEvent('linkNode', ImplementsLink, event))" right="0"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-label.png')" glowColor="#000000" y="123" click="" right="0"/>
 	

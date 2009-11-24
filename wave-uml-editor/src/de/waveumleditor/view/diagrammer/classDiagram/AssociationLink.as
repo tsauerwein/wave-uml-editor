@@ -2,17 +2,17 @@ package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.Link;
 
-	public class AssoziationLink extends Link
+	public class AssociationLink extends Link
 	{
 		
-		public function AssoziationLink()
+		public function AssociationLink()
 		{
 			super();
 		}
 		
 		override protected function createLinkContextPanel():void 
 		{
-			this.linkContextPanel = new AssoziationLinkContextPanel;
+			this.linkContextPanel = new AssociationLinkContextPanel;
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);				
 		}
 		
