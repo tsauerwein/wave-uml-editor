@@ -1,8 +1,7 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
-	import com.anotherflexdev.diagrammer.Link;
 	
-	public class InheritanceLink extends Link
+	public class InheritanceLink extends ClassLink
 	{
 		public function InheritanceLink()
 		{

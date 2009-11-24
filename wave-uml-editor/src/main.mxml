@@ -4,6 +4,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.controller.Controller;
 			import de.waveumleditor.model.classDiagram.link.LinkComposition;
 			import de.waveumleditor.model.classDiagram.link.LinkAggregation;
 			import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
@@ -25,8 +26,11 @@
 			
 			private var classOne:ClassNode;
 			private var classTwo:ClassNode;
+			private var controller:Controller;
+			private var classDiagram:ClassDiagram;
 			
 		private function init():void {
+				
 				
 				var classData:UMLClass = new UMLClass(new Position(100, 100), "Klassenname 1");
 				var classData2:UMLClass = new UMLClass(new Position(400, 100), "Klassenname 2");
@@ -51,7 +55,9 @@
 				classData.addMethod(method);
 				classData2.addConstructor(constructor);
 				
-				classOne = new ClassNode();
+				var linkInheritance:LinkInheritance = new LinkInheritance(classData, classData2);
+				
+				/* classOne = new ClassNode();
 				classTwo = new ClassNode();
 			
 				classOne.update(classData);
@@ -65,8 +71,15 @@
 				
 				this.diagram.addChild(link.fromNode);
 				this.diagram.addChild(link.toNode);
-				this.diagram.addChildAt(link, 0);	
+				this.diagram.addChildAt(link, 0);	 */
 				
+				classDiagram = new ClassDiagram();
+				classDiagram.addNode(classData);
+				classDiagram.addNode(classData2);
+				classDiagram.addLink(linkInheritance);
+				
+				controller = new Controller(diagram);
+				controller.createDiagram(classDiagram);
 		}
 			
 		 private function test():void

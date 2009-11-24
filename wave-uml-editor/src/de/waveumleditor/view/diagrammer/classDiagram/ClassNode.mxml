@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<BaseClassNode xmlns="de.waveumleditor.view.diagrammer.classDiagram.*" xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#8FAEF3" borderColor="#000000">
+<BaseClassDiagramNode xmlns="de.waveumleditor.view.diagrammer.classDiagram.*" xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#8FAEF3" borderColor="#000000">
 	<lblNodeName>
 		<mx:Text y="0" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="test" />
 	</lblNodeName>
 
 		<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 			import mx.controls.HRule;
 			import mx.controls.Text;
 			import mx.containers.Grid;
@@ -18,12 +19,13 @@
 			import de.waveumleditor.model.classDiagram.UMLClass;
 			import de.waveumleditor.model.classDiagram.ClassAttribute;
 			
-			public function update(classData:UMLClass):void 
+			override public function update(nodeData:ClassDiagramNode):void 
 			{
-				// update position
-				this.x = classData.getPosition().getX();
-				this.y = classData.getPosition().getY();
+				super.update(nodeData);
 				
+				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
+				
+				var classData:UMLClass = nodeData as UMLClass;
 				// update class-name
 				nodeName = classData.getName();
 				
@@ -81,6 +83,6 @@
 		
 	</grids>
 
-</BaseClassNode>
+</BaseClassDiagramNode>
 
 

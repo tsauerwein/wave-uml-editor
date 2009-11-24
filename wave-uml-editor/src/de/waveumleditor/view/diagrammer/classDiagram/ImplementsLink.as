@@ -1,10 +1,9 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
-	import com.anotherflexdev.diagrammer.Link;
 	
 	import flash.geom.Point;
 
-	public class ImplementsLink extends Link
+	public class ImplementsLink extends ClassLink
 	{
 		public function ImplementsLink()
 		{
