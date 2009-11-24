@@ -11,7 +11,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		{
 			super();
 			var label:Label = new Label();
-			label.text = elementContent;
+			label.htmlText = elementContent;
 			label.setVisible(true);
 			
 			var gridItem:GridItem = new GridItem();
