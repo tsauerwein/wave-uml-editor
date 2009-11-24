@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:diagrammer="com.anotherflexdev.diagrammer.*" layout="absolute" creationComplete="init()">
+	<mx:Style source="/diagrammer/assets/style/style.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.DragEvent;
+			import com.nextgenapp.wave.gadget.WaveParticipant;
+			import com.nextgenapp.wave.gadget.Wave;
+			import com.nextgenapp.wave.gadget.WaveState;
+			
+			import com.anotherflexdev.diagrammer.BaseNode;	
+			import com.anotherflexdev.diagrammer.Link;		
+			import diagrammer.ClassNode;
+			
+			private var wave:Wave;
+			
+			private var classOne:ClassNode;
+			private var classTwo:ClassNode;
+			
+			private var KEY_CLASS_ONE:String = "one";
+			private var KEY_CLASS_TWO:String = "two";
+			
+			private function init():void {
+				
+				classOne = new ClassNode();
+				classTwo = new ClassNode();
+				
+				var link:Link = new Link();
+				link.fromNode = classOne;
+				link.fromNode.x = 100;
+				link.fromNode.y = 100;
+				link.toNode = classTwo;
+				link.toNode.x = 400;
+				link.toNode.y = 100;
+				link.fromNode.addLeavingLink(link);
+				link.toNode.addArrivingLink(link);
+				this.diagram.addChild(link.fromNode);
+				this.diagram.addChild(link.toNode);
+				this.diagram.addChildAt(link, 0);
+				
+				// setup event listeners
+				link.fromNode.addEventListener(DragEvent.DRAG_COMPLETE, storePosition);
+				link.toNode.addEventListener(DragEvent.DRAG_COMPLETE, storePosition);
+				
+				Application.application.id = "prototype";
+				debug("init " + Application.application.id);
+				wave = new Wave();
+				wave.setStateCallback(stateCallback);
+				
+				debug("wave initialisiert");
+			}
+
+			private function storePosition(e:MouseEvent):void {
+				debug("storePosition");
+				
+				if (e.currentTarget is ClassNode) {
+					if (e.currentTarget == classOne) {
+						submitDelta(KEY_CLASS_ONE, e.currentTarget as ClassNode);
+					} else if (e.currentTarget == classTwo) {
+						submitDelta(KEY_CLASS_TWO, e.currentTarget as ClassNode);
+					}
+				}			
+        	}
+        	
+        	private function submitDelta(keyPrefix:String, classNode:ClassNode):void {
+        		debug("submitDelta: " + keyPrefix + " " + classNode.x + " " + classNode.y);
+        		
+        		var delta:Object = {};
+				delta[keyPrefix + '_x'] = classNode.x;
+				delta[keyPrefix + '_y'] = classNode.y;
+				
+				wave.submitDelta(delta);
+				
+				debug("submitDelta succesful");
+        	}
+
+
+			private function stateCallback(state:Object):void {
+				debug("stateCallback being called.");
+				
+				var waveState:WaveState = wave.getState();
+				
+				updatePosition(waveState, classOne, KEY_CLASS_ONE); 
+				updatePosition(waveState, classTwo, KEY_CLASS_TWO);	
+
+				debug("stateCallback succesful");		
+			}
+			
+			private function updatePosition(waveState:WaveState, classNode:ClassNode, keyPrefix:String):void {
+				if (waveState.getStringValue(keyPrefix + "_x") != null &&
+					waveState.getStringValue(keyPrefix + "_y") != null) {
+						classNode.x = parseInt(waveState.getStringValue(keyPrefix + "_x"));
+						classNode.y = parseInt(waveState.getStringValue(keyPrefix + "_y"));
+						
+						debug("set " + keyPrefix + " " + classNode.x + " " + classNode.y);
+					}
+			}
+
+			private function debug(msg:String):void {
+				trace(msg);
+				debugBox.text += msg + "\n";
+				debugBox.verticalScrollPosition = debugBox.maxVerticalScrollPosition;
+			}
+			
+					]]>
+	</mx:Script>
+	
+	<diagrammer:Diagram id="diagram" left="0" top="0" bottom="50" right="0">
+	</diagrammer:Diagram> 
+	<mx:TextArea bottom="0" width="100%" id="debugBox"  height="50"/>
+</mx:Application>

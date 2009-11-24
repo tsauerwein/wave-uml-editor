@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GenericNodeContextPanel  
+	xmlns="com.anotherflexdev.diagrammer.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:buttons="com.anotherflexdev.ui.buttons.*"  
+	width="28" height="156"
+	verticalScrollPolicy="off" horizontalScrollPolicy="off" 
+	rollOut="this.currentState=null" 
+	backgroundColor="#F7F7F2"  themeColor="#4DD2CA" alpha="0.64"
+	borderColor="#A8B1B7" cornerRadius="14" borderStyle="solid"
+	resizeEffect="{resize}">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.anotherflexdev.diagrammer.Link;
+			import com.anotherflexdev.diagrammer.BeginLinkEvent;
+			import mx.effects.easing.Bounce;
+			private function handleRemoveClick(event:Event):void {
+				this.currentState = "removeQuestion";
+			}
+		]]>
+	</mx:Script>
+	<mx:Metadata>
+		[Event(name="removeNode", type="flash.events.MouseEvent")]
+		[Event(name="linkNode", type="flash.events.MouseEvent")]
+	</mx:Metadata>
+	<states>
+		<mx:State name="removeQuestion">
+			<mx:SetProperty name="width" value="178"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="27" y="10" width="109" height="58" id="msgCanvas">
+					<mx:Label x="15" y="5" text="Remove me?" fontWeight="bold"/>
+					<mx:Button x="5" y="30" label="Yes" width="47" click="dispatchEvent(new MouseEvent('removeNode'))"/>
+					<mx:Button x="54" y="30" label="No" width="49" click="this.currentState=null"/>
+				</mx:Canvas>
+			</mx:AddChild>
+		</mx:State>
+	</states>
+	
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="4" click="handleRemoveClick(event)" right="0"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-link.png')" glowColor="#000000" click="dispatchEvent(new BeginLinkEvent('linkNode', InheritanceLink, event))" right="0" width="25" y="33"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="93" click="dispatchEvent(new BeginLinkEvent('linkNode', AssoziationLink, event))" right="0"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-implements.png')" glowColor="#000000" y="63" click="dispatchEvent(new BeginLinkEvent('linkNode', ImplementsLink, event))" right="0"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-label.png')" glowColor="#000000" y="123" click="" right="0"/>
+	
+	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>
+</GenericNodeContextPanel>
+

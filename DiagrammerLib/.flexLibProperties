@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="com.anotherflexdev.diagrammer.LabelLinkEvent"/>
+<classEntry path="com.anotherflexdev.diagrammer.BaseNode"/>
+<classEntry path="com.anotherflexdev.diagrammer.BeginLinkEvent"/>
+<classEntry path="com.anotherflexdev.diagrammer.DiagramElement"/>
+<classEntry path="com.anotherflexdev.ui.buttons.GlowButton"/>
+<classEntry path="com.anotherflexdev.diagrammer.Link"/>
+<classEntry path="com.anotherflexdev.diagrammer.Diagram"/>
+<classEntry path="com.anotherflexdev.diagrammer.NodeContextPanel"/>
+<classEntry path="com.anotherflexdev.diagrammer.GenericNodeContextPanel"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>

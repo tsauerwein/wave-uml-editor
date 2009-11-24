@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+    xmlns:mx="http://www.adobe.com/2006/mxml"
+    xmlns:flexunit="flexunit.flexui.*" 
+    creationComplete="onCreationComplete()"
+>    
+    <mx:Script>
+    	<![CDATA[
+    		import de.tests.waveumleditor.model.classDiagram.ClassDiagramTest;
+    	]]>
+    </mx:Script>
+    <mx:Script>
+        <![CDATA[
+        	import de.tests.waveumleditor.model.classDiagram.UMLClassTest;
+        	import de.tests.waveumleditor.model.classDiagram.InterfaceMethodTest;
+        	import de.tests.waveumleditor.model.classDiagram.InterfaceTest;
+        	import de.tests.waveumleditor.model.classDiagram.ConstantAttributeTest;
+        	import de.tests.waveumleditor.model.classDiagram.ClassMethodTest;
+        	import de.tests.waveumleditor.model.PositionTest;
+        	import de.tests.waveumleditor.model.classDiagram.link.ClassDiagramLinkTest;
+        	import de.tests.waveumleditor.model.classDiagram.ClassDiagramNodeTest;
+        	import de.tests.waveumleditor.model.classDiagram.ClassConstructorMethodTest;
+        	import de.tests.waveumleditor.model.classDiagram.VariableTest;
+        	import de.tests.waveumleditor.model.classDiagram.TypeTest;
+        	import de.tests.waveumleditor.model.classDiagram.EVisibilityTest;
+        	import de.tests.waveumleditor.model.classDiagram.EModifierTest;
+        	import de.tests.waveumleditor.model.classDiagram.ClassAttributeTest;
+        	import de.tests.waveumleditor.model.classDiagram.ClassDiagramTest;
+        	import flexunit.framework.TestSuite;
+                        
+            private function onCreationComplete():void
+            {
+ 
+            	testRunner.test = createSuite();
+  				testRunner.startTest();
+  			}
+			
+			// Creates the test suite to run
+			private function createSuite():TestSuite {
+  				var testSuite:TestSuite = new TestSuite();
+  				
+  				testSuite.addTestSuite(EModifierTest);
+  				testSuite.addTestSuite(EVisibilityTest);
+  				testSuite.addTestSuite(TypeTest);
+  				testSuite.addTestSuite(VariableTest);
+  				testSuite.addTestSuite(PositionTest);
+  				
+  				testSuite.addTestSuite(ClassDiagramTest);
+  				testSuite.addTestSuite(ClassAttributeTest); 
+  				testSuite.addTestSuite(ClassConstructorMethodTest);
+  				testSuite.addTestSuite(ClassDiagramNodeTest);
+  				testSuite.addTestSuite(ClassDiagramLinkTest);
+  				testSuite.addTestSuite(ClassMethodTest);
+  				testSuite.addTestSuite(ConstantAttributeTest);
+  				testSuite.addTestSuite(InterfaceTest);
+  				testSuite.addTestSuite(InterfaceMethodTest);
+  				testSuite.addTestSuite(UMLClassTest);
+  				
+  				return testSuite;
+  			}	
+        ]]>
+    </mx:Script>    
+    
+    <flexunit:TestRunnerBase id="testRunner" width="100%" height="100%" />
+</mx:Application>

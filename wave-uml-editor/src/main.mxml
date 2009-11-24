@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:diagrammer="com.anotherflexdev.diagrammer.*" layout="absolute" creationComplete="init()">
+	<mx:Style source="/de/waveumleditor/view/diagrammer/assets/style/style.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import de.waveumleditor.model.classDiagram.link.LinkComposition;
+			import de.waveumleditor.model.classDiagram.link.LinkAggregation;
+			import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
+			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+			import de.waveumleditor.model.classDiagram.link.LinkImplements;
+			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
+			import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
+			import de.waveumleditor.model.Position;
+			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.Variable;
+			import de.waveumleditor.model.classDiagram.Type;
+			import de.waveumleditor.model.classDiagram.*;
+			
+			import com.anotherflexdev.diagrammer.Diagram;
+			import com.anotherflexdev.diagrammer.BaseNode;	
+			import com.anotherflexdev.diagrammer.Link;	
+				
+			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+			
+			private var classOne:ClassNode;
+			private var classTwo:ClassNode;
+			
+		private function init():void {
+				
+				var classData:UMLClass = new UMLClass(new Position(100, 100), "Klassenname 1");
+				var classData2:UMLClass = new UMLClass(new Position(400, 100), "Klassenname 2");
+				
+  			 	//Attribut mit Variable: public static final int myInteger default=0
+				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
+				var integerAttribute:ClassAttribute = new ClassAttribute(integerVariable, EVisibility.PUBLIC);
+				
+ 				//Attribut mit Variable: private String myString
+				var stringVariable:Variable = new Variable("myString", Type.STRING);
+				var stringAttribute:ClassAttribute = new ClassAttribute(stringVariable, EVisibility.PRIVATE);  
+
+ 				classData.addAttribute(integerAttribute);
+				classData.addAttribute(stringAttribute);
+				classData2.addAttribute(integerAttribute);   
+				
+				var method:ClassMethod = new ClassMethod("getMyString", EVisibility.PUBLIC, Type.STRING);
+				var constructor:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
+				constructor.addVariable(stringVariable);
+				
+				classData.addConstructor(constructor);
+				classData.addMethod(method);
+				classData2.addConstructor(constructor);
+				
+				classOne = new ClassNode();
+				classTwo = new ClassNode();
+			
+				classOne.update(classData);
+				classTwo.update(classData2);
+			
+			var link:Link = new InheritanceLink();
+				link.fromNode = classOne;
+				link.toNode = classTwo;
+				link.fromNode.addLeavingLink(link);
+				link.toNode.addArrivingLink(link);
+				
+				this.diagram.addChild(link.fromNode);
+				this.diagram.addChild(link.toNode);
+				this.diagram.addChildAt(link, 0);	
+				
+		}
+			
+		 private function test():void
+		{
+			var type:Type = new Type("test");
+			var variable:Variable = new Variable("test", type);
+			var classConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
+			var classMethod:ClassMethod = new ClassMethod("test", EVisibility.PUBLIC, type);
+			var classAttribute:ClassAttribute = new ClassAttribute(variable, EVisibility.PUBLIC);
+			
+			var umlclass:UMLClass = new UMLClass(new Position(1, 2), "test");
+			var classNode:ClassDiagramNode = new ClassDiagramNode(new Position(1, 1), "test");
+			
+			var interfaceMethod:InterfaceMethod = new InterfaceMethod("test", type);
+			var constantAttribute:ConstantAttribute = new ConstantAttribute(variable);
+			
+			var linkInheritance:LinkInheritance = new LinkInheritance(classNode, classNode);
+ 			var linkImplements:LinkImplements = new LinkImplements(classNode, classNode);
+ 			var linkAssociation:LinkAssociation = new LinkAssociationDirected(classNode, classNode);  
+			var linkAgg:LinkAggregation = new LinkAggregation(classNode, classNode);  
+			var linkComp:LinkComposition = new LinkComposition(classNode, classNode);  
+			
+			var classDiagram:ClassDiagram = new ClassDiagram();
+		}		 
+		]]>
+	</mx:Script>	
+	
+	<diagrammer:Diagram id="diagram" left="0" top="0" bottom="50" right="0">
+	</diagrammer:Diagram>
+</mx:Application>

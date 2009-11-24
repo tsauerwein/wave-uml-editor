@@ -1,0 +1,35 @@
+package de.waveumleditor.model.classDiagram
+{
+	import de.waveumleditor.model.Position;
+	
+	import mx.collections.ArrayList;
+	import mx.collections.IList;
+	
+	public class Interface extends ClassDiagramNode
+	{
+		private var methods:ArrayList;
+		
+		public function Interface(position:Position, name:String = "") 
+		{
+			super(position, name);
+			
+			this.methods = new ArrayList();
+		}
+		
+		public function addMethod(method:InterfaceMethod):void
+		{
+			methods.addItem(method);
+		}
+		
+		public function removeMethod(method:InterfaceMethod):void
+		{
+			methods.removeItem(method);
+		}
+		
+		public function getMethods():IList
+		{
+			return this.methods;
+		}
+		
+	}
+}
