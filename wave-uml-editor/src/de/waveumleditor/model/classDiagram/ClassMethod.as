@@ -1,8 +1,9 @@
 package de.waveumleditor.model.classDiagram
 {
+	
 	import mx.collections.ArrayList;
 	
-	public class ClassMethod extends ClassConstructorMethod
+	public class ClassMethod extends ClassConstructorMethod implements IClassElement
 	{
 		private var name:String;
 		private var returnType:Type;
@@ -54,7 +55,7 @@ package de.waveumleditor.model.classDiagram
 			modifiers.removeItem(modifier);
 		}
 		
-		public function isAbstract():Boolean
+		override public function isAbstract():Boolean
 		{
 			return this.abstract;
 		}
@@ -79,6 +80,15 @@ package de.waveumleditor.model.classDiagram
 			out += ":" + returnType.toString();
 
 			return out;
+		}
+		
+		override public function isStatic():Boolean
+		{
+			for each(var modifier:EModifier in this.modifiers)
+			{
+				if(modifier.getValue()==0) return true;
+			}
+			return false;
 		}
 		
 	}

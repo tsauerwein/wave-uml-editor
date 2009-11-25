@@ -1,9 +1,10 @@
 package de.waveumleditor.model.classDiagram
 {
+	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
-	public class ClassAttribute
+	public class ClassAttribute implements IClassElement
 	{
 		private var variable:Variable;
 		private var modifiers:ArrayList;
@@ -60,6 +61,20 @@ package de.waveumleditor.model.classDiagram
 			out += " " + this.variable;
 			
 			return out;
+		}
+		
+		public function isStatic():Boolean
+		{
+			for each(var modifier:EModifier in this.modifiers)
+			{
+				if(modifier.getValue()==0) return true;
+			}
+			return false;
+		}
+		
+		public function isAbstract():Boolean
+		{
+			return false;
 		}
 		
 	}

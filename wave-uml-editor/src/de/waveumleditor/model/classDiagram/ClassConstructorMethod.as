@@ -3,7 +3,7 @@ package de.waveumleditor.model.classDiagram
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
-	public class ClassConstructorMethod 
+	public class ClassConstructorMethod implements IClassElement
 	{
 		private var visibility:EVisibility;
 		private var variables:ArrayList;
@@ -63,5 +63,14 @@ package de.waveumleditor.model.classDiagram
 			return out;
 		}
 		
+		public function isStatic():Boolean
+		{
+			return false;
+		}
+		
+		public function isAbstract():Boolean
+		{
+			return false;
+		}
 	}
 }

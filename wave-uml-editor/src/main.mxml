@@ -17,6 +17,7 @@
 			import de.waveumleditor.model.classDiagram.Variable;
 			import de.waveumleditor.model.classDiagram.Type;
 			import de.waveumleditor.model.classDiagram.*;
+			import de.waveumleditor.model.classDiagram.EModifier
 			
 			import com.anotherflexdev.diagrammer.Diagram;
 			import com.anotherflexdev.diagrammer.BaseNode;	
@@ -39,10 +40,13 @@
 				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
 				var integerAttribute:ClassAttribute = new ClassAttribute(integerVariable, EVisibility.PUBLIC);
 				
+				integerAttribute.addModifier(EModifier.STATIC);//FIXME
+				integerAttribute.addModifier(EModifier.FINAL);
+				
  				//Attribut mit Variable: private String myString
 				var stringVariable:Variable = new Variable("myString", Type.STRING);
 				var stringAttribute:ClassAttribute = new ClassAttribute(stringVariable, EVisibility.PRIVATE);  
-
+				
  				classData.addAttribute(integerAttribute);
 				classData.addAttribute(stringAttribute);
 				classData2.addAttribute(integerAttribute);   
