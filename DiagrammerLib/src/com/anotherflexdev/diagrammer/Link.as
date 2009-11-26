@@ -67,6 +67,10 @@ package com.anotherflexdev.diagrammer {
 			}	
 		}
 		
+		public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean {
+			return true;
+		}
+		
 		protected function createLinkContextPanel():void {
 			this.linkContextPanel = new LinkContextPanel;
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);

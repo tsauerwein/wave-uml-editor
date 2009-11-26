@@ -1,5 +1,6 @@
 package com.anotherflexdev.diagrammer {
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
@@ -21,10 +22,18 @@ package com.anotherflexdev.diagrammer {
 			this.addEventListener(MouseEvent.MOUSE_MOVE, handleMouseMove);
 			this.addEventListener(Event.ADDED, handleAdded);
 			this.addEventListener(Event.REMOVED, handleRemoved);
+			
+			// add KeyBoardEvent-Listener when the stage is ready to enable linking-cancelation
+			addEventListener(Event.ADDED_TO_STAGE, addToStageHandler);
 		}
 		
+		private function addToStageHandler(event:Event):void {
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown, true);
+		}
+
 		public function get isLinking():Boolean {
-			return this.templateLine.fromNode != null;
+			return this.templateLine != null &&
+					this.templateLine.fromNode != null;
 		}
 		
 		override protected function createChildren():void {
@@ -51,7 +60,7 @@ package com.anotherflexdev.diagrammer {
 		}
 		
 		private function handleNodeRollOver(event:MouseEvent):void {
-			if(this.isLinking) {
+			if(isValidLink(BaseNode(event.currentTarget))) {
 				this.templateLine.toNode = BaseNode(event.currentTarget);
 			}
 		}
@@ -79,6 +88,8 @@ package com.anotherflexdev.diagrammer {
 		}
 		
 		public function beginLink(fromNode:BaseNode, linkFactory:IFactory = null):void {
+			stage.focus = this; // otherwise the KeyboardEvent is not triggered!
+			
 			this.currentLinkFactory = linkFactory;
 			if (linkFactory != null) {
 				this.templateLine = linkFactory.newInstance();
@@ -88,6 +99,26 @@ package com.anotherflexdev.diagrammer {
 			
 			this.templateLine.fromNode = fromNode;
 			this.addChild(this.templateLine);
+		}
+		
+		public function isValidLink(toNode:BaseNode):Boolean {
+			return isLinking && templateLine.canLink(templateLine.fromNode, toNode);
+		}		
+		
+		private function handleKeyDown(event:KeyboardEvent):void {
+			// cancel linking when ESC (keycode 27) is pressed
+			if(this.isLinking && event.keyCode == 27) { 
+				trace("cancel linking");
+				cancelLink();
+			} else {
+        		event.stopPropagation();
+    		}
+		}
+		
+		private function cancelLink():void {
+			this.removeChild(this.templateLine);
+			this.templateLine.fromNode = null;
+			this.templateLine.toNode = null;
 		}
 		
 		public function endLink():void {

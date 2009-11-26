@@ -200,7 +200,7 @@ package com.anotherflexdev.diagrammer {
 				this.nodeContextPanel.x = this.x + (this.width - 10);
 				Diagram(parent).addChild(this.nodeContextPanel);
 			}
-			if(Diagram(parent).isLinking) {
+			if(Diagram(parent).isLinking && Diagram(parent).isValidLink(this)) {
 				this.filters = [this.linkingGlowFilter];
 				this.addEventListener(MouseEvent.CLICK, handleMouseClick);
 			}

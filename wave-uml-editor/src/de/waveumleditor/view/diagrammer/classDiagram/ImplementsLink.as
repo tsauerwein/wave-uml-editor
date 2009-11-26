@@ -1,6 +1,8 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	
+	import com.anotherflexdev.diagrammer.BaseNode;
+	
 	import flash.geom.Point;
 
 	public class ImplementsLink extends ClassLink
@@ -9,7 +11,12 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		{
 			super();
 		}
-
+		
+		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
+		{
+			return false;
+		}
+		
 		override protected function createLinkContextPanel():void
 		{
 			this.linkContextPanel = new ImplementsLinkContextPanel;
