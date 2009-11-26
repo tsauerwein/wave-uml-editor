@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<diagrammer:GenericLinkContextPanel xmlns:diagrammer="com.anotherflexdev.diagrammer.*" xmlns:buttons="com.anotherflexdev.ui.buttons.*" xmlns:mx="http://www.adobe.com/2006/mxml" cornerRadius="10" borderStyle="solid" dropShadowEnabled="true" backgroundColor="#FFFFFF" width="33" height="33">
+	<mx:Script>
+		<![CDATA[
+		
+
+			private function handleRemoveMe(event:MouseEvent):void {
+				dispatchEvent(new Event('removeLink'));
+			}
+			
+		]]>
+	</mx:Script>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)"  y="3" x="3"/>
+</diagrammer:GenericLinkContextPanel>

@@ -1,5 +1,7 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
+	import flash.geom.Point;
+	
 
 	public class AssociationLink extends ClassLink
 	{
@@ -15,6 +17,8 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);				
 		}
 		
+		override protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
+		{}
 		
 	}
 }

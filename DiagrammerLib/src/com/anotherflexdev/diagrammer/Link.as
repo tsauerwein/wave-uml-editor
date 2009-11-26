@@ -265,24 +265,51 @@ package com.anotherflexdev.diagrammer {
 			this.graphics.lineStyle(this.getStyle("lineThickness")+8, bottomColor, 0.1);
 			this.graphics.moveTo(point1.x, point1.y);
 			this.graphics.lineTo(point2.x, point2.y);
-			//			
+					
 			this.graphics.lineStyle(this.getStyle("lineThickness")+2, bottomColor, 0.70);
-			this.graphics.moveTo(point1.x, point1.y);
-			this.graphics.lineTo(point2.x, point2.y);
-			this.graphics.drawCircle(point1.x, point1.y, 4);
-			this.graphics.lineStyle(this.getStyle("lineThickness"), topColor, 0.70);
-			this.graphics.moveTo(point1.x, point1.y);
-			this.graphics.lineTo(point2.x, point2.y);
-			this.graphics.drawCircle(point1.x, point1.y, 2);
+			drawLineBetween(point1, point2);
 			
-			drawSymbols(point1.x, point1.y, point2.x, point2.y, bottomColor, topColor);	
+			this.graphics.lineStyle(this.getStyle("lineThickness"), topColor, 0.70);
+			drawLineBetween(point1, point2);
+			
+			drawStartSymbol(point1, point2, bottomColor, topColor);
+			drawEndSymbol(point1, point2, bottomColor, topColor);	
 		}
 		
-		//"abstract"
-		protected function drawSymbols(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void {
-			
+		protected function drawLineBetween(point1:Point, point2:Point):void {
+			this.graphics.moveTo(point1.x, point1.y);
+			this.graphics.lineTo(point2.x, point2.y);
+		}
+		
+		protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void {
+			this.graphics.lineStyle(this.getStyle("lineThickness"), bottomColor, 0.70);
+			this.graphics.drawCircle(point1.x, point1.y, 4);
+			this.graphics.lineStyle(this.getStyle("lineThickness"), topColor, 0.70);
+			this.graphics.drawCircle(point1.x, point1.y, 2);
+		}
+		
+		protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void {
+			drawArrow(point1.x, point1.y, point2.x, point2.y, bottomColor, topColor);
 		}
 
+		protected function drawArrow(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void{
+			this.performArrowDrawing(x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);		
+			this.performArrowDrawing(x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
+	  	}		
+		
+		protected function performArrowDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void{
+			this.graphics.lineStyle(lineThickness, color, alpha);
+			var arrowHeight:Number = 10;
+			var arrowWidth:Number = 10;
+			var angle:Number = Math.atan2(y2-y1, x2-x1);
+			graphics.moveTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+			  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
+			graphics.lineTo(x2, y2);
+			graphics.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
+			  							y2-arrowHeight*Math.sin(angle)-arrowWidth*Math.cos(angle));										
+		}
+
+		
 		protected function getDrawDirection(fromNode:BaseNode, toNode:BaseNode):String{
 		    var drawDirection :String;
 		    var boxFromX2:int = fromNode.x+fromNode.width;
