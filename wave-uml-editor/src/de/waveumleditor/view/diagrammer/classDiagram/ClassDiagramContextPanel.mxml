@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GenericDiagramContextPanel 
+	xmlns="com.anotherflexdev.diagrammer.*" 
+	xmlns:buttons="com.anotherflexdev.ui.buttons.*"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="50" height="25" backgroundColor="#914141">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.Canvas;
+			import com.anotherflexdev.diagrammer.Diagram;
+			
+			private var diagram:Diagram = getParentPanel();
+			
+			private function addNode(nodeType:Class):void{
+				var node:Canvas = new nodeType;
+				node.x = 100;
+				node.y = 100;
+				getParentPanel().addChild(node);
+			}
+		]]>
+	</mx:Script>
+	
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(ClassNode)" toolTip="Delete" width="22" x="2"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(ClassNode)" toolTip="Delete" width="22" x="27"/>
+	
+</GenericDiagramContextPanel>

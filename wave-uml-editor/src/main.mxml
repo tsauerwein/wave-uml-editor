@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:diagrammer="com.anotherflexdev.diagrammer.*" layout="absolute" creationComplete="init()">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"  
+				xmlns:diagrammer="com.anotherflexdev.diagrammer.*" 
+				xmlns:classDiagrammer="de.waveumleditor.view.diagrammer.classDiagram.*"
+				layout="absolute" 
+				creationComplete="init()">
 	<mx:Style source="/de/waveumleditor/view/diagrammer/assets/style/style.css"/>
 	
 	<mx:Script>
@@ -124,6 +128,6 @@
 		]]>
 	</mx:Script>	
 	
-	<diagrammer:Diagram id="diagram" left="0" top="0" bottom="50" right="0">
-	</diagrammer:Diagram>
+	<classDiagrammer:ClassDiagramComponent id="diagram" left="0" top="0" bottom="50" right="0">
+	</classDiagrammer:ClassDiagramComponent>
 </mx:Application>
