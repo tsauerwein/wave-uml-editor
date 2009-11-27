@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BaseClassDiagramNode xmlns="de.waveumleditor.view.diagrammer.classDiagram.*" xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#8FAEF3" borderColor="#000000">
+	<mx:Text y="0" text="«Interface»" selectable="false" left="1" right="1" textAlign="center" color="0xFFFFFF"/>
 	<lblNodeName>
-		<mx:Text y="0" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="classNodeName" />
+		<mx:Text y="10" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="classNodeName" />
 	</lblNodeName>
 
 		<mx:Script>
@@ -27,7 +28,7 @@
 				
 				// update class-name
 				Formatter.formatLabelOfClassElement(interfaceData, classNodeName);
-				nodeName = "<<"+interfaceData.getName()+">>";
+				nodeName = interfaceData.getName();
 				
 				// add methods
 				var methods:IList = interfaceData.getMethods();
