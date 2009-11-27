@@ -40,7 +40,18 @@ package com.anotherflexdev.diagrammer {
 			if(!this.templateLine) {
 				this.templateLine = new Link;
 			}
+			
+		 	var diagramPanel:GenericDiagramContextPanel = createContextPanel();
+		 	if (diagramPanel != null) {
+				addChild(diagramPanel);
+				diagramPanel.setParentPanel(this);
+		 	}
+			
 			super.createChildren();
+		}
+		
+		protected function createContextPanel():GenericDiagramContextPanel {
+			return null;
 		}
 		
 		private function handleAdded(event:Event):void {
