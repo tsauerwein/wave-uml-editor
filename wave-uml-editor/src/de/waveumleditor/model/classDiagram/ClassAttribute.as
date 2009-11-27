@@ -7,13 +7,13 @@ package de.waveumleditor.model.classDiagram
 	public class ClassAttribute implements IClassElement
 	{
 		private var variable:Variable;
-		private var modifiers:ArrayList;
+		private var statique:Boolean;
 		private var visibility:EVisibility;
 		
-		public function ClassAttribute(variable:Variable, visibility:EVisibility)
+		public function ClassAttribute(variable:Variable, visibility:EVisibility, is_static:Boolean = false)
 		{
 			this.variable = variable;
-			this.modifiers = new ArrayList();
+			this.statique = is_static;
 			this.visibility = visibility;
 		}
 		
@@ -27,24 +27,19 @@ package de.waveumleditor.model.classDiagram
 			this.variable = variable;
 		}
 		
-		public function addModifier(modifier:EModifier):void
+		public function isStatic():Boolean
 		{
-			modifiers.addItem(modifier);
-		}
-		
-		public function removeModifier(modifier:EModifier):void
-		{
-			modifiers.removeItem(modifier);
-		}
-		
-		public function getModifiers():IList
-		{
-			return this.modifiers;
+			return this.statique;
 		}
 		
 		public function getVisibility():EVisibility
 		{
 			return this.visibility;
+		}
+		
+		public function setStatic(is_static:Boolean):void
+		{
+			this.statique = is_static;
 		}
 		
 		public function setVisibility(visibility:EVisibility):void
@@ -61,15 +56,6 @@ package de.waveumleditor.model.classDiagram
 			out += " " + this.variable;
 			
 			return out;
-		}
-		
-		public function isStatic():Boolean
-		{
-			for each(var modifier:EModifier in this.modifiers)
-			{
-				if(modifier.getValue()==0) return true;
-			}
-			return false;
 		}
 		
 		public function isAbstract():Boolean

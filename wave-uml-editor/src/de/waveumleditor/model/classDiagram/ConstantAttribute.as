@@ -2,7 +2,7 @@ package de.waveumleditor.model.classDiagram
 {
 	import mx.collections.ArrayList;
 		
-	public class ConstantAttribute extends ClassAttribute
+	public class ConstantAttribute extends ClassAttribute implements IClassElement
 	{
 		/* private var modifiers:ArrayList; */
 		
@@ -10,23 +10,16 @@ package de.waveumleditor.model.classDiagram
 		{
 			super(variable, EVisibility.PUBLIC);
 			
-			super.addModifier(EModifier.STATIC);
-			super.addModifier(EModifier.FINAL);
-		}
-		
-		override public function addModifier(modifier:EModifier):void
-		{
-			// simulates private function - sorry
-			throw new Error("should not be called");
-		}
-		
-		override public function removeModifier(modifier:EModifier):void
-		{
-			// simulates private function - sorry
-			throw new Error("should not be called");
+			super.setStatic(true);
 		}
 		
 		override public function setVisibility(visibility:EVisibility):void
+		{
+			// simulates private function - sorry
+			throw new Error("should not be called");
+		}
+		
+		override public function setStatic(is_static:Boolean):void
 		{
 			// simulates private function - sorry
 			throw new Error("should not be called");

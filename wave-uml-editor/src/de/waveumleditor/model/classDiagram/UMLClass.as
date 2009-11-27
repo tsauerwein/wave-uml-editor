@@ -5,7 +5,7 @@ package de.waveumleditor.model.classDiagram
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
-	public class UMLClass extends ClassDiagramNode
+	public class UMLClass extends ClassDiagramNode implements IClassElement
 	{
 		private var constructors:ArrayList;
 		private var methods:ArrayList;
@@ -81,6 +81,10 @@ package de.waveumleditor.model.classDiagram
 		{
 			this.abstract = abstract;
 		}
-
+		
+		public function isStatic():Boolean
+		{
+			return false;
+		}
 	}
 }

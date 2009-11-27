@@ -7,16 +7,16 @@ package de.waveumleditor.model.classDiagram
 	{
 		private var name:String;
 		private var returnType:Type;
-		private var modifiers:ArrayList;
+		private var statique:Boolean;
 		private var abstract:Boolean;
 		
-		public function ClassMethod(name:String, visibility:EVisibility, returnType:Type, abstract:Boolean = false)
+		public function ClassMethod(name:String, visibility:EVisibility, returnType:Type, abstract:Boolean = false, is_static:Boolean = false)
 		{
 			super(visibility);
 			
 			this.name = name;
 			this.returnType = returnType;
-			this.modifiers = new ArrayList();
+			this.statique = is_static
 			this.abstract = abstract;
 		}
 		
@@ -40,21 +40,6 @@ package de.waveumleditor.model.classDiagram
 			this.returnType = returnType;
 		}
 		
-		public function getModifiers():ArrayList
-		{
-			return this.modifiers;
-		}
-		
-		public function addModifier(modifier:EModifier):void
-		{
-			modifiers.addItem(modifier);
-		}
-		
-		public function removeModifier(modifier:EModifier):void
-		{
-			modifiers.removeItem(modifier);
-		}
-		
 		override public function isAbstract():Boolean
 		{
 			return this.abstract;
@@ -63,6 +48,11 @@ package de.waveumleditor.model.classDiagram
 		public function setAbstract(abstract:Boolean):void
 		{
 			this.abstract = abstract;
+		}
+		
+		public function setStatic(is_static:Boolean):void
+		{
+			this.statique = is_static;
 		}
 		
 		override public function toString():String
@@ -84,11 +74,7 @@ package de.waveumleditor.model.classDiagram
 		
 		override public function isStatic():Boolean
 		{
-			for each(var modifier:EModifier in this.modifiers)
-			{
-				if(modifier.getValue()==0) return true;
-			}
-			return false;
+			return this.statique;
 		}
 		
 	}

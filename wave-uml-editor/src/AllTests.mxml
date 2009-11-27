@@ -24,7 +24,6 @@
         	import de.tests.waveumleditor.model.classDiagram.VariableTest;
         	import de.tests.waveumleditor.model.classDiagram.TypeTest;
         	import de.tests.waveumleditor.model.classDiagram.EVisibilityTest;
-        	import de.tests.waveumleditor.model.classDiagram.EModifierTest;
         	import de.tests.waveumleditor.model.classDiagram.ClassAttributeTest;
         	import de.tests.waveumleditor.model.classDiagram.ClassDiagramTest;
         	import flexunit.framework.TestSuite;
@@ -40,7 +39,6 @@
 			private function createSuite():TestSuite {
   				var testSuite:TestSuite = new TestSuite();
   				
-  				testSuite.addTestSuite(EModifierTest);
   				testSuite.addTestSuite(EVisibilityTest);
   				testSuite.addTestSuite(TypeTest);
   				testSuite.addTestSuite(VariableTest);

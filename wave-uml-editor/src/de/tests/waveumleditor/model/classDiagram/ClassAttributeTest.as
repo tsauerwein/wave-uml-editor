@@ -1,7 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.EModifier;
 	import de.waveumleditor.model.classDiagram.EVisibility;
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
@@ -23,9 +22,7 @@ package de.tests.waveumleditor.model.classDiagram
 			trace(classAttribute.toString());
 			assertEquals("- test:test", classAttribute.toString());
 			
-			classAttribute.addModifier(EModifier.FINAL);
-			classAttribute.addModifier(EModifier.STATIC);
-			classAttribute.addModifier(EModifier.VOLATILE);
+			classAttribute.setStatic(true);
 			trace(classAttribute.toString());
 			assertEquals("- test:test", classAttribute.toString());
 			

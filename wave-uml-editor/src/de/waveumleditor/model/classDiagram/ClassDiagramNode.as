@@ -37,5 +37,6 @@ package de.waveumleditor.model.classDiagram
 		{			
 			return this.name;
 		}
+		
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <BaseClassDiagramNode xmlns="de.waveumleditor.view.diagrammer.classDiagram.*" xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#8FAEF3" borderColor="#000000">
 	<lblNodeName>
-		<mx:Text y="0" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="test" />
+		<mx:Text y="0" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="classNodeName" />
 	</lblNodeName>
 
 		<mx:Script>
@@ -13,7 +13,6 @@
 			import mx.containers.Grid;
 			import mx.core.*;
 			import mx.containers.GridRow;
-			import de.waveumleditor.model.classDiagram.EModifier;
 			import mx.messaging.management.Attribute;
 			import mx.containers.GridItem;
 			import mx.collections.IList;
@@ -27,7 +26,9 @@
 				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
 				
 				var classData:UMLClass = nodeData as UMLClass;
+				
 				// update class-name
+				Formatter.formatLabelOfClassElement(classData, classNodeName);
 				nodeName = classData.getName();
 				
 				// add attributes

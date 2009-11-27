@@ -2,7 +2,6 @@ package de.tests.waveumleditor.model.classDiagram
 {
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.EModifier;
 	import de.waveumleditor.model.classDiagram.EVisibility;
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
@@ -24,9 +23,7 @@ package de.tests.waveumleditor.model.classDiagram
 			
 			method = new ClassMethod("superMethod", EVisibility.PUBLIC, Type.STRING, true);
 			method.setUMLClass(umlclass);			
-			method.addModifier(EModifier.FINAL);
-			method.addModifier(EModifier.STATIC);
-			method.addModifier(EModifier.VOLATILE);
+			method.setStatic(true);
 			method.addVariable(new Variable("var1", Type.INT, "1"));
 			method.addVariable(new Variable("var2", Type.INT));
 			
