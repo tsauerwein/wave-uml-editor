@@ -1,6 +1,7 @@
 package de.waveumleditor.controller
 {
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.Interface;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
@@ -10,6 +11,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ImplementsLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
 	
@@ -20,6 +22,11 @@ package de.waveumleditor.controller
 			if (nodeData is UMLClass)
 			{
 				return new ClassNode();
+			}
+			
+			if (nodeData is Interface)
+			{
+				return new InterfaceNode();
 			}
 			
 			// todo

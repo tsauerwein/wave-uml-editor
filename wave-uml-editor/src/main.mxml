@@ -32,8 +32,9 @@
 		private function init():void {
 				
 				
-				var classData:UMLClass = new UMLClass(new Position(100, 100), "Klassenname 1");
-				var classData2:UMLClass = new UMLClass(new Position(400, 100), "Klassenname 2");
+				var classData:UMLClass = new UMLClass(new Position(100, 150), "Klassenname 1");
+				var classData2:UMLClass = new UMLClass(new Position(400, 150), "Klassenname 2");
+				var interfaceData:Interface = new Interface(new Position(400, 50), "Superinterface");
 				
 				classData.setAbstract(true);
 				
@@ -54,6 +55,10 @@
 				var method:ClassMethod = new ClassMethod("getMyString", EVisibility.PUBLIC, Type.STRING);
 				var constructor:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
 				constructor.addVariable(stringVariable);
+				
+				//Interfacemethode
+				var interfaceMethod:InterfaceMethod = new InterfaceMethod("superMethode", Type.DOUBLE);
+				interfaceData.addMethod(interfaceMethod);
 				
 				classData.addConstructor(constructor);
 				classData.addMethod(method);
@@ -80,6 +85,7 @@
 				classDiagram = new ClassDiagram();
 				classDiagram.addNode(classData);
 				classDiagram.addNode(classData2);
+				classDiagram.addNode(interfaceData);
 				classDiagram.addLink(linkInheritance);
 				
 				controller = new Controller(diagram);

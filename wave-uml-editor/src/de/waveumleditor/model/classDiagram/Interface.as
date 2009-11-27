@@ -5,7 +5,7 @@ package de.waveumleditor.model.classDiagram
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
-	public class Interface extends ClassDiagramNode
+	public class Interface extends ClassDiagramNode implements IClassElement
 	{
 		private var methods:ArrayList;
 		
@@ -29,6 +29,16 @@ package de.waveumleditor.model.classDiagram
 		public function getMethods():IList
 		{
 			return this.methods;
+		}
+		
+		public function isAbstract():Boolean
+		{
+			return true;
+		}
+		
+		public function isStatic():Boolean
+		{
+			return false;
 		}
 		
 	}
