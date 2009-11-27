@@ -52,19 +52,25 @@
 				classData.addAttribute(stringAttribute);
 				classData2.addAttribute(integerAttribute);   
 				
+				//Methode public String getMyString()
 				var method:ClassMethod = new ClassMethod("getMyString", EVisibility.PUBLIC, Type.STRING);
+				//Konstruktor
 				var constructor:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
 				constructor.addVariable(stringVariable);
 				
 				//Interfacemethode
 				var interfaceMethod:InterfaceMethod = new InterfaceMethod("superMethode", Type.DOUBLE);
 				interfaceData.addMethod(interfaceMethod);
+				//Implementierung der Interfacemethode
+				var implementedInterfaceMethod:ClassMethod = new ClassMethod("superMethode",EVisibility.PUBLIC, Type.DOUBLE);
 				
 				classData.addConstructor(constructor);
 				classData.addMethod(method);
+				classData2.addMethod(implementedInterfaceMethod);
 				classData2.addConstructor(constructor);
 				
 				var linkInheritance:LinkInheritance = new LinkInheritance(classData, classData2);
+				var linkImplements:LinkImplements = new LinkImplements(classData2, interfaceData);
 				
 				/* classOne = new ClassNode();
 				classTwo = new ClassNode();
@@ -87,6 +93,7 @@
 				classDiagram.addNode(classData2);
 				classDiagram.addNode(interfaceData);
 				classDiagram.addLink(linkInheritance);
+				classDiagram.addLink(linkImplements);
 				
 				controller = new Controller(diagram);
 				controller.createDiagram(classDiagram);
