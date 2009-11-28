@@ -1,5 +1,7 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
+	import com.anotherflexdev.diagrammer.BaseNode;
+	
 	import flash.geom.Point;
 	
 	
@@ -8,6 +10,19 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		public function InheritanceLink()
 		{
 			super();
+		}
+		
+		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
+		{
+			if (fromNode is InterfaceNode && toNode is InterfaceNode)
+			{
+				return true;
+			} else if (fromNode is ClassNode && toNode is ClassNode)
+			{
+				return true;
+			}
+			
+			return false;
 		}
 		
 		override protected function createLinkContextPanel():void 
