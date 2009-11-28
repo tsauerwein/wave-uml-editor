@@ -30,7 +30,7 @@
 				// update interface-name
 				Formatter.formatLabelOfClassElement(interfaceData, classNodeName);
 				nodeName = interfaceData.getName();
-				if(nodeName==""){nodeName="Interfacename"};//default
+				if(nodeName==""){nodeName="Neues Interface"};//default
 				
 				// add methods
 				if(interfaceData.getMethods().length==0)//default

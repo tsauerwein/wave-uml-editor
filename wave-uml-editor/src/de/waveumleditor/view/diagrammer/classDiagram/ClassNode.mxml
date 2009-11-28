@@ -34,7 +34,7 @@
 				// update class-name
 				Formatter.formatLabelOfClassElement(classData, classNodeName);
 				nodeName = classData.getName();
-				if(nodeName==""){nodeName="Klassenname"};//default
+				if(nodeName==""){nodeName="Neue Klasse"};//default
 				
 				// add attributes
 				if(classData.getAttributes().length==0)//default
