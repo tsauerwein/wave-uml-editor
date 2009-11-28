@@ -21,7 +21,7 @@
 		]]>
 	</mx:Script>
 	
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(ClassNode)" toolTip="Delete" width="22" x="2"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(ClassNode)" toolTip="Delete" width="22" x="27"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(ClassNode)" toolTip="Klasse hinzufügen" width="22" x="2"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" y="2" click="addNode(InterfaceNode)" toolTip="Interface hinzufügen" width="22" x="27"/>
 	
 </GenericDiagramContextPanel>
