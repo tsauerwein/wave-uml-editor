@@ -6,6 +6,9 @@
 
 		<mx:Script>
 		<![CDATA[
+			import mx.controls.Label;
+			import org.hamcrest.object.IsEqualMatcher;
+			import mx.logging.Log;
 			import de.waveumleditor.model.classDiagram.IClassElement;
 			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 			import mx.controls.HRule;
@@ -27,19 +30,33 @@
 				
 				var classData:UMLClass = nodeData as UMLClass;
 				
+				
 				// update class-name
 				Formatter.formatLabelOfClassElement(classData, classNodeName);
 				nodeName = classData.getName();
+				if(nodeName==""){nodeName="Klassenname"};//default
 				
 				// add attributes
+				if(classData.getAttributes().length==0)//default
+				{
+					var defaultAttribute:Label = new Label;
+					defaultAttribute.text="Attribute";
+					defaultAttributeGridItem.addChild(defaultAttribute);
+				}
 				var attributes:IList = classData.getAttributes();
 				addElementsToContentGrid(attributes, attributeGrid);
 		
-				// add constructors
+				// add constructors and methods
+				if(classData.getMethods().length==0&&classData.getConstructors().length==0)//default
+				{
+					var defaultMethod:Label = new Label();
+					defaultMethod.text="Methoden";
+					defaultMethodGridItem.addChild(defaultMethod);
+				}
+				//constructors
 				var constructors:IList = classData.getConstructors();
 				addElementsToContentGrid(constructors, methodGrid);
-				
-				// add methods
+				//methods
 				var methods:IList = classData.getMethods();
 				addElementsToContentGrid(methods, methodGrid);
 			}
@@ -55,8 +72,6 @@
 					}
 				}
 			}
-			
-			
 		]]>
 	</mx:Script>
 	
@@ -65,7 +80,11 @@
 					<mx:GridRow width="100%" height="100%">
 						<mx:GridItem width="100%" height="100%">
 								<mx:Grid id="attributeGrid"  y="147" width="100%" verticalGap="0">
-									
+									<mx:GridRow width="100%" height="100%">
+										<mx:GridItem id="defaultAttributeGridItem">
+											
+										</mx:GridItem>
+									</mx:GridRow>
 								</mx:Grid>
 						</mx:GridItem>
 				</mx:GridRow>
@@ -77,7 +96,11 @@
 				<mx:GridRow width="100%" height="100%">
 						<mx:GridItem width="100%" height="100%">
 									<mx:Grid id="methodGrid" y="147" width="100%" verticalGap="0">
-
+										<mx:GridRow width="100%" height="100%">
+											<mx:GridItem id="defaultMethodGridItem">
+												
+											</mx:GridItem>
+										</mx:GridRow>
 									</mx:Grid>
 						</mx:GridItem>
 				</mx:GridRow>

@@ -39,6 +39,8 @@
 				var classData:UMLClass = new UMLClass(new Position(100, 150), "Klassenname 1");
 				var classData2:UMLClass = new UMLClass(new Position(400, 150), "Klassenname 2");
 				var interfaceData:Interface = new Interface(new Position(400, 50), "Superinterface");
+				var emptyClass:UMLClass = new UMLClass(new Position(100, 50));
+				var emptyInterface:Interface = new Interface(new Position(210, 50));
 				
 				classData.setAbstract(true);
 				
@@ -95,6 +97,8 @@
 				classDiagram = new ClassDiagram();
 				classDiagram.addNode(classData);
 				classDiagram.addNode(classData2);
+				classDiagram.addNode(emptyClass);
+				classDiagram.addNode(emptyInterface);
 				classDiagram.addNode(interfaceData);
 				classDiagram.addLink(linkInheritance);
 				classDiagram.addLink(linkImplements);
