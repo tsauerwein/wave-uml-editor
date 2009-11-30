@@ -77,6 +77,7 @@
 				
 				var linkInheritance:LinkInheritance = new LinkInheritance(classData, classData2);
 				var linkImplements:LinkImplements = new LinkImplements(classData2, interfaceData);
+				var linkAssociation:LinkAssociation = new LinkAssociation(classData2, classData2);
 				
 				/* classOne = new ClassNode();
 				classTwo = new ClassNode();
@@ -102,6 +103,7 @@
 				classDiagram.addNode(interfaceData);
 				classDiagram.addLink(linkInheritance);
 				classDiagram.addLink(linkImplements);
+				classDiagram.addLink(linkAssociation);
 				
 				controller = new Controller(diagram);
 				controller.createDiagram(classDiagram);

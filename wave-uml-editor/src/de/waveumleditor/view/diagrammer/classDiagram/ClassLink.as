@@ -53,7 +53,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		 */
 		protected function dashLine(x1:Number, y1:Number, x2:Number, y2:Number, onLength:Number = 0, offLength:Number = 0):void
 		{
-			this.graphics.moveTo(x1,y1);
 			if (offLength == 0)
 			{
 			    this.graphics.lineTo(x2,y2);

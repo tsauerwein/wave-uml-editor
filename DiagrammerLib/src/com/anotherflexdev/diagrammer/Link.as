@@ -6,6 +6,7 @@ package com.anotherflexdev.diagrammer {
 	import flash.ui.Keyboard;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.collections.ArrayCollection;
 	import mx.controls.Label;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
@@ -121,12 +122,21 @@ package com.anotherflexdev.diagrammer {
 		}
 		
 		protected function getMidlePoint():Point {
-			var fromNodeCenterPoint:Point = new Point(this.fromNode.x+this.fromNode.width/2, this.fromNode.y+this.fromNode.height/2);
-			var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
-			var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
-			var point2:Point = this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode);
-			var x:Number = point1.x == point2.x ? point1.x : point1.x + ((point2.x-point1.x)/2);
-			var y:Number = point1.x == point2.x ? point1.y + (point2.y - point1.y)/2 : this.getYBoundary(x, point2.x, point2.y, this.fromNode);
+			var x:Number = 0;
+			var y:Number = 0;
+			
+			if (this.fromNode == this.toNode) {
+				x = this.fromNode.x + this.fromNode.width + 20;
+				y = this.fromNode.y + this.fromNode.height + 20;
+			} else {
+				var fromNodeCenterPoint:Point = new Point(this.fromNode.x+this.fromNode.width/2, this.fromNode.y+this.fromNode.height/2);
+				var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
+				var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
+				var point2:Point = this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode);
+				x = point1.x == point2.x ? point1.x : point1.x + ((point2.x-point1.x)/2);
+				y = point1.x == point2.x ? point1.y + (point2.y - point1.y)/2 : this.getYBoundary(x, point2.x, point2.y, this.fromNode);
+			}
+			
 			return new Point(x,y);			
 		}
 		
@@ -253,35 +263,57 @@ package com.anotherflexdev.diagrammer {
 		}
 
 		protected function drawLine(fromNodeCenterPoint:Point, toNodeCenterPoint:Point, bottomColor:uint, topColor:uint):void {
-			var point1:Point = null;
-			var point2:Point = null;
+			var line:ArrayCollection = new ArrayCollection();
 			
 			if(this.toNode == null) {
-				point1 = fromNodeCenterPoint;
-				point2 = toNodeCenterPoint;
+				line.addItem(fromNodeCenterPoint);
+				line.addItem(toNodeCenterPoint);
+			} else if (this.toNode == this.fromNode) {
+				getReflexiveLine(this.toNode, line);
 			} else {
-				point1 = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
-				point2 = this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode);
+				line.addItem(this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode));
+				line.addItem(this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode));
 			}
 			
 			this.graphics.clear();
+			if (line.length < 2) return;
+			
 			//For easy event handling a transparent stronger line
 			this.graphics.lineStyle(this.getStyle("lineThickness")+8, bottomColor, 0.1);
-			this.graphics.moveTo(point1.x, point1.y);
-			this.graphics.lineTo(point2.x, point2.y);
+			drawLineFrom(line);
 					
 			this.graphics.lineStyle(this.getStyle("lineThickness")+2, bottomColor, 0.70);
-			drawLineBetween(point1, point2);
+			drawLineFrom(line);
 			
 			this.graphics.lineStyle(this.getStyle("lineThickness"), topColor, 0.70);
-			drawLineBetween(point1, point2);
+			drawLineFrom(line);
 			
-			drawStartSymbol(point1, point2, bottomColor, topColor);
-			drawEndSymbol(point1, point2, bottomColor, topColor);	
+			drawStartSymbol(
+				line.getItemAt(0) as Point,
+				line.getItemAt(1) as Point,
+				bottomColor, topColor);
+			drawEndSymbol(
+				line.getItemAt(line.length-2) as Point,
+				line.getItemAt(line.length-1) as Point,
+				bottomColor, topColor);	
+		}
+		
+		private function drawLineFrom(pointCollection:ArrayCollection):void {
+			
+			var startPoint:Point = pointCollection.getItemAt(0) as Point;
+			this.graphics.moveTo(startPoint.x, startPoint.y);
+			
+			// draw lines between all points
+			var endPoint:Point = null;
+			for (var i:int = 1; i < pointCollection.length; i++) {
+				startPoint = pointCollection.getItemAt(i-1) as Point;
+				endPoint = pointCollection.getItemAt(i) as Point;
+				
+				drawLineBetween(startPoint, endPoint);
+			}
 		}
 		
 		protected function drawLineBetween(point1:Point, point2:Point):void {
-			this.graphics.moveTo(point1.x, point1.y);
 			this.graphics.lineTo(point2.x, point2.y);
 		}
 		
@@ -407,6 +439,21 @@ package com.anotherflexdev.diagrammer {
 			} 
 			return new Point(toCenterPoint.x, toCenterPoint.y);
 	  	}
+	
+	/**
+	 * Builds a line which starts and ends at the same node.
+	 * The line is drawn around the right, bottom corner.
+	 */ 
+	private function getReflexiveLine(node:BaseNode, line:ArrayCollection):void {
+		var maxX:int = node.x + node.width;
+		var maxY:int = node.y + node.height;
+		
+		line.addItem(new Point(maxX, maxY - 20));
+		line.addItem(new Point(maxX + 20, maxY - 20));
+		line.addItem(new Point(maxX + 20, maxY + 20));
+		line.addItem(new Point(maxX - 20, maxY + 20));
+		line.addItem(new Point(maxX - 20, maxY));
+	} 	
 		
 	}
 }
