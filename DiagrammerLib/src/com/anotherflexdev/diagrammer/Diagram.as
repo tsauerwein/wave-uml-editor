@@ -129,7 +129,11 @@ package com.anotherflexdev.diagrammer {
 		private function cancelLink():void {
 			this.removeChild(this.templateLine);
 			this.templateLine.fromNode = null;
-			this.templateLine.toNode = null;
+			
+			if (this.templateLine.toNode != null) {
+				this.templateLine.toNode.cancelLinking();
+				this.templateLine.toNode = null;
+			}
 		}
 		
 		public function endLink():void {

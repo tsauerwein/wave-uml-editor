@@ -206,13 +206,17 @@ package com.anotherflexdev.diagrammer {
 			}
 		}
 		
+		public function cancelLinking():void {
+				this.filters = null;
+				this.removeEventListener(MouseEvent.CLICK, handleMouseClick);
+		}
+		
 		private function handleMouseRollOut(event:MouseEvent):void {
 			if(Diagram(parent).contains(this.nodeContextPanel)) {
 				Diagram(parent).removeChild(this.nodeContextPanel);
 			}
 			if(Diagram(parent).isLinking) {
-				this.filters = null;
-				this.removeEventListener(MouseEvent.CLICK, handleMouseClick);
+				cancelLinking();
 			}
 		}			
 			
