@@ -195,7 +195,7 @@ package com.anotherflexdev.diagrammer {
 		}
 					
 		private function handleMouseRollOver(event:MouseEvent):void {
-			if(!Diagram(parent).contains(this.nodeContextPanel)) {
+			if(!Diagram(parent).contains(this.nodeContextPanel) && !Diagram(parent).isLinking) {
 				this.nodeContextPanel.y = this.y + ((this.height / 2) - (this.nodeContextPanel.height / 2));
 				this.nodeContextPanel.x = this.x + (this.width - 10);
 				Diagram(parent).addChild(this.nodeContextPanel);
