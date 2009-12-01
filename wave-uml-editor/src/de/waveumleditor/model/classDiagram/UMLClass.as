@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	
 	import mx.collections.ArrayList;
@@ -12,9 +13,9 @@ package de.waveumleditor.model.classDiagram
 		private var attributes:ArrayList;
 		private var abstract:Boolean;
 		
-		public function UMLClass(position:Position, name:String = "", abstract:Boolean = false) 
+		public function UMLClass(key:Identifier, position:Position, name:String = "", abstract:Boolean = false) 
 		{
-			super(position, name);
+			super(key, position, name);
 			
 			this.abstract = abstract;
 			

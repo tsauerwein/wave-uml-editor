@@ -5,6 +5,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.view.diagrammer.CreationEvent;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	
@@ -12,17 +13,22 @@ package de.waveumleditor.controller
 	
 	public class Controller
 	{
-		private var diagram:Diagram;
+		private var diagramView:Diagram;
+		private var diagramModel:ClassDiagram;
+		private var fascade:ControllerFascade;
 		
-		public function Controller(diagram:Diagram)
+		public function Controller(diagramView:Diagram, diagramModel:ClassDiagram)
 		{
-			this.diagram = diagram;
+			this.diagramView = diagramView;
+			this.diagramModel = diagramModel;
+			this.fascade = new ControllerFascade(this.diagramModel);
+			this.diagramView.addEventListener(CreationEvent.ADD_CLASS_NODE, handleAddClassNode );
 		}
 		
-		public function createDiagram(diagramData:ClassDiagram):void
+		public function createDiagram():void
 		{
 			var nodes:ArrayList = new ArrayList();
-			var nodeDatas:ArrayList = diagramData.getNodes();
+			var nodeDatas:ArrayList = this.diagramModel.getNodes();
 			 for(var i:int = 0; i < nodeDatas.length; i++)
 			 {
 			 	var nodeData:ClassDiagramNode = nodeDatas.getItemAt(i) as ClassDiagramNode;
@@ -31,12 +37,12 @@ package de.waveumleditor.controller
 			 	node.update(nodeData);
 			 	
 			 	nodes.addItem(node);
-			 	diagram.addChild(node);
+			 	diagramView.addChild(node);
 			 }
 			 
-			 for(i = 0; i < diagramData.getLinks().length; i++)
+			 for(i = 0; i < this.diagramModel.getLinks().length; i++)
 			 {
-			 	var linkData:ClassDiagramLink = diagramData.getLinks().getItemAt(i) as ClassDiagramLink;
+			 	var linkData:ClassDiagramLink = this.diagramModel.getLinks().getItemAt(i) as ClassDiagramLink;
 			 	var link:ClassLink = ViewFactory.createLink(linkData);
 			 	link.update(linkData);
 			 	
@@ -48,10 +54,14 @@ package de.waveumleditor.controller
 			 	link.fromNode.addLeavingLink(link);
 				link.toNode.addArrivingLink(link);
 			 	
-			 	diagram.addChild(link);
+			 	diagramView.addChild(link);
 			 }
 			 
-			 
+		}
+			
+		private function handleAddClassNode(event:CreationEvent):void
+		{
+			this.fascade.addClassNode(event.getNode());
 		}
 		
 	}

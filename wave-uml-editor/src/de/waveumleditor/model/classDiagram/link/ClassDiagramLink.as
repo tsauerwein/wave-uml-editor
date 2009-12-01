@@ -1,14 +1,18 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	public class ClassDiagramLink
 	{
 		private var linkFrom:ClassDiagramNode;
 		private var linkTo:ClassDiagramNode;
-				
-		public function ClassDiagramLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		
+		private var key:Identifier;
+		
+		public function ClassDiagramLink(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
+			this.key = key
 			this.linkFrom = linkFrom;
 			this.linkTo = linkTo;
 		}
@@ -27,6 +31,11 @@ package de.waveumleditor.model.classDiagram.link
 		public function getLinkTo():ClassDiagramNode
 		{
 			return this.linkTo;
+		}
+		
+		public function getKey():Identifier
+		{
+			return this.key;
 		}
 		
 		public function toString():String

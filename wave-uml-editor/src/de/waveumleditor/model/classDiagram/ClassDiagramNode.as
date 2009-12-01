@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	
 	public class ClassDiagramNode
@@ -7,10 +8,13 @@ package de.waveumleditor.model.classDiagram
 		private var position:Position; 
 		private var name:String;
 		
-		public function ClassDiagramNode(position:Position, name:String = "") 
+		private var key:Identifier;
+		
+		public function ClassDiagramNode(key:Identifier, position:Position, name:String = "") 
 		{
-				this.position = position;
-				this.name = name;
+			this.key = key;
+			this.position = position;
+			this.name = name;
 		}
 
 		public function getPosition():Position
@@ -31,6 +35,11 @@ package de.waveumleditor.model.classDiagram
 		public function setName(name:String):void 
 		{
 			this.name = name;
+		}
+		
+		public function getKey():Identifier
+		{
+			return this.key;
 		}
 		
 		public function toString():String

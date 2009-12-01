@@ -2,12 +2,15 @@ package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.Link;
 	
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	
 	import flash.geom.Point;
 	
 	public class ClassLink extends Link
 	{
+		private var key:Identifier;
+		
 		public function ClassLink()
 		{
 			super();
@@ -94,6 +97,14 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		    }
 		}
 
- 
+		public function getIdentifier():Identifier
+		{
+			return this.key;
+		}
+		
+		public function setIdentifier(key:Identifier):void
+		{
+			this.key = key;
+		}
 	}
 }

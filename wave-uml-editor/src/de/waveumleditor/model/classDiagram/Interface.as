@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	
 	import mx.collections.ArrayList;
@@ -9,9 +10,9 @@ package de.waveumleditor.model.classDiagram
 	{
 		private var methods:ArrayList;
 		
-		public function Interface(position:Position, name:String = "") 
+		public function Interface(key:Identifier, position:Position, name:String = "") 
 		{
-			super(position, name);
+			super(key, position, name);
 			
 			this.methods = new ArrayList();
 		}

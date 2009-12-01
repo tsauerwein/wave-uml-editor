@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.EVisibility;
@@ -18,7 +19,7 @@ package de.tests.waveumleditor.model.classDiagram
 		public function testToString():void
 		{
 			var classConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
-			classConstructorMethod.setUMLClass(new UMLClass(new Position(0,0), "DasIstKlasse") );
+			classConstructorMethod.setUMLClass(new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse") );
 			
 			assertEquals("+ DasIstKlasse()", classConstructorMethod.toString());
 			

@@ -1,12 +1,13 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	public class LinkAggregation extends LinkAssociation
 	{
-		public function LinkAggregation(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		public function LinkAggregation(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
-			super(linkFrom, linkTo);
+			super(key, linkFrom, linkTo);
 		}
 
 	}

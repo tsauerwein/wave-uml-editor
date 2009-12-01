@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	public class LinkAssociationDirected extends LinkAssociation
@@ -7,9 +8,9 @@ package de.waveumleditor.model.classDiagram.link
 		private var toNavigable:Boolean = false;
 		private var fromNavigable:Boolean = false;
 		
-		public function LinkAssociationDirected(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		public function LinkAssociationDirected(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
-			super(linkFrom, linkTo);
+			super(key, linkFrom, linkTo);
 		}
 		
 		public function getToNavigable():Boolean

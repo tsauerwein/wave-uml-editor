@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.UMLClass;
@@ -40,17 +41,17 @@ package de.tests.waveumleditor.model.classDiagram
 		{
 			var  classDiagram:ClassDiagram = new ClassDiagram();
     		
-    		class1 = new UMLClass(new Position(0,0), "class1");
-    		class2 = new UMLClass(new Position(0,0), "class2");
-    		class3 = new UMLClass(new Position(0,0), "class3");
+    		class1 = new UMLClass(new Identifier("1234567"), new Position(0,0), "class1");
+    		class2 = new UMLClass(new Identifier("12345673"), new Position(0,0), "class2");
+    		class3 = new UMLClass(new Identifier("12345674"), new Position(0,0), "class3");
     		
     		classDiagram.addNode(class1);
     		classDiagram.addNode(class2);
     		classDiagram.addNode(class3);
     		
-    		classDiagram.addLink(new LinkAssociationDirected(class1, class2));
-    		classDiagram.addLink(new LinkAssociationDirected(class2, class3));
-    		classDiagram.addLink(new LinkAssociationDirected(class1, class3));
+    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345675"), class1, class2));
+    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345676"), class2, class3));
+    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345677"), class1, class3));
     		
     		return classDiagram;
 		}

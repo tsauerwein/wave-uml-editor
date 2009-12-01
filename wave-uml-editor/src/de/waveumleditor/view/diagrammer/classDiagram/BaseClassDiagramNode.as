@@ -1,6 +1,8 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
+	
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	import mx.containers.Grid;
@@ -8,6 +10,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	public class BaseClassDiagramNode extends BaseNode
 	{
 		protected var grids:Grid;
+		private var key:Identifier;
 		
 		public function BaseClassDiagramNode()
 		{
@@ -35,6 +38,16 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				// update position
 				this.x = nodeData.getPosition().getX();
 				this.y = nodeData.getPosition().getY();
+		}
+		
+		public function getIdentifier():Identifier
+		{
+			return this.key;
+		}
+		
+		public function setIdentifier(key:Identifier):void
+		{
+			this.key = key;
 		}
 		
 	}

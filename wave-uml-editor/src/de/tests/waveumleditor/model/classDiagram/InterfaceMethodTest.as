@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.InterfaceMethod;
 	import de.waveumleditor.model.classDiagram.Type;
@@ -15,7 +16,7 @@ package de.tests.waveumleditor.model.classDiagram
 		
 		public function testToString():void
 		{
-			var umlclass:UMLClass = new UMLClass(new Position(0,0), "DasIstKlasse");
+			var umlclass:UMLClass = new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse");
 			var ifaceMethod:InterfaceMethod = new InterfaceMethod("method", Type.INT);
 			ifaceMethod.setUMLClass(umlclass);
 			

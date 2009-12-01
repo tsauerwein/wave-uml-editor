@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.Interface;
 	import de.waveumleditor.model.classDiagram.UMLClass;
@@ -7,9 +8,9 @@ package de.waveumleditor.model.classDiagram.link
 	public class LinkInheritance extends ClassDiagramLink
 	{
 		
-		public function LinkInheritance(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		public function LinkInheritance(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
-			super(linkFrom, linkTo);
+			super(key, linkFrom, linkTo);
 		}
 
 		public override function canLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):Boolean 

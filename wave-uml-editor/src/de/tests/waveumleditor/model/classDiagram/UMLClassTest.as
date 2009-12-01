@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	
@@ -13,7 +14,7 @@ package de.tests.waveumleditor.model.classDiagram
 		
 		public function testToString():void
 		{
-			var umlclass:UMLClass = new UMLClass(new Position(0,0), "TestClass");
+			var umlclass:UMLClass = new UMLClass(new Identifier("1234567"), new Position(0,0), "TestClass");
 			
 			assertEquals("TestClass", umlclass.toString());
 		}

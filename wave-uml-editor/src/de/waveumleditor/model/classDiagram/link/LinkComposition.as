@@ -1,12 +1,13 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	public class LinkComposition extends LinkAssociation
 	{
-		public function LinkComposition(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		public function LinkComposition(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
-			super(linkFrom, linkTo);
+			super(key, linkFrom, linkTo);
 		}
 
 	}

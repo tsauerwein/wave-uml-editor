@@ -1,5 +1,6 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
 	
@@ -12,9 +13,9 @@ package de.waveumleditor.model.classDiagram.link
 		
 		private var name:String;
 		
-		public function LinkAssociation(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+		public function LinkAssociation(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
-			super(linkFrom, linkTo);
+			super(key, linkFrom, linkTo);
 		}
 		
 		public override function canLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):Boolean 

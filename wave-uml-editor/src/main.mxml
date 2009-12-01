@@ -8,25 +8,17 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 			import de.waveumleditor.controller.Controller;
-			import de.waveumleditor.model.classDiagram.link.LinkComposition;
+			import de.waveumleditor.model.Identifier;
+			import de.waveumleditor.model.Position;
+			import de.waveumleditor.model.classDiagram.*;
 			import de.waveumleditor.model.classDiagram.link.LinkAggregation;
-			import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
 			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+			import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
+			import de.waveumleditor.model.classDiagram.link.LinkComposition;
 			import de.waveumleditor.model.classDiagram.link.LinkImplements;
 			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
-			import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
-			import de.waveumleditor.model.Position;
-			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-			import de.waveumleditor.model.classDiagram.Variable;
-			import de.waveumleditor.model.classDiagram.Type;
-			import de.waveumleditor.model.classDiagram.*;
-			
-			import com.anotherflexdev.diagrammer.Diagram;
-			import com.anotherflexdev.diagrammer.BaseNode;	
-			import com.anotherflexdev.diagrammer.Link;	
-				
-			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 			
 			private var classOne:ClassNode;
 			private var classTwo:ClassNode;
@@ -36,11 +28,11 @@
 		private function init():void {
 				
 				
-				var classData:UMLClass = new UMLClass(new Position(100, 150), "Klassenname 1");
-				var classData2:UMLClass = new UMLClass(new Position(400, 150), "Klassenname 2");
-				var interfaceData:Interface = new Interface(new Position(400, 50), "Superinterface");
-				var emptyClass:UMLClass = new UMLClass(new Position(100, 50));
-				var emptyInterface:Interface = new Interface(new Position(210, 50));
+				var classData:UMLClass = new UMLClass(new Identifier("1234567"), new Position(100, 150), "Klassenname 1");
+				var classData2:UMLClass = new UMLClass(new Identifier("12345671"), new Position(400, 150), "Klassenname 2");
+				var interfaceData:Interface = new Interface(new Identifier("12345672"), new Position(400, 50), "Superinterface");
+				var emptyClass:UMLClass = new UMLClass(new Identifier("12345673"), new Position(100, 50));
+				var emptyInterface:Interface = new Interface(new Identifier("12345674"), new Position(210, 50));
 				
 				classData.setAbstract(true);
 				
@@ -75,9 +67,9 @@
 				classData2.addMethod(implementedInterfaceMethod);
 				classData2.addConstructor(constructor);
 				
-				var linkInheritance:LinkInheritance = new LinkInheritance(classData, classData2);
-				var linkImplements:LinkImplements = new LinkImplements(classData2, interfaceData);
-				var linkAssociation:LinkAssociation = new LinkAssociation(classData2, classData2);
+				var linkInheritance:LinkInheritance = new LinkInheritance(new Identifier("12345681"), classData, classData2);
+				var linkImplements:LinkImplements = new LinkImplements(new Identifier("12345682"), classData2, interfaceData);
+				var linkAssociation:LinkAssociation = new LinkAssociation(new Identifier("12345683"), classData2, classData2);
 				
 				/* classOne = new ClassNode();
 				classTwo = new ClassNode();
@@ -105,11 +97,11 @@
 				classDiagram.addLink(linkImplements);
 				classDiagram.addLink(linkAssociation);
 				
-				controller = new Controller(diagram);
-				controller.createDiagram(classDiagram);
+				controller = new Controller(diagram, classDiagram);
+				controller.createDiagram();
 		}
 			
-		 private function test():void
+		 /* private function test():void
 		{
 			var type:Type = new Type("test");
 			var variable:Variable = new Variable("test", type);
@@ -130,7 +122,7 @@
 			var linkComp:LinkComposition = new LinkComposition(classNode, classNode);  
 			
 			var classDiagram:ClassDiagram = new ClassDiagram();
-		}		 
+		}		  */
 		]]>
 	</mx:Script>	
 	

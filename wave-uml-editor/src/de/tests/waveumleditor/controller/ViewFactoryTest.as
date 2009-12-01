@@ -1,6 +1,7 @@
 package de.tests.waveumleditor.controller
 {
 	import de.waveumleditor.controller.ViewFactory;
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkImplements;
@@ -18,14 +19,14 @@ package de.tests.waveumleditor.controller
 	{
 		public function testCreateNode():void
 		{	
-			assertThat(ViewFactory.createNode(new UMLClass(null)) is ClassNode);
+			assertThat(ViewFactory.createNode(new UMLClass(new Identifier("1234567"), null)) is ClassNode);
 		}
 		
 		public function testCreateLink():void
 		{	
-			assertThat(ViewFactory.createLink(new LinkInheritance(null, null)) is InheritanceLink);
-			assertThat(ViewFactory.createLink(new LinkImplements(null, null)) is ImplementsLink);
-			assertThat(ViewFactory.createLink(new LinkAssociation(null, null)) is AssociationLink);
+			assertThat(ViewFactory.createLink(new LinkInheritance(new Identifier("1234568"), null, null)) is InheritanceLink);
+			assertThat(ViewFactory.createLink(new LinkImplements(new Identifier("12345681"), null, null)) is ImplementsLink);
+			assertThat(ViewFactory.createLink(new LinkAssociation(new Identifier("12345682"), null, null)) is AssociationLink);
 		}
 
 	}
