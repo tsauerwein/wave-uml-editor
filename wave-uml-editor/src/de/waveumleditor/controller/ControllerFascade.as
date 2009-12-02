@@ -3,6 +3,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 
@@ -22,6 +23,17 @@ package de.waveumleditor.controller
 			var umlclass:UMLClass = new UMLClass(id, new Position(node.x, node.y), "New Class");
 			this.diagram.addNode(umlclass);
 			node.setIdentifier(id);
+		}
+		
+		public function moveNode(node:BaseClassDiagramNode):void
+		{
+			var id:Identifier = node.getIdentifier();
+			var nodeModel:ClassDiagramNode = diagram.getNode(id);
+			
+			if (nodeModel != null)
+			{
+				nodeModel.setPosition(new Position(node.x, node.y));
+			}
 		}
 		
 		public function getDiagram():ClassDiagram

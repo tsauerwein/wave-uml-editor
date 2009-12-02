@@ -7,18 +7,20 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.anotherflexdev.diagrammer.Diagram;
 			import de.waveumleditor.view.diagrammer.CreationEvent;
-			import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 			
-			private var diagram:Diagram = getParentPanel();
+			
+			private function getParentDiagram():ClassDiagramComponent
+			{
+				return getParentPanel() as ClassDiagramComponent;
+			}
 			
 			private function addNode(nodeType:Class):void{
 				var node:BaseClassDiagramNode = new nodeType as BaseClassDiagramNode;
 				node.x = 100;
 				node.y = 100;
-				getParentPanel().addChild(node);
-				getParentPanel().dispatchEvent(new CreationEvent(CreationEvent.ADD_CLASS_NODE, node));
+				getParentDiagram().addNode(node);
+				getParentDiagram().dispatchEvent(new CreationEvent(CreationEvent.ADD_CLASS_NODE, node));
 			}
 		]]>
 	</mx:Script>

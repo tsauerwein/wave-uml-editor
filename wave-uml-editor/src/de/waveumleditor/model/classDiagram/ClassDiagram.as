@@ -1,34 +1,52 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	
+	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayList;
 	
 	public class ClassDiagram
 	{
-		private var nodes:ArrayList;
+		private var nodes:Dictionary;
 		private var links:ArrayList;
 		
 		public function ClassDiagram()
 		{
-			this.nodes = new ArrayList();
+			this.nodes = new Dictionary();
 			this.links = new ArrayList();
 		}
 
 		public function addNode(node:ClassDiagramNode):void
 		{
-			this.nodes.addItem(node);
+			this.nodes[node.getKey()] = node;
 		}
 		
 		public function removeNode(node:ClassDiagramNode):void
 		{
-			this.nodes.removeItem(node);
+			this.nodes[node.getKey()] = null;
 			removeCorrespondingLinks(node);
+		}
+		
+		public function getNode(id:Identifier):ClassDiagramNode
+		{
+			return this.nodes[id];
 		}
 		
 		public function getNodes():ArrayList
 		{
-			return this.nodes;
+			var nodeList:ArrayList = new ArrayList();
+			
+			for (var key:Object in nodes)
+			{
+				if (key != null && nodes[key] != null) 
+				{
+					nodeList.addItem(nodes[key]);
+				}
+			}
+			
+			return nodeList;
 		}
 		
 		public function addLink(link:ClassDiagramLink):void
@@ -61,11 +79,7 @@ package de.waveumleditor.model.classDiagram
 				
 			}
 		}
-		
-		public function toString():String
-		{	
-			return this.nodes.toString();
-		}
+
 		
 	}
 }

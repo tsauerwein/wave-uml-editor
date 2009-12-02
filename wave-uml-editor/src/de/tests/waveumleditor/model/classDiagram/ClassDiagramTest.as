@@ -28,15 +28,6 @@ package de.tests.waveumleditor.model.classDiagram
     		assertEquals(2, classDiagram.getNodes().length);
 		}
 		
-		public function testToString():void
-		{
-			var  classDiagram:ClassDiagram = createClassDiagram();
-    		
-    		classDiagram.removeNode(class1);
-    		
-    		assertEquals("class2,class3", classDiagram.toString());
-		}
-		
 		private function createClassDiagram():ClassDiagram
 		{
 			var  classDiagram:ClassDiagram = new ClassDiagram();

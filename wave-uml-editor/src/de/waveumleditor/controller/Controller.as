@@ -1,28 +1,30 @@
 package de.waveumleditor.controller
 {
-	import com.anotherflexdev.diagrammer.Diagram;
-	
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.CreationEvent;
+	import de.waveumleditor.view.diagrammer.MoveNodeEvent;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	
 	import mx.collections.ArrayList;
 	
 	public class Controller
 	{
-		private var diagramView:Diagram;
+		private var diagramView:ClassDiagramComponent;
 		private var diagramModel:ClassDiagram;
 		private var fascade:ControllerFascade;
 		
-		public function Controller(diagramView:Diagram, diagramModel:ClassDiagram)
+		public function Controller(diagramView:ClassDiagramComponent, diagramModel:ClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
 			this.fascade = new ControllerFascade(this.diagramModel);
+			
 			this.diagramView.addEventListener(CreationEvent.ADD_CLASS_NODE, handleAddClassNode );
+			this.diagramView.addEventListener(MoveNodeEvent.EVENT_MOVE_NODE, handleMoveClassNode );
 		}
 		
 		public function createDiagram():void
@@ -37,7 +39,7 @@ package de.waveumleditor.controller
 			 	node.update(nodeData);
 			 	
 			 	nodes.addItem(node);
-			 	diagramView.addChild(node);
+			 	diagramView.addNode(node);
 			 }
 			 
 			 for(i = 0; i < this.diagramModel.getLinks().length; i++)
@@ -64,5 +66,10 @@ package de.waveumleditor.controller
 			this.fascade.addClassNode(event.getNode());
 		}
 		
+		private function handleMoveClassNode(event:MoveNodeEvent):void
+		{
+			trace("move " + event.getNode().x + " " + event.getNode().y);
+			this.fascade.moveNode(event.getNode());
+		}
 	}
 }

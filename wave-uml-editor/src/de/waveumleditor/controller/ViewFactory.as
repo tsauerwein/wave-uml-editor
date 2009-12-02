@@ -11,27 +11,29 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
-	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ImplementsLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
 	
 	public class ViewFactory
 	{
 		public static function createNode(nodeData:ClassDiagramNode):BaseClassDiagramNode
 		{
+			var node:BaseClassDiagramNode = null;
+			
 			if (nodeData is UMLClass)
 			{
-				return new ClassNode();
+				node = new ClassNode();
 			}
 			
 			if (nodeData is Interface)
 			{
-				return new InterfaceNode();
+				node = new InterfaceNode();
 			}
 			
-			// todo
+			node.setIdentifier(nodeData.getKey());
 						
-			return null;
+			return node;
 		}
 		
 		public static function createLink(linkData:ClassDiagramLink):ClassLink
