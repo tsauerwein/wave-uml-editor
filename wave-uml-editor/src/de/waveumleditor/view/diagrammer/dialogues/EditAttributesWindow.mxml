@@ -31,7 +31,7 @@
                 
                 //MockupAttribut
 				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
-				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr010"), integerVariable, EVisibility.PUBLIC);
+				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr010"), integerVariable, EVisibility.PUBLIC, true);
                 
                 var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
                 editSingleAttribute.update(integerAttribute);//TODO Attribut über Id holen
