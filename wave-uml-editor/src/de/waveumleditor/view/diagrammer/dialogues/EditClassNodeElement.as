@@ -55,7 +55,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var deleteButton:Button = new Button();
 			deleteButton.label="-";
 			deleteButton.height=15;
-			deleteButton.width=30;
+			deleteButton.width=35;
 			deleteButton.id= element.getKey().getId();
 			
 			return deleteButton;

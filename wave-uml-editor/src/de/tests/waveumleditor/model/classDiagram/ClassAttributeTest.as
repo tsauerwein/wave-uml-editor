@@ -16,7 +16,7 @@ package de.tests.waveumleditor.model.classDiagram
 
 		public function testToString():void
 		{
-			var type:Type = new Type("test");
+			var type:Type = new Type(4, "test");
 			var variable:Variable = new Variable("test", type);
 			
 			var classAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr003"), variable, EVisibility.PRIVATE );
