@@ -1,14 +1,14 @@
 package de.waveumleditor.model.classDiagram
 {
-	import mx.collections.ArrayList;
+	import de.waveumleditor.model.Identifier;
 		
 	public class ConstantAttribute extends ClassAttribute implements IClassElement
 	{
 		/* private var modifiers:ArrayList; */
 		
-		public function ConstantAttribute(variable:Variable)
+		public function ConstantAttribute(key:Identifier, variable:Variable)
 		{
-			super(variable, EVisibility.PUBLIC);
+			super(key, variable, EVisibility.PUBLIC);
 			
 			super.setStatic(true);
 		}

@@ -44,13 +44,13 @@
 				
   			 	//Attribut mit Variable: public static int myInteger default=0
 				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
-				var integerAttribute:ClassAttribute = new ClassAttribute(integerVariable, EVisibility.PUBLIC);
+				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr001"), integerVariable, EVisibility.PUBLIC);
 				
 				integerAttribute.setStatic(true);
 				
  				//Attribut mit Variable: private String myString
 				var stringVariable:Variable = new Variable("myString", Type.STRING);
-				var stringAttribute:ClassAttribute = new ClassAttribute(stringVariable, EVisibility.PRIVATE);  
+				var stringAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr002"), stringVariable, EVisibility.PRIVATE);  
 				
  				classData.addAttribute(integerAttribute);
 				classData.addAttribute(stringAttribute);

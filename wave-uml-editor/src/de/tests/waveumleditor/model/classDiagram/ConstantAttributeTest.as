@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ConstantAttribute;
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
@@ -14,7 +15,7 @@ package de.tests.waveumleditor.model.classDiagram
 		
 		public function testToString():void
 		{
-			var constantAttribute:ConstantAttribute = new ConstantAttribute(new Variable("test", Type.INT));
+			var constantAttribute:ConstantAttribute = new ConstantAttribute(new Identifier("attr005"), new Variable("test", Type.INT));
 			
 			assertEquals("+ test:int", constantAttribute.toString());
 		}

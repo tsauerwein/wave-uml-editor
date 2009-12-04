@@ -1,17 +1,18 @@
 package de.waveumleditor.model.classDiagram
 {
 	
-	import mx.collections.ArrayList;
-	import mx.collections.IList;
+	import de.waveumleditor.model.Identifier;
 	
 	public class ClassAttribute implements IClassElement
 	{
 		private var variable:Variable;
 		private var statique:Boolean;
 		private var visibility:EVisibility;
+		private var key:Identifier;
 		
-		public function ClassAttribute(variable:Variable, visibility:EVisibility, is_static:Boolean = false)
+		public function ClassAttribute(key:Identifier, variable:Variable, visibility:EVisibility, is_static:Boolean = false)
 		{
+			this.key = key;
 			this.variable = variable;
 			this.statique = is_static;
 			this.visibility = visibility;
@@ -61,6 +62,11 @@ package de.waveumleditor.model.classDiagram
 		public function isAbstract():Boolean
 		{
 			return false;
+		}
+		
+		public function getKey():Identifier
+		{
+			return this.key;
 		}
 		
 	}
