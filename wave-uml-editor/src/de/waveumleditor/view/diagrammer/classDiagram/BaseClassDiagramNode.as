@@ -5,6 +5,8 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
+	import flash.events.Event;
+	
 	import mx.containers.Grid;
 	
 	public class BaseClassDiagramNode extends BaseNode
@@ -29,7 +31,8 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override protected function createNodeContextPanel():void 
 		{
 			this.nodeContextPanel = new ClassContextPanel();
-			this.nodeContextPanel.addEventListener("linkNode", handleCustomLinkNode);	
+			this.nodeContextPanel.addEventListener("linkNode", handleCustomLinkNode);
+			this.nodeContextPanel.addEventListener("editAttributes", handleEditAttributes);	
 	 
 		}	
 		
@@ -50,5 +53,10 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.key = key;
 		}
 		
+		private function handleEditAttributes(event:Event):void
+		{
+			trace("handleEditAttri");
+			
+		}
 	}
 }

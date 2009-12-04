@@ -43,7 +43,7 @@
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="66" click="dispatchEvent(new BeginLinkEvent('linkNode', AssociationLink, event))" toolTip="Assoziation" width="20" x="2" height="20"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-dependency.png')" glowColor="#000000" y="88" click="dispatchEvent(new BeginLinkEvent('linkNode', DependencyLink, event))" toolTip="Abhängigkeit" width="20" height="20" x="2"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-emet.png')" glowColor="#000000" y="110" click="" toolTip="Methoden" width="20" x="2" height="20"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="" toolTip="Attribute" width="20" x="2" height="20"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="dispatchEvent(new MouseEvent('editAttributes'))" toolTip="Attribute" width="20" x="2" height="20"/>
 
 	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>
 </GenericNodeContextPanel>

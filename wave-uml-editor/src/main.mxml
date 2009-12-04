@@ -9,6 +9,7 @@
 	<mx:Script>
 		<![CDATA[
 			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+			import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 			import de.waveumleditor.controller.Controller;
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.Position;
@@ -20,6 +21,10 @@
 			import de.waveumleditor.model.classDiagram.link.LinkImplements;
 			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 			
+			import mx.containers.TitleWindow;
+            import mx.managers.PopUpManager;
+
+			
 			private var classOne:ClassNode;
 			private var classTwo:ClassNode;
 			private var controller:Controller;
@@ -27,6 +32,7 @@
 			
 		private function init():void {
 				
+
 				
 				var classData:UMLClass = new UMLClass(new Identifier("1234567"), new Position(100, 150), "Klassenname 1");
 				var classData2:UMLClass = new UMLClass(new Identifier("12345671"), new Position(400, 150), "Klassenname 2");
@@ -99,6 +105,13 @@
 				
 				controller = new Controller(diagram, classDiagram);
 				controller.createDiagram();
+				
+				
+				//TODO Aufruf des Editieren-Popups auslagern in Kontextmenü
+				var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+				editAttributes.update(classData);
+				editAttributes.popUp(); 
+				
 		}
 			
 		 /* private function test():void
