@@ -3,6 +3,7 @@
 	
 	<mx:Script>
         <![CDATA[
+        	import mx.messaging.management.Attribute;
         	import de.waveumleditor.model.classDiagram.EVisibility;
         	import de.waveumleditor.model.Identifier;
         	import de.waveumleditor.model.classDiagram.Type;
@@ -42,6 +43,16 @@
             {
             	var buttonClicked:Button = event.currentTarget as Button;
                 trace("delete class element handler" + buttonClicked.id);
+            }
+            
+            private function newAttributeHandler(event:Event):void
+            {
+            	var defaultVariable:Variable = new Variable("", Type.STRING);
+            	var newAttribute:ClassAttribute = new ClassAttribute(new Identifier("default_attr"), defaultVariable, EVisibility.PUBLIC, false);
+                
+                var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
+                editSingleAttribute.update(newAttribute);//TODO Attribut über Id holen
+                editSingleAttribute.popUp();
             }
             
             private function titleWindow_close(evt:CloseEvent):void {
@@ -128,7 +139,7 @@
 	                    </mx:GridRow>
 	                    <mx:GridRow>
 	                   		<mx:GridItem horizontalAlign="right">
-	                   			<mx:Button label="+" height="15" width="35" click=""/>
+	                   			<mx:Button label="+" height="15" width="35" click="newAttributeHandler(event)"/>
 	                    	</mx:GridItem>
 	                    </mx:GridRow>
 	                </mx:Grid>
