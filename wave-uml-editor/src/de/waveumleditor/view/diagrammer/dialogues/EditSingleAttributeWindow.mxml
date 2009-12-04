@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditSingleAttribute xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+		<mx:Script>
+        <![CDATA[
+        	import de.waveumleditor.model.classDiagram.ClassAttribute;
+        	import mx.controls.Button;
+        	import mx.managers.SystemManager;
+        	import mx.core.Application;
+        	import mx.managers.PopUpManagerChildList;
+        	import adobe.utils.CustomActions;
+            import mx.events.CloseEvent;
+            import mx.managers.PopUpManager;
+            import mx.collections.IList;
+            import mx.containers.TitleWindow;
+            
+            import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+            import de.waveumleditor.model.classDiagram.UMLClass;
+            import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+            import de.waveumleditor.model.classDiagram.IClassElement;
+
+            
+            private function singleAttributeWindow_close(evt:CloseEvent):void {
+                PopUpManager.removePopUp(singleAttributeWindow);
+            }
+            public function update(attribute:ClassAttribute):void 
+			{
+				
+
+			}
+			
+
+			public function popUp():void
+			{	
+		        singleAttributeWindow.title = "Attribut editieren";
+		        singleAttributeWindow.addChild(editAttributeGrid);
+		        
+		        mx.managers.PopUpManager.addPopUp(singleAttributeWindow, SystemManager.getSWFRoot(singleAttributeWindow), true);
+		        mx.managers.PopUpManager.centerPopUp(singleAttributeWindow);
+			}
+        ]]>
+    </mx:Script>
+<!--	<container> -->
+	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+			id="singleAttributeWindow"
+			layout="vertical" 
+			width="200" 
+			height="200"
+	        title="Attribute editieren"
+	        titleStyleName="titleText"
+	        backgroundColor="#FFFFFF"
+	        backgroundAlpha="0.9"
+	        borderAlpha="1.0"
+	        cornerRadius="10"
+	        dropShadowEnabled="true"
+	        showCloseButton="true"
+	        close="singleAttributeWindow_close(event)" borderColor="#E2E2E2"> 
+	    
+	    <mx:Grid id="editAttributeGrid" width="100%" height="100%" verticalAlign="top">
+	        <mx:GridRow width="100%" height="100%">
+	            <mx:GridItem width="100%" height="100%">
+                    <mx:Grid>
+                        <mx:GridRow width="100%" height="100%">
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Sichtbarkeit:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Sichtbarkeit"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow width="100%" height="100%">
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="static"/>
+                            </mx:GridItem>     
+                        </mx:GridRow>
+                        <mx:GridRow width="100%" height="100%">
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Typ:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Typ"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow width="100%" height="100%">
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Name:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" height="100%">
+                            	<mx:Label text="Name"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                    </mx:Grid>
+	            </mx:GridItem>
+	        </mx:GridRow>
+	    
+	    	<mx:GridRow width="100%" height="0%">
+	    		<mx:GridItem>
+				    <mx:Grid width="100%" height="0%">
+				        <mx:GridRow width="100%" height="100%">
+				            <mx:GridItem width="100%" height="100%">
+				            </mx:GridItem>
+				            <mx:GridItem width="0%" height="100%">
+				                <mx:Button label="Abbrechen" click="singleAttributeWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
+				            </mx:GridItem>
+				            <mx:GridItem width="0%" height="100%">
+				                <mx:Button label="OK" click="singleAttributeWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
+				            </mx:GridItem>
+				        </mx:GridRow>
+				    </mx:Grid>
+			   </mx:GridItem>
+		    </mx:GridRow>
+	    </mx:Grid>
+		
+	
+	
+	</mx:TitleWindow> 
+</EditSingleAttribute>

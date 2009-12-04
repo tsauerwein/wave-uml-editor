@@ -2,6 +2,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.model.classDiagram.IClassElement;
 	import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
+	
+	import flash.events.MouseEvent;
 	
 	import mx.containers.GridItem;
 	import mx.containers.GridRow;
@@ -41,6 +44,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 			editButton.label="edit";
 			editButton.height=15;
 			editButton.id= element.getKey().getId();
+			editButton.addEventListener(MouseEvent.CLICK, EditAttributesWindow.editAttributeHandler);
+			
 			
 			return editButton;
 		}
@@ -51,7 +56,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			deleteButton.label="-";
 			deleteButton.height=15;
 			deleteButton.width=30;
-			//TODO id des delete buttons setzen
+			deleteButton.id= element.getKey().getId();
 			
 			return deleteButton;
 		}
