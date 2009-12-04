@@ -157,7 +157,14 @@ package com.anotherflexdev.diagrammer {
 			fromNode.addLeavingLink(link);
 			toNode.addArrivingLink(link);
 			this.addChildAt(link, 0);
+			
+			addedLink(link);
 		}
+		
+		/**
+		 * Template method to process added link in child classes.
+		 */ 
+		public function addedLink(link:Link):void {}
 		
 		public function removeNode(node:BaseNode):void {
 			this.removeChild(node);

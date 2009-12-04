@@ -237,11 +237,17 @@ package com.anotherflexdev.diagrammer {
 		private function handleTxNodeNameKeyUp(event:KeyboardEvent):void {
 			if(event.keyCode == Keyboard.ENTER) {
 				this.nodeName = this.txNodeName.text;
+				editedName();
 				unEditNodeName();
 			} else if(event.keyCode == Keyboard.ESCAPE) {
 				unEditNodeName();
 			}
 		}
+		
+		/**
+		 * Template method to handle renaming node
+		 */ 
+		public function editedName():void {}
 		
 		private function handleLblNodeNameClick(event:MouseEvent):void {
 			if(!Diagram(parent).isLinking && this.editable) {
