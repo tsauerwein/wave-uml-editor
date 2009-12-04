@@ -61,7 +61,13 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		private function handleEditAttributes(event:Event):void
 		{
-			trace("handleEditAttri");
+			trace("handleEditAttributes");
+			//TODO 
+			/*
+			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+			editAttributes.update(classData);
+			editAttributes.popUp(); 
+			*/
 			
 		}
 	}
