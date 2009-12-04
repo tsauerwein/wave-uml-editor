@@ -23,9 +23,9 @@ package de.waveumleditor.controller
 			this.diagramModel = diagramModel;
 			this.fascade = new ModelFascade(this.diagramModel);
 			
-			this.diagramView.addEventListener(NodeEvent.EVENT_ADD_NODE, handleAddClassNode);
+			this.diagramView.addEventListener(NodeEvent.EVENT_ADD_NODE, handleAddNode);
 			this.diagramView.addEventListener(NodeEvent.EVENT_MOVE_NODE, handleMoveClassNode);
-			this.diagramView.addEventListener(NodeEvent.EVENT_REMOVE_NODE, handleRemoveClassNode);
+			this.diagramView.addEventListener(NodeEvent.EVENT_REMOVE_NODE, handleRemoveNode);
 			this.diagramView.addEventListener(NodeEvent.EVENT_RENAME_NODE, handleRenameClassNode);
 			
 			this.diagramView.addEventListener(LinkEvent.EVENT_REMOVE_LINK, handleRemoveLink);
@@ -66,9 +66,9 @@ package de.waveumleditor.controller
 			 
 		}
 			
-		private function handleAddClassNode(event:NodeEvent):void
+		private function handleAddNode(event:NodeEvent):void
 		{
-			this.fascade.addClassNode(event.getNode());
+			this.fascade.addNode(event.getNode());
 		}
 		
 		private function handleMoveClassNode(event:NodeEvent):void
@@ -77,7 +77,7 @@ package de.waveumleditor.controller
 			this.fascade.moveNode(event.getNode());
 		}
 		
-		private function handleRemoveClassNode(event:NodeEvent):void
+		private function handleRemoveNode(event:NodeEvent):void
 		{
 			trace("remove " + event.getNode().x + " " + event.getNode().y);
 			this.fascade.removeNode(event.getNode());

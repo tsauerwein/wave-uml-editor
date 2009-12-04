@@ -19,12 +19,12 @@ package de.tests.waveumleditor.controller
 			var diagram:ClassDiagram = new ClassDiagram();
 			var list:ArrayList = diagram.getNodes();
 			
-			var sizeBefore = list.length;
+			var sizeBefore:int = list.length;
 			
 			var cf:ModelFascade = new ModelFascade(diagram);
 			var bcdn:BaseClassDiagramNode = new BaseClassDiagramNode();
 			
-			cf.addClassNode(bcdn);
+			cf.addNode(bcdn);
 			assertEquals(sizeBefore + 1, diagram.getNodes().length);
 		}
 		
