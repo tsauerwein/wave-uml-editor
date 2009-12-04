@@ -107,7 +107,7 @@
 				controller.createDiagram();
 				
 				
-				//TODO Aufruf des Editieren-Popups auslagern in Kontextmenü
+				//TODO Aufruf des Editieren-Popups auslagern in Kontextmenï¿½
 				var editAttributes:EditAttributesWindow = new EditAttributesWindow();
 				editAttributes.update(classData);
 				editAttributes.popUp(); 

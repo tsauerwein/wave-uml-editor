@@ -19,7 +19,7 @@ package de.tests.waveumleditor.controller
 			var diagram:ClassDiagram = new ClassDiagram();
 			var list:ArrayList = diagram.getNodes();
 			
-			var sizeBefore = list.length;
+			var sizeBefore:int = list.length;
 			
 			var cf:ControllerFascade = new ControllerFascade(diagram);
 			var bcdn:BaseClassDiagramNode = new BaseClassDiagramNode();
