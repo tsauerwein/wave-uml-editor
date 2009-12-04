@@ -21,8 +21,7 @@ package de.waveumleditor.model.classDiagram.link
 		public override function canLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):Boolean 
 		{	
 			return true;
-		}
-		
+		}		
 		
 		public function getFromName():String 
 		{

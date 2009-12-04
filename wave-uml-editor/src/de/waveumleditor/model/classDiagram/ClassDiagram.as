@@ -10,17 +10,22 @@ package de.waveumleditor.model.classDiagram
 	public class ClassDiagram
 	{
 		private var nodes:Dictionary;
-		private var links:ArrayList;
+		private var links:Dictionary;
 		
 		public function ClassDiagram()
 		{
 			this.nodes = new Dictionary();
-			this.links = new ArrayList();
+			this.links = new Dictionary();
 		}
 
 		public function addNode(node:ClassDiagramNode):void
 		{
 			this.nodes[node.getKey()] = node;
+		}
+		
+		public function removeNodeById(id:Identifier):void
+		{
+			removeNode(this.nodes[id]);
 		}
 		
 		public function removeNode(node:ClassDiagramNode):void
@@ -51,32 +56,47 @@ package de.waveumleditor.model.classDiagram
 		
 		public function addLink(link:ClassDiagramLink):void
 		{
-			this.links.addItem(link);
+			this.links[link.getKey()] = link;
 		}
 		
 		public function removeLink(link:ClassDiagramLink):void
 		{
-			this.links.removeItem(link);
+			removeLinkById(link.getKey());
+		}
+		
+		public function removeLinkById(id:Identifier):void
+		{
+			this.links[id] = null;
 		}
 		
 		public function getLinks():ArrayList
 		{
-			return this.links;
+			var linkList:ArrayList = new ArrayList();
+			
+			for (var key:Object in links)
+			{
+				if (key != null && links[key] != null) 
+				{
+					linkList.addItem(links[key]);
+				}
+			}
+			
+			return linkList;
 		}
 		
 		private function removeCorrespondingLinks(node:ClassDiagramNode):void
 		{
-			var linksCopy:Array = links.toArray();
-			
-			for (var i:int = 0; i < linksCopy.length; i++)
+			for (var key:Object in links)
 			{
-				var link:ClassDiagramLink  = linksCopy[i];
-				
-				if (link.getLinkFrom() == node || link.getLinkTo() == node) 
+				if (key != null && links[key] != null) 
 				{
-					links.removeItem(link);		
-				}		
-				
+					var link:ClassDiagramLink  = links[key];
+					
+					if (link.getLinkFrom() == node || link.getLinkTo() == node) 
+					{
+						removeLink(link);		
+					}	
+				}
 			}
 		}
 

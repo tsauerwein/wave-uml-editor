@@ -3,11 +3,11 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.view.diagrammer.CreationEvent;
-	import de.waveumleditor.view.diagrammer.MoveNodeEvent;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.events.LinkEvent;
+	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
 	import mx.collections.ArrayList;
 	
@@ -15,16 +15,21 @@ package de.waveumleditor.controller
 	{
 		private var diagramView:ClassDiagramComponent;
 		private var diagramModel:ClassDiagram;
-		private var fascade:ControllerFascade;
+		private var fascade:ModelFascade;
 		
 		public function Controller(diagramView:ClassDiagramComponent, diagramModel:ClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
-			this.fascade = new ControllerFascade(this.diagramModel);
+			this.fascade = new ModelFascade(this.diagramModel);
 			
-			this.diagramView.addEventListener(CreationEvent.ADD_CLASS_NODE, handleAddClassNode );
-			this.diagramView.addEventListener(MoveNodeEvent.EVENT_MOVE_NODE, handleMoveClassNode );
+			this.diagramView.addEventListener(NodeEvent.EVENT_ADD_NODE, handleAddClassNode);
+			this.diagramView.addEventListener(NodeEvent.EVENT_MOVE_NODE, handleMoveClassNode);
+			this.diagramView.addEventListener(NodeEvent.EVENT_REMOVE_NODE, handleRemoveClassNode);
+			this.diagramView.addEventListener(NodeEvent.EVENT_RENAME_NODE, handleRenameClassNode);
+			
+			this.diagramView.addEventListener(LinkEvent.EVENT_REMOVE_LINK, handleRemoveLink);
+			this.diagramView.addEventListener(LinkEvent.EVENT_ADD_LINK, handleAddLink);
 		}
 		
 		public function createDiagram():void
@@ -61,15 +66,39 @@ package de.waveumleditor.controller
 			 
 		}
 			
-		private function handleAddClassNode(event:CreationEvent):void
+		private function handleAddClassNode(event:NodeEvent):void
 		{
 			this.fascade.addClassNode(event.getNode());
 		}
 		
-		private function handleMoveClassNode(event:MoveNodeEvent):void
+		private function handleMoveClassNode(event:NodeEvent):void
 		{
 			trace("move " + event.getNode().x + " " + event.getNode().y);
 			this.fascade.moveNode(event.getNode());
+		}
+		
+		private function handleRemoveClassNode(event:NodeEvent):void
+		{
+			trace("remove " + event.getNode().x + " " + event.getNode().y);
+			this.fascade.removeNode(event.getNode());
+		}
+		
+		private function handleRenameClassNode(event:NodeEvent):void
+		{
+			trace("rename " + event.getNode().nodeName);
+			this.fascade.renameNode(event.getNode());
+		}
+		
+		private function handleRemoveLink(event:LinkEvent):void
+		{
+			trace("handleRemoveLink " + event.getLink().getIdentifier());
+			this.fascade.removeLink(event.getLink());
+		}
+		
+		private function handleAddLink(event:LinkEvent):void
+		{
+			trace("handleAddLink ");
+			this.fascade.addLink(event.getLink());
 		}
 	}
 }

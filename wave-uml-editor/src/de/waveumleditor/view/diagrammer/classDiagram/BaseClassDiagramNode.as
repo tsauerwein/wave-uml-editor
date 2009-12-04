@@ -4,6 +4,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
 	import flash.events.Event;
 	
@@ -35,6 +36,11 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.nodeContextPanel.addEventListener("editAttributes", handleEditAttributes);	
 	 
 		}	
+		
+		override public function editedName():void
+		{
+			parent.dispatchEvent(new NodeEvent(NodeEvent.EVENT_RENAME_NODE, this));
+		}
 		
 		public function update(nodeData:ClassDiagramNode):void
 		{

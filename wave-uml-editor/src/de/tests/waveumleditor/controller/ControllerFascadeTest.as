@@ -1,6 +1,6 @@
 package de.tests.waveumleditor.controller
 {
-	import de.waveumleditor.controller.ControllerFascade;
+	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	
@@ -19,9 +19,9 @@ package de.tests.waveumleditor.controller
 			var diagram:ClassDiagram = new ClassDiagram();
 			var list:ArrayList = diagram.getNodes();
 			
-			var sizeBefore:int = list.length;
+			var sizeBefore = list.length;
 			
-			var cf:ControllerFascade = new ControllerFascade(diagram);
+			var cf:ModelFascade = new ModelFascade(diagram);
 			var bcdn:BaseClassDiagramNode = new BaseClassDiagramNode();
 			
 			cf.addClassNode(bcdn);

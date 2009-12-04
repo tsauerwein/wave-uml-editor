@@ -15,6 +15,9 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
 	
+	/**
+	 * Factory to build view elements from model elements
+	 */
 	public class ViewFactory
 	{
 		public static function createNode(nodeData:ClassDiagramNode):BaseClassDiagramNode
@@ -38,20 +41,25 @@ package de.waveumleditor.controller
 		
 		public static function createLink(linkData:ClassDiagramLink):ClassLink
 		{
+			var link:ClassLink = null;
+			
 			if (linkData is LinkInheritance)
 			{
-				return new InheritanceLink();
+				link =  new InheritanceLink();
 			}
 			else if (linkData is LinkImplements)
 			{
-				return new ImplementsLink();
+				link = new ImplementsLink();
 			}
 			else if (linkData is LinkAssociation)
 			{
-				return new AssociationLink();
+				link = new AssociationLink();
 			}
+			// TODO linkdependency
 			
-			return null;
+			link.setIdentifier(linkData.getKey());
+			
+			return link;
 		}
 
 	}
