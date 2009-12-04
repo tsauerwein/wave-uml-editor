@@ -1,6 +1,8 @@
 package de.waveumleditor.model.classDiagram
 {
 	
+	import de.waveumleditor.model.Identifier;
+	
 	import mx.collections.ArrayList;
 	
 	public class ClassMethod extends ClassConstructorMethod implements IClassElement
@@ -10,9 +12,9 @@ package de.waveumleditor.model.classDiagram
 		private var statique:Boolean;
 		private var abstract:Boolean;
 		
-		public function ClassMethod(name:String, visibility:EVisibility, returnType:Type, abstract:Boolean = false, is_static:Boolean = false)
+		public function ClassMethod(key:Identifier, name:String, visibility:EVisibility, returnType:Type, abstract:Boolean = false, is_static:Boolean = false)
 		{
-			super(visibility);
+			super(key, visibility);
 			
 			this.name = name;
 			this.returnType = returnType;

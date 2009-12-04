@@ -19,10 +19,10 @@ package de.tests.waveumleditor.model.classDiagram
 		public function testToString():void
 		{	
 			var umlclass:UMLClass = new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse");
-			var method:ClassMethod = new ClassMethod("toString", EVisibility.PUBLIC, Type.STRING);
+			var method:ClassMethod = new ClassMethod(new Identifier("meth001"), "toString", EVisibility.PUBLIC, Type.STRING);
 			assertEquals("+ toString():String", method.toString());
 			
-			method = new ClassMethod("superMethod", EVisibility.PUBLIC, Type.STRING, true);
+			method = new ClassMethod(new Identifier("meth002"), "superMethod", EVisibility.PUBLIC, Type.STRING, true);
 			method.setUMLClass(umlclass);			
 			method.setStatic(true);
 			method.addVariable(new Variable("var1", Type.INT, "1"));

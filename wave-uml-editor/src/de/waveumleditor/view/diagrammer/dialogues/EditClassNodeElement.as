@@ -40,7 +40,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var editButton:Button = new Button();
 			editButton.label="edit";
 			editButton.height=15;
-			//TODO id des edit buttons setzen
+			editButton.id= element.getKey().getId();
 			
 			return editButton;
 		}

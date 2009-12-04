@@ -1,13 +1,14 @@
 package de.waveumleditor.model.classDiagram
 {
 	import de.waveumleditor.model.classDiagram.IClassElement;
+	import de.waveumleditor.model.Identifier;
 	
 	public class InterfaceMethod extends ClassMethod implements IClassElement
 	{
 		
-		public function InterfaceMethod(name:String, returnType:Type)
+		public function InterfaceMethod(key:Identifier, name:String, returnType:Type)
 		{
-			super(name, EVisibility.PUBLIC, returnType, true);
+			super(key, name, EVisibility.PUBLIC, returnType, true);
 		}
 		
 		public override function setVisibility(visibility:EVisibility):void

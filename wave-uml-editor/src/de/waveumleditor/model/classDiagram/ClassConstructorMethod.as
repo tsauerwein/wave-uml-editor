@@ -1,5 +1,7 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.Identifier;
+	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
@@ -8,9 +10,11 @@ package de.waveumleditor.model.classDiagram
 		private var visibility:EVisibility;
 		private var variables:ArrayList;
 		private var umlclass:UMLClass;
+		private var key:Identifier;
 		
-		public function ClassConstructorMethod(visibility:EVisibility)
+		public function ClassConstructorMethod(key:Identifier, visibility:EVisibility)
 		{
+			this.key = key;
 			this.visibility = visibility;
 			variables = new ArrayList();
 		}
@@ -71,6 +75,11 @@ package de.waveumleditor.model.classDiagram
 		public function isAbstract():Boolean
 		{
 			return false;
+		}
+		
+		public function getKey():Identifier
+		{
+			return this.key;
 		}
 	}
 }

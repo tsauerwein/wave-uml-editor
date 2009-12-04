@@ -57,16 +57,16 @@
 				classData2.addAttribute(integerAttribute);   
 				
 				//Methode public String getMyString()
-				var method:ClassMethod = new ClassMethod("getMyString", EVisibility.PUBLIC, Type.STRING);
+				var method:ClassMethod = new ClassMethod(new Identifier("meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
 				//Konstruktor
-				var constructor:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
+				var constructor:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("meth003"), EVisibility.PUBLIC);
 				constructor.addVariable(stringVariable);
 				
 				//Interfacemethode
-				var interfaceMethod:InterfaceMethod = new InterfaceMethod("superMethode", Type.DOUBLE);
+				var interfaceMethod:InterfaceMethod = new InterfaceMethod(new Identifier("meth005"), "superMethode", Type.DOUBLE);
 				interfaceData.addMethod(interfaceMethod);
 				//Implementierung der Interfacemethode
-				var implementedInterfaceMethod:ClassMethod = new ClassMethod("superMethode",EVisibility.PUBLIC, Type.DOUBLE);
+				var implementedInterfaceMethod:ClassMethod = new ClassMethod(new Identifier("meth006"), "superMethode",EVisibility.PUBLIC, Type.DOUBLE);
 				
 				classData.addConstructor(constructor);
 				classData.addMethod(method);
