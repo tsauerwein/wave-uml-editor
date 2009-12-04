@@ -38,7 +38,7 @@
 				var classData2:UMLClass = new UMLClass(new Identifier("12345671"), new Position(400, 150), "Klassenname 2");
 				var interfaceData:Interface = new Interface(new Identifier("12345672"), new Position(400, 50), "Superinterface");
 				var emptyClass:UMLClass = new UMLClass(new Identifier("12345673"), new Position(100, 50));
-				var emptyInterface:Interface = new Interface(new Identifier("12345674"), new Position(210, 50));
+				var emptyInterface:Interface = new Interface(new Identifier("12345674"), new Position(250, 50), "");
 				
 				classData.setAbstract(true);
 				
