@@ -32,9 +32,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override protected function createNodeContextPanel():void 
 		{
 			this.nodeContextPanel = new ClassContextPanel();
-			this.nodeContextPanel.addEventListener("linkNode", handleCustomLinkNode);
-			this.nodeContextPanel.addEventListener("editAttributes", handleEditAttributes);	
-	 
+			this.nodeContextPanel.addEventListener("linkNode", handleCustomLinkNode);	 
 		}	
 		
 		override public function editedName():void
@@ -58,17 +56,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		{
 			this.key = key;
 		}
-		
-		private function handleEditAttributes(event:Event):void
-		{
-			trace("handleEditAttributes");
-			//TODO 
-			/*
-			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
-			editAttributes.update(classData);
-			editAttributes.popUp(); 
-			*/
-			
-		}
+
 	}
 }

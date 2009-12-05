@@ -113,9 +113,9 @@
 				
 				
 				//TODO Aufruf des Editieren-Popups auslagern in Kontextmen�
-				var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+				/* var editAttributes:EditAttributesWindow = new EditAttributesWindow();
 				editAttributes.update(classData);
-				editAttributes.popUp(); 
+				editAttributes.popUp();  */
 				
 		}
 			

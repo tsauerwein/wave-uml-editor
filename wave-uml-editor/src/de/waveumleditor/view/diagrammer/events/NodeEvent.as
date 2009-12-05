@@ -11,6 +11,8 @@ package de.waveumleditor.view.diagrammer.events
 		public static var EVENT_ADD_NODE:String = "eventAddNode";
 		public static var EVENT_RENAME_NODE:String = "eventRenameNode";
 		
+		public static var EVENT_EDIT_NODE_ATTRIBUTES:String = "eventEditNodeAttributes";
+		
 		private var node:BaseClassDiagramNode;
 		
 		public function NodeEvent(type:String, node:BaseClassDiagramNode)
