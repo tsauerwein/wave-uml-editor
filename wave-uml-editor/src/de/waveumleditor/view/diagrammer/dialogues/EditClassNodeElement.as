@@ -1,8 +1,9 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
+	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.IClassElement;
 	import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	
 	import flash.events.MouseEvent;
 	
@@ -44,7 +45,13 @@ package de.waveumleditor.view.diagrammer.dialogues
 			editButton.label="edit";
 			editButton.height=15;
 			editButton.id= element.getKey().getId();
-			editButton.addEventListener(MouseEvent.CLICK, EditAttributesWindow.editAttributeHandler);
+			if(element is ClassAttribute){
+				editButton.addEventListener(MouseEvent.CLICK, EditAttributesWindow.editAttributeHandler);
+			}
+			if(element is ClassMethod){
+				editButton.addEventListener(MouseEvent.CLICK, EditMethodsWindow.editMethodHandler);
+			}
+			
 			
 			
 			return editButton;

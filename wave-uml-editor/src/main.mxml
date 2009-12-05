@@ -8,6 +8,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 			import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 			import de.waveumleditor.controller.Controller;
@@ -116,6 +117,10 @@
 				/* var editAttributes:EditAttributesWindow = new EditAttributesWindow();
 				editAttributes.update(classData);
 				editAttributes.popUp();  */
+				
+				var editMethods:EditMethodsWindow = new EditMethodsWindow();
+				editMethods.update(classData);
+				editMethods.popUp(); 
 				
 		}
 			
