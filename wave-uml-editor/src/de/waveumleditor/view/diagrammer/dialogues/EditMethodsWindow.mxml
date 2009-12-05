@@ -69,6 +69,7 @@
 				var nodeName:String;
 				nodeName = nodeData.getName();
 				if(nodeName==""){nodeName="Neue Klasse"};//default
+				classNodeName.text = nodeName;
 				
 				// add Methods
 				var methods:IList = classData.getMethods();
@@ -100,8 +101,8 @@
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 			id="editMethodsWindow"
 			layout="vertical" 
-			width="330" 
-			height="300"
+			minWidth="340" 
+			minHeight="300"
 	        title="Methoden editieren"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
@@ -116,8 +117,8 @@
 	        <mx:GridRow width="100%" height="100%">
 	            <mx:GridItem width="100%" height="100%">
 	                <mx:Grid width="100%" height="100%">
-	                    <mx:GridRow width="100%" height="0%">
-	                        <mx:GridItem width="100%" height="15" >
+	                    <mx:GridRow width="100%" height="15">
+	                        <mx:GridItem width="100%">
 	                            <mx:Label id="classNodeName">
 	                        		<mx:text>
 	                        		
@@ -132,13 +133,15 @@
 	                    </mx:GridRow>
 	                    <mx:GridRow width="100%">
 	                        <mx:GridItem width="100%" height="100%">
-	                            <mx:Grid id="methodsList">
+	                            <mx:Grid width="100%" id="methodsList">
 	                            </mx:Grid>
 	                        </mx:GridItem>
 	                    </mx:GridRow>
-	                    <mx:GridRow>
+	                    <mx:GridRow width="100%">
 	                   		<mx:GridItem horizontalAlign="right">
 	                   			<mx:Button label="+" height="15" width="35" click="newMethodHandler(event)"/>
+	                    	</mx:GridItem>
+	                    	<mx:GridItem>
 	                    	</mx:GridItem>
 	                    </mx:GridRow>
 	                </mx:Grid>

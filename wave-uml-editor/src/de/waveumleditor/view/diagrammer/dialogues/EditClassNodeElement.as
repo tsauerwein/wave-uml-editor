@@ -20,12 +20,14 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			super();
 			this.element = element;
+			this.percentWidth=100;
 			
 			var label:Label = new Label();
 			Formatter.formatLabelOfClassElement(element, label);
 			
 			var gridItem:GridItem = new GridItem();
-			gridItem.width=200;
+			gridItem.minWidth=200;
+			gridItem.percentWidth=100;
 			
 			gridItem.addChild(label);
 			this.addChild(gridItem);
