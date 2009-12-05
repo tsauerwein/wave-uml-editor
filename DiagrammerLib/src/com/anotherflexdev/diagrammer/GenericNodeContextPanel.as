@@ -5,7 +5,7 @@ package com.anotherflexdev.diagrammer
 	public class GenericNodeContextPanel extends Canvas {
 		private var parentNode:BaseNode;
 		
-		public function GenericDiagramContextPanel()
+		public function GenericNodeContextPanel()
 		{
 			
 		}
