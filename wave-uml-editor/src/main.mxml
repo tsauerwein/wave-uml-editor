@@ -118,9 +118,9 @@
 				editAttributes.update(classData);
 				editAttributes.popUp();  */
 				
-				var editMethods:EditMethodsWindow = new EditMethodsWindow();
+/* 				var editMethods:EditMethodsWindow = new EditMethodsWindow();
 				editMethods.update(classData);
-				editMethods.popUp(); 
+				editMethods.popUp();  */
 				
 		}
 			

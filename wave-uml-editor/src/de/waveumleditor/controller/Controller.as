@@ -7,6 +7,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
@@ -30,6 +31,7 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(NodeEvent.EVENT_RENAME_NODE, handleRenameClassNode);
 			
 			this.diagramView.addEventListener(NodeEvent.EVENT_EDIT_NODE_ATTRIBUTES, handleEditNodeAttributes);
+			this.diagramView.addEventListener(NodeEvent.EVENT_EDIT_NODE_METHODS, handleEditNodeMethods);
 			
 			this.diagramView.addEventListener(LinkEvent.EVENT_REMOVE_LINK, handleRemoveLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_ADD_LINK, handleAddLink);
@@ -100,6 +102,16 @@ package de.waveumleditor.controller
 			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
 			editAttributes.update(diagramModel.getNode(event.getNode().getIdentifier()));
 			editAttributes.popUp(); 
+		}
+		
+		private function handleEditNodeMethods(event:NodeEvent):void
+		{
+			trace("handleEditNodeMethods " + event.getNode().nodeName);
+			//TODO 
+			
+			var editMethods:EditMethodsWindow = new EditMethodsWindow();
+			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
+			editMethods.popUp();
 		}
 		
 		private function handleRemoveLink(event:LinkEvent):void
