@@ -46,6 +46,10 @@
 				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
 				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr001"), integerVariable, EVisibility.PUBLIC);
 				
+				//Attribut mit Variable: public customType myCustomVariable
+				var customVariable:Variable = new Variable("myCustomVariable", (new Type("customType")));
+				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr_custom"), customVariable, EVisibility.PUBLIC);
+				
 				integerAttribute.setStatic(true);
 				
  				//Attribut mit Variable: private String myString
@@ -54,6 +58,7 @@
 				
  				classData.addAttribute(integerAttribute);
 				classData.addAttribute(stringAttribute);
+				classData.addAttribute(customAttribute);
 				classData2.addAttribute(integerAttribute);   
 				
 				//Methode public String getMyString()

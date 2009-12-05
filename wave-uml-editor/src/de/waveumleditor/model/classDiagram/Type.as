@@ -5,14 +5,13 @@ package de.waveumleditor.model.classDiagram
 		private var name:String;
 		private var key:int;
 		
-		public static const STRING:Type = new Type(0, "String");
-		public static const BOOLEAN:Type = new Type(1, "boolean");
-		public static const INT:Type = new Type(2, "int");
-		public static const DOUBLE:Type = new Type(3, "double");
+		public static const STRING:Type = new Type("String");
+		public static const BOOLEAN:Type = new Type("boolean");
+		public static const INT:Type = new Type("int");
+		public static const DOUBLE:Type = new Type("double");
 		
-		public function Type(key:int, name:String)
+		public function Type(name:String)
 		{
-			this.key = key;
 			this.name = name;
 		}
 
@@ -24,11 +23,6 @@ package de.waveumleditor.model.classDiagram
 		public function setName(name:String):void
 		{
 			this.name = name;
-		}
-		
-		public function getKey():int
-		{
-			return this.key;
 		}
 		
 		public function toString():String

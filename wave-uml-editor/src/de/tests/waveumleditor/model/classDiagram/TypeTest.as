@@ -16,7 +16,7 @@ package de.tests.waveumleditor.model.classDiagram
 			
 			assertEquals("double", type.toString());
 			
-			type = new Type(4, "TollerTyp");
+			type = new Type("TollerTyp");
 			assertEquals("TollerTyp", type.toString());
 		}
 

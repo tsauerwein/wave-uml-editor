@@ -30,11 +30,11 @@
                 trace("edit attribute handler:" + buttonClicked.id);
                 
                 //MockupAttribut
-				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
-				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr010"), integerVariable, EVisibility.PUBLIC, true);
+				var customVariable:Variable = new Variable("myCustomVariable", (new Type("myCustomType")));
+				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr_custom"), customVariable, EVisibility.PUBLIC);
                 
                 var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
-                editSingleAttribute.update(integerAttribute);//TODO Attribut über Id holen
+                editSingleAttribute.update(customAttribute);//TODO Attribut über Id holen
                 editSingleAttribute.popUp();
                 
             }
