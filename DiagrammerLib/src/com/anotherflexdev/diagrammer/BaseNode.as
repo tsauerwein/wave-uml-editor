@@ -97,6 +97,7 @@ package com.anotherflexdev.diagrammer {
 				this.nodeContextPanel.addEventListener(MouseEvent.ROLL_OVER, handleMouseRollOver);
 				this.nodeContextPanel.addEventListener(MouseEvent.ROLL_OUT, handleMouseRollOut);
 				this.nodeContextPanel.addEventListener("removeNode", handleRemoveNode);
+				this.nodeContextPanel.setParentNode(this);
 			}
 			if(!this.linkingGlowFilter){
 				this.linkingGlowFilter = new GlowFilter;
