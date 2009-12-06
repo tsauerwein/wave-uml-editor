@@ -47,7 +47,7 @@
             }
             public function update(method:ClassMethod):void 
 			{
-				trace("update method " + method.getKey().getId());
+				trace("update method " + method.getIdentifier().getId());
 				
 				//Sichtbarkeit
 				visibility_comboBox.selectedIndex = method.getVisibility().getValue();
@@ -65,7 +65,7 @@
 				//Name
 				meth_name.text = method.getName();
 				//key
-				meth_key = method.getKey().getId();
+				meth_key = method.getIdentifier().getId();
 				
 			}
 			

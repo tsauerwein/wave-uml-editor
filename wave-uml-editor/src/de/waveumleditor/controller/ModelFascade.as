@@ -2,10 +2,12 @@ package de.waveumleditor.controller
 {
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
+	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 
 	public class ModelFascade
 	{
@@ -63,9 +65,20 @@ package de.waveumleditor.controller
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
 		
-		public function getDiagram():ClassDiagram
+		public function addNodeAttribute(node:ClassNode, attribute:ClassAttribute):void
 		{
-			return this.diagram;
+			var id:Identifier = generateAttributeIdentifier();
+			diagram.addAttribute(node.getIdentifier(), attribute, generateAttributeIdentifier());
+		}
+		
+		public function editNodeAttribute(node:ClassNode, attribute:ClassAttribute):void
+		{
+			diagram.editAttribute(node.getIdentifier(), attribute);
+		}
+		
+		public function removeNodeAttribute(node:ClassNode, attributeId:Identifier):void
+		{
+			diagram.removeAttribute(node.getIdentifier(), attributeId);
 		}
 		
 		public function generateNodeIdentifier():Identifier
@@ -78,6 +91,13 @@ package de.waveumleditor.controller
 		{
 			//var nodeList:List = diagram.getNodes();
 			return new Identifier("L" + new Number(int.MAX_VALUE * Math.random()).toString() );
+		}
+		
+		public function generateAttributeIdentifier():Identifier
+		{
+			// todo: abhängig von node
+			//var nodeList:List = diagram.getNodes();
+			return new Identifier("A" + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 	}

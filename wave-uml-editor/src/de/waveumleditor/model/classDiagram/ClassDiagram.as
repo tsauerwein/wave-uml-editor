@@ -2,104 +2,121 @@ package de.waveumleditor.model.classDiagram
 {
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	
-	import flash.utils.Dictionary;
+	import de.waveumleditor.model.classDiagram.maps.LinkMap;
+	import de.waveumleditor.model.classDiagram.maps.NodeMap;
 	
 	import mx.collections.ArrayList;
 	
+	/**
+	 * Holds a list of all nodes and links that belong 
+	 * to a digram
+	 */ 
 	public class ClassDiagram
 	{
-		private var nodes:Dictionary;
-		private var links:Dictionary;
+
+		private var nodes:NodeMap;
+		private var links:LinkMap;
 		
 		public function ClassDiagram()
 		{
-			this.nodes = new Dictionary();
-			this.links = new Dictionary();
+			this.nodes = new NodeMap();
+			this.links = new LinkMap();
 		}
 
 		public function addNode(node:ClassDiagramNode):void
 		{
-			this.nodes[node.getKey()] = node;
+			this.nodes.setValue(node);
 		}
 		
 		public function removeNodeById(id:Identifier):void
 		{
-			removeNode(this.nodes[id]);
+			removeNode(getNode(id));
 		}
 		
 		public function removeNode(node:ClassDiagramNode):void
 		{
-			this.nodes[node.getKey()] = null;
+			this.nodes.removeValue(node.getIdentifier());
 			removeCorrespondingLinks(node);
 		}
 		
 		public function getNode(id:Identifier):ClassDiagramNode
 		{
-			return this.nodes[id];
+			return this.nodes.getValue(id);
 		}
 		
 		public function getNodes():ArrayList
 		{
-			var nodeList:ArrayList = new ArrayList();
-			
-			for (var key:Object in nodes)
-			{
-				if (key != null && nodes[key] != null) 
-				{
-					nodeList.addItem(nodes[key]);
-				}
-			}
-			
-			return nodeList;
+			return this.nodes.getAsList();
 		}
 		
 		public function addLink(link:ClassDiagramLink):void
 		{
-			this.links[link.getKey()] = link;
+			this.links.setValue(link);
 		}
 		
 		public function removeLink(link:ClassDiagramLink):void
 		{
-			removeLinkById(link.getKey());
+			removeLinkById(link.getIdentifier());
 		}
 		
 		public function removeLinkById(id:Identifier):void
 		{
-			this.links[id] = null;
+			this.links.removeValue(id);
+		}
+		
+		public function getLink(id:Identifier):ClassDiagramLink
+		{
+			return this.links.getValue(id);
 		}
 		
 		public function getLinks():ArrayList
 		{
-			var linkList:ArrayList = new ArrayList();
-			
-			for (var key:Object in links)
-			{
-				if (key != null && links[key] != null) 
-				{
-					linkList.addItem(links[key]);
-				}
-			}
-			
-			return linkList;
+			return this.links.getAsList();
 		}
 		
 		private function removeCorrespondingLinks(node:ClassDiagramNode):void
 		{
-			for (var key:Object in links)
+			var linkList:ArrayList = getLinks();
+			
+			for (var i:int = 0; i < linkList.length; i++)
 			{
-				if (key != null && links[key] != null) 
+				var link:ClassDiagramLink = linkList.getItemAt(i) as ClassDiagramLink;
+				
+				if (link.getLinkFrom() == node || link.getLinkTo() == node) 
 				{
-					var link:ClassDiagramLink  = links[key];
-					
-					if (link.getLinkFrom() == node || link.getLinkTo() == node) 
-					{
 						removeLink(link);		
-					}	
-				}
+				}	
 			}
 		}
-
 		
+		public function addAttribute(classId:Identifier, newAttribute:ClassAttribute, 
+			attributeId:Identifier):void
+		{
+			// build a copy of the attribute
+			var attribute:ClassAttribute = new ClassAttribute(attributeId, 
+				new Variable(newAttribute.getVariable().getName(),
+					newAttribute.getVariable().getType(),
+					newAttribute.getVariable().getDefaultValue()),
+				newAttribute.getVisibility(),
+				newAttribute.isStatic());
+				
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			umlClass.addAttribute(attribute);
+		}
+		
+		public function editAttribute(classId:Identifier, newAttribute:ClassAttribute):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			var attribute:ClassAttribute = umlClass.getAttribute(newAttribute.getIdentifier());
+			attribute.updateFrom(newAttribute);
+		}
+		
+		public function removeAttribute(classId:Identifier, attributeId:Identifier):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			umlClass.removeAttributeById(attributeId);
+		}
 	}
 }

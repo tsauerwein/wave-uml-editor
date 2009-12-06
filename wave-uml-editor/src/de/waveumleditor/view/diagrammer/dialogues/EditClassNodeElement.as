@@ -46,7 +46,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var editButton:Button = new Button();
 			editButton.label="edit";
 			editButton.height=15;
-			editButton.id= element.getKey().getId();
+			editButton.id= element.getIdentifier().getId();
 			if(element is ClassAttribute){
 				editButton.addEventListener(MouseEvent.CLICK, EditAttributesWindow.editAttributeHandler);
 			}
@@ -65,7 +65,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			deleteButton.label="-";
 			deleteButton.height=15;
 			deleteButton.width=35;
-			deleteButton.id= element.getKey().getId();
+			deleteButton.id= element.getIdentifier().getId();
 			
 			return deleteButton;
 		}

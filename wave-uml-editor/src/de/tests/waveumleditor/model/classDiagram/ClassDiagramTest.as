@@ -3,10 +3,13 @@ package de.tests.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
 	
 	import flexunit.framework.TestCase;
+	
+	import org.flexunit.assertThat;
 	
 	public class ClassDiagramTest extends TestCase
 	{
@@ -26,6 +29,27 @@ package de.tests.waveumleditor.model.classDiagram
     		
     		assertEquals(1, classDiagram.getLinks().length);
     		assertEquals(2, classDiagram.getNodes().length);
+		}
+		
+		public function testGetNode():void
+		{
+			var  classDiagram:ClassDiagram = createClassDiagram();
+			var node:ClassDiagramNode = classDiagram.getNode(new Identifier("1234567"));
+			
+			assertThat(node != null);
+		}
+		
+		public function testRemoveNodeById():void
+		{
+			var  classDiagram:ClassDiagram = createClassDiagram();
+			classDiagram.removeNodeById(new Identifier("1234567"));
+			
+			assertThat(null == classDiagram.getNode(new Identifier("1234567")));
+			assertThat(null == classDiagram.getLink(new Identifier("12345675")));
+			assertThat(null == classDiagram.getLink(new Identifier("12345677")));
+			
+			assertEquals(1, classDiagram.getLinks().length);
+			assertEquals(2, classDiagram.getNodes().length);
 		}
 		
 		private function createClassDiagram():ClassDiagram

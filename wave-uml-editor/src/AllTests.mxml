@@ -11,7 +11,8 @@
     </mx:Script>
     <mx:Script>
         <![CDATA[
-			import de.tests.waveumleditor.controller.ControllerFascadeTest;
+        	import de.tests.waveumleditor.controller.ModelFascadeTest;
+			import de.tests.waveumleditor.controller.ControllerTest;
         	import de.tests.waveumleditor.controller.ViewFactoryTest;
         	import de.tests.waveumleditor.model.classDiagram.UMLClassTest;
         	import de.tests.waveumleditor.model.classDiagram.InterfaceMethodTest;
@@ -58,7 +59,9 @@
   				
   				testSuite.addTestSuite(ViewFactoryTest);
   				
-				testSuite.addTestSuite(ControllerFascadeTest);
+				testSuite.addTestSuite(ControllerTest);
+				testSuite.addTestSuite(ModelFascadeTest);
+				
   				return testSuite;
   			}	
         ]]>

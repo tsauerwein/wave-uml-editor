@@ -64,9 +64,18 @@ package de.waveumleditor.model.classDiagram
 			return false;
 		}
 		
-		public function getKey():Identifier
+		public function getIdentifier():Identifier
 		{
 			return this.key;
+		}
+		
+		public function updateFrom(other:ClassAttribute):void
+		{
+			visibility = other.visibility;
+			statique = other.statique;
+			variable = new Variable(other.variable.getName(),
+					other.variable.getType(),
+					other.variable.getDefaultValue());			
 		}
 		
 	}

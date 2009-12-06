@@ -3,14 +3,15 @@ package de.tests.waveumleditor.controller
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 	
 	import flexunit.framework.TestCase;
 	
 	import mx.collections.ArrayList;
 
-	public class ControllerFascadeTest extends TestCase
+	public class ControllerTest extends TestCase
 	{
-		public function ControllerFascadeTest()
+		public function ControllerTest()
 		{
 		}
 		
@@ -22,7 +23,7 @@ package de.tests.waveumleditor.controller
 			var sizeBefore:int = list.length;
 			
 			var cf:ModelFascade = new ModelFascade(diagram);
-			var bcdn:BaseClassDiagramNode = new BaseClassDiagramNode();
+			var bcdn:BaseClassDiagramNode = new ClassNode();
 			
 			cf.addNode(bcdn);
 			assertEquals(sizeBefore + 1, diagram.getNodes().length);

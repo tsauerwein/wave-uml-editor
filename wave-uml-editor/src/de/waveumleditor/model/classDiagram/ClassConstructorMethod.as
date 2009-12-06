@@ -77,7 +77,7 @@ package de.waveumleditor.model.classDiagram
 			return false;
 		}
 		
-		public function getKey():Identifier
+		public function getIdentifier():Identifier
 		{
 			return this.key;
 		}

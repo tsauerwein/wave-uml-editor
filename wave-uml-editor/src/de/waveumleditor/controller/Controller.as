@@ -1,14 +1,18 @@
 package de.waveumleditor.controller
 {
+	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
+	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
 	import mx.collections.ArrayList;
@@ -94,25 +98,6 @@ package de.waveumleditor.controller
 			this.fascade.renameNode(event.getNode());
 		}
 		
-		private function handleEditNodeAttributes(event:NodeEvent):void
-		{
-			trace("handleEditNodeAttributes " + event.getNode().nodeName);
-			//TODO 
-			
-			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
-			editAttributes.update(diagramModel.getNode(event.getNode().getIdentifier()));
-			editAttributes.popUp(); 
-		}
-		
-		private function handleEditNodeMethods(event:NodeEvent):void
-		{
-			trace("handleEditNodeMethods " + event.getNode().nodeName);
-			//TODO 
-			
-			var editMethods:EditMethodsWindow = new EditMethodsWindow();
-			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
-			editMethods.popUp();
-		}
 		
 		private function handleRemoveLink(event:LinkEvent):void
 		{
@@ -124,6 +109,66 @@ package de.waveumleditor.controller
 		{
 			trace("handleAddLink ");
 			this.fascade.addLink(event.getLink());
+		}
+		
+		
+		private function handleEditNodeAttributes(event:NodeEvent):void
+		{
+			trace("handleEditNodeAttributes " + event.getNode().nodeName);
+			//TODO 
+			
+			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+			editAttributes.update(diagramModel.getNode(event.getNode().getIdentifier()));
+			editAttributes.popUp(); 
+		}
+		
+		private function handleShowSingleAttribute(event:NodeAttributeEvent):void
+		{
+			trace("handleShowSingleAttribute " + event.getNode().nodeName);
+		
+			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+			var umlClass:UMLClass = diagramModel.getNode(event.getNode().getIdentifier()) as UMLClass;
+			var attribute:ClassAttribute = umlClass.getAttribute(event.getAttributeId());
+			
+			var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
+          	editSingleAttribute.update(attribute);
+         	
+         	editSingleAttribute.popUp();			
+		}
+		
+		public function handleAddAttribute(event:NodeAttributeEvent):void
+		{
+			this.fascade.addNodeAttribute(event.getClassNode(), event.getAttribute());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getAttributeWindow().update(updatedClass);
+		}
+		
+		public function handleEditAttribute(event:NodeAttributeEvent):void
+		{
+			this.fascade.editNodeAttribute(event.getClassNode(), event.getAttribute());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getAttributeWindow().update(updatedClass);
+		}
+		
+		public function handleRemoveAttribute(event:NodeAttributeEvent):void
+		{
+			this.fascade.removeNodeAttribute(event.getClassNode(), event.getAttributeId());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getAttributeWindow().update(updatedClass);
+		}
+		
+		
+		private function handleEditNodeMethods(event:NodeEvent):void
+		{
+			trace("handleEditNodeMethods " + event.getNode().nodeName);
+			//TODO 
+			
+			var editMethods:EditMethodsWindow = new EditMethodsWindow();
+			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
+			editMethods.popUp();
 		}
 	}
 }

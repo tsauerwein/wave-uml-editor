@@ -1,9 +1,10 @@
 package de.waveumleditor.model.classDiagram.link
 {
+	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	
-	public class ClassDiagramLink
+	public class ClassDiagramLink implements IIdentifiable
 	{
 		private var linkFrom:ClassDiagramNode;
 		private var linkTo:ClassDiagramNode;
@@ -33,7 +34,7 @@ package de.waveumleditor.model.classDiagram.link
 			return this.linkTo;
 		}
 		
-		public function getKey():Identifier
+		public function getIdentifier():Identifier
 		{
 			return this.key;
 		}

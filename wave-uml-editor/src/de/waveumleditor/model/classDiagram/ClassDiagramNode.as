@@ -1,9 +1,10 @@
 package de.waveumleditor.model.classDiagram
 {
+	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	
-	public class ClassDiagramNode
+	public class ClassDiagramNode implements IIdentifiable
 	{
 		private var position:Position; 
 		private var name:String;
@@ -37,7 +38,7 @@ package de.waveumleditor.model.classDiagram
 			this.name = name;
 		}
 		
-		public function getKey():Identifier
+		public function getIdentifier():Identifier
 		{
 			return this.key;
 		}

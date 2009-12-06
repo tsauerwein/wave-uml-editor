@@ -46,7 +46,7 @@
             }
             public function update(attribute:ClassAttribute):void 
 			{
-				trace("update attribute " + attribute.getKey().getId());
+				trace("update attribute " + attribute.getIdentifier().getId());
 				
 				//Sichtbarkeit
 				visibility_comboBox.selectedIndex = attribute.getVisibility().getValue();
@@ -64,7 +64,7 @@
 				//Name
 				attr_name.text = attribute.getVariable().getName();
 				//key
-				attr_key = attribute.getKey().getId();
+				attr_key = attribute.getIdentifier().getId();
 
 			}
 			

@@ -34,7 +34,7 @@ package de.waveumleditor.controller
 				node = new InterfaceNode();
 			}
 			
-			node.setIdentifier(nodeData.getKey());
+			node.setIdentifier(nodeData.getIdentifier());
 						
 			return node;
 		}
@@ -57,7 +57,7 @@ package de.waveumleditor.controller
 			}
 			// TODO linkdependency
 			
-			link.setIdentifier(linkData.getKey());
+			link.setIdentifier(linkData.getIdentifier());
 			
 			return link;
 		}
