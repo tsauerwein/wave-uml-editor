@@ -110,5 +110,6 @@ package de.waveumleditor.model.classDiagram
 		{
 			return false;
 		}
+		
 	}
 }

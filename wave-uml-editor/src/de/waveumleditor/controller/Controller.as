@@ -118,6 +118,7 @@ package de.waveumleditor.controller
 			//TODO 
 			
 			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
+			editAttributes.setController(this);
 			editAttributes.update(diagramModel.getNode(event.getNode().getIdentifier()));
 			editAttributes.popUp(); 
 		}

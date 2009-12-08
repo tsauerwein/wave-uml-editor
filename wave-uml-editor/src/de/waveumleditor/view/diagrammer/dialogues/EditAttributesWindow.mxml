@@ -3,6 +3,7 @@
 	
 	<mx:Script>
         <![CDATA[
+        	import de.waveumleditor.controller.Controller;
         	import mx.messaging.management.Attribute;
         	import de.waveumleditor.model.classDiagram.EVisibility;
         	import de.waveumleditor.model.Identifier;
@@ -24,36 +25,8 @@
             import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
             import de.waveumleditor.model.classDiagram.IClassElement;
 
-            public static function editAttributeHandler(event:MouseEvent):void
-            {
-                var buttonClicked:Button = event.currentTarget as Button;
-                trace("edit attribute handler:" + buttonClicked.id);
-                
-                //MockupAttribut
-				var customVariable:Variable = new Variable("myCustomVariable", (new Type("myCustomType")));
-				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier("attr_custom"), customVariable, EVisibility.PUBLIC);
-                
-                var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
-                editSingleAttribute.update(customAttribute);//TODO Attribut über Id holen
-                editSingleAttribute.popUp();
-                
-            }
-            
-            private function deleteClassElementHandler(event:MouseEvent):void
-            {
-            	var buttonClicked:Button = event.currentTarget as Button;
-                trace("delete class element handler" + buttonClicked.id);
-            }
-            
-            private function newAttributeHandler(event:Event):void
-            {
-            	var defaultVariable:Variable = new Variable("", Type.STRING);
-            	var newAttribute:ClassAttribute = new ClassAttribute(new Identifier("default_attr"), defaultVariable, EVisibility.PUBLIC, false);
-                
-                var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
-                editSingleAttribute.update(newAttribute);//TODO Attribut über Id holen
-                editSingleAttribute.popUp();
-            }
+  
+          
             
             private function titleWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(titleWindow);
@@ -62,20 +35,20 @@
 			{
 				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
 				
-				var classData:UMLClass = nodeData as UMLClass;
-				
+				this.setClassData(nodeData as UMLClass);
 				
 				// update class-name
-				Formatter.formatLabelOfClassElement(classData, classNodeName);
+				Formatter.formatLabelOfClassElement(this.getClassData(), classNodeName);
 				var nodeName:String;
 				nodeName = nodeData.getName();
 				if(nodeName==""){nodeName="Neue Klasse"};//default
 				classNodeName.text = nodeName;
 				
 				// add attributes
-				var attributes:IList = classData.getAttributes();
+				var attributes:IList = this.getClassData().getAttributes();
 				addElementsToContentGrid(attributes, attributesList);
 			}
+			
 			
 			public function addElementsToContentGrid(elements:IList, classDataGrid:Grid):void 
 			{
@@ -84,7 +57,7 @@
 					for(var i:int = 0; i < elements.length; i++)
 					{
 						var classElement:Object = elements.getItemAt(i);
-						attributesList.addChild(new EditClassNodeElement(classElement as ClassAttribute));
+						attributesList.addChild(new EditClassNodeElement(classElement as ClassAttribute, this));
 					}
 				}
 			}
@@ -140,7 +113,7 @@
 	                    </mx:GridRow>
 	                    <mx:GridRow width="100%">
 	                   		<mx:GridItem horizontalAlign="right">
-	                   			<mx:Button label="+" height="15" width="35" click="newAttributeHandler(event)"/>
+	                   			<mx:Button label="+" height="15" width="35" click="handleAdd(event)"/>
 	                    	</mx:GridItem>
 	                    	<mx:GridItem>
 	                    	</mx:GridItem>

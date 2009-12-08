@@ -15,10 +15,14 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditClassNodeElement extends GridRow
 	{
 		private var element:IClassElement;
+		private var editWindow:IEditWindow;
 		
-		public function EditClassNodeElement(element:IClassElement)
+		public function EditClassNodeElement(element:IClassElement, editWindow:IEditWindow)
 		{
 			super();
+			
+			this.editWindow = editWindow;
+			
 			this.element = element;
 			this.percentWidth=100;
 			
@@ -41,25 +45,19 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.addChild(deleteGridItem);
 		}
 		
-		public static function getEditButtonOfElement(element:IClassElement):Button
+		public function getEditButtonOfElement(element:IClassElement):Button
 		{
 			var editButton:Button = new Button();
 			editButton.label="edit";
 			editButton.height=15;
 			editButton.id= element.getIdentifier().getId();
-			if(element is ClassAttribute){
-				editButton.addEventListener(MouseEvent.CLICK, EditAttributesWindow.editAttributeHandler);
-			}
-			if(element is ClassMethod){
-				editButton.addEventListener(MouseEvent.CLICK, EditMethodsWindow.editMethodHandler);
-			}
 			
-			
+			editButton.addEventListener(MouseEvent.CLICK, editWindow.handleEdit);
 			
 			return editButton;
 		}
 		
-		public static function getDeleteButtonOfElement(element:IClassElement):Button
+		public function getDeleteButtonOfElement(element:IClassElement):Button
 		{
 			var deleteButton:Button = new Button();
 			deleteButton.label="-";
@@ -67,6 +65,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 			deleteButton.width=35;
 			deleteButton.id= element.getIdentifier().getId();
 			
+			deleteButton.addEventListener(MouseEvent.CLICK, editWindow.handleDelete);
+
 			return deleteButton;
 		}
 		
