@@ -118,7 +118,6 @@ package de.waveumleditor.controller
 		private function handleEditNodeAttributes(event:NodeEvent):void
 		{
 			trace("handleEditNodeAttributes " + event.getNode().nodeName);
-			//TODO 
 			
 			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
 			editAttributes.setController(this);
@@ -126,15 +125,15 @@ package de.waveumleditor.controller
 			editAttributes.popUp(); 
 		}
 		
-		private function handleShowSingleAttribute(event:NodeAttributeEvent):void
+		public function handleShowSingleAttribute(event:NodeAttributeEvent):void
 		{
-			trace("handleShowSingleAttribute " + event.getNode().nodeName);
+			trace("handleShowSingleAttribute " + event.getClassNode().getName());
 		
-			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
-			var umlClass:UMLClass = diagramModel.getNode(event.getNode().getIdentifier()) as UMLClass;
+			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			var attribute:ClassAttribute = umlClass.getAttribute(event.getAttributeId());
 			
 			var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
+			editSingleAttribute.setController(this);
           	editSingleAttribute.update(attribute);
          	
          	editSingleAttribute.popUp();			
@@ -142,25 +141,25 @@ package de.waveumleditor.controller
 		
 		public function handleAddAttribute(event:NodeAttributeEvent):void
 		{
-			this.fascade.addNodeAttribute(event.getClassNode(), event.getAttribute());
+			this.fascade.addNodeAttribute(event.getClassNode().getIdentifier(), event.getAttribute());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
 		}
 		
 		public function handleEditAttribute(event:NodeAttributeEvent):void
 		{
-			this.fascade.editNodeAttribute(event.getClassNode(), event.getAttribute());
+			this.fascade.editNodeAttribute(event.getClassNode().getIdentifier(), event.getAttribute());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
 		}
 		
 		public function handleRemoveAttribute(event:NodeAttributeEvent):void
 		{
-			this.fascade.removeNodeAttribute(event.getClassNode(), event.getAttributeId());
+			this.fascade.removeNodeAttribute(event.getClassNode().getIdentifier(), event.getAttributeId());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
 		}
 		

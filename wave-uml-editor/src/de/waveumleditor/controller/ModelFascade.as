@@ -66,20 +66,20 @@ package de.waveumleditor.controller
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
 		
-		public function addNodeAttribute(node:ClassNode, attribute:ClassAttribute):void
+		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
 			var id:Identifier = generateAttributeIdentifier();
-			diagram.addAttribute(node.getIdentifier(), attribute, generateAttributeIdentifier());
+			diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
 		}
 		
-		public function editNodeAttribute(node:ClassNode, attribute:ClassAttribute):void
+		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
-			diagram.editAttribute(node.getIdentifier(), attribute);
+			diagram.editAttribute(nodeId, attribute);
 		}
 		
-		public function removeNodeAttribute(node:ClassNode, attributeId:Identifier):void
+		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void
 		{
-			diagram.removeAttribute(node.getIdentifier(), attributeId);
+			diagram.removeAttribute(nodeId, attributeId);
 		}
 		
 		// Methods

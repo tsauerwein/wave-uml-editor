@@ -51,7 +51,7 @@ package de.tests.waveumleditor.controller
 			var nodeView:ClassNode = new ClassNode();
 			nodeView.setIdentifier(nodeId);
 			
-			modelFascade.addNodeAttribute(nodeView, newAttribute);
+			modelFascade.addNodeAttribute(nodeModel.getIdentifier(), newAttribute);
 			
 			assertEquals(1, nodeModel.getAttributes().length);
 			assertThat(null != (nodeModel.getAttributes().getItemAt(0) as ClassAttribute).getIdentifier())
@@ -80,7 +80,7 @@ package de.tests.waveumleditor.controller
 				new Variable("test2", Type.STRING, "a"), 
 				EVisibility.PRIVATE);
 			
-			modelFascade.editNodeAttribute(nodeView, attributeFromView);
+			modelFascade.editNodeAttribute(nodeModel.getIdentifier(), attributeFromView);
 			
 			assertEquals(attribute.getVisibility(), attributeFromView.getVisibility());
 			assertEquals(attribute.isStatic(), attributeFromView.isStatic());
@@ -111,7 +111,7 @@ package de.tests.waveumleditor.controller
 			var nodeView:ClassNode = new ClassNode();
 			nodeView.setIdentifier(nodeId);
 			
-			modelFascade.removeNodeAttribute(nodeView, attribute.getIdentifier());
+			modelFascade.removeNodeAttribute(nodeModel.getIdentifier(), attribute.getIdentifier());
 			
 			assertEquals(0, nodeModel.getAttributes().length);
 		}
