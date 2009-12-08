@@ -5,6 +5,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
@@ -81,6 +82,26 @@ package de.waveumleditor.controller
 			diagram.removeAttribute(node.getIdentifier(), attributeId);
 		}
 		
+		// Methods
+		
+		public function addNodeMethod(node:ClassNode, method:ClassMethod):void
+		{
+			var id:Identifier = generateMethodIdentifier();
+			diagram.addMethod(node.getIdentifier(), method, generateMethodIdentifier());
+		}
+		
+		public function editNodeMethod(node:ClassNode, method:ClassMethod):void
+		{
+			diagram.editMethod(node.getIdentifier(), method);
+		}
+		
+		public function removeNodeMethod(node:ClassNode, methodId:Identifier):void
+		{
+			diagram.removeMethod(node.getIdentifier(), methodId);
+		}
+		
+		
+		// Identifier
 		public function generateNodeIdentifier():Identifier
 		{
 			//var nodeList:List = diagram.getNodes();
@@ -98,6 +119,13 @@ package de.waveumleditor.controller
 			// todo: abhängig von node
 			//var nodeList:List = diagram.getNodes();
 			return new Identifier("A" + new Number(int.MAX_VALUE * Math.random()).toString() );
+		}
+		
+		public function generateMethodIdentifier():Identifier
+		{
+			// todo: abhängig von node
+			//var nodeList:List = diagram.getNodes();
+			return new Identifier("M" + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 	}

@@ -4,6 +4,7 @@ package de.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.Identifier;
 	
 	import mx.collections.ArrayList;
+	import mx.collections.IList;
 	
 	public class ClassMethod extends ClassConstructorMethod implements IClassElement
 	{
@@ -77,6 +78,54 @@ package de.waveumleditor.model.classDiagram
 		override public function isStatic():Boolean
 		{
 			return this.statique;
+		}
+		
+		public function updateFrom(other:ClassMethod):void
+		{
+			setVisibility(other.getVisibility());
+			
+			this.name = other.name;
+			this.abstract = other.abstract;
+			this.returnType = other.returnType.clone();
+			this.statique = other.statique;
+			this.abstract = other.abstract;
+			
+			this.getVariables().removeAll();
+			
+			var	list:IList = other.getVariables();
+			for (var obj:Object in list)
+			{		
+				var variable:Variable = obj as Variable;
+				
+				this.addVariable(variable.clone());
+			}	
+		}
+		
+		/**
+		 * Builds a copy by using the passed in Identifier
+		 * 
+		 * @param id
+		 */
+		public function clone(id:Identifier):ClassMethod
+		{
+			var method:ClassMethod = new ClassMethod(
+				id, 
+				this.getName(), 
+				this.getVisibility(), 
+				this.getReturnType().clone(), 
+				this.isAbstract(),
+				this.isStatic()); 
+			
+			var	list:IList = this.getVariables();
+			
+			for (var obj:Object in list)
+			{		
+				var variable:Variable = obj as Variable;
+				
+				this.addVariable(variable.clone());
+			}
+			
+			return method;
 		}
 		
 	}

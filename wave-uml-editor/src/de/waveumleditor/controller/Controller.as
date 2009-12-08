@@ -3,6 +3,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
@@ -11,9 +12,11 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditSingleMethodWindow;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
+	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
 	import mx.collections.ArrayList;
 	
@@ -170,6 +173,44 @@ package de.waveumleditor.controller
 			var editMethods:EditMethodsWindow = new EditMethodsWindow();
 			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
 			editMethods.popUp();
+		}
+		
+		private function handleShowSingleMethod(event:NodeMethodEvent):void
+		{
+			trace("handleShowSingleMethod " + event.getNode().nodeName);
+			
+			var editMethod:EditMethodsWindow = new EditMethodsWindow();
+			var umlClass:UMLClass = diagramModel.getNode(event.getNode().getIdentifier()) as UMLClass;
+			var method:ClassMethod = umlClass.getMethod(event.getMethodId());
+			
+			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+			editSingleMethod.update(method);
+			
+			editSingleMethod.popUp();			
+		}
+		
+		public function handleAddMethod(event:NodeMethodEvent):void
+		{
+			this.fascade.addNodeMethod(event.getClassNode(), event.getMethod());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
+		}
+		
+		public function handleEditMethod(event:NodeMethodEvent):void
+		{
+			this.fascade.editNodeMethod(event.getClassNode(), event.getMethod());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
+		}
+		
+		public function handleRemoveMethod(event:NodeMethodEvent):void
+		{
+			this.fascade.removeNodeMethod(event.getClassNode(), event.getMethodId());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
 		}
 	}
 }

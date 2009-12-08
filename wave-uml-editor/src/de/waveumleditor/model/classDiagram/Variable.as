@@ -54,5 +54,11 @@ package de.waveumleditor.model.classDiagram
 			}
 		}
 		
+		public function clone():Variable
+		{
+
+			return new Variable(this.name, this.type, this.defaultValue);
+		}
+		
 	}
 }

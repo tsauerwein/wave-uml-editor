@@ -73,10 +73,18 @@ package de.waveumleditor.model.classDiagram
 		{
 			visibility = other.visibility;
 			statique = other.statique;
-			variable = new Variable(other.variable.getName(),
-					other.variable.getType(),
-					other.variable.getDefaultValue());			
+			variable = other.getVariable().clone();			
 		}
 		
+		
+		/**
+		 * Builds a copy by using the passed in Identifier
+		 * 
+		 * @param id
+		 */
+		public function clone(id:Identifier):ClassAttribute
+		{
+			return new ClassAttribute(id, this.variable.clone(), this.visibility, this.statique);
+		}
 	}
 }

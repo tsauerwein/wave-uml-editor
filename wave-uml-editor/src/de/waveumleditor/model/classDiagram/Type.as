@@ -29,5 +29,10 @@ package de.waveumleditor.model.classDiagram
 		{
 			return this.name;
 		}
+		
+		public function clone():Type
+		{
+			return new Type(this.name);
+		}
 	}
 }

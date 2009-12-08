@@ -61,6 +61,11 @@ package de.waveumleditor.model.classDiagram
 			methods.removeValue(method.getIdentifier());
 		}
 		
+		public function removeMethodById(methodId:Identifier):void
+		{
+			methods.removeValue(methodId);
+		}
+		
 		public function getMethod(id:Identifier):ClassMethod
 		{
 			return methods.getValue(id);
@@ -110,6 +115,5 @@ package de.waveumleditor.model.classDiagram
 		{
 			return false;
 		}
-		
 	}
 }

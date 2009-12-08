@@ -93,12 +93,7 @@ package de.waveumleditor.model.classDiagram
 			attributeId:Identifier):void
 		{
 			// build a copy of the attribute
-			var attribute:ClassAttribute = new ClassAttribute(attributeId, 
-				new Variable(newAttribute.getVariable().getName(),
-					newAttribute.getVariable().getType(),
-					newAttribute.getVariable().getDefaultValue()),
-				newAttribute.getVisibility(),
-				newAttribute.isStatic());
+			var attribute:ClassAttribute = newAttribute.clone(attributeId);
 				
 			var umlClass:UMLClass = getNode(classId) as UMLClass;
 			umlClass.addAttribute(attribute);
@@ -117,6 +112,31 @@ package de.waveumleditor.model.classDiagram
 			var umlClass:UMLClass = getNode(classId) as UMLClass;
 			
 			umlClass.removeAttributeById(attributeId);
+		}
+		
+		//Methods
+		public function addMethod(classId:Identifier, newMethod:ClassMethod, methodId:Identifier):void
+		{
+				var method:ClassMethod = newMethod.clone(methodId);
+				
+				var umlClass:UMLClass = getNode(classId) as UMLClass;
+				
+				umlClass.addMethod(method);
+		}
+		
+		public function editMethod(classId:Identifier, newMethod:ClassMethod):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			var method:ClassMethod = umlClass.getMethod(newMethod.getIdentifier());
+			method.updateFrom(newMethod);
+		}
+		
+		public function removeMethod(classId:Identifier, methodId:Identifier):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			umlClass.removeMethodById(methodId);
 		}
 	}
 }
