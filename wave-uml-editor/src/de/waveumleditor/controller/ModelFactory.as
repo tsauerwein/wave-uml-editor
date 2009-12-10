@@ -6,6 +6,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.classDiagram.link.LinkImplements;
 	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 	import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
@@ -41,8 +42,7 @@ package de.waveumleditor.controller
 			} 
 			else if (link is DependencyLink) 
 			{
-				//TODO Dependency
-				//return new LinkDependency(link.getIdentifier(), linkFrom, linkTo);
+				return new LinkDependency(link.getIdentifier(), linkFrom, linkTo);
 			} 
 			
 			return null;

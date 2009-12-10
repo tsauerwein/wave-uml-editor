@@ -102,7 +102,7 @@ package de.waveumleditor.model.classDiagram
 		}
 		
 		/**
-		 * Builds a copy by using the passed in Identifier
+		 * Builds a copy by using the passed-in Identifier
 		 * 
 		 * @param id
 		 */

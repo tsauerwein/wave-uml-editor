@@ -15,10 +15,7 @@
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.Position;
 			import de.waveumleditor.model.classDiagram.*;
-			import de.waveumleditor.model.classDiagram.link.LinkAggregation;
 			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-			import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
-			import de.waveumleditor.model.classDiagram.link.LinkComposition;
 			import de.waveumleditor.model.classDiagram.link.LinkImplements;
 			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 			

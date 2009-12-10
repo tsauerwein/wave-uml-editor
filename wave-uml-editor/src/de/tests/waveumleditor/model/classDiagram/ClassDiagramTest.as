@@ -5,7 +5,7 @@ package de.tests.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.link.LinkAssociationDirected;
+	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	
 	import flexunit.framework.TestCase;
 	
@@ -64,9 +64,9 @@ package de.tests.waveumleditor.model.classDiagram
     		classDiagram.addNode(class2);
     		classDiagram.addNode(class3);
     		
-    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345675"), class1, class2));
-    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345676"), class2, class3));
-    		classDiagram.addLink(new LinkAssociationDirected(new Identifier("12345677"), class1, class3));
+    		classDiagram.addLink(new LinkAssociation(new Identifier("12345675"), class1, class2));
+    		classDiagram.addLink(new LinkAssociation(new Identifier("12345676"), class2, class3));
+    		classDiagram.addLink(new LinkAssociation(new Identifier("12345677"), class1, class3));
     		
     		return classDiagram;
 		}
