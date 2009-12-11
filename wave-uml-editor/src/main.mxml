@@ -11,6 +11,7 @@
 			import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 			import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
+			import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
 			import de.waveumleditor.controller.Controller;
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.Position;
@@ -20,7 +21,7 @@
 			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 			
 			import mx.containers.TitleWindow;
-            import mx.managers.PopUpManager;
+			import mx.managers.PopUpManager;
 
 			
 			private var classOne:ClassNode;
@@ -118,7 +119,7 @@
 /* 				var editMethods:EditMethodsWindow = new EditMethodsWindow();
 				editMethods.update(classData);
 				editMethods.popUp();  */
-				
+
 		}
 			
 		 /* private function test():void

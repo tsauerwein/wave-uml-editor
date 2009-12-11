@@ -35,18 +35,18 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				event.currentTarget as BaseClassDiagramNode));
 		}
 		
-		override public function removeLink(link:Link):void
-		{
-			super.removeLink(link);
-			dispatchEvent(new LinkEvent(LinkEvent.EVENT_REMOVE_LINK, 
-				link as ClassLink));
-		}
-		
 		override public function removeNode(node:BaseNode):void
 		{
 			super.removeNode(node);
 			dispatchEvent(new NodeEvent(NodeEvent.EVENT_REMOVE_NODE, 
 				node as BaseClassDiagramNode)); 
+		}
+		
+		override public function removeLink(link:Link):void
+		{
+			super.removeLink(link);
+			dispatchEvent(new LinkEvent(LinkEvent.EVENT_REMOVE_LINK, 
+				link as ClassLink));
 		}
 		
 		override public function addedLink(link:Link):void

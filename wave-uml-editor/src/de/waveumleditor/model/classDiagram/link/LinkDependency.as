@@ -28,5 +28,10 @@ package de.waveumleditor.model.classDiagram.link
 		{
 			this.name = name;
 		}	
+		
+		public function updateFrom(link:LinkDependency):void
+		{
+			this.name = link.getName();
+		}
 	}
 }

@@ -9,14 +9,18 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleMethodWindow;
+	import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
@@ -46,6 +50,8 @@ package de.waveumleditor.controller
 			
 			this.diagramView.addEventListener(LinkEvent.EVENT_REMOVE_LINK, handleRemoveLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_ADD_LINK, handleAddLink);
+			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, handleShowAssociationLink);
+			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_DEPENDENCY_LINK, handleShowDependencyLink);
 		}
 		
 		public function createDiagram():void
@@ -117,7 +123,6 @@ package de.waveumleditor.controller
 			trace("handleAddLink ");
 			this.fascade.addLink(event.getLink());
 		}
-		
 		
 		private function handleEditNodeAttributes(event:NodeEvent):void
 		{
@@ -234,5 +239,29 @@ package de.waveumleditor.controller
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
+		
+		public function handleShowAssociationLink(event:LinkEvent):void 
+		{
+			//TODO
+			var link:LinkAssociation = diagramModel.getLink( event.getLink().getIdentifier() ) as LinkAssociation;
+			
+		}
+		
+		public function handleSaveLink(event:LinkEditEvent):void 
+		{
+			this.fascade.editLink(event.getLink());
+			
+		}
+		
+		public function handleShowDependencyLink(event:LinkEvent):void
+		{
+			var link:LinkDependency = diagramModel.getLink( event.getLink().getIdentifier() ) as LinkDependency;
+			
+			var editLinksWindow:EditDependencyLinkWindow = new EditDependencyLinkWindow();
+			editLinksWindow.update(link);
+			editLinksWindow.setController(this);
+			editLinksWindow.popUp();
+		}
+		
 	}
 }

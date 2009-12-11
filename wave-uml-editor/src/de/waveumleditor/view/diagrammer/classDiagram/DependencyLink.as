@@ -32,6 +32,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override protected function createLinkContextPanel():void
 		{
 			this.linkContextPanel = new DependencyLinkContextPanel;
+			this.linkContextPanel.setLink(this);
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
 		}
 

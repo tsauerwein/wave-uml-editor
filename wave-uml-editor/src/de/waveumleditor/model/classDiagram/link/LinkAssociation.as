@@ -93,5 +93,28 @@ package de.waveumleditor.model.classDiagram.link
 			this.fromNavigable = fromNavigable;
 		} 
 		
+		override public function updateFrom(link:LinkDependency):void
+		{
+			super.updateFrom(link);
+			
+			if (!(link is LinkAssociation)) 
+			{
+				throw new Error("link is not type of LinkAssociation");
+			}
+			
+			var linkAssocation:LinkAssociation = link as LinkAssociation;
+			
+			toName = linkAssocation.getToName();
+			fromName = linkAssocation.getFromName();
+			
+			toMultiplicity = linkAssocation.getToMultiplicity();
+			fromMultiplicity = linkAssocation.getFromMultiplicity();
+			
+			toNavigable = linkAssocation.getToNavigable();
+			fromNavigable = linkAssocation.getFromNavigable();
+			
+			type = linkAssocation.getType();
+		}
+		
 	}
 }

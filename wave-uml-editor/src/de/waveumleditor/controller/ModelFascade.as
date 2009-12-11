@@ -6,6 +6,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
+	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
@@ -67,6 +68,12 @@ package de.waveumleditor.controller
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
 		
+		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
+		{
+			var id:Identifier = generateAttributeIdentifier();
+			diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
+		}
+		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
 			if (attribute.getIdentifier().getId() == EditAttributes.DEFAULT_IDENTIFIER.getId())
@@ -103,6 +110,10 @@ package de.waveumleditor.controller
 			diagram.removeMethod(node.getIdentifier(), methodId);
 		}
 		
+		public function editLink(link:LinkDependency):void
+		{
+			diagram.editLink(link);
+		}
 		
 		// Identifier
 		public function generateNodeIdentifier():Identifier

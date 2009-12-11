@@ -8,6 +8,8 @@ package de.waveumleditor.view.diagrammer.events
 	{
 		public static var EVENT_REMOVE_LINK:String = "removeLink";
 		public static var EVENT_ADD_LINK:String = "addLink";
+		public static var EVENT_EDIT_ASSOCIATION_LINK:String = "associationLink";
+		public static var EVENT_EDIT_DEPENDENCY_LINK:String = "dependencyLink";
 		
 		private var link:ClassLink;
 		

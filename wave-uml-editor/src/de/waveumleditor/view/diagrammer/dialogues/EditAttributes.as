@@ -18,14 +18,13 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditAttributes implements IEditWindow
 	{
 		private var classData:UMLClass;
+		private var controller:Controller;
 		
 		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_attr");
 		
 		public function EditAttributes()
 		{
 		}
-		
-		private var controller:Controller;
         
         public function setController(controller:Controller):void
         {
@@ -64,8 +63,9 @@ package de.waveumleditor.view.diagrammer.dialogues
         	var newAttribute:ClassAttribute = new ClassAttribute(new Identifier("default_attr"), defaultVariable, EVisibility.PUBLIC, false);
             
             var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
-            editSingleAttribute.update(newAttribute);
-            editSingleAttribute.popUp(); */
+            editSingleAttribute.update(newAttribute);//TODO Attribut über Id holen
+            editSingleAttribute.popUp();
+            */
 		}
 		
 		public function handleDelete(event:Event):void

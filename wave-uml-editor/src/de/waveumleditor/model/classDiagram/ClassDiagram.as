@@ -2,6 +2,7 @@ package de.waveumleditor.model.classDiagram
 {
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.classDiagram.maps.LinkMap;
 	import de.waveumleditor.model.classDiagram.maps.NodeMap;
 	
@@ -137,6 +138,13 @@ package de.waveumleditor.model.classDiagram
 			var umlClass:UMLClass = getNode(classId) as UMLClass;
 			
 			umlClass.removeMethodById(methodId);
+		}
+		
+		public function editLink(newLink:LinkDependency):void
+		{
+			var link:LinkDependency = getLink(newLink.getIdentifier()) as LinkDependency;
+			
+			link.updateFrom(newLink);
 		}
 	}
 }
