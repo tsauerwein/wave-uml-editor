@@ -47,7 +47,7 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(NodeEvent.EVENT_RENAME_NODE, handleRenameClassNode);
 			
 			this.diagramView.addEventListener(NodeEvent.EVENT_EDIT_NODE_ATTRIBUTES, handleEditNodeAttributes);
-			this.diagramView.addEventListener(NodeEvent.EVENT_EDIT_NODE_METHODS, handleEditNodeMethods);
+			this.diagramView.addEventListener(NodeEvent.EVENT_EDIT_NODE_METHODS, handleShowMethodDialog);
 			
 			this.diagramView.addEventListener(LinkEvent.EVENT_REMOVE_LINK, handleRemoveLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_ADD_LINK, handleAddLink);
@@ -176,11 +176,11 @@ package de.waveumleditor.controller
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			
 			var attribute:ClassAttribute = null;
-			if (event.getAttributeId() == EditAttributes.DEFAULT_IDENTIFIER)
+			if (event.getAttributeId() == ModelFascade.DEFAULT_IDENTIFIER)
 			{
 				// in case the dialog is opened to add a new attribute, create a default attribute
 				var defaultVariable:Variable = new Variable("", Type.STRING);
-        		attribute = new ClassAttribute(EditAttributes.DEFAULT_IDENTIFIER, 
+        		attribute = new ClassAttribute(ModelFascade.DEFAULT_IDENTIFIER, 
         			defaultVariable, 
         			EVisibility.PUBLIC, 
         			false);
@@ -224,8 +224,12 @@ package de.waveumleditor.controller
 			event.getAttributeWindow().update(updatedClass);
 		}
 		
-		
-		private function handleEditNodeMethods(event:NodeEvent):void
+		/**
+		 * This handler is supposed to be called from a 
+		 * node's context-panel. It opens the method/constructor-dialog
+		 * of the node. 
+		 */ 
+		private function handleShowMethodDialog(event:NodeEvent):void
 		{
 			trace("handleEditNodeMethods " + event.getNode().nodeName);
 			//TODO 
@@ -235,12 +239,17 @@ package de.waveumleditor.controller
 			editMethods.popUp();
 		}
 		
-		private function handleShowSingleMethod(event:NodeMethodEvent):void
+		/** 
+		 * This handler is supposed to be called from the 
+		 * method/constructor-dialog of a node. It opens the single-method-dialog
+		 * for a method. 
+		 */ 
+		public function handleShowSingleMethod(event:NodeMethodEvent):void
 		{
-			trace("handleShowSingleMethod " + event.getNode().nodeName);
+			trace("handleShowSingleMethod " + event.getClassNode().getName());
 			
 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
-			var umlClass:UMLClass = diagramModel.getNode(event.getNode().getIdentifier()) as UMLClass;
+			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			var method:ClassMethod = umlClass.getMethod(event.getMethodId());
 			
 			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
@@ -249,27 +258,68 @@ package de.waveumleditor.controller
 			editSingleMethod.popUp();			
 		}
 		
-		public function handleAddMethod(event:NodeMethodEvent):void
+		/** 
+		 * This handler is supposed to be called from the 
+		 * method/constructor-dialog of a node. It opens the single-constructor-dialog
+		 * for a constructor. 
+		 */ 
+		public function handleShowSingleConstructor(event:NodeMethodEvent):void
 		{
-			this.fascade.addNodeMethod(event.getClassNode(), event.getMethod());
+			trace("handleShowSingleConstructor " + event.getClassNode().getName());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
-			event.getMethodWindow().update(updatedClass);
+/* 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
+			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
+			var constructor:ClassConstructorMethod = umlClass.getConstructor(event.getMethodId());
+			
+			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+			editSingleMethod.update(constructor);
+			
+			editSingleMethod.popUp();	 */		
 		}
 		
+		/**
+		 * Handler to store the changes to a method.
+		 * This method is also used to add a new method.
+		 */
 		public function handleEditMethod(event:NodeMethodEvent):void
 		{
-			this.fascade.editNodeMethod(event.getClassNode(), event.getMethod());
+			this.fascade.editNodeMethod(event.getClassNode().getIdentifier(), event.getMethod() as ClassMethod);
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
 		
+		/**
+		 * Handler to remove a method.
+		 */ 
 		public function handleRemoveMethod(event:NodeMethodEvent):void
 		{
-			this.fascade.removeNodeMethod(event.getClassNode(), event.getMethodId());
+			this.fascade.removeNodeMethod(event.getClassNode().getIdentifier(), event.getMethodId());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
+		}
+		
+		/**
+		 * Handler to store the changes to a constructor.
+		 * This method is also used to add a new constructor.
+		 */		
+		public function handleEditConstructor(event:NodeMethodEvent):void
+		{
+			this.fascade.editClassConstructor(event.getClassNode().getIdentifier(), event.getMethod());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
+		}
+		
+		/**
+		 * Handler to remove a constructor.
+		 */ 
+		public function handleRemoveConstructor(event:NodeMethodEvent):void
+		{
+			this.fascade.removeClassConstructor(event.getClassNode().getIdentifier(), event.getMethodId());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
 		

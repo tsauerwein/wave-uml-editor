@@ -4,7 +4,6 @@ package de.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.Identifier;
 	
 	import mx.collections.ArrayList;
-	import mx.collections.IList;
 	
 	public class ClassMethod extends ClassConstructorMethod implements IClassElement
 	{
@@ -80,25 +79,21 @@ package de.waveumleditor.model.classDiagram
 			return this.statique;
 		}
 		
-		public function updateFrom(other:ClassMethod):void
+		override public function updateFrom(other:ClassConstructorMethod):void
 		{
-			setVisibility(other.getVisibility());
+			super.updateFrom(other);
 			
-			this.name = other.name;
-			this.abstract = other.abstract;
-			this.returnType = other.returnType.clone();
-			this.statique = other.statique;
-			this.abstract = other.abstract;
+			if (!(other is ClassMethod))
+			{
+				throw Error("other is not an instance of ClassMethod");
+			}
 			
-			this.getVariables().removeAll();
+			var method:ClassMethod = other as ClassMethod;
 			
-			var	list:IList = other.getVariables();
-			for (var obj:Object in list)
-			{		
-				var variable:Variable = obj as Variable;
-				
-				this.addVariable(variable.clone());
-			}	
+			this.name = method.name;
+			this.abstract = method.abstract;
+			this.returnType = method.returnType.clone();
+			this.statique = method.statique;
 		}
 		
 		/**
@@ -106,7 +101,7 @@ package de.waveumleditor.model.classDiagram
 		 * 
 		 * @param id
 		 */
-		public function clone(id:Identifier):ClassMethod
+		override public function clone(id:Identifier):ClassConstructorMethod
 		{
 			var method:ClassMethod = new ClassMethod(
 				id, 
@@ -116,14 +111,7 @@ package de.waveumleditor.model.classDiagram
 				this.isAbstract(),
 				this.isStatic()); 
 			
-			var	list:IList = this.getVariables();
-			
-			for (var obj:Object in list)
-			{		
-				var variable:Variable = obj as Variable;
-				
-				this.addVariable(variable.clone());
-			}
+			method.updateFrom(this);
 			
 			return method;
 		}

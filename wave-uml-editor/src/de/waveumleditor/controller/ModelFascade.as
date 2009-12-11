@@ -3,18 +3,20 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 
 	public class ModelFascade
 	{
 		private var diagram:ClassDiagram;
+		
+		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_attr");
 		
 		public function ModelFascade(diagram:ClassDiagram)
 		{
@@ -76,7 +78,7 @@ package de.waveumleditor.controller
 		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
-			if (attribute.getIdentifier().getId() == EditAttributes.DEFAULT_IDENTIFIER.getId())
+			if (attribute.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
 			{
 				var id:Identifier = generateAttributeIdentifier();
 				diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
@@ -94,21 +96,45 @@ package de.waveumleditor.controller
 		
 		// Methods
 		
-		public function addNodeMethod(node:ClassNode, method:ClassMethod):void
+		public function editNodeMethod(nodeId:Identifier, method:ClassMethod):void
 		{
-			var id:Identifier = generateMethodIdentifier();
-			diagram.addMethod(node.getIdentifier(), method, generateMethodIdentifier());
+			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
+			{
+				var id:Identifier = generateMethodIdentifier();
+				diagram.addMethod(nodeId, method, id);
+			}
+			else
+			{
+				diagram.editMethod(nodeId, method);
+			}
 		}
 		
-		public function editNodeMethod(node:ClassNode, method:ClassMethod):void
+		public function removeNodeMethod(nodeId:Identifier, methodId:Identifier):void
 		{
-			diagram.editMethod(node.getIdentifier(), method);
+			diagram.removeMethod(nodeId, methodId);
 		}
 		
-		public function removeNodeMethod(node:ClassNode, methodId:Identifier):void
+		// Constructors
+		
+		public function editClassConstructor(classId:Identifier, constructor:ClassConstructorMethod):void
 		{
-			diagram.removeMethod(node.getIdentifier(), methodId);
+			if (constructor.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
+			{
+				var id:Identifier = generateConstructorIdentifier();
+				diagram.addConstructor(classId, constructor, id);
+			}
+			else
+			{
+				diagram.editConstructor(classId, constructor);
+			}
 		}
+		
+		public function removeClassConstructor(classId:Identifier, constructorId:Identifier):void
+		{
+			diagram.removeConstructor(classId, constructorId);
+		}
+		
+		// Link 
 		
 		public function editLink(link:LinkDependency):void
 		{
@@ -140,6 +166,13 @@ package de.waveumleditor.controller
 			// todo: abhängig von node
 			//var nodeList:List = diagram.getNodes();
 			return new Identifier("M" + new Number(int.MAX_VALUE * Math.random()).toString() );
+		}
+		
+		public function generateConstructorIdentifier():Identifier
+		{
+			// todo: abhängig von node
+			//var nodeList:List = diagram.getNodes();
+			return new Identifier("CO" + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 	}

@@ -54,19 +54,6 @@ package de.waveumleditor.model.classDiagram
 			this.umlclass = umlclass;
 		}
 		
-		public function toString():String
-		{
-			var out:String = "";
-			
-			out += this.visibility.toString();
-			
-			out += " " + this.umlclass.getName();
-			
-			out += "(" + this.variables.toString() + ")";
-			
-			return out;
-		}
-		
 		public function isStatic():Boolean
 		{
 			return false;
@@ -80,6 +67,45 @@ package de.waveumleditor.model.classDiagram
 		public function getIdentifier():Identifier
 		{
 			return this.key;
+		}
+		
+		public function toString():String
+		{
+			var out:String = "";
+			
+			out += this.visibility.toString();
+			
+			out += " " + this.umlclass.getName();
+			
+			out += "(" + this.variables.toString() + ")";
+			
+			return out;
+		}
+		
+		public function updateFrom(other:ClassConstructorMethod):void
+		{
+			setVisibility(other.getVisibility());
+			setUMLClass(other.getUMLClass());
+			
+			// copy all parameters
+			this.getVariables().removeAll();
+			
+			var	list:IList = other.getVariables();
+			for (var obj:Object in list)
+			{		
+				var variable:Variable = obj as Variable;
+				
+				this.addVariable(variable.clone());
+			}	
+		}
+		
+		public function clone(id:Identifier):ClassConstructorMethod
+		{
+			var constructor:ClassConstructorMethod = new ClassConstructorMethod(id, visibility);
+			
+			constructor.updateFrom(this);
+			
+			return constructor;
 		}
 	}
 }

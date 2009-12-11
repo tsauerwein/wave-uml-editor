@@ -39,6 +39,11 @@ package de.waveumleditor.model.classDiagram
 			constructors.removeValue(constructor.getIdentifier());
 		}
 		
+		public function removeConstructorById(constructorId:Identifier):void
+		{
+			constructors.removeValue(constructorId);
+		}
+		
 		public function getConstructor(id:Identifier):ClassConstructorMethod
 		{
 			return constructors.getValue(id);

@@ -2,13 +2,10 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	
 	import de.waveumleditor.controller.Controller;
+	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	
 	import flash.events.Event;
@@ -19,8 +16,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 	{
 		private var classData:UMLClass;
 		private var controller:Controller;
-		
-		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_attr");
 		
 		public function EditAttributes()
 		{
@@ -55,7 +50,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add attribute handler");
 			
-			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, DEFAULT_IDENTIFIER);
+			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, ModelFascade.DEFAULT_IDENTIFIER);
 			controller.handleShowSingleAttribute(attributeEvent);
 			
 		    //Default Attribut

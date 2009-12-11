@@ -118,7 +118,7 @@ package de.waveumleditor.model.classDiagram
 		//Methods
 		public function addMethod(classId:Identifier, newMethod:ClassMethod, methodId:Identifier):void
 		{
-				var method:ClassMethod = newMethod.clone(methodId);
+				var method:ClassMethod = newMethod.clone(methodId) as ClassMethod;
 				
 				var umlClass:UMLClass = getNode(classId) as UMLClass;
 				
@@ -138,6 +138,33 @@ package de.waveumleditor.model.classDiagram
 			var umlClass:UMLClass = getNode(classId) as UMLClass;
 			
 			umlClass.removeMethodById(methodId);
+		}
+		
+		// Constructors
+		public function addConstructor(classId:Identifier, 
+			newConstructor:ClassConstructorMethod, 
+			constructorId:Identifier):void
+		{
+				var constructor:ClassConstructorMethod = newConstructor.clone(constructorId);
+				
+				var umlClass:UMLClass = getNode(classId) as UMLClass;
+				
+				umlClass.addConstructor(constructor);
+		}
+		
+		public function editConstructor(classId:Identifier, newConstructor:ClassConstructorMethod):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			var constructor:ClassConstructorMethod = umlClass.getConstructor(newConstructor.getIdentifier());
+			constructor.updateFrom(newConstructor);
+		}
+		
+		public function removeConstructor(classId:Identifier, constructorId:Identifier):void
+		{
+			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			
+			umlClass.removeConstructorById(constructorId);
 		}
 		
 		public function editLink(newLink:LinkDependency):void
