@@ -91,9 +91,9 @@ package de.waveumleditor.model.classDiagram
 			this.getVariables().removeAll();
 			
 			var	list:IList = other.getVariables();
-			for (var obj:Object in list)
+			for (var i:int = 0; i < list.length; i++)
 			{		
-				var variable:Variable = obj as Variable;
+				var variable:Variable = list.getItemAt(0) as Variable;
 				
 				this.addVariable(variable.clone());
 			}	

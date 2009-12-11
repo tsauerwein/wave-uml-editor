@@ -29,7 +29,32 @@ package de.tests.waveumleditor.model.classDiagram
 			method.addVariable(new Variable("var2", Type.INT));
 			
 			assertEquals("+ superMethod(var1:int=1,var2:int):String", method.toString());
+		}
+		
+		public function testUpdataFrom():void
+		{
+			var a:ClassMethod = new ClassMethod(new Identifier("meth008"), "test", EVisibility.PUBLIC, Type.INT);
+			a.addVariable(new Variable("var1", Type.BOOLEAN));
 			
+			var b:ClassMethod = new ClassMethod(new Identifier("meth009"), "", EVisibility.PRIVATE, Type.STRING);
+			b.updateFrom(a);
+			
+			assertEquals(a.getVisibility(), b.getVisibility());
+			assertEquals(a.getVariables().length, b.getVariables().length);
+			assertEquals(a.getName(), b.getName());
+		}
+		
+		public function testClone():void
+		{
+			var a:ClassMethod = new ClassMethod(new Identifier("meth008"), "test", EVisibility.PUBLIC, Type.INT);
+			a.addVariable(new Variable("var1", Type.BOOLEAN));
+			
+			var b:ClassMethod = a.clone(a.getIdentifier()) as ClassMethod;
+			
+			assertEquals(a.getIdentifier(), b.getIdentifier());
+			assertEquals(a.getVisibility(), b.getVisibility());
+			assertEquals(a.getVariables().length, b.getVariables().length);
+			assertEquals(a.getName(), b.getName());
 		}
 
 	}

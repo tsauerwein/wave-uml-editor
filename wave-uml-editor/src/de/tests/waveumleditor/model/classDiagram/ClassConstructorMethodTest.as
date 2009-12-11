@@ -27,6 +27,29 @@ package de.tests.waveumleditor.model.classDiagram
 			classConstructorMethod.addVariable(new Variable("var2", Type.INT, "4711"));
 			assertEquals("+ DasIstKlasse(var1:boolean,var2:int=4711)", classConstructorMethod.toString());
 		}
-
+		
+		public function testUpdataFrom():void
+		{
+			var a:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("meth008"), EVisibility.PUBLIC);
+			a.addVariable(new Variable("var1", Type.BOOLEAN));
+			
+			var b:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("meth009"), EVisibility.PUBLIC);
+			b.updateFrom(a);
+			
+			assertEquals(a.getVisibility(), b.getVisibility());
+			assertEquals(a.getVariables().length, b.getVariables().length);
+		}
+		
+		public function testClone():void
+		{
+			var a:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("meth008"), EVisibility.PUBLIC);
+			a.addVariable(new Variable("var1", Type.BOOLEAN));
+			
+			var b:ClassConstructorMethod = a.clone(a.getIdentifier());
+			
+			assertEquals(a.getIdentifier(), b.getIdentifier());
+			assertEquals(a.getVisibility(), b.getVisibility());
+			assertEquals(a.getVariables().length, b.getVariables().length);
+		}
 	}
 }
