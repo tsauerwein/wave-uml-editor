@@ -117,7 +117,7 @@ package com.anotherflexdev.diagrammer {
 			}
 		}
 		
-		private function handleLabelResize(event:Event):void {
+		protected function handleLabelResize(event:Event):void {
 			this.invalidateDisplayList();
 		}
 		
