@@ -6,7 +6,6 @@ package de.waveumleditor.view.diagrammer.events
 	{
 		private var link:LinkDependency;
 		
-		// todo: dialog als member
 		public function LinkEditEvent(link:LinkDependency)
 		{
 			this.link = link;

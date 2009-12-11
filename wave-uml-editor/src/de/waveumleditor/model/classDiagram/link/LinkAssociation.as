@@ -18,9 +18,9 @@ package de.waveumleditor.model.classDiagram.link
 		private var type:EAssociationType = EAssociationType.ASSOCIATION;
 		
 		public function LinkAssociation(key:Identifier, 
-			linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+			linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode, name:String = "")
 		{
-			super(key, linkFrom, linkTo);
+			super(key, linkFrom, linkTo, name);
 		}
 
 		public function getType():EAssociationType
@@ -116,5 +116,12 @@ package de.waveumleditor.model.classDiagram.link
 			type = linkAssocation.getType();
 		}
 		
+		override public function clone(id:Identifier):LinkDependency
+		{
+			var copy:LinkAssociation = new LinkAssociation(id, getLinkFrom(), getLinkTo(), getName());
+			copy.updateFrom(this);
+			
+			return copy;
+		}
 	}
 }

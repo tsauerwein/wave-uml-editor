@@ -14,6 +14,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -279,9 +280,13 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowAssociationLink(event:LinkEvent):void 
 		{
-			//TODO
-			var link:LinkAssociation = diagramModel.getLink( event.getLink().getIdentifier() ) as LinkAssociation;
+			var link:LinkAssociation = diagramModel.getLink(event.getLink().getIdentifier()) as LinkAssociation;
+			var linkCopy:LinkAssociation = link.clone(link.getIdentifier()) as LinkAssociation;
 			
+			var editLinksWindow:EditAssociationLinkWindow = new EditAssociationLinkWindow();
+			editLinksWindow.update(linkCopy);
+			editLinksWindow.setController(this);
+			editLinksWindow.popUp();
 		}
 		
 		/**
@@ -301,10 +306,11 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowDependencyLink(event:LinkEvent):void
 		{
-			var link:LinkDependency = diagramModel.getLink( event.getLink().getIdentifier() ) as LinkDependency;
+			var link:LinkDependency = diagramModel.getLink(event.getLink().getIdentifier()) as LinkDependency;
+			var linkCopy:LinkDependency = link.clone(link.getIdentifier());
 			
 			var editLinksWindow:EditDependencyLinkWindow = new EditDependencyLinkWindow();
-			editLinksWindow.update(link);
+			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
 			editLinksWindow.popUp();
 		}

@@ -18,5 +18,5 @@
 		]]>
 	</mx:Script>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)" toolTip="Löschen?" y="2" x="2" width="20" height="20"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-text-edit.png')" glowColor="#000000" click="handleEditLink(event)" toolTip="Text Ändern" y="2" x="24" width="20" height="20"/>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-text-edit.png')" glowColor="#000000" click="handleEditLink(event)" toolTip="Bezeichnung ändern" y="2" x="24" width="20" height="20"/>
 </diagrammer:GenericLinkContextPanel>

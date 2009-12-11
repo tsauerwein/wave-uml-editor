@@ -9,9 +9,10 @@ package de.waveumleditor.model.classDiagram.link
 		private var name:String;
 		
 		public function LinkDependency(key:Identifier, 
-			linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
+			linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode, name:String = "")
 		{
 			super(key, linkFrom, linkTo);
+			this.name = name;
 		}
 		
 		public override function canLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):Boolean 
@@ -32,6 +33,11 @@ package de.waveumleditor.model.classDiagram.link
 		public function updateFrom(link:LinkDependency):void
 		{
 			this.name = link.getName();
+		}
+		
+		public function clone(id:Identifier):LinkDependency
+		{
+			return new LinkDependency(id, getLinkFrom(), getLinkTo(), name);
 		}
 	}
 }
