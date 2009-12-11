@@ -21,11 +21,13 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override protected function createLinkContextPanel():void 
 		{
 			this.linkContextPanel = new AssociationLinkContextPanel;
-			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);				
+			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
+			this.linkContextPanel.addEventListener("describeLink", handleDescribeLink);
 		}
 		
 		override protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
-		{}
+		{
+		}
 		
 	}
 }

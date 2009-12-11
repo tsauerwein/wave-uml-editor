@@ -1,15 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<diagrammer:GenericLinkContextPanel xmlns:diagrammer="com.anotherflexdev.diagrammer.*" xmlns:buttons="com.anotherflexdev.ui.buttons.*" xmlns:mx="http://www.adobe.com/2006/mxml" cornerRadius="10" borderStyle="solid" dropShadowEnabled="true" backgroundColor="#FFFFFF" width="48" height="25">
+<GenericLinkContextPanel  xmlns="com.anotherflexdev.diagrammer.*" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:buttons="com.anotherflexdev.ui.buttons.*"  width="55.68" height="32.6" verticalScrollPolicy="off" horizontalScrollPolicy="off" resizeEffect="{resize}" clipContent="true" styleName="Balloon2">
+	<mx:Style source="../assets/style/balloon.css"/>
 	<mx:Script>
 		<![CDATA[
-		
-
-			private function handleRemoveMe(event:MouseEvent):void {
-				dispatchEvent(new Event('removeLink'));
+			import mx.core.Application;
+			import mx.effects.easing.Bounce;
+			import de.waveumleditor.view.diagrammer.events.LinkDescriptionEvent;
+			
+			private function handleRemoveClick(event:Event):void {
+				this.currentState = "removeQuestion";
+			}
+			
+			private function handleDescribeMeClick(event:Event):void 
+			{
+				this.currentState = "describeMe";
+			}
+			
+			private function handleLinkDescription():void
+			{
+				var descriptionArray:Array = new Array(6);
+				
+				descriptionArray[0] = txLinkName.text;
+				descriptionArray[1] = txLinkMultiplicityFrom.text;
+				descriptionArray[2] = txLinkAttrFrom.text;
+				descriptionArray[3] = txLinkMultiplicityTo.text;
+				descriptionArray[4] = txLinkAttrTo.text;
+				descriptionArray[5] = checkboxNavi.selected;
+				
+				
+				dispatchEvent(new LinkDescriptionEvent(descriptionArray));	
+			}
+			
+			private function handleTxLinkNameKeyUp(event:KeyboardEvent):void 
+			{
+				if(event.keyCode == Keyboard.ESCAPE) 
+				{
+					this.currentState = null;	
+				}
 			}
 			
 		]]>
 	</mx:Script>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)"  toolTip="Löschen?" y="2" x="2" width="20" height="20"/>
-		<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-text-edit.png')" glowColor="#000000" click="handleRemoveMe(event)" toolTip="Text Ändern"  y="2" x="24" width="22" height="20"/>
-</diagrammer:GenericLinkContextPanel>
+	<mx:Metadata>
+		[Event(name="removeLink", type="flash.events.Event")]
+		[Event(name="describeLink", type="LinkDescriptionEvent")]
+	</mx:Metadata>
+	<states>
+		<mx:State name="removeQuestion">
+			<mx:SetProperty name="width" value="178"/>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas x="10" y="10" width="158" height="58" id="msgCanvas">
+					<mx:Label x="15" y="5" text="Remove me?" fontWeight="bold" width="133" textAlign="center" fontSize="11"/>
+					<mx:Button x="10" y="30" label="Yes" width="60" click="dispatchEvent(new Event('removeLink'))"/>
+					<mx:Button x="88" y="30" label="No" width="60" click="this.currentState=null"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:SetProperty name="height" value="85"/>
+			<mx:RemoveChild target="{glowbutton1}"/>
+			<mx:RemoveChild target="{image1}"/>
+			<mx:RemoveChild target="{glowbutton0}"/>
+		</mx:State>
+		<mx:State name="describeMe" enterState="txLinkMultiplicityFrom.setFocus()">
+			<mx:RemoveChild target="{image1}"/>
+			<mx:RemoveChild target="{glowbutton0}"/>
+			<mx:SetProperty name="width" value="700"/>
+			<mx:SetProperty name="height" value="278"/>
+			<mx:AddChild position="lastChild">
+				<mx:Label x="10" y="10" text="Edit Link Description" fontWeight="bold" textDecoration="normal" fontSize="14" width="187" height="22" fontStyle="normal"/>
+			</mx:AddChild>
+			<mx:AddChild>
+				<mx:Image  alpha="0.5" source="de/waveumleditor/view/diagrammer/assets/images/Background_LinkDescription.png" width="660" x="20" height="195" y="50" scaleContent="true"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Canvas left="10" right="10" bottom="15" top="40">
+					<mx:TextInput id="txLinkName" x="280" y="55" keyUp="handleTxLinkNameKeyUp(event)" text="" editable="true" width="120" textAlign="center"/>
+					<mx:TextInput id="txLinkAttrTo" x="408" y="101" keyUp="handleTxLinkNameKeyUp(event)" text="" editable="true" width="115" textAlign="right"/>
+					<mx:TextInput id="txLinkMultiplicityFrom" x="157" y="55" keyUp="handleTxLinkNameKeyUp(event)" text="" editable="true" width="61"/>
+					<mx:TextInput id="txLinkMultiplicityTo" x="462" y="55" keyUp="handleTxLinkNameKeyUp(event)" editable="true" width="61" textAlign="right"/>
+					<mx:TextInput id="txLinkAttrFrom" x="157" y="101" keyUp="handleTxLinkNameKeyUp(event)" text="" editable="true" width="115"/>
+					<mx:CheckBox x="10" y="194" label="Navigable" id="checkboxNavi" enabled="true"/>
+					
+					<mx:Button x="575" y="195" width="95" label="OK" click="handleLinkDescription(); this.currentState=null"/>
+					<mx:Button x="472" y="195" width="95" label="Cancel" click="currentState=null" />
+					<mx:Label x="157" y="40" text="Multiplicity" width="71"/>
+					<mx:Label x="451" y="40" text="Multiplicity" width="72" textAlign="right"/>
+					<mx:Label x="157" y="121" text="Attribute" width="115"/>
+					<mx:Label x="408" y="121" text="Attribute" width="115" textAlign="right"/>
+					<mx:Label x="280" y="40" text="Name" width="120" textAlign="center"/>
+				</mx:Canvas>
+			</mx:AddChild>
+			<mx:RemoveChild target="{glowbutton1}"/>
+		</mx:State>
+	</states>
+	<buttons:GlowButton source="@Embed(source='../assets/images/btn-remove.png')" glowColor="#000000" y="5" click="handleRemoveClick(event)" right="29.749996" id="glowbutton1"/>
+	<buttons:GlowButton source="@Embed(source='../assets/images/btn-label.png')" glowColor="#000000" y="5" click="handleDescribeMeClick(event)" right="5.949997" id="glowbutton0"/>
+	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>
+	<mx:Image bottom="0" id="image1" horizontalCenter="0" source="@Embed(source='../assets/images/balloon-edge.png')" width="12" height="7">
+	</mx:Image>
+</GenericLinkContextPanel>
