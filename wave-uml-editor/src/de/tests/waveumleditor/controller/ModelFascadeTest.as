@@ -35,7 +35,7 @@ package de.tests.waveumleditor.controller
 			assertThat(diagram.getNode(id) != null);
 		}
 		
-		public function testAddNodeAttribute():void
+/* 		public function testAddNodeAttribute():void
 		{
 			var diagram:ClassDiagram = new ClassDiagram();
 			var nodeId:Identifier = new Identifier("C1");
@@ -56,7 +56,7 @@ package de.tests.waveumleditor.controller
 			assertEquals(1, nodeModel.getAttributes().length);
 			assertThat(null != (nodeModel.getAttributes().getItemAt(0) as ClassAttribute).getIdentifier())
 			
-		}
+		} */
 		
 		public function testEditNodeAttribute():void
 		{

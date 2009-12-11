@@ -9,6 +9,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 
 	public class ModelFascade
 	{
@@ -66,15 +67,17 @@ package de.waveumleditor.controller
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
 		
-		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
-		{
-			var id:Identifier = generateAttributeIdentifier();
-			diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
-		}
-		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
-			diagram.editAttribute(nodeId, attribute);
+			if (attribute.getIdentifier().getId() == EditAttributes.DEFAULT_IDENTIFIER.getId())
+			{
+				var id:Identifier = generateAttributeIdentifier();
+				diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
+			}
+			else
+			{
+				diagram.editAttribute(nodeId, attribute);
+			}
 		}
 		
 		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void

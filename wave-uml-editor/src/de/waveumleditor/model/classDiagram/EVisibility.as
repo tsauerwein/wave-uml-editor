@@ -48,5 +48,22 @@ package de.waveumleditor.model.classDiagram
 			return out;
 		}
 		
+		public static function getEVisibilityFromVal(value:int):EVisibility
+		{
+			switch(value)
+			{
+				case 0: 
+					return PUBLIC;
+				case 1: 
+					return PRIVATE;
+				case 2:
+					return PROTECTED;
+				case 3: 
+					return PACKAGE;
+			}
+ 	
+			return new EVisibility(4, "unknown");
+		}
+		
 	}
 }

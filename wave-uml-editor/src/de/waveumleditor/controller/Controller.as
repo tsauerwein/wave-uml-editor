@@ -4,11 +4,15 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
+	import de.waveumleditor.model.classDiagram.EVisibility;
+	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
@@ -130,22 +134,39 @@ package de.waveumleditor.controller
 			trace("handleShowSingleAttribute " + event.getClassNode().getName());
 		
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
-			var attribute:ClassAttribute = umlClass.getAttribute(event.getAttributeId());
+			
+			var attribute:ClassAttribute = null;
+			if (event.getAttributeId() == EditAttributes.DEFAULT_IDENTIFIER)
+			{
+				var defaultVariable:Variable = new Variable("", Type.STRING);
+        		attribute = new ClassAttribute(EditAttributes.DEFAULT_IDENTIFIER, 
+        			defaultVariable, 
+        			EVisibility.PUBLIC, 
+        			false);
+			}
+			else 
+			{
+				attribute = umlClass.getAttribute(event.getAttributeId());
+			}
 			
 			var editSingleAttribute:EditSingleAttributeWindow = new EditSingleAttributeWindow();
 			editSingleAttribute.setController(this);
+			editSingleAttribute.setClassData(umlClass);
+			editSingleAttribute.setEditAttributesWindow(event.getAttributeWindow() as EditAttributesWindow);
           	editSingleAttribute.update(attribute);
          	
-         	editSingleAttribute.popUp();			
+         	editSingleAttribute.popUp();		
 		}
 		
-		public function handleAddAttribute(event:NodeAttributeEvent):void
+		/* public function handleAddAttribute(event:NodeAttributeEvent):void
 		{
 			this.fascade.addNodeAttribute(event.getClassNode().getIdentifier(), event.getAttribute());
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			
+			
 			event.getAttributeWindow().update(updatedClass);
-		}
+		} */
 		
 		public function handleEditAttribute(event:NodeAttributeEvent):void
 		{
@@ -157,6 +178,8 @@ package de.waveumleditor.controller
 		
 		public function handleRemoveAttribute(event:NodeAttributeEvent):void
 		{
+			trace(event.getClassNode().getIdentifier());
+			trace(event.getAttributeId());
 			this.fascade.removeNodeAttribute(event.getClassNode().getIdentifier(), event.getAttributeId());
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());

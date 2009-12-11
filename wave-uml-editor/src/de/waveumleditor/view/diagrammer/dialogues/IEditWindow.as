@@ -18,5 +18,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 		function getClassData():UMLClass;
 		
 		
+		
 	}
 }

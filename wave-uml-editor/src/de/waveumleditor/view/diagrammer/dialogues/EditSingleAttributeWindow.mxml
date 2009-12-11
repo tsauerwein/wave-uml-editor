@@ -2,6 +2,9 @@
 <EditSingleAttribute xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
+        	import de.waveumleditor.model.classDiagram.Variable;
+        	import de.waveumleditor.model.Identifier;
+        	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
         	import de.waveumleditor.model.classDiagram.EVisibility;
         	import de.waveumleditor.model.classDiagram.Type;
         	import mx.collections.ArrayCollection;
@@ -72,9 +75,19 @@
 			
 			public function saveAttribute(event:Event):void 
 			{
-				trace("save attribute event");
-				
-				//TODO Attribut speichern (Falls Attributkey==default_attr neues Attribut anlegen )
+				trace("save edited attribute event");
+				var newAttribute:ClassAttribute = new ClassAttribute(
+					new Identifier(attr_key),
+					new Variable(
+						attr_name.text,
+						new Type(type_comboBox.selectedItem.toString()),
+						attr_default_value.text),
+					EVisibility.getEVisibilityFromVal(visibility_comboBox.selectedIndex),//TODO
+					static_checkbox.selected
+				)
+	
+	            var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), newAttribute, getEditAttributesWindow());
+	            controller.handleEditAttribute(nodeAttributeEvent);
 				
 				PopUpManager.removePopUp(singleAttributeWindow);
 			}
@@ -161,11 +174,12 @@
 				        <mx:GridRow width="100%" height="100%">
 				            <mx:GridItem width="100%" height="100%">
 				            </mx:GridItem>
+				            
 				            <mx:GridItem width="0%" height="100%">
-				                <mx:Button label="Abbrechen" click="singleAttributeWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
+				                <mx:Button label="Speichern" click="saveAttribute(event)"/>
 				            </mx:GridItem>
 				            <mx:GridItem width="0%" height="100%">
-				                <mx:Button label="OK" click="saveAttribute(event)"/>
+				                <mx:Button label="Abbrechen" click="singleAttributeWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
 				            </mx:GridItem>
 				        </mx:GridRow>
 				    </mx:Grid>

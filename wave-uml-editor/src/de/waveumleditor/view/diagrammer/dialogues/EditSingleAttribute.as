@@ -6,8 +6,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditSingleAttribute
 	{
 
-		private var controller:Controller;
-		private var classData:UMLClass;
+		public var controller:Controller;
+		public var classData:UMLClass;
+		public var editAttributesWindow:EditAttributesWindow;
 
 		
 		public function EditSingleAttribute()
@@ -32,6 +33,16 @@ package de.waveumleditor.view.diagrammer.dialogues
         public function getClassData():UMLClass
         {
         	return this.classData;
+        }
+        
+        public function setEditAttributesWindow(editAttributesWindow:EditAttributesWindow):void
+        {
+        	this.editAttributesWindow = editAttributesWindow;
+        }
+        
+        public function getEditAttributesWindow():EditAttributesWindow
+        {
+        	return this.editAttributesWindow;
         }
 
 	}

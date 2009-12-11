@@ -3,21 +3,21 @@ package de.waveumleditor.view.diagrammer.events
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 
 	public class NodeAttributeEvent
 	{
 		
 		private var attribute:ClassAttribute;
-		private var attributeWindow:EditAttributesWindow;
+		private var attributeWindow:EditAttributes;
 		private var attributeId:Identifier;
 		private var node:UMLClass;
 		
 		public function NodeAttributeEvent(
 			node:UMLClass, 
 			attribute:ClassAttribute,
-			attributeWindow:EditAttributesWindow,
+			attributeWindow:EditAttributes,
 			attributeId:Identifier = null)
 		{
 			this.attribute = attribute;
@@ -26,7 +26,11 @@ package de.waveumleditor.view.diagrammer.events
 			
 			if (attributeId == null && attribute != null)
 			{
-				attributeId = attribute.getIdentifier();
+				this.attributeId = attribute.getIdentifier();
+			} 
+			else 
+			{
+				this.attributeId = attributeId;
 			}
 		}
 		
@@ -40,7 +44,7 @@ package de.waveumleditor.view.diagrammer.events
 			return attribute;
 		}
 		
-		public function getAttributeWindow():EditAttributesWindow
+		public function getAttributeWindow():EditAttributes
 		{
 			return attributeWindow;
 		}
