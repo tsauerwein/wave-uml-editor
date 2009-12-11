@@ -9,5 +9,18 @@ package com.anotherflexdev.diagrammer {
 		[Bindable] public var linkAttributeFrom:String;
 		[Bindable] public var linkAttributeTo:String;
 		[Bindable] public var linkNavigable:String;
+		
+		private var link:Link;
+		
+		public function setLink(link:Link):void
+		{
+			this.link = link;
+		}
+		
+		public function getLink():Link
+		{
+			return this.link;
+		}
+
 	}
 }

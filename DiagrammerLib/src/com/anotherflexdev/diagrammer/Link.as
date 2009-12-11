@@ -75,7 +75,8 @@ package com.anotherflexdev.diagrammer {
 		protected function createLinkContextPanel():void {
 			this.linkContextPanel = new LinkContextPanel;
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
-			this.linkContextPanel.addEventListener("labelLink", handleLabelLink);			
+			this.linkContextPanel.addEventListener("labelLink", handleLabelLink);
+			this.linkContextPanel.setLink(this);
 		}
 		
 		protected function createLabel():void {
