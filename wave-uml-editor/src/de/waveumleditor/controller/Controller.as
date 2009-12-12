@@ -15,7 +15,6 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
-	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
@@ -235,6 +234,7 @@ package de.waveumleditor.controller
 			//TODO 
 			
 			var editMethods:EditMethodsWindow = new EditMethodsWindow();
+			editMethods.setController(this);
 			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
 			editMethods.popUp();
 		}
@@ -263,6 +263,14 @@ package de.waveumleditor.controller
 		 * method/constructor-dialog of a node. It opens the single-constructor-dialog
 		 * for a constructor. 
 		 */ 
+		public function handleAddMethod(event:NodeMethodEvent):void
+		{
+			this.fascade.addNodeMethod(event.getClassNode().getIdentifier(), event.getMethod());
+			
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			event.getMethodWindow().update(updatedClass);
+		}
+		
 		public function handleShowSingleConstructor(event:NodeMethodEvent):void
 		{
 			trace("handleShowSingleConstructor " + event.getClassNode().getName());

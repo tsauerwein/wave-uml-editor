@@ -10,7 +10,6 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.dialogues.EditAttributes;
 
 	public class ModelFascade
 	{
@@ -96,6 +95,24 @@ package de.waveumleditor.controller
 		
 		// Methods
 		
+		public function addNodeMethod(nodeId:Identifier, method:ClassConstructorMethod):void
+		{
+			var id:Identifier = generateMethodIdentifier();
+			if(method is ClassMethod)
+			{
+				diagram.addMethod(nodeId, method as ClassMethod, generateMethodIdentifier());
+			}
+			if(method is ClassConstructorMethod)
+			{
+				diagram.addConstructor(nodeId, method, generateMethodIdentifier());
+			}
+			
+		}
+		
+		public function removeNodeMethod(nodeId:Identifier, methodId:Identifier):void
+		{
+			diagram.removeMethod(nodeId, methodId);
+		}
 		public function editNodeMethod(nodeId:Identifier, method:ClassMethod):void
 		{
 			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
@@ -107,11 +124,6 @@ package de.waveumleditor.controller
 			{
 				diagram.editMethod(nodeId, method);
 			}
-		}
-		
-		public function removeNodeMethod(nodeId:Identifier, methodId:Identifier):void
-		{
-			diagram.removeMethod(nodeId, methodId);
 		}
 		
 		// Constructors

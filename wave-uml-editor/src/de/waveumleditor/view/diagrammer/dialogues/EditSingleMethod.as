@@ -8,6 +8,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 
 		private var controller:Controller;
 		private var classData:UMLClass;
+		public var editMethodsWindow:EditMethodsWindow;
 
 		
 		public function EditSingleMethod()
@@ -32,6 +33,16 @@ package de.waveumleditor.view.diagrammer.dialogues
         public function getClassData():UMLClass
         {
         	return this.classData;
+        }
+        
+        public function setEditMethodsWindow(editMethodsWindow:EditMethodsWindow):void
+        {
+        	this.editMethodsWindow = editMethodsWindow;
+        }
+        
+        public function getEditMethodsWindow():EditMethodsWindow
+        {
+        	return this.editMethodsWindow;
         }
 
 	}

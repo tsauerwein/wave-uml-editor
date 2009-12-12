@@ -4,20 +4,21 @@ package de.waveumleditor.view.diagrammer.events
 	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.view.diagrammer.dialogues.EditMethods;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 
 	public class NodeMethodEvent
 	{
 		
 		private var method:ClassConstructorMethod;
-		private var methodWindow:EditMethodsWindow;
+		private var methodWindow:EditMethods;
 		private var methodId:Identifier;
 		private var node:UMLClass;
 		
 		public function NodeMethodEvent(
 			node:UMLClass, 
 			method:ClassConstructorMethod,
-			methodWindow:EditMethodsWindow,
+			methodWindow:EditMethods,
 			methodId:Identifier = null)
 		{
 			this.node = node;			
@@ -44,7 +45,7 @@ package de.waveumleditor.view.diagrammer.events
 			return method;
 		}
 		
-		public function getMethodWindow():EditMethodsWindow
+		public function getMethodWindow():EditMethods
 		{
 			return methodWindow;
 		}
@@ -53,6 +54,7 @@ package de.waveumleditor.view.diagrammer.events
 		{
 			return methodId;
 		}
+		
 		
 	}
 }

@@ -2,10 +2,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.Identifier;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.EVisibility;
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
 	import flash.events.Event;
 	
@@ -15,6 +17,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 	{
 		private var controller:Controller;
 		private var classData:UMLClass;
+		
+		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
 
 		
 		public function EditMethods()
@@ -41,14 +45,22 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.classData;
         }
 
+		public function update(nodeData:ClassDiagramNode):void 
+		{
+			
+		}
+		
 		public function handleAdd(event:Event):void
 		{
 			trace("add method handler");
-			var newMethod:ClassMethod = new ClassMethod(new Identifier("default_meth"), "", EVisibility.PUBLIC, Type.STRING);
+			
+			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, DEFAULT_IDENTIFIER);
+			controller.handleShowSingleMethod(methodEvent);
+			/* var newMethod:ClassMethod = new ClassMethod(new Identifier("default_meth"), "", EVisibility.PUBLIC, Type.STRING);
                 
             var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
             editSingleMethod.update(newMethod);//TODO Methode über Id holen
-            editSingleMethod.popUp();
+            editSingleMethod.popUp(); */
 		}
 		
 		public function handleDelete(event:Event):void

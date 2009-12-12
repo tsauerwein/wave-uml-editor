@@ -22,8 +22,9 @@
             private function editMethodsWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(editMethodsWindow);
             }
-            public function update(nodeData:ClassDiagramNode):void 
+            override public function update(nodeData:ClassDiagramNode):void 
 			{
+				trace("update editMethodsWindow method called");
 				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
 				
 				this.setClassData(nodeData as UMLClass);
