@@ -69,5 +69,24 @@ package de.waveumleditor.view.diagrammer.dialogues
             editSingleMethod.update(mockupMethod);//TODO Attribut über Id holen
             editSingleMethod.popUp();
 		}
+		
+		public function handleAddConstructor(event:Event):void
+		{
+			//TODO
+			trace("handleAddConstructor");
+		}
+		
+		public function handleEditConstructor(event:Event):void
+		{
+			//TODO
+			trace("handleEditConstructor");
+		}
+		
+		public function handleRemoveConstructor(event:Event):void
+		{
+			//TODO
+			trace("handleRemoveConstructor");
+		}
+		
 	}
 }
