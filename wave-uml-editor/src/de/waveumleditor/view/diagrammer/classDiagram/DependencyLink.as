@@ -13,20 +13,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
-/*			if (fromNode is InterfaceNode && toNode is ClassNode)
-			{
-				return true;
-			} else if (fromNode is ClassNode && toNode is ClassNode)
-			{
-				return true;
-			} */
-			
-			if (toNode is ClassNode)
-			{
-				return true;
-			}
-			
-			return false;
+			return true;
 		}
 		
 		override protected function createLinkContextPanel():void
