@@ -53,7 +53,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.performTriangleDrawing(x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
 		}
 
-		private function performTriangleDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void 
+		protected function performTriangleDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void 
 		{
 			this.graphics.lineStyle(lineThickness, color, alpha);
 			var arrowHeight:Number = 10;
