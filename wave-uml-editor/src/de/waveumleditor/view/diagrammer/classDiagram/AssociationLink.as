@@ -1,13 +1,10 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
-	
 	import flash.geom.Point;
 	
-
 	public class AssociationLink extends ClassLink
 	{
-		
 		public function AssociationLink()
 		{
 			super();
@@ -20,10 +17,9 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override protected function createLinkContextPanel():void 
 		{
-			this.linkContextPanel = new AssociationLinkContextPanel;
+			this.linkContextPanel = new AssociationLinkContextPanel();
 			this.linkContextPanel.setLink(this);
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
-			this.linkContextPanel.addEventListener("describeLink", handleDescribeLink);
 		}
 		
 		override protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 

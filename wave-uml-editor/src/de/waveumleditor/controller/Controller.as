@@ -340,8 +340,8 @@ package de.waveumleditor.controller
 		{
 			var link:LinkAssociation = diagramModel.getLink(event.getLink().getIdentifier()) as LinkAssociation;
 			var linkCopy:LinkAssociation = link.clone(link.getIdentifier()) as LinkAssociation;
-			
 			var editLinksWindow:EditAssociationLinkWindow = new EditAssociationLinkWindow();
+			editLinksWindow.setViewLink(event.getLink());
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
 			editLinksWindow.popUp();

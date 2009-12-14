@@ -6,7 +6,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.view.diagrammer.events.LinkDescriptionEvent;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -22,7 +21,8 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		[Bindable] public var linkMultiplicityTo:String;
 		[Bindable] public var linkAttributeFrom:String;
 		[Bindable] public var linkAttributeTo:String;
-		[Bindable] public var linkNavigable:String;
+		[Bindable] public var linkNavigableFrom:Boolean;
+		[Bindable] public var linkNavigableTo:Boolean;
 		
 		protected var labelMultiplicityFrom:Label;
 		protected var labelMultiplicityTo:Label;
@@ -125,13 +125,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		public function setIdentifier(key:Identifier):void
 		{
 			this.key = key;
-		}
-		
-		override protected function createLinkContextPanel():void 
-		{
-			this.linkContextPanel = new ClassLinkContexPanel();
-			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
-			this.linkContextPanel.addEventListener("describeLink", handleDescribeLink);
 		}
 		
 		override protected function createChildren():void 
@@ -309,7 +302,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				{
 					if(pointFromNode.x >= pointToNode.x)
 					{
-						this.labelAttributeTo.x = pointFromNode.x;
+						this.labelAttributeTo.x = pointToNode.x;
 					}
 					else
 					{
@@ -332,6 +325,29 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 				}
 			}
+		}
+		
+		override protected function handleRemove(event:Event):void 
+		{
+			if(this.label.parent != null) {
+				Diagram(parent).removeChild(this.label);
+			}
+			if(this.labelMultiplicityFrom.parent != null) {
+				Diagram(parent).removeChild(this.labelMultiplicityFrom);
+			}
+			if(this.labelMultiplicityTo.parent != null) {
+				Diagram(parent).removeChild(this.labelMultiplicityTo);
+			}
+			if(this.labelAttributeFrom.parent != null) {
+				Diagram(parent).removeChild(this.labelAttributeFrom);
+			}
+			if(this.labelAttributeTo.parent != null) {
+				Diagram(parent).removeChild(this.labelAttributeTo);
+			}
+			if(this.linkContextPanel.parent != null) {
+				Diagram(parent).removeChild(this.linkContextPanel);
+			}
+			trace("AssoziationLink -> override protected function handleRemove()");
 		}
 		
 		protected function getLineStartPoint():Point
@@ -387,46 +403,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					
 		}
 		
-		override protected function handleLabelLink(event:LabelLinkEvent):void 
-		{
-			trace("handleLabelLink");
-		}
-		
-		protected function handleDescribeLink(event:LinkDescriptionEvent):void
-		{
-			this.linkName = event.valueArray[0];
-			this.linkMultiplicityFrom = event.valueArray[1];
-			this.linkAttributeFrom = event.valueArray[2];
-			this.linkMultiplicityTo = event.valueArray[3];
-			this.linkAttributeTo = event.valueArray[4];
-			this.linkNavigable = event.valueArray[5];
-			
-			this.invalidateDisplayList();
-			this.removeLinkContextPanelFromParent();
-			trace("handleDescribeLink");
-		}
-		
-		override protected function handleClick(event:MouseEvent):void 
-		{
-			var diagram:Diagram = Diagram(parent);
-			if(!diagram.isLinking && !diagram.contains(this.linkContextPanel)) 
-			{
-				setLinkContextPanelPosition();
-				this.linkContextPanel.linkName = this.linkName;
-				this.linkContextPanel.linkMultiplicityFrom = this.linkMultiplicityFrom;
-				this.linkContextPanel.linkAttributeFrom = this.linkAttributeFrom;
-				this.linkContextPanel.linkMultiplicityTo = this.linkMultiplicityTo;
-				this.linkContextPanel.linkAttributeTo = this.linkAttributeTo;
-				this.linkContextPanel.linkNavigable = this.linkNavigable;
-				diagram.addChild(this.linkContextPanel);
-				diagram.addEventListener(MouseEvent.CLICK, handleParentClick);
-				diagram.addEventListener(Event.ADDED, handleParentAdded);
-				this.invalidateDisplayList();
-				this.setFocus();
-			}
-		}
-		
-		private function setLabelStyle(lab:Label):void
+		protected function setLabelStyle(lab:Label):void
 		{
 			lab.setStyle("fontFamily", this.getStyle("labelFontFamily"));
 			lab.setStyle("fontSize", "12");
@@ -434,27 +411,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			lab.setStyle("fontWeight","bold");
 		}
 		
-		override protected function handleRemove(event:Event):void {
-			if(this.label.parent != null) {
-				Diagram(parent).removeChild(this.label);
-			}
-			if(this.labelMultiplicityFrom.parent != null) {
-				Diagram(parent).removeChild(this.labelMultiplicityFrom);
-			}
-			if(this.labelMultiplicityTo.parent != null) {
-				Diagram(parent).removeChild(this.labelMultiplicityTo);
-			}
-			if(this.labelAttributeFrom.parent != null) {
-				Diagram(parent).removeChild(this.labelAttributeFrom);
-			}
-			if(this.labelAttributeTo.parent != null) {
-				Diagram(parent).removeChild(this.labelAttributeTo);
-			}
-			if(this.linkContextPanel.parent != null) {
-				Diagram(parent).removeChild(this.linkContextPanel);
-			}
-			trace("handleRemove");
-		}		
+				
 		
 	}
 }
