@@ -8,6 +8,7 @@
 			import de.waveumleditor.model.classDiagram.ClassMethod;
 			import de.waveumleditor.model.classDiagram.UMLClass;
 			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 			
 			import mx.collections.IList;
 			import mx.containers.TitleWindow;

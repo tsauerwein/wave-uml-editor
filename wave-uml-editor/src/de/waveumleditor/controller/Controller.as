@@ -1,6 +1,7 @@
 package de.waveumleditor.controller
 {
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
@@ -14,7 +15,6 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -179,11 +179,11 @@ package de.waveumleditor.controller
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			
 			var attribute:ClassAttribute = null;
-			if (event.getAttributeId() == ModelFascade.DEFAULT_IDENTIFIER)
+			if (event.getAttributeId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER)
 			{
 				// in case the dialog is opened to add a new attribute, create a default attribute
 				var defaultVariable:Variable = new Variable("", Type.STRING);
-        		attribute = new ClassAttribute(ModelFascade.DEFAULT_IDENTIFIER, 
+        		attribute = new ClassAttribute(ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER, 
         			defaultVariable, 
         			EVisibility.PUBLIC, 
         			false);
@@ -260,12 +260,49 @@ package de.waveumleditor.controller
 			
 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
-			var method:ClassMethod = umlClass.getMethod(event.getMethodId());
 			
-			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-			editSingleMethod.update(method);
+			var method:ClassMethod = null;
+			if (event.getMethod() is ClassMethod) {
+				if (event.getMethodId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER)
+				{
+					// in case the dialog is opened to add a new method, create a default method
+					method = new ClassMethod(ModelFascade.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
+					
+				}
+				else 
+				{
+					method = umlClass.getMethod(event.getMethodId());
+				}
+				
+				var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+				editSingleMethod.setClassData(umlClass);
+				editSingleMethod.setController(this);
+				editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
+				editSingleMethod.update(method);
+				editSingleMethod.popUp();			
+			}
+			else 
+			{
+				var constructor:ClassConstructorMethod = null;
+				if (event.getMethodId() == ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER)
+				{
+					// in case the dialog is opened to add a new method, create a default method
+					constructor = new  ClassConstructorMethod(ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
+				}
+				else 
+				{
+					constructor = umlClass.getConstructor(event.getMethodId());
+				}
+				
+				var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+				editSingleMethod.setClassData(umlClass);
+				editSingleMethod.setController(this);
+				editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
+				editSingleMethod.update(constructor);
+				editSingleMethod.popUp();		
+			}
 			
-			editSingleMethod.popUp();			
+			
 		}
 		
 		/** 
@@ -284,6 +321,11 @@ package de.waveumleditor.controller
 		public function handleShowSingleConstructor(event:NodeMethodEvent):void
 		{
 			trace("handleShowSingleConstructor " + event.getClassNode().getName());
+			
+			var editMethod:EditMethodsWindow = new EditMethodsWindow();
+			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
+			
+			
 			
 /* 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;

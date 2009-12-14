@@ -50,7 +50,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add attribute handler");
 			
-			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, ModelFascade.DEFAULT_IDENTIFIER);
+			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER);
 			controller.handleShowSingleAttribute(attributeEvent);
 			
 		    //Default Attribut

@@ -2,25 +2,16 @@
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.model.classDiagram.ClassMethod;
-        	import de.waveumleditor.model.classDiagram.EVisibility;
-        	import de.waveumleditor.model.classDiagram.Type;
-        	import mx.collections.ArrayCollection;
-        	import de.waveumleditor.model.classDiagram.ClassAttribute;
-        	import mx.controls.Button;
-        	import mx.managers.SystemManager;
-        	import mx.core.Application;
-        	import mx.managers.PopUpManagerChildList;
-        	import adobe.utils.CustomActions;
-            import mx.events.CloseEvent;
-            import mx.managers.PopUpManager;
-            import mx.collections.IList;
-            import mx.containers.TitleWindow;
-            
-            import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-            import de.waveumleditor.model.classDiagram.UMLClass;
-            import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-            import de.waveumleditor.model.classDiagram.IClassElement;
+			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.ClassMethod;
+			import de.waveumleditor.model.classDiagram.EVisibility;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.TitleWindow;
+			import mx.controls.Button;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.SystemManager;
 			
 			//visibility Combo-Box Data provider
 			[Bindable]
@@ -45,27 +36,48 @@
             private function singleMethodWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(singleMethodWindow);
             }
-            public function update(method:ClassMethod):void 
+            public function update(method:ClassConstructorMethod):void 
 			{
 				trace("update method " + method.getIdentifier().getId());
 				
 				//Sichtbarkeit
 				visibility_comboBox.selectedIndex = method.getVisibility().getValue();
-				//Static
-				static_checkbox.selected = method.isStatic();
-				//Abstrakt
-				abstract_checkbox.selected = method.isAbstract();
-				//Typ
-				var current_type:String = method.getReturnType().getName();
-				if(type.indexOf(current_type)<0)
-				{
-					type.push(current_type);
-				}
-				type_comboBox.selectedItem = current_type;
-				//Name
-				meth_name.text = method.getName();
 				//key
 				meth_key = method.getIdentifier().getId();
+				
+				if (method is ClassMethod)
+				{
+					var classMethod:ClassMethod =  new ClassMethod(method.getIdentifier(), 
+																	(method as ClassMethod).getName(),
+																	(method as ClassMethod).getVisibility(), 
+																	(method as ClassMethod).getReturnType(), 
+																	(method as ClassMethod).isAbstract(),
+																	(method as ClassMethod).isStatic());
+					
+					//Static
+					static_checkbox.selected = classMethod.isStatic();
+					//Abstrakt
+					abstract_checkbox.selected = classMethod.isAbstract();
+					//Typ
+					var current_type:String = classMethod.getReturnType().getName();
+					if(type.indexOf(current_type)<0)
+					{
+						type.push(current_type);
+					}
+					type_comboBox.selectedItem = current_type;
+					//Name
+					meth_name.text = classMethod.getName();
+	
+				}
+				// ClassConstructorMethod
+				else
+				{
+					meth_name.text = this.getClassData().getName();
+					meth_name.enabled = false;
+					static_checkbox.enabled = false;
+					abstract_checkbox.enabled = false;
+					type_comboBox.enabled = false;
+				}
 				
 			}
 			

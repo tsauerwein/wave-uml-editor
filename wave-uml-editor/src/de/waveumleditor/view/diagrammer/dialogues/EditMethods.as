@@ -1,11 +1,9 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
+	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
@@ -18,7 +16,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		private var controller:Controller;
 		private var classData:UMLClass;
 		
-		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
+		//public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
 
 		
 		public function EditMethods()
@@ -54,7 +52,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add method handler");
 			
-			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, DEFAULT_IDENTIFIER);
+			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, ModelFascade.DEFAULT_METHOD_IDENTIFIER);
 			controller.handleShowSingleMethod(methodEvent);
 			/* var newMethod:ClassMethod = new ClassMethod(new Identifier("default_meth"), "", EVisibility.PUBLIC, Type.STRING);
                 
@@ -75,23 +73,33 @@ package de.waveumleditor.view.diagrammer.dialogues
             trace("edit method handler: " + buttonClicked.id);
             
             //Mockup Methode
-			var mockupMethod:ClassMethod = new ClassMethod(new Identifier("meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
-            
-            var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+			//var mockupMethod:ClassMethod = new ClassMethod(new Identifier("meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
+
+			var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
+			controller.handleShowSingleMethod(nodeMethodEvent);
+			
+            /*var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
             editSingleMethod.update(mockupMethod);//TODO Attribut über Id holen
-            editSingleMethod.popUp();
+            editSingleMethod.popUp(); */
 		}
 		
 		public function handleAddConstructor(event:Event):void
 		{
 			//TODO
 			trace("handleAddConstructor");
+			
+			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER);
+			controller.handleShowSingleConstructor(methodEvent);
 		}
 		
 		public function handleEditConstructor(event:Event):void
 		{
-			//TODO
-			trace("handleEditConstructor");
+			//TODO DELETE -> wird mit handleEdit aufgerufen
+/*			trace("handleEditConstructor");
+			var buttonClicked:Button = event.currentTarget as Button;
+			
+			var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
+			controller.handleShowSingleConstructor(nodeMethodEvent);*/
 		}
 		
 		public function handleRemoveConstructor(event:Event):void

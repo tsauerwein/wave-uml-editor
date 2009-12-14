@@ -15,7 +15,9 @@ package de.waveumleditor.controller
 	{
 		private var diagram:ClassDiagram;
 		
-		public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_attr");
+		public static const DEFAULT_ATTRIBUTE_IDENTIFIER:Identifier = new Identifier("default_attr");
+		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier("default_meth");
+		public static const DEFAULT_CONSTRUCTOR_IDENTIFIER:Identifier = new Identifier("default_constr");
 		
 		public function ModelFascade(diagram:ClassDiagram)
 		{
@@ -77,7 +79,7 @@ package de.waveumleditor.controller
 		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
-			if (attribute.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
+			if (attribute.getIdentifier().getId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
 			{
 				var id:Identifier = generateAttributeIdentifier();
 				diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
@@ -115,7 +117,7 @@ package de.waveumleditor.controller
 		}
 		public function editNodeMethod(nodeId:Identifier, method:ClassMethod):void
 		{
-			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
+			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
 			{
 				var id:Identifier = generateMethodIdentifier();
 				diagram.addMethod(nodeId, method, id);
@@ -130,7 +132,7 @@ package de.waveumleditor.controller
 		
 		public function editClassConstructor(classId:Identifier, constructor:ClassConstructorMethod):void
 		{
-			if (constructor.getIdentifier().getId() == ModelFascade.DEFAULT_IDENTIFIER.getId())
+			if (constructor.getIdentifier().getId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
 			{
 				var id:Identifier = generateConstructorIdentifier();
 				diagram.addConstructor(classId, constructor, id);
