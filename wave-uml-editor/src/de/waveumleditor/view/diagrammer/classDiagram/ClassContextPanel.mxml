@@ -47,10 +47,10 @@
 		<mx:State name="removeQuestion">
 			<mx:SetProperty name="width" value="178"/>
 			<mx:AddChild position="lastChild">
-				<mx:Canvas x="27" y="10" width="109" height="58" id="msgCanvas">
-					<mx:Label x="15" y="5" text="Remove me?" fontWeight="bold"/>
-					<mx:Button x="5" y="30" label="Yes" width="47" click="dispatchEvent(new MouseEvent('removeNode'))"/>
-					<mx:Button x="54" y="30" label="No" width="49" click="this.currentState=null"/>
+				<mx:Canvas x="27" y="10" width="139" height="58" id="msgCanvas">
+					<mx:Label x="10" y="5" text="Remove me?" fontWeight="bold" width="119" textAlign="center"/>
+					<mx:Button x="10" y="30" label="Yes" width="55" click="dispatchEvent(new MouseEvent('removeNode'))"/>
+					<mx:Button x="78" y="30" label="No" width="55" click="this.currentState=null"/>
 				</mx:Canvas>
 			</mx:AddChild>
 		</mx:State>
