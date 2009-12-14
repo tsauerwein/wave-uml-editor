@@ -23,6 +23,8 @@
             import de.waveumleditor.model.classDiagram.UMLClass;
             import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
             import de.waveumleditor.model.classDiagram.IClassElement;
+            
+            public var attribute;
 			
 			//visibility Combo-Box Data provider
 			[Bindable]
@@ -51,7 +53,7 @@
             public function update(attribute:ClassAttribute):void 
 			{
 				trace("update attribute " + attribute.getIdentifier().getId());
-				
+				this.attribute = attribute;
 				//Sichtbarkeit
 				visibility_comboBox.selectedIndex = attribute.getVisibility().getValue();
 				//Static
@@ -76,11 +78,20 @@
 			public function saveAttribute(event:Event):void 
 			{
 				trace("save edited attribute event");
+				var newType:Type;
+				if(type.indexOf(type_comboBox.selectedItem)<0)
+				{
+					newType = new Type(type_comboBox.text);
+				}
+				else
+				{
+					newType = new Type(type_comboBox.selectedItem.toString());
+				}
 				var newAttribute:ClassAttribute = new ClassAttribute(
 					new Identifier(attr_key),
 					new Variable(
 						attr_name.text,
-						new Type(type_comboBox.selectedItem.toString()),
+						newType,
 						attr_default_value.text),
 					EVisibility.getEVisibilityFromVal(visibility_comboBox.selectedIndex),//TODO
 					static_checkbox.selected
