@@ -24,7 +24,8 @@
             import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
             import de.waveumleditor.model.classDiagram.IClassElement;
             
-            public var attribute;
+
+            public var attribute:ClassAttribute;
 			
 			//visibility Combo-Box Data provider
 			[Bindable]
@@ -43,6 +44,8 @@
                   "double" );
 			//Attribut key
 			private var attr_key:String;
+			
+			public static const DEFAULT_ATTR_NAME:String = "attributeName";
                 
 
             
@@ -69,6 +72,7 @@
 				attr_default_value.text = attribute.getVariable().getDefaultValue();
 				//Name
 				attr_name.text = attribute.getVariable().getName();
+				if(attr_name.text == DEFAULT_ATTR_NAME){attr_name.text = "";}
 				//key
 				attr_key = attribute.getIdentifier().getId();
 
@@ -87,10 +91,12 @@
 				{
 					newType = new Type(type_comboBox.selectedItem.toString());
 				}
+				var newName:String = DEFAULT_ATTR_NAME;
+				if(attr_name.text.length>0){newName = attr_name.text;}
 				var newAttribute:ClassAttribute = new ClassAttribute(
 					new Identifier(attr_key),
 					new Variable(
-						attr_name.text,
+						newName,
 						newType,
 						attr_default_value.text),
 					EVisibility.getEVisibilityFromVal(visibility_comboBox.selectedIndex),//TODO
