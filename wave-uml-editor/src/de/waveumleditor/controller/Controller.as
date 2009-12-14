@@ -14,6 +14,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -89,7 +90,7 @@ package de.waveumleditor.controller
 			 	link.fromNode.addLeavingLink(link);
 				link.toNode.addArrivingLink(link);
 			 	
-			 	diagramView.addChild(link);
+			 	diagramView.addClassLink(link);
 			 }
 			 
 		}
@@ -101,6 +102,7 @@ package de.waveumleditor.controller
 		private function handleAddNode(event:NodeEvent):void
 		{
 			this.fascade.addNode(event.getNode());
+			this.diagramView.saveNode(event.getNode());
 		}
 		
 		/**
@@ -119,6 +121,7 @@ package de.waveumleditor.controller
 		{
 			trace("remove " + event.getNode().x + " " + event.getNode().y);
 			this.fascade.removeNode(event.getNode());
+			
 		}
 		
 		/**
@@ -146,6 +149,7 @@ package de.waveumleditor.controller
 		{
 			trace("handleAddLink ");
 			this.fascade.addLink(event.getLink());
+			this.diagramView.saveLink(event.getLink());
 		}
 		
 		/**
@@ -208,6 +212,9 @@ package de.waveumleditor.controller
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
+			
+			// also update the diagram in the view
+			refreshNodeInView(updatedClass);
 		}
 		
 		/**
@@ -221,6 +228,9 @@ package de.waveumleditor.controller
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
+			
+			// also update the diagram in the view
+			refreshNodeInView(updatedClass);
 		}
 		
 		/**
@@ -371,6 +381,11 @@ package de.waveumleditor.controller
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
 			editLinksWindow.popUp();
+		}
+		
+		private function refreshNodeInView(node:ClassDiagramNode):void
+		{
+			this.diagramView.getNode(node.getIdentifier()).update(node);
 		}
 	}
 }

@@ -2,15 +2,14 @@ package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
 	
+	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
-	import flash.events.Event;
-	
 	import mx.containers.Grid;
 	
-	public class BaseClassDiagramNode extends BaseNode
+	public class BaseClassDiagramNode extends BaseNode implements IIdentifiable
 	{
 		protected var grids:Grid;
 		private var key:Identifier;

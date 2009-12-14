@@ -1,21 +1,20 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.Diagram;
-	import com.anotherflexdev.diagrammer.LabelLinkEvent;
 	import com.anotherflexdev.diagrammer.Link;
 	
+	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.controls.Label;
 	import mx.events.ResizeEvent;
 	
-	public class ClassLink extends Link
+	public class ClassLink extends Link implements IIdentifiable
 	{
 		[Bindable] public var linkMultiplicityFrom:String;
 		[Bindable] public var linkMultiplicityTo:String;
