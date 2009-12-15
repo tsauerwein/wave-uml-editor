@@ -17,14 +17,14 @@
 			import flash.display.DisplayObject;
 			
 			
-			private var viewLink:ClassLink = null;
+			private var viewLink:AssociationLink = null;
 			private var link:LinkAssociation = null;
 			
 			private function close():void {
 				PopUpManager.removePopUp(titleWindow);
 			}
 			
-			public function setViewLink(link:ClassLink):void
+			public function setViewLink(link:AssociationLink):void
 			{
 				this.viewLink = link;
 			}

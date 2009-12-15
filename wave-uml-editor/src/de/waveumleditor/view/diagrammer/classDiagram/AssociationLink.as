@@ -1,13 +1,30 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
+	import com.anotherflexdev.diagrammer.Diagram;
 	
 	import de.waveumleditor.model.classDiagram.link.EAssociationType;
 	
 	import flash.geom.Point;
 	
+	import mx.binding.utils.BindingUtils;
+	import mx.controls.Label;
+	import mx.events.ResizeEvent;
+	
 	public class AssociationLink extends ClassLink
 	{
+		[Bindable] public var linkMultiplicityFrom:String;
+		[Bindable] public var linkMultiplicityTo:String;
+		[Bindable] public var linkAttributeFrom:String;
+		[Bindable] public var linkAttributeTo:String;
+		[Bindable] public var linkNavigableFrom:Boolean;
+		[Bindable] public var linkNavigableTo:Boolean;
+		[Bindable] public var linkAssoziationType:EAssociationType;
+		
+		protected var labelMultiplicityFrom:Label;
+		protected var labelMultiplicityTo:Label;
+		protected var labelAttributeFrom:Label;
+		protected var labelAttributeTo:Label;
 		
 		public function AssociationLink()
 		{
@@ -24,6 +41,230 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.linkContextPanel = new AssociationLinkContextPanel();
 			this.linkContextPanel.setLink(this);
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
+		}
+		
+		override protected function createChildren():void 
+		{
+			super.createChildren();
+			if(!this.linkContextPanel) 
+			{
+				this.createLinkContextPanel();
+			}		
+			if(!this.label) 
+			{
+				this.label = new Label();
+				this.label.addEventListener(ResizeEvent.RESIZE, handleLabelResize);
+				BindingUtils.bindProperty(this.label, "text", this, "linkName");
+			}
+			if(!this.labelMultiplicityFrom) 
+			{
+				this.labelMultiplicityFrom = new Label();
+				this.labelMultiplicityFrom.addEventListener(ResizeEvent.RESIZE, handleLabelResize);
+				BindingUtils.bindProperty(this.labelMultiplicityFrom, "text", this, "linkMultiplicityFrom");		
+			}
+			if(!this.labelMultiplicityTo) 
+			{
+				this.labelMultiplicityTo = new Label();
+				this.labelMultiplicityTo.addEventListener(ResizeEvent.RESIZE, handleLabelResize);
+				BindingUtils.bindProperty(this.labelMultiplicityTo, "text", this, "linkMultiplicityTo");
+			}	
+			if(!this.labelAttributeFrom) 
+			{
+				this.labelAttributeFrom = new Label();
+				this.labelAttributeFrom.addEventListener(ResizeEvent.RESIZE, handleLabelResize);
+				BindingUtils.bindProperty(this.labelAttributeFrom, "text", this, "linkAttributeFrom");
+			}
+			if(!this.labelAttributeTo) 
+			{
+				this.labelAttributeTo = new Label();
+				this.labelAttributeTo.addEventListener(ResizeEvent.RESIZE, handleLabelResize);
+				BindingUtils.bindProperty(this.labelAttributeTo, "text", this, "linkAttributeTo");
+			}	
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
+		{
+			var pointFromNode:Point = this.getLineStartPoint();
+			var pointToNode:Point = this.getLineEndPoint();
+			
+			if(!this.fromNode && !this.toNode) 
+			{
+				return;
+			}
+			
+			if(this.toNode == null)
+			{
+				this.drawTemplate();
+			} 
+			else 
+			{
+				this.draw();
+			}
+			if(this.linkContextPanel.parent != null) 
+			{
+				this.setLinkContextPanelPosition();
+			}
+			
+			if(this.fromNode != null && this.toNode != null)
+			{
+				if(this.linkName != null && this.linkName != "") 
+				{
+					var point:Point = this.getMidlePoint();
+					
+					this.label.x = point.x;
+					this.label.y = point.y;
+					this.label.x -= this.label.width/2;
+					this.label.y -= this.label.height;
+					
+					setLabelStyle(label);
+					
+					if(this.label.parent == null && this.parent != null) 
+					{
+						Diagram(parent).addChild(this.label);
+					}
+				} 
+				else 
+				{
+					if(this.label.parent != null) 
+					{
+						Diagram(parent).removeChild(this.label);
+					}
+				}
+				
+				
+				if(this.linkMultiplicityFrom != null && this.linkMultiplicityFrom != "") 
+				{
+					if(pointFromNode.x >= pointToNode.x)
+					{
+						this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width - 10;
+					}
+					else
+					{
+						this.labelMultiplicityFrom.x = pointFromNode.x;
+					}
+					this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height;
+					
+					setLabelStyle(labelMultiplicityFrom);
+					
+					if(this.labelMultiplicityFrom.parent == null && this.parent != null) 
+					{
+						Diagram(parent).addChild(this.labelMultiplicityFrom);
+					}
+				} 
+				else 
+				{
+					if(this.labelMultiplicityFrom.parent != null) 
+					{
+						Diagram(parent).removeChild(this.labelMultiplicityFrom);
+					}
+				}
+				
+				if(this.linkAttributeFrom != null && this.linkAttributeFrom != "") 
+				{
+					
+					if(pointFromNode.x >= pointToNode.x)
+					{
+						this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 10;
+					}
+					else
+					{
+						this.labelAttributeFrom.x = pointFromNode.x;
+					}
+					this.labelAttributeFrom.y = pointFromNode.y + labelAttributeFrom.height;
+					
+					setLabelStyle(labelAttributeFrom);
+					
+					if(this.labelAttributeFrom.parent == null && this.parent != null) 
+					{
+						Diagram(parent).addChild(this.labelAttributeFrom);
+					}
+				} 
+				else 
+				{
+					if(this.labelAttributeFrom.parent != null) 
+					{
+						Diagram(parent).removeChild(this.labelAttributeFrom);
+					}
+				}
+				
+				if(this.linkMultiplicityTo != null && this.linkMultiplicityTo != "") 
+				{
+					if(pointFromNode.x >= pointToNode.x)
+					{
+						this.labelMultiplicityTo.x = pointToNode.x;
+					}
+					else
+					{
+						this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width - 10;
+					}
+					this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height;
+					
+					setLabelStyle(labelMultiplicityTo);
+					
+					if(this.labelMultiplicityTo.parent == null && this.parent != null) {
+						Diagram(parent).addChild(this.labelMultiplicityTo);
+					}
+				
+				} 
+				else 
+				{
+					if(this.labelMultiplicityTo.parent != null) 
+					{
+						Diagram(parent).removeChild(this.labelMultiplicityTo);
+					}
+				}
+				
+				if(this.linkAttributeTo != null && this.linkAttributeTo != "") 
+				{
+					if(pointFromNode.x >= pointToNode.x)
+					{
+						this.labelAttributeTo.x = pointToNode.x;
+					}
+					else
+					{
+						this.labelAttributeTo.x = pointToNode.x - this.labelAttributeTo.width - 10;
+					}
+					this.labelAttributeTo.y = pointToNode.y + labelAttributeTo.height;
+					
+					
+					setLabelStyle(labelAttributeTo);
+					
+					if(this.labelAttributeTo.parent == null && this.parent != null) 
+					{
+						Diagram(parent).addChild(this.labelAttributeTo);
+					}
+				} 
+				else 
+				{
+					if(this.labelAttributeTo.parent != null) 
+					{
+						Diagram(parent).removeChild(this.labelAttributeTo);
+					}
+				}
+			}
+		}
+		
+		override protected function handleRemove(event:Event):void 
+		{
+			if(this.label.parent != null) {
+				Diagram(parent).removeChild(this.label);
+			}
+			if(this.labelMultiplicityFrom.parent != null) {
+				Diagram(parent).removeChild(this.labelMultiplicityFrom);
+			}
+			if(this.labelMultiplicityTo.parent != null) {
+				Diagram(parent).removeChild(this.labelMultiplicityTo);
+			}
+			if(this.labelAttributeFrom.parent != null) {
+				Diagram(parent).removeChild(this.labelAttributeFrom);
+			}
+			if(this.labelAttributeTo.parent != null) {
+				Diagram(parent).removeChild(this.labelAttributeTo);
+			}
+			if(this.linkContextPanel.parent != null) {
+				Diagram(parent).removeChild(this.linkContextPanel);
+			}
+			trace("AssoziationLink -> override protected function handleRemove()");
 		}
 		
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 

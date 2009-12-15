@@ -10,9 +10,9 @@
 			}
 			
 			private function handleEditLink(event:Event):void {
-				var link:ClassLink = getLink() as ClassLink;
+				var link:AssociationLink = getLink() as AssociationLink;
 				
-				ClassDiagramComponent(parent).dispatchEvent(new LinkEvent(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, link));
+				ClassDiagramComponent(parent).dispatchEvent(new LinkEvent(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK,null,link));
 			}
 			
 		]]>

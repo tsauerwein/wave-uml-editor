@@ -375,10 +375,10 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowAssociationLink(event:LinkEvent):void 
 		{
-			var link:LinkAssociation = diagramModel.getLink(event.getLink().getIdentifier()) as LinkAssociation;
+			var link:LinkAssociation = diagramModel.getLink(event.getAssociationLink().getIdentifier()) as LinkAssociation;
 			var linkCopy:LinkAssociation = link.clone(link.getIdentifier()) as LinkAssociation;
 			var editLinksWindow:EditAssociationLinkWindow = new EditAssociationLinkWindow();
-			editLinksWindow.setViewLink(event.getLink());
+			editLinksWindow.setViewLink(event.getAssociationLink());
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
 			editLinksWindow.popUp();
@@ -401,10 +401,11 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowDependencyLink(event:LinkEvent):void
 		{
-			var link:LinkDependency = diagramModel.getLink(event.getLink().getIdentifier()) as LinkDependency;
+			var link:LinkDependency = diagramModel.getLink(event.getDependencyLink().getIdentifier()) as LinkDependency;
 			var linkCopy:LinkDependency = link.clone(link.getIdentifier());
 			
 			var editLinksWindow:EditDependencyLinkWindow = new EditDependencyLinkWindow();
+			editLinksWindow.setViewLink(event.getDependencyLink());
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
 			editLinksWindow.popUp();
