@@ -15,9 +15,15 @@ package de.waveumleditor.controller
 	{
 		private var diagram:ClassDiagram;
 		
-		public static const DEFAULT_ATTRIBUTE_IDENTIFIER:Identifier = new Identifier("default_attr");
-		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier("default_meth");
-		public static const DEFAULT_CONSTRUCTOR_IDENTIFIER:Identifier = new Identifier("default_constr");
+		public static const PREFIX_ATTRIBUTE:String = "A-";
+		public static const PREFIX_METHOD:String = "M-";
+		public static const PREFIX_CONSTRUCTOR:String = "CO-";
+		public static const PREFIX_CLASS:String = "C-";
+		public static const PREFIX_INTERFACE:String = "I-";
+		
+		public static const DEFAULT_ATTRIBUTE_IDENTIFIER:Identifier = new Identifier(PREFIX_ATTRIBUTE + "default_attr");
+		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier(PREFIX_METHOD + "default_meth");
+		public static const DEFAULT_CONSTRUCTOR_IDENTIFIER:Identifier = new Identifier(PREFIX_CONSTRUCTOR + "default_constr");
 		
 		public function ModelFascade(diagram:ClassDiagram)
 		{
@@ -159,7 +165,7 @@ package de.waveumleditor.controller
 		public function generateNodeIdentifier():Identifier
 		{
 			//var nodeList:List = diagram.getNodes();
-			return new Identifier("C" + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_CLASS + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 		public function generateLinkIdentifier():Identifier
@@ -172,21 +178,31 @@ package de.waveumleditor.controller
 		{
 			// todo: abhängig von node
 			//var nodeList:List = diagram.getNodes();
-			return new Identifier("A" + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_ATTRIBUTE + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 		public function generateMethodIdentifier():Identifier
 		{
 			// todo: abhängig von node
 			//var nodeList:List = diagram.getNodes();
-			return new Identifier("M" + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_METHOD + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 		public function generateConstructorIdentifier():Identifier
 		{
 			// todo: abhängig von node
 			//var nodeList:List = diagram.getNodes();
-			return new Identifier("CO" + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_CONSTRUCTOR + new Number(int.MAX_VALUE * Math.random()).toString() );
+		}
+		
+		public function isConstructor(id:Identifier):Boolean
+		{
+			return id.getId().substr(0, 3) == PREFIX_CONSTRUCTOR;
+		}
+		
+		public function isMethod(id:Identifier):Boolean
+		{
+			return id.getId().substr(0, 2) == PREFIX_METHOD;
 		}
 		
 	}

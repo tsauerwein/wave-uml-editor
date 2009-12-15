@@ -266,7 +266,7 @@ package de.waveumleditor.controller
 			editSingleMethod.setController(this);
 			
 			var method:ClassConstructorMethod = null;
-			if (event.getMethod() is ClassMethod) 
+			if (fascade.isMethod(event.getMethodId())) 
 			{
 				if (event.getMethodId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER)
 				{
