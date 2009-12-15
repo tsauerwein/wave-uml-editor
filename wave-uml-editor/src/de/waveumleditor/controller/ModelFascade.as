@@ -8,6 +8,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 
@@ -15,11 +16,13 @@ package de.waveumleditor.controller
 	{
 		private var diagram:ClassDiagram;
 		
-		public static const PREFIX_ATTRIBUTE:String = "A-";
-		public static const PREFIX_METHOD:String = "M-";
-		public static const PREFIX_CONSTRUCTOR:String = "CO-";
-		public static const PREFIX_CLASS:String = "C-";
-		public static const PREFIX_INTERFACE:String = "I-";
+		public static const SEPERATOR:String = "-";
+		
+		public static const PREFIX_ATTRIBUTE:String = "A" + SEPERATOR;
+		public static const PREFIX_METHOD:String = "M" + SEPERATOR;
+		public static const PREFIX_CONSTRUCTOR:String = "CO" + SEPERATOR;
+		public static const PREFIX_CLASS:String = "C" + SEPERATOR;
+		public static const PREFIX_INTERFACE:String = "I" + SEPERATOR;
 		
 		public static const DEFAULT_ATTRIBUTE_IDENTIFIER:Identifier = new Identifier(PREFIX_ATTRIBUTE + "default_attr");
 		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier(PREFIX_METHOD + "default_meth");
@@ -38,6 +41,7 @@ package de.waveumleditor.controller
 			var modelNode:ClassDiagramNode = ModelFactory.nodeFromView(node);
 			this.diagram.addNode(modelNode);
 			
+			WAONode.createNode(modelNode);
 			node.update(modelNode);
 		}
 		
@@ -48,7 +52,10 @@ package de.waveumleditor.controller
 			
 			if (nodeModel != null)
 			{
-				nodeModel.setPosition(new Position(node.x, node.y));
+				var newPosition:Position = new Position(node.x, node.y);
+				
+				nodeModel.setPosition(newPosition);
+				WAONode.setPosition(id, newPosition);
 			}
 		}
 		

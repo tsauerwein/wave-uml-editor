@@ -10,6 +10,8 @@ package de.waveumleditor.model.classDiagram
 	{
 		private var methods:ArrayList;
 		
+		public static const TYPE:String = "Interface";
+		
 		public function Interface(key:Identifier, position:Position, name:String = "") 
 		{
 			super(key, position, name);
@@ -41,6 +43,11 @@ package de.waveumleditor.model.classDiagram
 		{
 			return false;
 		}
+		
+		override public function getType():String
+		{
+			return TYPE;
+		} 
 		
 	}
 }

@@ -48,5 +48,10 @@ package de.waveumleditor.model.classDiagram
 			return this.name;
 		}
 		
+		public function getType():String
+		{
+			throw new Error("must be overriden in child classes");
+		}
+		
 	}
 }

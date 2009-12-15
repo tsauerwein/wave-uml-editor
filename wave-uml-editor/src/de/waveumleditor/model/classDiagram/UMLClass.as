@@ -16,6 +16,8 @@ package de.waveumleditor.model.classDiagram
 		
 		private var abstract:Boolean;
 		
+		public static const TYPE:String = "Class";
+		
 		public function UMLClass(key:Identifier, position:Position, name:String = "", abstract:Boolean = false) 
 		{
 			super(key, position, name);
@@ -120,5 +122,10 @@ package de.waveumleditor.model.classDiagram
 		{
 			return false;
 		}
+		
+		override public function getType():String
+		{
+			return TYPE;
+		} 
 	}
 }
