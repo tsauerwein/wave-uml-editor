@@ -6,6 +6,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.link.EAssociationType;
 	
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -22,11 +23,13 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		[Bindable] public var linkAttributeTo:String;
 		[Bindable] public var linkNavigableFrom:Boolean;
 		[Bindable] public var linkNavigableTo:Boolean;
+		[Bindable] public var linkAssoziationType:EAssociationType;
 		
 		protected var labelMultiplicityFrom:Label;
 		protected var labelMultiplicityTo:Label;
 		protected var labelAttributeFrom:Label;
 		protected var labelAttributeTo:Label;
+		
 		
 		private var key:Identifier;
 		
@@ -305,9 +308,10 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 					else
 					{
-						this.labelAttributeTo.x = pointFromNode.x - this.labelAttributeTo.width - 10;
+						this.labelAttributeTo.x = pointToNode.x - this.labelAttributeTo.width - 10;
 					}
-					this.labelAttributeTo.y = pointFromNode.y + labelAttributeTo.height;
+					this.labelAttributeTo.y = pointToNode.y + labelAttributeTo.height;
+					
 					
 					setLabelStyle(labelAttributeTo);
 					
@@ -353,6 +357,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		{
 			var x:Number = 0;
 			var y:Number = 0;
+			var ptr:Point;
 			
 			if(this.fromNode != null && this.toNode != null)
 			{
@@ -364,12 +369,15 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				} 
 				else 
 				{
+					
 					var fromNodeCenterPoint:Point = new Point(this.fromNode.x+this.fromNode.width/2, this.fromNode.y+this.fromNode.height/2);
 					var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
 					var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
 					var point2:Point = this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode);
-					x = point1.x;
-					y = point1.x == point2.x ? point1.y + (point2.y - point1.y)/2 : this.getYBoundary(x, point2.x, point2.y, this.fromNode);
+					
+					ptr = Point.interpolate(point1,point2,0.05);
+					x = ptr.x;
+					y = ptr.y;
 				}
 			
 			}	
@@ -381,6 +389,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		{
 			var x:Number = 0;
 			var y:Number = 0;
+			var ptr:Point;
 			
 			if(this.fromNode != null && this.toNode != null)
 			{
@@ -394,8 +403,10 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
 					var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
 					var point2:Point = this.getBoundary(toNodeCenterPoint, fromNodeCenterPoint, this.toNode);
-					x = point2.x;
-					y = point1.x == point2.x ? point1.y + (point2.y - point1.y)/2 : this.getYBoundary(x, point2.x, point2.y, this.fromNode);
+					
+					ptr = Point.interpolate(point2,point1,0.05);
+					x = ptr.x;
+					y = ptr.y;
 				}
 			}
 			return new Point(x,y);

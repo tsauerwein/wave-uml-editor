@@ -5,6 +5,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.model.classDiagram.link.EAssociationType;
 			import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 			import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
 			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
@@ -13,8 +14,8 @@
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
+			import flash.display.DisplayObject;
 			
-			import mx.core.Application;
 			
 			private var viewLink:ClassLink = null;
 			private var link:LinkAssociation = null;
@@ -44,8 +45,32 @@
 				this.viewLink.linkMultiplicityFrom = txLinkMultiplicityFrom.text;
 				this.viewLink.linkAttributeTo = txLinkAttrTo.text;
 				this.viewLink.linkMultiplicityTo = txLinkMultiplicityTo.text;
-				this.viewLink.linkNavigableTo = checkboxNaviTo.selected;
-				this.viewLink.linkNavigableFrom = checkboxNaviFrom.selected;
+				
+				if(assoziationCheckBox.selected)
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.ASSOCIATION;
+					this.viewLink.linkNavigableTo = checkboxNaviTo.selected;
+					this.viewLink.linkNavigableFrom = checkboxNaviFrom.selected;
+				}
+				if(aggregationCheckBox.selected)
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.AGGREGATION;
+					this.viewLink.linkNavigableTo = false;
+					this.viewLink.linkNavigableFrom = false;
+				}
+				if(compositionCheckBox.selected)
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.COMPOSITION;
+					this.viewLink.linkNavigableTo = false;
+					this.viewLink.linkNavigableFrom = false;
+				}
+				
+				//default Assoziation
+				if(!compositionCheckBox.selected && !aggregationCheckBox.selected && !assoziationCheckBox.selected)
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.ASSOCIATION;
+				}
+				
 			}
 			
 			public function update(link:LinkAssociation):void 
@@ -57,10 +82,29 @@
 				txLinkMultiplicityFrom.text = link.getFromMultiplicity();
 				txLinkAttrTo.text = link.getToName();
 				txLinkMultiplicityTo.text = link.getToMultiplicity();
-				checkboxNaviTo.selected = link.getToNavigable();
-				checkboxNaviFrom.selected = link.getFromNavigable();
 				
-				//get Assoziation Type	
+				if(link.getType() == EAssociationType.ASSOCIATION)
+				{
+					assoziationCheckBox.selected = true;
+					checkboxNaviTo.selected = link.getToNavigable();
+					checkboxNaviFrom.selected = link.getFromNavigable();
+				}
+				if(link.getType() == EAssociationType.AGGREGATION)
+				{
+					aggregationCheckBox.selected = true;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+				}
+				if(link.getType() == EAssociationType.COMPOSITION)
+				{
+					compositionCheckBox.selected = true;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+				}
 			}
 			
 			private function save():void
@@ -71,14 +115,65 @@
 				link.setFromMultiplicity(txLinkMultiplicityFrom.text);
 				link.setToName(txLinkAttrTo.text);
 				link.setToMultiplicity(txLinkMultiplicityTo.text);
-				link.setToNavigable(checkboxNaviTo.selected);
-				link.setFromNavigable(checkboxNaviFrom.selected);
 				
-				// todo: eigenschaften setzen
-				// set Komposition ... Aggregation Type 
+				if(assoziationCheckBox.selected)
+				{
+					link.setType(EAssociationType.ASSOCIATION);
+					link.setToNavigable(checkboxNaviTo.selected);
+					link.setFromNavigable(checkboxNaviFrom.selected);
+				}
+				if(aggregationCheckBox.selected)
+				{
+					link.setType(EAssociationType.AGGREGATION);
+					link.setToNavigable(false);
+					link.setFromNavigable(false);
+				}
+				if(compositionCheckBox.selected)
+				{
+					link.setType(EAssociationType.COMPOSITION);
+					link.setToNavigable(false);
+					link.setFromNavigable(false);
+				}
+				//default Assoziation
+				if(!compositionCheckBox.selected && !aggregationCheckBox.selected && !assoziationCheckBox.selected)
+				{
+					link.setType(EAssociationType.ASSOCIATION);
+				}
 				
 				getController().handleSaveLink(event);				
 				close();
+			}
+			
+			
+			private function handelClick():void
+			{
+				if(assoziationCheckBox.selected)
+				{
+					aggregationCheckBox.selected = false;
+					compositionCheckBox.selected = false;
+					checkboxNaviFrom.enabled = true;
+					checkboxNaviTo.enabled = true;
+					
+				}
+				if(aggregationCheckBox.selected)
+				{
+					assoziationCheckBox.selected = false;
+					compositionCheckBox.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+					
+				}
+				if(compositionCheckBox.selected)
+				{
+					assoziationCheckBox.selected = false;
+					aggregationCheckBox.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+				}
 			}
 			
 		]]>
@@ -101,23 +196,29 @@
 		
 		<mx:Canvas id="editLinkCanvas" width="667" height="237">
 		<mx:Image source="de/waveumleditor/view/diagrammer/assets/images/Background_LinkDescription.png" width="651" height="173" scaleContent="true" x="10" y="10" alpha="0.5"/>
-			<mx:Canvas backgroundAlpha="1.0" top="0" right="0" left="0" bottom="63">
-				<mx:TextInput id="txLinkName" tabIndex="1" x="276.5" y="54" text="" editable="true" width="120" textAlign="center"/>
-				<mx:TextInput id="txLinkAttrTo" tabIndex="5" x="404.5" y="100" text="" editable="true" width="115" textAlign="right"/>
-				<mx:TextInput id="txLinkMultiplicityFrom" tabIndex="2" x="153.5" y="54" text="" editable="true" width="61"/>
-				<mx:TextInput id="txLinkMultiplicityTo" tabIndex="3" x="458.5" y="54" editable="true" width="61" textAlign="right"/>
-				<mx:TextInput id="txLinkAttrFrom" tabIndex="4" x="153.5" y="100" text="" editable="true" width="115"/>
-				<mx:CheckBox id="checkboxNaviFrom" tabIndex="6" x="153.5" y="146" label="NavigableFrom" enabled="true"/>
-				<mx:CheckBox id="checkboxNaviTo" tabIndex="7" x="426.5" y="146" label="NavigableTo" enabled="true"/>
-				
-				<mx:Label x="153.5" y="39" text="Multiplicity" width="71"/>
-				<mx:Label x="447.5" y="39" text="Multiplicity" width="72" textAlign="right"/>
-				<mx:Label x="153.5" y="120" text="Attribute" width="115"/>
-				<mx:Label x="404.5" y="120" text="Attribute" width="115" textAlign="right"/>
+			<mx:Canvas backgroundAlpha="1.0" top="0" right="0" left="0" bottom="61">
+				<mx:TextInput id="txLinkName" x="276.5" y="54" text="" editable="true" width="120" textAlign="center"/>
+				<mx:TextInput id="txLinkAttrTo" x="393.5" y="100" text="" editable="true" width="115" textAlign="right"/>
+				<mx:TextInput id="txLinkMultiplicityFrom" x="153.5" y="54" text="" editable="true" width="61"/>
+				<mx:TextInput id="txLinkMultiplicityTo" x="447.5" y="54" editable="true" width="61" textAlign="right"/>
+				<mx:TextInput id="txLinkAttrFrom" x="153.5" y="100" text="" editable="true" width="115"/>
+				<mx:CheckBox x="153.5" y="149" label="Navigierbar" id="checkboxNaviFrom" enabled="true"/>
+				<mx:CheckBox x="421.5" y="149" label="Navigierbar" id="checkboxNaviTo" enabled="true"/>
+				<mx:Label x="153.5" y="39" text="Multiplizität" width="71"/>
+				<mx:Label x="436.5" y="39" text="Multiplizität" width="72" textAlign="right"/>
+				<mx:Label x="153.5" y="120" text="Attribut" width="115"/>
+				<mx:Label x="393.5" y="120" text="Attribut" width="115" textAlign="right"/>
 				<mx:Label x="276.5" y="39" text="Name" width="120" textAlign="center"/>
 			</mx:Canvas>
-			<mx:Button label="Speichern" tabIndex="8" click="save(); handleLinkDescription()" x="483" y="211"/>
-			<mx:Button label="Abbrechen" tabIndex="9" click="close()" x="573" y="211"/>
+			
+			<mx:Button label="Abbrechen" click="close()" x="572" y="213"/>
+			<mx:Button label="Speichern" click="save(); handleLinkDescription()" x="480" y="213"/>
+			<mx:Label x="10" y="189" text="Assoziationstyp" fontWeight="bold" textDecoration="underline" fontSize="12"/>
+			<mx:Canvas>
+				<mx:CheckBox id="assoziationCheckBox" click="handelClick()" x="10" y="210" label="Assoziation" width="91"/>
+				<mx:CheckBox id="aggregationCheckBox" click="handelClick()" x="109" y="210" label="Aggregation" width="91"/>
+				<mx:CheckBox id="compositionCheckBox" click="handelClick()" x="208" y="210" label="Komposition" width="98"/>
+			</mx:Canvas>
 		</mx:Canvas>
 	</mx:TitleWindow> 
 	<!--	</container>-->
