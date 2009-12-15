@@ -272,7 +272,7 @@ package de.waveumleditor.controller
 				{
 					// in case the dialog is opened to add a new method, create a default method
 					method = new ClassMethod(ModelFascade.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
-					
+					editSingleMethod.isConstructor = false;
 				}
 				else 
 				{
@@ -285,6 +285,7 @@ package de.waveumleditor.controller
 				{
 					// in case the dialog is opened to add a new method, create a default method
 					method = new  ClassConstructorMethod(ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
+					editSingleMethod.isConstructor = true;
 				}
 				else 
 				{
@@ -311,32 +312,13 @@ package de.waveumleditor.controller
 			event.getMethodWindow().update(updatedClass);
 		}
 		
-		public function handleShowSingleConstructor(event:NodeMethodEvent):void
-		{
-			trace("handleShowSingleConstructor " + event.getClassNode().getName());
-			
-			var editMethod:EditMethodsWindow = new EditMethodsWindow();
-			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
-			
-			
-			
-/* 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
-			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
-			var constructor:ClassConstructorMethod = umlClass.getConstructor(event.getMethodId());
-			
-			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-			editSingleMethod.update(constructor);
-			
-			editSingleMethod.popUp();	 */		
-		}
-		
 		/**
 		 * Handler to store the changes to a method.
 		 * This method is also used to add a new method.
 		 */
 		public function handleEditMethod(event:NodeMethodEvent):void
 		{
-			this.fascade.editNodeMethod(event.getClassNode().getIdentifier(), event.getMethod() as ClassMethod);
+			this.fascade.editNodeMethod(event.getClassNode().getIdentifier(), event.getMethod());
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
@@ -347,10 +329,20 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleRemoveMethod(event:NodeMethodEvent):void
 		{
-			this.fascade.removeNodeMethod(event.getClassNode().getIdentifier(), event.getMethodId());
+			if (fascade.isMethod(event.getMethodId()))
+			{
+				this.fascade.removeNodeMethod(event.getClassNode().getIdentifier(), event.getMethodId());
+			}
+			else 
+			{
+				this.fascade.removeClassConstructor(event.getClassNode().getIdentifier(), event.getMethodId());
+			}
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());	
+			
 			event.getMethodWindow().update(updatedClass);
+			// also update the diagram in the view
+			refreshNodeInView(updatedClass);
 		}
 		
 		/**

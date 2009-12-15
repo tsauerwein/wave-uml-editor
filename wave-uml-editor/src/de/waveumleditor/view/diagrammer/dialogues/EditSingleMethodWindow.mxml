@@ -2,6 +2,9 @@
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
+        	import de.waveumleditor.model.classDiagram.Type;
+        	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
+        	import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 			import de.waveumleditor.model.classDiagram.ClassMethod;
 			import de.waveumleditor.model.classDiagram.EVisibility;
@@ -30,7 +33,7 @@
                   "double" );
 			//Attribut key
 			private var methodKey:String;
-                
+			    
 
             
             private function close(evt:CloseEvent):void {
@@ -39,6 +42,7 @@
             public function update(method:ClassConstructorMethod):void 
 			{
 				trace("update method " + method.getIdentifier().getId());
+				
 				
 				//Sichtbarkeit
 				cbVisibility.selectedIndex = method.getVisibility().getValue();
@@ -72,11 +76,24 @@
 				// ClassConstructorMethod
 				else
 				{
-					txtMethodName.text = this.getClassData().getName();
+					gdInput.removeChild(grStatic);
+					gdInput.removeChild(grAbstract);
+					gdInput.removeChild(grType);
+					
+					/* txtMethodName.text = this.getClassData().getName();
 					txtMethodName.enabled = false;
+					grStatic.percentHeight = 0;
 					chbStatic.enabled = false;
+					chbStatic.visible = false;
+					lblStatic.visible = false;
+					grAbstract.percentHeight = 0;
 					chbAbstract.enabled = false;
+					chbAbstract.visible = false;
+					lblAbstract.visible = false;
+					grType.percentHeight = 0;
 					cbType.enabled = false;
+					cbType.visible = false;
+					lblType.visible = false; */
 				}
 				
 			}
@@ -85,8 +102,42 @@
 			{
 				trace("save method event");
 				
-				//TODO Methode speichern (Falls Methodkay==default_meth neue Methode anlegen )
+				var nodeMethodEvent:NodeMethodEvent;
 				
+				if(isConstructor)
+				{
+					var newClassConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(
+						new Identifier(methodKey),
+						EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex)
+					)
+		
+		            nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassConstructorMethod, getEditMethodsWindow());
+		            controller.handleEditMethod(nodeMethodEvent);
+				}
+	            else 
+	            {
+	            	var newType:Type;
+					if(type.indexOf(cbType.selectedItem)<0)
+					{
+						newType = new Type(cbType.text);
+					}
+					else
+					{
+						newType = new Type(cbType.selectedItem.toString());
+					}
+					
+	            	var newClassMethod:ClassMethod = new ClassMethod(
+	            		new Identifier(methodKey), 
+	            		txtMethodName.text,
+	            		EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex),
+	            		newType,
+	            		chbAbstract.selected,
+	            		chbStatic.selected);
+	            		
+	            	nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassMethod, getEditMethodsWindow());
+		            controller.handleEditMethod(nodeMethodEvent);	
+	            }
+	            
 				PopUpManager.removePopUp(singleMethodWindow);
 			}
 			
@@ -121,36 +172,36 @@
 	    <mx:Grid id="editMethodGrid" width="100%" height="100%" verticalAlign="top">
 	        <mx:GridRow width="100%" height="100%">
 	            <mx:GridItem width="100%" height="100%">
-                    <mx:Grid>
-                        <mx:GridRow width="100%" height="100%">
+                    <mx:Grid id="gdInput">
+                        <mx:GridRow id="grVisibility" width="100%" height="100%">
                             <mx:GridItem width="100%" height="100%">
-                            	<mx:Label text="Sichtbarkeit:"/>
+                            	<mx:Label id="lblVisibility" text="Sichtbarkeit:"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" height="100%" horizontalAlign="right">
                             	<mx:ComboBox id="cbVisibility" dataProvider="{visibility}"/>
                             </mx:GridItem>
                         </mx:GridRow>
-                        <mx:GridRow width="100%" height="100%">
+                        <mx:GridRow id="grStatic" width="100%" height="100%">
                             <mx:GridItem width="100%" height="100%">
-                            	<mx:Label text="Statisch:"/>
+                            	<mx:Label id="lblStatic" text="Statisch:"/>
                             </mx:GridItem>   
                             <mx:GridItem width="100%" height="100%" horizontalAlign="right">
                             	<mx:CheckBox id="chbStatic" label=""/>
                             </mx:GridItem>    
                         </mx:GridRow>
-                        <mx:GridRow width="100%" height="100%">
+                        <mx:GridRow id="grAbstract" width="100%" height="100%">
                             <mx:GridItem width="100%" height="100%">
-                            	<mx:Label text="Abstrakt:"/>
+                            	<mx:Label id="lblAbstract" text="Abstrakt:"/>
                             </mx:GridItem>   
                             <mx:GridItem width="100%" height="100%" horizontalAlign="right">
                             	<mx:CheckBox id="chbAbstract" label=""/>
                             </mx:GridItem>    
                         </mx:GridRow>
-                        <mx:GridRow width="100%" height="100%">
+                        <mx:GridRow id="grType" width="100%" height="100%">
                             <mx:GridItem width="100%" height="100%">
-                            	<mx:Label text="Rückgabetyp:"/>
+                            	<mx:Label id="lblType" text="Rückgabetyp:"/>
                             </mx:GridItem>
-                            <mx:GridItem width="100%" height="100%" horizontalAlign="right">
+                            <mx:GridItem  width="100%" height="100%" horizontalAlign="right">
                             	<mx:ComboBox id="cbType" editable="true" dataProvider="{type}"/>
                             </mx:GridItem>
                         </mx:GridRow>

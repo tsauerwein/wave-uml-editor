@@ -121,16 +121,36 @@ package de.waveumleditor.controller
 		{
 			diagram.removeMethod(nodeId, methodId);
 		}
-		public function editNodeMethod(nodeId:Identifier, method:ClassMethod):void
+		public function editNodeMethod(nodeId:Identifier, method:ClassConstructorMethod):void
 		{
-			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
+			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER.getId() ||
+				method.getIdentifier().getId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER.getId())
 			{
-				var id:Identifier = generateMethodIdentifier();
-				diagram.addMethod(nodeId, method, id);
+				var id:Identifier;
+				
+				if(method is ClassMethod)
+				{
+					id = generateMethodIdentifier();
+					diagram.addMethod(nodeId, method as ClassMethod, id);	
+				}
+				else
+				{
+					id = generateConstructorIdentifier();
+					diagram.addConstructor(nodeId, method, id);
+				}
+				
 			}
 			else
 			{
-				diagram.editMethod(nodeId, method);
+				if(method is ClassMethod)
+				{
+					diagram.editMethod(nodeId, method as ClassMethod);
+				}
+				else
+				{
+					diagram.editConstructor(nodeId, method);
+				}
+				
 			}
 		}
 		

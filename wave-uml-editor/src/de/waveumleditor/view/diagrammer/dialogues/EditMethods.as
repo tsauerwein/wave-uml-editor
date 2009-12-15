@@ -65,6 +65,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			var buttonClicked:Button = event.currentTarget as Button;
             trace("delete method handler: " + buttonClicked.id);	
+
+            var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
+			controller.handleRemoveMethod(nodeMethodEvent);
 		}
 		
 		public function handleEdit(event:Event):void
@@ -89,7 +92,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			trace("handleAddConstructor");
 			
 			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER);
-			controller.handleShowSingleConstructor(methodEvent);
+			controller.handleShowSingleMethod(methodEvent);
 		}
 		
 		public function handleEditConstructor(event:Event):void

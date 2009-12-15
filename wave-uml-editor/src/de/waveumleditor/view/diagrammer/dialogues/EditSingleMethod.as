@@ -6,8 +6,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditSingleMethod
 	{
 
-		private var controller:Controller;
+		public var controller:Controller;
 		private var classData:UMLClass;
+		public var isConstructor:Boolean;
 		public var editMethodsWindow:EditMethodsWindow;
 
 		
@@ -44,6 +45,7 @@ package de.waveumleditor.view.diagrammer.dialogues
         {
         	return this.editMethodsWindow;
         }
+        
 
 	}
 }
