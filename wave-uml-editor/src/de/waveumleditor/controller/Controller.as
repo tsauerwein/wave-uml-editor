@@ -261,8 +261,13 @@ package de.waveumleditor.controller
 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			
-			var method:ClassMethod = null;
-			if (event.getMethod() is ClassMethod) {
+			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
+			editSingleMethod.setClassData(umlClass);
+			editSingleMethod.setController(this);
+			
+			var method:ClassConstructorMethod = null;
+			if (event.getMethod() is ClassMethod) 
+			{
 				if (event.getMethodId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
@@ -273,35 +278,23 @@ package de.waveumleditor.controller
 				{
 					method = umlClass.getMethod(event.getMethodId());
 				}
-				
-				var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-				editSingleMethod.setClassData(umlClass);
-				editSingleMethod.setController(this);
-				editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
-				editSingleMethod.update(method);
-				editSingleMethod.popUp();			
 			}
 			else 
 			{
-				var constructor:ClassConstructorMethod = null;
 				if (event.getMethodId() == ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
-					constructor = new  ClassConstructorMethod(ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
+					method = new  ClassConstructorMethod(ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
 				}
 				else 
 				{
-					constructor = umlClass.getConstructor(event.getMethodId());
+					method = umlClass.getConstructor(event.getMethodId());
 				}
 				
-				var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-				editSingleMethod.setClassData(umlClass);
-				editSingleMethod.setController(this);
-				editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
-				editSingleMethod.update(constructor);
-				editSingleMethod.popUp();		
 			}
-			
+			editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
+			editSingleMethod.update(method);
+			editSingleMethod.popUp();	
 			
 		}
 		
