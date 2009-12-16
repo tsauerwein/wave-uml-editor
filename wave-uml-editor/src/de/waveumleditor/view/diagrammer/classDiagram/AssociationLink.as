@@ -107,14 +107,22 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			
 			if(this.fromNode != null && this.toNode != null)
 			{
+				//Positioning of the label in the middle position of the line
 				if(this.linkName != null && this.linkName != "") 
 				{
-					var point:Point = this.getMidlePoint();
-					
-					this.label.x = point.x;
-					this.label.y = point.y;
-					this.label.x -= this.label.width/2;
-					this.label.y -= this.label.height;
+					var point:Point;
+					if(this.toNode == this.fromNode)
+					{
+						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
+						this.label.x = point.x - this.label.width/2;
+						this.label.y = point.y + 24;
+					}
+					else
+					{
+						point = this.getMidlePoint();
+						this.label.x = point.x - this.label.width/2;
+						this.label.y = point.y - this.label.height;
+					}
 					
 					setLabelStyle(label);
 					
@@ -131,18 +139,28 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 				}
 				
-				
+				//Positioning of the Label from the node at the position above the line
 				if(this.linkMultiplicityFrom != null && this.linkMultiplicityFrom != "") 
 				{
-					if(pointFromNode.x >= pointToNode.x)
+					point = null;
+					if(this.toNode == this.fromNode)
 					{
-						this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width - 10;
+						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
+						this.labelMultiplicityFrom.x = point.x + 16;
+						this.labelMultiplicityFrom.y = point.y - 25 - labelMultiplicityFrom.height;
 					}
 					else
 					{
-						this.labelMultiplicityFrom.x = pointFromNode.x;
+						if(pointFromNode.x > pointToNode.x)
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width - 10;
+						}
+						else
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x;
+						}
+						this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height;
 					}
-					this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height;
 					
 					setLabelStyle(labelMultiplicityFrom);
 					
@@ -159,18 +177,28 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 				}
 				
+				//Positioning of the Label from the node at the position under the line
 				if(this.linkAttributeFrom != null && this.linkAttributeFrom != "") 
 				{
-					
-					if(pointFromNode.x >= pointToNode.x)
+					point = null;
+					if(this.toNode == this.fromNode)
 					{
-						this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 10;
+						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
+						this.labelAttributeFrom.x = point.x + 30;
+						this.labelAttributeFrom.y = point.y - 8 - labelAttributeFrom.height;
 					}
 					else
 					{
-						this.labelAttributeFrom.x = pointFromNode.x;
+						if(pointFromNode.x > pointToNode.x)
+						{
+							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 10;
+						}
+						else
+						{
+							this.labelAttributeFrom.x = pointFromNode.x;
+						}
+						this.labelAttributeFrom.y = pointFromNode.y + labelAttributeFrom.height;
 					}
-					this.labelAttributeFrom.y = pointFromNode.y + labelAttributeFrom.height;
 					
 					setLabelStyle(labelAttributeFrom);
 					
@@ -187,17 +215,28 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 				}
 				
+				//Positioning of the Label to the node at the position above the line
 				if(this.linkMultiplicityTo != null && this.linkMultiplicityTo != "") 
 				{
-					if(pointFromNode.x >= pointToNode.x)
+					point = null;
+					if(this.toNode == this.fromNode)
 					{
-						this.labelMultiplicityTo.x = pointToNode.x;
+						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
+						this.labelMultiplicityTo.x = point.x - 35 - labelMultiplicityTo.width;
+						this.labelMultiplicityTo.y = point.y - 3;
 					}
 					else
 					{
-						this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width - 10;
+						if(pointFromNode.x > pointToNode.x)
+						{
+							this.labelMultiplicityTo.x = pointToNode.x;
+						}
+						else
+						{
+							this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width - 10;
+						}
+						this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height;
 					}
-					this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height;
 					
 					setLabelStyle(labelMultiplicityTo);
 					
@@ -214,18 +253,28 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 				}
 				
+				//Positioning of the Label to the node at the position under the line
 				if(this.linkAttributeTo != null && this.linkAttributeTo != "") 
 				{
-					if(pointFromNode.x >= pointToNode.x)
+					point = null;
+					if(this.toNode == this.fromNode)
 					{
-						this.labelAttributeTo.x = pointToNode.x;
+						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
+						this.labelAttributeTo.x = point.x - 15;
+						this.labelAttributeTo.y = point.y - 3;
 					}
 					else
 					{
-						this.labelAttributeTo.x = pointToNode.x - this.labelAttributeTo.width - 10;
+						if(pointFromNode.x > pointToNode.x)
+						{
+							this.labelAttributeTo.x = pointToNode.x;
+						}
+						else
+						{
+							this.labelAttributeTo.x = pointToNode.x - this.labelAttributeTo.width - 10;
+						}
+						this.labelAttributeTo.y = pointToNode.y + labelAttributeTo.height;
 					}
-					this.labelAttributeTo.y = pointToNode.y + labelAttributeTo.height;
-					
 					
 					setLabelStyle(labelAttributeTo);
 					

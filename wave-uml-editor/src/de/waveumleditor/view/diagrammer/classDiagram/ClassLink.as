@@ -182,6 +182,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			lab.setStyle("fontSize", "12");
 			lab.setStyle("color",this.getStyle("labelFontColor"));
 			lab.setStyle("fontWeight","bold");
+			lab.setStyle("align","left");
 		}
 		
 				
