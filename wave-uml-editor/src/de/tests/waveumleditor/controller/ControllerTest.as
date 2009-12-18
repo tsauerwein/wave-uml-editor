@@ -1,5 +1,7 @@
 package de.tests.waveumleditor.controller
 {
+	import com.nextgenapp.wave.gadget.WaveSimulator;
+	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
@@ -22,7 +24,7 @@ package de.tests.waveumleditor.controller
 			
 			var sizeBefore:int = list.length;
 			
-			var cf:ModelFascade = new ModelFascade(diagram);
+			var cf:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			var bcdn:BaseClassDiagramNode = new ClassNode();
 			
 			cf.addNode(bcdn);

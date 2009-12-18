@@ -1,5 +1,7 @@
 package de.waveumleditor.controller
 {
+	import com.nextgenapp.wave.gadget.WaveSimulator;
+	
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
@@ -39,7 +41,7 @@ package de.waveumleditor.controller
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
-			this.fascade = new ModelFascade(this.diagramModel);
+			this.fascade = new ModelFascade(this.diagramModel, new WaveSimulator()); // todo
 			
 			this.diagramView.addEventListener(NodeEvent.EVENT_ADD_NODE, handleAddNode);
 			this.diagramView.addEventListener(NodeEvent.EVENT_MOVE_NODE, handleMoveClassNode);

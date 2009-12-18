@@ -11,6 +11,8 @@
     </mx:Script>
     <mx:Script>
         <![CDATA[
+			import de.tests.waveumleditor.model.wao.wave.classDiagram.WAOClassAttributeTest;
+			import de.tests.waveumleditor.model.wao.wave.classDiagram.WAONodeTest;
 			import de.tests.waveumleditor.model.wao.wave.WAOPositionTest;
 			import de.waveumleditor.model.wao.WAOPosition;
 			import de.tests.waveumleditor.model.wao.wave.DeltaTest;
@@ -66,7 +68,9 @@
 				testSuite.addTestSuite(ModelFascadeTest);
 				
 				testSuite.addTestSuite(DeltaTest);
-				testSuite.addTestSuite(WAOPositionTest);		
+				testSuite.addTestSuite(WAOPositionTest);	
+				testSuite.addTestSuite(WAONodeTest);
+				testSuite.addTestSuite(WAOClassAttributeTest);
 				
   				return testSuite;
   			}	

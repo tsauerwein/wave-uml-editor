@@ -1,5 +1,7 @@
 package de.waveumleditor.controller
 {
+	import com.nextgenapp.wave.gadget.Wave;
+	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
@@ -7,6 +9,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
+	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
@@ -15,6 +18,10 @@ package de.waveumleditor.controller
 	public class ModelFascade
 	{
 		private var diagram:ClassDiagram;
+		
+		private var wave:Wave;
+		
+		private var waoNode:WAONode;
 		
 		public static const SEPERATOR:String = "-";
 		
@@ -28,9 +35,12 @@ package de.waveumleditor.controller
 		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier(PREFIX_METHOD + "default_meth");
 		public static const DEFAULT_CONSTRUCTOR_IDENTIFIER:Identifier = new Identifier(PREFIX_CONSTRUCTOR + "default_constr");
 		
-		public function ModelFascade(diagram:ClassDiagram)
+		public function ModelFascade(diagram:ClassDiagram, wave:Wave)
 		{
 			this.diagram = diagram;
+			
+			this.wave = wave;
+			this.waoNode = new WAONode(wave);
 		}
 		
 		public function addNode(node:BaseClassDiagramNode):void
@@ -41,7 +51,7 @@ package de.waveumleditor.controller
 			var modelNode:ClassDiagramNode = ModelFactory.nodeFromView(node);
 			this.diagram.addNode(modelNode);
 			
-			WAONode.createNode(modelNode);
+			waoNode.createNode(modelNode);
 			node.update(modelNode);
 		}
 		
@@ -55,7 +65,7 @@ package de.waveumleditor.controller
 				var newPosition:Position = new Position(node.x, node.y);
 				
 				nodeModel.setPosition(newPosition);
-				WAONode.setPosition(id, newPosition);
+				waoNode.setPosition(id, newPosition);
 			}
 		}
 		
@@ -84,23 +94,31 @@ package de.waveumleditor.controller
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
 		
-		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
+/*		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
 			var id:Identifier = generateAttributeIdentifier();
 			diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
-		}
+		}*/
 		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
+			var id:Identifier = null;
+			
 			if (attribute.getIdentifier().getId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
 			{
-				var id:Identifier = generateAttributeIdentifier();
+				id = generateAttributeIdentifier();
 				diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
 			}
 			else
 			{
+				id = attribute.getIdentifier();
 				diagram.editAttribute(nodeId, attribute);
 			}
+			
+			var node:UMLClass = diagram.getNode(nodeId) as UMLClass;
+			var attribute:ClassAttribute = node.getAttribute(id);
+			
+			waoNode.updateClassAttribute(nodeId, attribute);
 		}
 		
 		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void

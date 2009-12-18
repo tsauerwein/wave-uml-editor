@@ -16,6 +16,11 @@ package de.waveumleditor.model.wao.wave
 			delta[key]= value;
 		}
 		
+		public function getWaveDelta():Object
+		{
+			return delta;
+		}
+		
 		public function toString():String
 		{
 			var out:String = "";

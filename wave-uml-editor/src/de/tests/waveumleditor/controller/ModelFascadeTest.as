@@ -1,5 +1,7 @@
 package de.tests.waveumleditor.controller
 {
+	import com.nextgenapp.wave.gadget.WaveSimulator;
+	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
@@ -21,7 +23,7 @@ package de.tests.waveumleditor.controller
 		{
 			var diagram:ClassDiagram = new ClassDiagram();
 			
-			var modelFascade:ModelFascade = new ModelFascade(diagram);
+			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 						
 			var sizeBefore:int = diagram.getNodes().length;
 			
@@ -64,7 +66,7 @@ package de.tests.waveumleditor.controller
 			var nodeId:Identifier = new Identifier("C1");
 			var nodeModel:UMLClass = new UMLClass(nodeId, null, "");
 			diagram.addNode(nodeModel);
-			var modelFascade:ModelFascade = new ModelFascade(diagram);
+			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			
 			var attribute:ClassAttribute = new ClassAttribute(
 				new Identifier("A1"), 
@@ -100,7 +102,7 @@ package de.tests.waveumleditor.controller
 			var nodeId:Identifier = new Identifier("C1");
 			var nodeModel:UMLClass = new UMLClass(nodeId, null, "");
 			diagram.addNode(nodeModel);
-			var modelFascade:ModelFascade = new ModelFascade(diagram);
+			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			
 			var attribute:ClassAttribute = new ClassAttribute(
 				new Identifier("A1"), 
