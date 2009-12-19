@@ -5,7 +5,9 @@ package de.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.wao.WAOPosition;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
@@ -22,16 +24,6 @@ package de.waveumleditor.model.wao.classDiagram
 			this.wave = wave;
 		}
 		
-		public function setPosition(nodeId:Identifier, newPosition:Position):void
-		{
-			var delta:Delta = new Delta();
-			
-			WAOPosition.store(delta, nodeId.getId() + Delta.IDS_SEPERATOR + POSITION, newPosition);
-			
-			trace(delta.toString());
-			wave.submitDelta(delta.getWaveDelta());
-		}
-		
 		public function createNode(node:ClassDiagramNode):void
 		{
 			var delta:Delta = new Delta();
@@ -41,6 +33,16 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			WAOPosition.store(delta, node.getIdentifier().getId() + Delta.IDS_SEPERATOR + POSITION, node.getPosition());
 			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function setPosition(nodeId:Identifier, newPosition:Position):void
+		{
+			var delta:Delta = new Delta();
+			
+			WAOPosition.store(delta, nodeId.getId() + Delta.IDS_SEPERATOR + POSITION, newPosition);
+			
+			trace(delta.toString());
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
@@ -57,7 +59,52 @@ package de.waveumleditor.model.wao.classDiagram
 		{
 			var delta:Delta = new Delta();
 			
+			WAOClassAttribute.store(delta, classId.getId(), attribute);
 			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function removeClassAttribute(classId:Identifier, attributeId:Identifier):void
+		{
+			var delta:Delta = new Delta();
+			
+			WAOClassAttribute.remove(delta, classId.getId(), attributeId.getId());
+			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function updateClassConstructor(classId:Identifier, constructor:ClassConstructorMethod):void
+		{
+			var delta:Delta = new Delta();
+		
+			WAOClassConstructor.store(delta, classId.getId(), constructor);			
+			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function removeClassConstructor(classId:Identifier, constructorId:Identifier):void
+		{
+			var delta:Delta = new Delta();
+			
+			WAOClassConstructor.remove(delta, classId.getId(), constructorId.getId());
+			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function updateClassMethod(classId:Identifier, method:ClassMethod):void
+		{
+			var delta:Delta = new Delta();
+		
+			WAOClassMethod.store(delta, classId.getId(), method);	
+			
+			wave.submitDelta(delta.getWaveDelta());
+		}
+		
+		public function removeClassMethod(classId:Identifier, methodId:Identifier):void
+		{
+			var delta:Delta = new Delta();
+			
+			WAOClassMethod.remove(delta, classId.getId(), methodId.getId());
 			
 			wave.submitDelta(delta.getWaveDelta());
 		}

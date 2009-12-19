@@ -1,5 +1,6 @@
 package de.tests.waveumleditor.model.wao.wave
 {
+	import de.tests.TestUtil;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import flexunit.framework.TestCase;
@@ -15,9 +16,8 @@ package de.tests.waveumleditor.model.wao.wave
 			delta.setValue("key1", "value1");
 			delta.setValue("key2", "value2");
 			
-			assertEquals("ja", "ja");
-			trace(delta.toString());
-			assertEquals(delta.toString(), "key2 : value2 \n key1 : value1 \n ");
+			assertTrue(TestUtil.contains(delta.toString(), "key2 : value2"));
+			assertTrue(TestUtil.contains(delta.toString(), "key1 : value1"));
 		}
 	}
 }

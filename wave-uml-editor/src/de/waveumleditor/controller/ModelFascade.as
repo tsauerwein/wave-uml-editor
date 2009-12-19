@@ -76,7 +76,9 @@ package de.waveumleditor.controller
 		
 		public function renameNode(node:BaseClassDiagramNode):void
 		{
-			diagram.getNode(node.getIdentifier()).setName(node.nodeName);
+			var modelNode:ClassDiagramNode = diagram.getNode(node.getIdentifier());
+			modelNode.setName(node.nodeName);
+			waoNode.renameNode(modelNode);
 		}
 		
 		public function removeLink(link:ClassLink):void
@@ -93,12 +95,6 @@ package de.waveumleditor.controller
 			
 			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
 		}
-		
-/*		public function addNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
-		{
-			var id:Identifier = generateAttributeIdentifier();
-			diagram.addAttribute(nodeId, attribute, generateAttributeIdentifier());
-		}*/
 		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
 		{
@@ -124,6 +120,7 @@ package de.waveumleditor.controller
 		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void
 		{
 			diagram.removeAttribute(nodeId, attributeId);
+			waoNode.removeClassAttribute(nodeId, attributeId);
 		}
 		
 		// Methods

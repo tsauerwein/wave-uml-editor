@@ -1,4 +1,4 @@
-package de.tests.waveumleditor.model.wao.wave
+package de.tests.waveumleditor.model.wao
 {
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.wao.WAOPosition;

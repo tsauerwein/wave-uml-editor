@@ -1,5 +1,6 @@
-package de.tests.waveumleditor.model.wao.wave.classDiagram
+package de.tests.waveumleditor.model.wao.classDiagram
 {
+	import de.tests.TestUtil;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.EVisibility;
@@ -20,7 +21,12 @@ package de.tests.waveumleditor.model.wao.wave.classDiagram
 			
 			WAOClassAttribute.store(delta, "classId", attribute);
 			
-			assertEquals(delta.getWaveDelta()["classId_attrId"], "");
+			assertNotNull(delta.getWaveDelta()["classId_attrId"]);
+			
+			var json:String = delta.getWaveDelta()["classId_attrId"];
+			assertTrue(TestUtil.contains(json, "\"" + WAOClassAttribute.VISIBILITY + "\":0"));
+			assertTrue(TestUtil.contains(json, "\"" + WAOClassAttribute.STATIC + "\":false"));
+			assertTrue(TestUtil.contains(json, "\"" + WAOClassAttribute.VARIABLE + "\":{"));
 		}
 	}
 }

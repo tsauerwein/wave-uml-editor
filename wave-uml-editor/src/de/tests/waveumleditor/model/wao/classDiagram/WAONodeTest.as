@@ -1,4 +1,4 @@
-package de.tests.waveumleditor.model.wao.wave.classDiagram
+package de.tests.waveumleditor.model.wao.classDiagram
 {
 	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveSimulator;
