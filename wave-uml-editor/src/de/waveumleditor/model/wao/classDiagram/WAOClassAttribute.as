@@ -5,6 +5,12 @@ package de.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.wao.wave.Delta;
 
+	/**
+	 * This class maps ClassAttribute objects into key-value-pairs, which are
+	 * stored in the Wave state.
+	 * 
+	 * @see de.waveumleditor.model.classDiagram.ClassAttribute
+	 */ 
 	public class WAOClassAttribute
 	{
 		public static const STATIC:String = "s";

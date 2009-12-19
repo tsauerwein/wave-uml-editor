@@ -16,7 +16,12 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import mx.collections.IList;
 	
-
+	/**
+	 * This class maps ClassDiagramNode objects into key-value-pairs, which are
+	 * stored in the Wave state.
+	 * 
+	 * @see de.waveumleditor.model.classDiagram.ClassDiagramNode
+	 */ 
 	public class WAONode
 	{
 		private var wave:Wave;
@@ -140,6 +145,12 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
+		/**
+		 * Removes a attribute from the Wave state.
+		 * 
+		 * Note that the delta is only submitted, if no delta 
+		 * was passed-in.
+		 */ 
 		public function removeClassAttribute(classId:Identifier, attributeId:Identifier, delta:Delta = null):void
 		{
 			var executeSubmit:Boolean = false;
@@ -167,7 +178,13 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			wave.submitDelta(delta.getWaveDelta());
 		}
-		
+
+		/**
+		 * Removes a constructor from the Wave state.
+		 * 
+		 * Note that the delta is only submitted, if no delta 
+		 * was passed-in.
+		 */ 
 		public function removeClassConstructor(classId:Identifier, constructorId:Identifier, delta:Delta = null):void
 		{
 			var executeSubmit:Boolean = false;
@@ -196,6 +213,12 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
+		/**
+		 * Removes a method from the Wave state.
+		 * 
+		 * Note that the delta is only submitted, if no delta 
+		 * was passed-in.
+		 */ 
 		public function removeClassMethod(classId:Identifier, methodId:Identifier, delta:Delta = null):void
 		{
 			var executeSubmit:Boolean = false;

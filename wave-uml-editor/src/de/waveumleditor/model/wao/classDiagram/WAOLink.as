@@ -8,6 +8,12 @@ package de.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
+	/**
+	 * This class maps ClassDiagramLink objects into key-value-pairs, which are
+	 * stored in the Wave state.
+	 * 
+	 * @see de.waveumleditor.model.classDiagram.link.ClassDiagramLink
+	 */ 
 	public class WAOLink
 	{
 		private var wave:Wave;
@@ -57,6 +63,12 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
+		/**
+		 * Removes a link from the Wave state.
+		 * 
+		 * Note that the delta is only submitted, if no delta 
+		 * was passed-in.
+		 */ 
 		public function removeLink(link:ClassDiagramLink, delta:Delta = null):void
 		{
 			var executeSubmit:Boolean = false;

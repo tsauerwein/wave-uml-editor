@@ -4,7 +4,13 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.wao.wave.Delta;
-	
+		
+	/**
+	 * This class maps ClassMethod objects into key-value-pairs, which are
+	 * stored in the Wave state.
+	 * 
+	 * @see de.waveumleditor.model.classDiagram.ClassMethod
+	 */ 
 	public class WAOClassMethod
 	{
 		public static const STATIC:String = "s";

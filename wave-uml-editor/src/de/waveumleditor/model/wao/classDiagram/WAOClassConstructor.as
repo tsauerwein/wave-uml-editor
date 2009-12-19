@@ -8,6 +8,12 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import mx.collections.IList;
 	
+	/**
+	 * This class maps ClassConstructorMethod objects into key-value-pairs, which are
+	 * stored in the Wave state.
+	 * 
+	 * @see de.waveumleditor.model.classDiagram.ClassConstructorMethod
+	 */ 
 	public class WAOClassConstructor
 	{
 		public static const VISIBILITY:String = "vi";
