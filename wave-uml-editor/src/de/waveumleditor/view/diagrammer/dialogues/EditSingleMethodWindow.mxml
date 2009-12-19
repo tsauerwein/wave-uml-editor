@@ -169,8 +169,7 @@
 	        {
 	        	trace("handle delete parameter");
 	        	var parameterGridRowName:String = "gr"+(event.currentTarget as Button).id;
-	        	//gdParameterList.removeChild(this.getDisplayObjectByName(parameterGridRowName, gdParameterList));
-	        	var parameterGridRowToDelete:DisplayObject = gdParameterList.getChildByName(parameterGridRowName); //FIXME: DisplayObject ist NULL
+	        	var parameterGridRowToDelete:DisplayObject = gdParameterList.getChildByName(parameterGridRowName);
 	        	gdParameterList.removeChild(parameterGridRowToDelete);
 	        }
 			
