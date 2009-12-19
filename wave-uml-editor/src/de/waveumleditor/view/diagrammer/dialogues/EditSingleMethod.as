@@ -3,6 +3,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	
+	import flash.events.Event;
+	
 	public class EditSingleMethod
 	{
 
@@ -44,6 +46,11 @@ package de.waveumleditor.view.diagrammer.dialogues
         public function getEditMethodsWindow():EditMethodsWindow
         {
         	return this.editMethodsWindow;
+        }
+        
+        public function handleDeleteParameter(event:Event):void
+        {
+        	
         }
         
 

@@ -143,6 +143,7 @@ package de.waveumleditor.controller
 		{
 			diagram.removeMethod(nodeId, methodId);
 		}
+		
 		public function editNodeMethod(nodeId:Identifier, method:ClassConstructorMethod):void
 		{
 			if (method.getIdentifier().getId() == ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER.getId() ||

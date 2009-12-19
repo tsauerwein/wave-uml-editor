@@ -279,6 +279,7 @@ package de.waveumleditor.controller
 				else 
 				{
 					method = umlClass.getMethod(event.getMethodId());
+					editSingleMethod.isConstructor = false;
 				}
 			}
 			else 
@@ -292,13 +293,13 @@ package de.waveumleditor.controller
 				else 
 				{
 					method = umlClass.getConstructor(event.getMethodId());
+					editSingleMethod.isConstructor = true;
 				}
 				
 			}
 			editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
 			editSingleMethod.update(method);
 			editSingleMethod.popUp();	
-			
 		}
 		
 		/** 
@@ -324,6 +325,9 @@ package de.waveumleditor.controller
 			
 			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
+
+			// also update the diagram in the view
+			refreshNodeInView(updatedClass);
 		}
 		
 		/**

@@ -78,7 +78,7 @@
 			id="titleWindow"
 			layout="vertical" 
 			minWidth="340" 
-			minHeight="300"
+			minHeight="200"
 			maxHeight="500"
 	        title="Attribute editieren"
 	        titleStyleName="titleText"
