@@ -2,6 +2,7 @@
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
+        	import mx.core.Container;
         	import de.waveumleditor.model.classDiagram.Variable;
         	import mx.collections.IList;
         	import de.waveumleditor.model.classDiagram.Type;
@@ -108,6 +109,7 @@
 					)
 					
 					newClassConstructorMethod.setUMLClass(getClassData());
+					addParametersToClassConstructorMethod(newClassConstructorMethod);
 					
 		            nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassConstructorMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);
@@ -133,6 +135,7 @@
 	            		chbStatic.selected);
 	            		
 	            		newClassMethod.setUMLClass(getClassData());
+	            		addParametersToClassConstructorMethod(newClassMethod);
 	            		
 	            	nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);	
@@ -141,15 +144,34 @@
 				PopUpManager.removePopUp(singleMethodWindow);
 			}
 			
+			public function addParametersToClassConstructorMethod(method:ClassConstructorMethod):void
+			{
+				
+				for(var i:int = 0; i < gdParameterList.numChildren; i++)
+				{
+					var parameterGridRow:EditParameterElement = gdParameterList.getChildAt(i) as EditParameterElement;
+					if(parameterGridRow != null && parameterGridRow is EditParameterElement && parameterGridRow.hasValidParameter())
+					{
+						method.addVariable(parameterGridRow.variable);
+					}
+				}
+			}
+			
+			
+			
 			public function handleAddParameter(event:Event):void
 			{
 				trace("handle add parameter");
+				gdParameterList.addChild(new EditParameterElement(new Variable("", Type.STRING, ""), this));
 			}
 			
 			override public function handleDeleteParameter(event:Event):void
 	        {
 	        	trace("handle delete parameter");
-	        	
+	        	var parameterGridRowName:String = "gr"+(event.currentTarget as Button).id;
+	        	//gdParameterList.removeChild(this.getDisplayObjectByName(parameterGridRowName, gdParameterList));
+	        	var parameterGridRowToDelete:DisplayObject = gdParameterList.getChildByName(parameterGridRowName); //FIXME: DisplayObject ist NULL
+	        	gdParameterList.removeChild(parameterGridRowToDelete);
 	        }
 			
 			public function addVariablesToContentGrid(classElement:ClassConstructorMethod, classDataGrid:Grid):void 
@@ -205,9 +227,22 @@
 		        mx.managers.PopUpManager.addPopUp(singleMethodWindow, SystemManager.getSWFRoot(singleMethodWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(singleMethodWindow);
 			}
+			
+			public function getDisplayObjectByName(id:String, grid:Grid):GridRow
+			{
+				for(var i:int = 0; i < grid.numChildren; i++)
+				{
+					if((grid.getChildAt(i)as GridRow).name == id)
+					{
+						return grid.getChildAt(i) as GridRow;
+					}
+				}
+				trace("parameter grid row not found!!!");
+				return null;
+			}
         ]]>
     </mx:Script>
-<!--	<container> -->
+	 
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 			id="singleMethodWindow"
 			layout="vertical" 
@@ -223,7 +258,8 @@
 	        dropShadowEnabled="true"
 	        showCloseButton="true"
 	        close="close(event)" borderColor="#E2E2E2"> 
-	    
+	        
+
 	    <mx:Grid id="editMethodGrid" width="100%" height="100%" verticalAlign="top">
 	        <mx:GridRow width="100%" height="100%">
 	            <mx:GridItem width="100%">
@@ -277,9 +313,9 @@
                         </mx:GridRow>
                         <mx:GridRow width="100%">
 	                        <mx:GridItem width="100%" colSpan="2">
-	                            <mx:Grid width="100%" id="gdParameterList">
+	                            	<mx:Grid width="100%" id="gdParameterList">
 	                            	
-	                            </mx:Grid>
+	                          		</mx:Grid>
 	                        </mx:GridItem>
 	                    </mx:GridRow>
 	                    <mx:GridRow width="100%">
@@ -311,8 +347,5 @@
 			   </mx:GridItem>
 		    </mx:GridRow>
 	    </mx:Grid>
-		
-	
-	
 	</mx:TitleWindow> 
 </EditSingleMethod>

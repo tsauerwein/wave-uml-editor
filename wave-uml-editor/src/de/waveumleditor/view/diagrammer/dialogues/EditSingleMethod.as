@@ -5,6 +5,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	import flash.events.Event;
 	
+	import mx.containers.Grid;
+	import mx.core.Container;
+	
 	public class EditSingleMethod
 	{
 

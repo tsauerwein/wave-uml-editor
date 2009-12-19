@@ -1,6 +1,5 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
-	import de.waveumleditor.model.classDiagram.IClassElement;
 	import de.waveumleditor.model.classDiagram.Variable;
 	
 	import flash.events.MouseEvent;
@@ -13,7 +12,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 
 	public class EditParameterElement extends GridRow
 	{
-		private var element:IClassElement;
+		public var variable:Variable;
 		private var editWindow:EditSingleMethod;
 		private static var idCounter:int = 0;
 		
@@ -31,10 +30,11 @@ package de.waveumleditor.view.diagrammer.dialogues
 			
 			this.editWindow = editWindow;
 			
-			this.element = element;
+			this.variable = variable;
 			this.percentWidth=100;
 			this.setStyle("verticalAlign", "center");
-			this.id = (idCounter++).toString();
+			this.name = "gr"+(idCounter).toString();
+			this.id = "gr"+(idCounter).toString();
 			
 			
 			//Typ
@@ -69,12 +69,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var deleteGridItem:GridItem = new GridItem();
 			deleteGridItem.percentWidth = 100;
 			deleteGridItem.setStyle("horizontalAlign", "right");
-			deleteGridItem.addChild(getDeleteButtonOfElement(this.element));
+			deleteGridItem.addChild(getDeleteButtonOfElement(this.variable));
 			this.addChild(deleteGridItem);
 		}
 		
 		
-		public function getDeleteButtonOfElement(element:IClassElement):Button
+		public function getDeleteButtonOfElement(variable:Variable):Button
 		{
 			var deleteButton:Button = new Button();
 			deleteButton.label="-";
@@ -85,6 +85,20 @@ package de.waveumleditor.view.diagrammer.dialogues
 			deleteButton.addEventListener(MouseEvent.CLICK, editWindow.handleDeleteParameter);
 
 			return deleteButton;
+		}
+		
+		public function hasValidParameter():Boolean
+		{
+			if(this.variable == null)
+			{
+				return false;
+			}
+			if(this.variable.getName()=="")
+			{
+				return false;
+			}
+			
+			return true;
 		}
 	}
 }
