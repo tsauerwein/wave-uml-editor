@@ -19,7 +19,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		public function testSetPosition():void
 		{
 			var wave:Wave = new WaveSimulator();
-			var waoNode:WAONode = new WAONode(wave);
+			var waoNode:WAONode = new WAONode(wave, null);
 			
 			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
 			var pos:Position = new Position(1, 2);
@@ -34,7 +34,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		public function testCreateNode():void
 		{
 			var wave:Wave = new WaveSimulator();
-			var waoNode:WAONode = new WAONode(wave);
+			var waoNode:WAONode = new WAONode(wave, null);
 			
 			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
 			var pos:Position = new Position(1, 2);
@@ -53,7 +53,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		public function testRenameNode():void
 		{
 			var wave:Wave = new WaveSimulator();
-			var waoNode:WAONode = new WAONode(wave);
+			var waoNode:WAONode = new WAONode(wave, null);
 			
 			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
 			var pos:Position = new Position(1, 2);
@@ -71,6 +71,11 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var newState:WaveState = wave.getState();
 			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.NAME), newName);
 			
+		}
+		
+		public function testRemoveNode():void
+		{
+			// todo
 		}
 	}
 }

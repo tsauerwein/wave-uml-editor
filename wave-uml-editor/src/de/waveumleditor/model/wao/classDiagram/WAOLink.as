@@ -57,9 +57,15 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
-		public function removeLink(link:ClassDiagramLink):void
+		public function removeLink(link:ClassDiagramLink, delta:Delta = null):void
 		{
-			var delta:Delta = new Delta();
+			var executeSubmit:Boolean = false;
+			
+			if (delta == null)
+			{
+				delta = new Delta();
+				executeSubmit = true;
+			}
 			
 			delta.setValue(link.getIdentifier().getId(), null);
 			delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + FROMTO, null);	
@@ -69,7 +75,11 @@ package de.waveumleditor.model.wao.classDiagram
 				delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + SETTINGS, null);	
 			}
 			
-			wave.submitDelta(delta.getWaveDelta());
+			if (executeSubmit)
+			{
+				// only submit if no delta was passed in
+				wave.submitDelta(delta.getWaveDelta());
+			}
 		}
 		
 		private function getEncodableSettingsObject(link:LinkDependency):Object

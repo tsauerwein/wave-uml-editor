@@ -9,6 +9,8 @@ package de.tests.waveumleditor.model.classDiagram
 	
 	import flexunit.framework.TestCase;
 	
+	import mx.collections.IList;
+	
 	import org.flexunit.assertThat;
 	
 	public class ClassDiagramTest extends TestCase
@@ -25,8 +27,9 @@ package de.tests.waveumleditor.model.classDiagram
 		{
     		var  classDiagram:ClassDiagram = createClassDiagram();
     		
-    		classDiagram.removeNode(class1);
+    		var removedLinks:IList = classDiagram.removeNode(class1);
     		
+    		assertEquals(2, removedLinks.length);
     		assertEquals(1, classDiagram.getLinks().length);
     		assertEquals(2, classDiagram.getNodes().length);
 		}

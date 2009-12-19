@@ -7,6 +7,7 @@ package de.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.classDiagram.maps.NodeMap;
 	
 	import mx.collections.ArrayList;
+	import mx.collections.IList;
 	
 	/**
 	 * Holds a list of all nodes and links that belong 
@@ -29,15 +30,25 @@ package de.waveumleditor.model.classDiagram
 			this.nodes.setValue(node);
 		}
 		
-		public function removeNodeById(id:Identifier):void
+		/**
+		 * Removes a node from the diagram by its id.
+		 * 
+		 * @returns A list of links that were connected to this node.
+		 */ 
+		public function removeNodeById(id:Identifier):IList
 		{
-			removeNode(getNode(id));
+			return removeNode(getNode(id));
 		}
 		
-		public function removeNode(node:ClassDiagramNode):void
+		/**
+		 * Removes a node from the diagram.
+		 * 
+		 * @returns A list of links that were connected to this node.
+		 */ 
+		public function removeNode(node:ClassDiagramNode):IList
 		{
 			this.nodes.removeValue(node.getIdentifier());
-			removeCorrespondingLinks(node);
+			return removeCorrespondingLinks(node);
 		}
 		
 		public function getNode(id:Identifier):ClassDiagramNode
@@ -75,19 +86,29 @@ package de.waveumleditor.model.classDiagram
 			return this.links.getAsList();
 		}
 		
-		private function removeCorrespondingLinks(node:ClassDiagramNode):void
+		/**
+		 * Removes all links from the diagram that are connected 
+		 * with the passed-in node.
+		 * 
+		 * @returns A list of links that were removed.
+		 */ 
+		private function removeCorrespondingLinks(node:ClassDiagramNode):IList
 		{
 			var linkList:ArrayList = getLinks();
 			
+			var removedLinks:ArrayList = new ArrayList();
 			for (var i:int = 0; i < linkList.length; i++)
 			{
 				var link:ClassDiagramLink = linkList.getItemAt(i) as ClassDiagramLink;
 				
 				if (link.getLinkFrom() == node || link.getLinkTo() == node) 
 				{
-						removeLink(link);		
+					removedLinks.addItem(link);	
+					removeLink(link);		
 				}	
 			}
+			
+			return removedLinks;
 		}
 		
 		public function addAttribute(classId:Identifier, newAttribute:ClassAttribute, 

@@ -16,6 +16,8 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	
+	import mx.collections.IList;
 
 	public class ModelFascade
 	{
@@ -43,8 +45,8 @@ package de.waveumleditor.controller
 			this.diagram = diagram;
 			
 			this.wave = wave;
-			this.waoNode = new WAONode(wave);
 			this.waoLink = new WAOLink(wave);
+			this.waoNode = new WAONode(wave, waoLink);
 		}
 		
 		public function addNode(node:BaseClassDiagramNode):void
@@ -73,9 +75,17 @@ package de.waveumleditor.controller
 			}
 		}
 		
+		/**
+		 * Removes a node from the diagram.
+		 * 
+		 * @returns A list of links that were connected to this node.
+		 */ 
 		public function removeNode(node:BaseClassDiagramNode):void
 		{
-			diagram.removeNodeById(node.getIdentifier());
+			var nodeModel:ClassDiagramNode = diagram.getNode(node.getIdentifier());
+			
+			var removedLinks:IList = diagram.removeNode(nodeModel);
+			waoNode.removeNode(nodeModel, removedLinks);
 		}
 		
 		public function renameNode(node:BaseClassDiagramNode):void
