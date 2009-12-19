@@ -8,6 +8,8 @@ package de.waveumleditor.model.classDiagram.link
 				
 		private var name:String;
 		
+		public static const TYPE:String = "A";
+		
 		public function LinkDependency(key:Identifier, 
 			linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode, name:String = "")
 		{
@@ -38,6 +40,11 @@ package de.waveumleditor.model.classDiagram.link
 		public function clone(id:Identifier):LinkDependency
 		{
 			return new LinkDependency(id, getLinkFrom(), getLinkTo(), name);
+		}
+		
+		override public function getLinkType():String
+		{
+			return TYPE;
 		}
 	}
 }

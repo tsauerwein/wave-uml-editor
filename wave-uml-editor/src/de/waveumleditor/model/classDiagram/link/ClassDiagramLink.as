@@ -43,6 +43,11 @@ package de.waveumleditor.model.classDiagram.link
 		{
 			return "from: " + this.linkFrom + " to: " + this.linkTo;
 		}
+		
+		public function getLinkType():String
+		{
+			throw new Error("must be overriden in child classes");
+		}
 
 	}
 }

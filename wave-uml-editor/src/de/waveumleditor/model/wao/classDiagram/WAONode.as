@@ -16,8 +16,8 @@ package de.waveumleditor.model.wao.classDiagram
 	{
 		private var wave:Wave;
 		
-		public static const POSITION:String = "pos";
-		public static const NAME:String = "name";
+		public static const POSITION:String = "p";
+		public static const NAME:String = "n";
 		
 		public function WAONode(wave:Wave)
 		{

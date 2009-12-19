@@ -7,6 +7,8 @@ package de.waveumleditor.model.classDiagram.link
 	
 	public class LinkImplements extends ClassDiagramLink	
 	{
+		public static const TYPE:String = "IM";
+		
 		public function LinkImplements(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
 			super(key, linkFrom, linkTo);
@@ -17,6 +19,11 @@ package de.waveumleditor.model.classDiagram.link
 			if (linkFrom is UMLClass && linkTo is Interface) return true;
 			
 			return false;
+		}
+		
+		override public function getLinkType():String
+		{
+			return TYPE;
 		}
 	}
 }

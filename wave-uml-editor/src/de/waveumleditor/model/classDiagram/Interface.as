@@ -10,7 +10,7 @@ package de.waveumleditor.model.classDiagram
 	{
 		private var methods:ArrayList;
 		
-		public static const TYPE:String = "Interface";
+		public static const TYPE:String = "I";
 		
 		public function Interface(key:Identifier, position:Position, name:String = "") 
 		{

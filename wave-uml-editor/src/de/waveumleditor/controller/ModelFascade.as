@@ -10,7 +10,9 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
@@ -22,6 +24,7 @@ package de.waveumleditor.controller
 		private var wave:Wave;
 		
 		private var waoNode:WAONode;
+		private var waoLink:WAOLink;
 		
 		public static const SEPERATOR:String = "-";
 		
@@ -41,6 +44,7 @@ package de.waveumleditor.controller
 			
 			this.wave = wave;
 			this.waoNode = new WAONode(wave);
+			this.waoLink = new WAOLink(wave);
 		}
 		
 		public function addNode(node:BaseClassDiagramNode):void
@@ -81,11 +85,8 @@ package de.waveumleditor.controller
 			waoNode.renameNode(modelNode);
 		}
 		
-		public function removeLink(link:ClassLink):void
-		{
-			diagram.removeLinkById(link.getIdentifier());
-		}
 		
+		// Link 				
 		public function addLink(link:ClassLink):void
 		{
 			var id:Identifier = generateLinkIdentifier();
@@ -93,7 +94,22 @@ package de.waveumleditor.controller
 			var fromNode:ClassDiagramNode = this.diagram.getNode((link.fromNode as BaseClassDiagramNode).getIdentifier());
 			var toNode:ClassDiagramNode = this.diagram.getNode((link.toNode as BaseClassDiagramNode).getIdentifier());
 			
-			this.diagram.addLink(ModelFactory.linkFromView(link, fromNode, toNode));
+			var modelLink:ClassDiagramLink = ModelFactory.linkFromView(link, fromNode, toNode);
+			this.diagram.addLink(modelLink);
+			waoLink.createLink(modelLink);
+		}
+		
+		public function editLink(link:LinkDependency):void
+		{
+			diagram.editLink(link);
+			waoLink.updateLink(link);
+		}
+		
+		public function removeLink(link:ClassLink):void
+		{
+			var modelLink:ClassDiagramLink = diagram.getLink(link.getIdentifier());
+			diagram.removeLinkById(link.getIdentifier());
+			waoLink.removeLink(modelLink);
 		}
 		
 		public function editNodeAttribute(nodeId:Identifier, attribute:ClassAttribute):void
@@ -195,13 +211,6 @@ package de.waveumleditor.controller
 		public function removeClassConstructor(classId:Identifier, constructorId:Identifier):void
 		{
 			diagram.removeConstructor(classId, constructorId);
-		}
-		
-		// Link 
-		
-		public function editLink(link:LinkDependency):void
-		{
-			diagram.editLink(link);
 		}
 		
 		// Identifier

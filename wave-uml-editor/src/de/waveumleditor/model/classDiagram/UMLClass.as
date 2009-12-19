@@ -16,7 +16,7 @@ package de.waveumleditor.model.classDiagram
 		
 		private var abstract:Boolean;
 		
-		public static const TYPE:String = "Class";
+		public static const TYPE:String = "C";
 		
 		public function UMLClass(key:Identifier, position:Position, name:String = "", abstract:Boolean = false) 
 		{

@@ -7,6 +7,7 @@ package de.waveumleditor.model.classDiagram.link
 	
 	public class LinkInheritance extends ClassDiagramLink
 	{
+		public static const TYPE:String = "IN";
 		
 		public function LinkInheritance(key:Identifier, linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode)
 		{
@@ -19,6 +20,11 @@ package de.waveumleditor.model.classDiagram.link
 			if (linkFrom is Interface && linkTo is Interface) return true;
 			
 			return false;
+		}
+		
+		override public function getLinkType():String
+		{
+			return TYPE;
 		}
 		
 	}
