@@ -11,21 +11,15 @@ package de.waveumleditor.model.wao.classDiagram
 	public class WAOLinkParser
 	{
 		private var linkId:String;		
-		private var nodeKeys:IList = new ArrayList();
 		
 		public function WAOLinkParser(linkId:String)
 		{
 			this.linkId = linkId;
 		}
 
-		public function addKey(key:String):void
-		{
-			nodeKeys.addItem(key);
-		}
-
 		public function getLink(state:WaveState, diagram:ClassDiagram):ClassDiagramLink
 		{
-			return null;
+			return WAOLink.getFromState(linkId, state, diagram);
 		}
 	}
 }

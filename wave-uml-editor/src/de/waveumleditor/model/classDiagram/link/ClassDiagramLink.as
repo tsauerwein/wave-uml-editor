@@ -18,6 +18,12 @@ package de.waveumleditor.model.classDiagram.link
 			this.linkTo = linkTo;
 		}
 	
+		public function setFromTo(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):void
+		{
+			this.linkFrom = linkFrom;
+			this.linkTo = linkTo;
+		}
+	
 		public function canLink(linkFrom:ClassDiagramNode, linkTo:ClassDiagramNode):Boolean 
 		{	
 			//simulates abstract method

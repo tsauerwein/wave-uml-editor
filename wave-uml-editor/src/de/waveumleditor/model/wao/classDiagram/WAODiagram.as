@@ -67,7 +67,6 @@ package de.waveumleditor.model.wao.classDiagram
 					
 				linkParsers[linkKey] = linkParser;
 			}
-			linkParser.addKey(stateKey);
 		}
 		
 		private static function processNodes(state:WaveState, nodeParsers:Dictionary, diagram:ClassDiagram):void

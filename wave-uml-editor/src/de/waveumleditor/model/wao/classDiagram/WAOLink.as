@@ -2,10 +2,17 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.adobe.serialization.json.JSON;
 	import com.nextgenapp.wave.gadget.Wave;
+	import com.nextgenapp.wave.gadget.WaveState;
 	
+	import de.waveumleditor.model.Identifier;
+	import de.waveumleditor.model.classDiagram.ClassDiagram;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.link.EAssociationType;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.classDiagram.link.LinkImplements;
+	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	/**
@@ -23,6 +30,7 @@ package de.waveumleditor.model.wao.classDiagram
 		public static const TO:String = "t";
 		
 		public static const SETTINGS:String = "s";
+		
 		public static const DEP_NAME:String = "n";
 		
 		public static const ASS_TYPE:String = "asst";
@@ -133,6 +141,95 @@ package de.waveumleditor.model.wao.classDiagram
 			trace(json);
 			
 			delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + FROMTO, json);	
+		}
+		
+		public static function getFromState(linkId:String, 
+			state:WaveState, diagram:ClassDiagram):ClassDiagramLink
+		{
+			var type:String = state.getStringValue(linkId);
+			var fromTo:String = state.getStringValue(linkId + Delta.IDS_SEPERATOR + FROMTO);
+			
+			if (type == null || fromTo == null)
+			{
+				return null;
+			}
+						
+			var link:ClassDiagramLink = null;
+			var id:Identifier = new Identifier(linkId);
+			switch (type)
+			{
+				case LinkImplements.TYPE:
+					link = new LinkImplements(id, null, null);
+					break;
+				
+				case LinkInheritance.TYPE:
+					link = new LinkInheritance(id, null, null);
+					break;
+					
+				case LinkAssociation.TYPE:
+					link = new LinkAssociation(id, null, null);
+					getLinkSettings(state, linkId, link as LinkAssociation);
+					break;
+					
+				case LinkDependency.TYPE:
+					link = new LinkDependency(id, null, null);
+					getLinkSettings(state, linkId, link as LinkDependency);
+					break;
+				default:
+					return null;
+			}
+			
+			return getFromTo(fromTo, link, diagram);
+		}
+		
+		private static function getFromTo(fromToValue:String, link:ClassDiagramLink,
+			diagram:ClassDiagram):ClassDiagramLink
+		{
+			var fromToData:Object = JSON.decode(fromToValue);
+			
+			var nodeFrom:ClassDiagramNode = diagram.getNode(new Identifier(fromToData[FROM]));	
+			var nodeTo:ClassDiagramNode = diagram.getNode(new Identifier(fromToData[TO]));
+			
+			if (nodeFrom == null || nodeTo == null)
+			{
+				return null;
+			}
+			else 
+			{
+				link.setFromTo(nodeFrom, nodeTo);
+				
+				return link;
+			}
+		} 
+		
+		private static function getLinkSettings(state:WaveState, linkId:String, link:LinkDependency):void
+		{
+			var settingsValue:String = state.getStringValue(linkId + Delta.IDS_SEPERATOR + SETTINGS);
+			
+			if (settingsValue == null || settingsValue == "")
+			{
+				return;
+			}
+			
+			var settingsData:Object = JSON.decode(settingsValue);
+			
+			link.setName(settingsData[DEP_NAME]);
+			
+			if (link is LinkAssociation)
+			{
+				var association:LinkAssociation = link as LinkAssociation;
+				
+				association.setType(EAssociationType.getFromValue(settingsData[ASS_TYPE]));
+				
+				association.setFromName(settingsData[ASS_FROM_NAME]);
+				association.setToName(settingsData[ASS_TO_NAME]);
+				
+				association.setFromMultiplicity(settingsData[ASS_FROM_MULTIPLICITY]);
+			 	association.setToMultiplicity(settingsData[ASS_TO_MULTIPLICITY]);
+				
+				association.setFromNavigable(settingsData[ASS_FROM_NAVIGABLE]);
+				association.setToNavigable(settingsData[ASS_TO_NAVIGABLE]);
+			}
 		}
 	}
 }

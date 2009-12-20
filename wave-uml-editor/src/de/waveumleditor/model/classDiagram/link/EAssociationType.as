@@ -29,5 +29,18 @@ package de.waveumleditor.model.classDiagram.link
 		{
 			return this.value;
 		}
+		
+		public static function getFromValue(value:int):EAssociationType
+		{
+			switch(value)
+			{
+				case AGGREGATION.value:
+					return AGGREGATION;
+				case COMPOSITION.value:
+					return COMPOSITION;
+				default:
+					return ASSOCIATION;
+			}
+		}
 	}
 }

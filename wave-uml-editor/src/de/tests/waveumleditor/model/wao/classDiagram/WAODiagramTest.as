@@ -14,7 +14,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
+	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	
 	import flexunit.framework.TestCase;
@@ -24,7 +27,9 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		public function testGetFromState():void
 		{
 			var wave:Wave = new WaveSimulator();
-			var waoNode:WAONode = new WAONode(wave, null);
+			var waoLink:WAOLink = new WAOLink(wave);
+			var waoNode:WAONode = new WAONode(wave, waoLink);
+			
 			
 			var class1:UMLClass = new UMLClass(
 				new Identifier(ModelFascade.PREFIX_NODE + "001"),
@@ -64,6 +69,21 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			waoNode.updateClassAttribute(class2.getIdentifier(), attribute2);
 			waoNode.updateClassMethod(class2.getIdentifier(), method1);
 			
+			var link1:LinkInheritance = new LinkInheritance(
+				new Identifier(ModelFascade.PREFIX_LINK + "001"),
+				class1,
+				class2);
+			var link2:LinkAssociation = new LinkAssociation(
+				new Identifier(ModelFascade.PREFIX_LINK + "002"),
+				class2,
+				class1);
+			link2.setName("Test");
+			link2.setFromMultiplicity("1");
+			
+			waoLink.createLink(link1);
+			waoLink.createLink(link2);
+			waoLink.updateLink(link2);	
+			
 			var diagram:ClassDiagram = WAODiagram.getFromState(wave.getState());
 			
 			assertEquals(2, diagram.getNodes().length);
@@ -77,7 +97,16 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			assertEquals(1, restoredClass2.getAttributes().length);
 			assertEquals(1, restoredClass2.getMethods().length);
 			assertEquals(0, restoredClass2.getConstructors().length);
-		
+			
+			assertEquals(2, diagram.getLinks().length);
+			
+			var restoredLink1:LinkInheritance = diagram.getLink(link1.getIdentifier()) as LinkInheritance;
+			var restoredLink2:LinkAssociation = diagram.getLink(link2.getIdentifier()) as LinkAssociation;
+			
+			assertEquals(link1.getLinkFrom().getIdentifier().getId(),
+				restoredLink1.getLinkFrom().getIdentifier().getId());
+			assertEquals(link2.getName(), restoredLink2.getName());
+			assertEquals(link2.getFromMultiplicity(), restoredLink2.getFromMultiplicity());
 		}
 
 	}
