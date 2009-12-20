@@ -2,7 +2,10 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import de.waveumleditor.controller.ModelFascade;
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
+	import de.waveumleditor.model.classDiagram.EVisibility;
 	import de.waveumleditor.model.wao.wave.Delta;
 		
 	/**
@@ -13,6 +16,7 @@ package de.waveumleditor.model.wao.classDiagram
 	 */ 
 	public class WAOClassMethod
 	{
+		public static const NAME:String = "n";
 		public static const STATIC:String = "s";
 		public static const ABSTRACT:String = "a";
 		public static const RETURN_TYPE:String = "t";
@@ -21,6 +25,7 @@ package de.waveumleditor.model.wao.classDiagram
 		{
 			var methodData:Object = WAOClassConstructor.getEncodableObject(method);
 			
+			methodData[NAME] = method.getName();
 			methodData[STATIC] = method.isStatic();
 			methodData[ABSTRACT] = method.isAbstract();
 			methodData[RETURN_TYPE] = WAOType.getEncodableObject(method.getReturnType());
@@ -38,5 +43,23 @@ package de.waveumleditor.model.wao.classDiagram
 			WAOClassAttribute.remove(delta, nodeId, methodId);
 		}
 
+		public static function getFromState(stateKey:String, stateValue:String):ClassMethod
+		{
+			var methodId:String = ModelFascade.getNodeElementIdentifier(stateKey);
+			
+			var methodData:Object = JSON.decode(stateValue);
+			
+			var method:ClassMethod = new ClassMethod(
+				new Identifier(methodId),
+				methodData[NAME],
+				EVisibility.getEVisibilityFromVal(methodData[WAOClassConstructor.VISIBILITY]),
+				WAOType.getFromDecodedObject(methodData[RETURN_TYPE]),
+				methodData[ABSTRACT],
+				methodData[STATIC]);
+				
+			WAOClassConstructor.getParametersFromDecodedObject(method, methodData[WAOClassConstructor.PARAMETERS]);
+			
+			return method;	
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package de.waveumleditor.controller
 {
+	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveSimulator;
 	
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
@@ -35,13 +36,19 @@ package de.waveumleditor.controller
 	{
 		private var diagramView:ClassDiagramComponent;
 		private var diagramModel:ClassDiagram;
+		
 		private var fascade:ModelFascade;
+		
+		private var wave:Wave;
 		
 		public function Controller(diagramView:ClassDiagramComponent, diagramModel:ClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
-			this.fascade = new ModelFascade(this.diagramModel, new WaveSimulator()); // todo
+			
+			this.wave = new WaveSimulator(); // todo
+			
+			this.fascade = new ModelFascade(this.diagramModel, this.wave);
 			
 			this.diagramView.addEventListener(NodeEvent.EVENT_ADD_NODE, handleAddNode);
 			this.diagramView.addEventListener(NodeEvent.EVENT_MOVE_NODE, handleMoveClassNode);
@@ -55,6 +62,16 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(LinkEvent.EVENT_ADD_LINK, handleAddLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, handleShowAssociationLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_DEPENDENCY_LINK, handleShowDependencyLink);
+			
+			wave.setStateCallback(stateCallback);
+		}
+		
+		private function stateCallback():void 
+		{
+			//wave.getState()
+			// diagramModel:ClassDiagram = WAODiagram.parseFromState(state)
+			// fascade.setDiagram(diagramModel)
+			// diagramView.update(diagramModel)
 		}
 		
 		/**

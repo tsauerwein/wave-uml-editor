@@ -22,5 +22,19 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			assertEquals(variable.getType().getName(), obj[WAOVariable.TYPE][WAOType.NAME]);
 		}
 
+		public function testGetFromDecodedObject():void
+		{
+			var obj:Object = new Object();
+			obj[WAOVariable.NAME] = "a";
+			obj[WAOVariable.DEFAULT] = "leer";
+			obj[WAOVariable.TYPE] = new Object();
+			obj[WAOVariable.TYPE][WAOType.NAME] = "String";
+			
+			var variable:Variable = WAOVariable.getFromDecodedObject(obj);
+			
+			assertEquals(obj[WAOVariable.NAME], variable.getName());
+			assertEquals(obj[WAOVariable.DEFAULT], variable.getDefaultValue());
+			assertEquals(obj[WAOVariable.TYPE][WAOType.NAME], variable.getType().getName());
+		}
 	}
 }

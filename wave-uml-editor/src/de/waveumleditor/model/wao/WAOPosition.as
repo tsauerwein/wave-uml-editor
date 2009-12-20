@@ -24,5 +24,12 @@ package de.waveumleditor.model.wao
 			
 			delta.setValue(key, json);
 		}
+		
+		public static function getFromState(stateValue:String):Position
+		{
+			var positionData:Object = JSON.decode(stateValue);
+			
+			return new Position(positionData[X], positionData[Y]);
+		}
 	}
 }

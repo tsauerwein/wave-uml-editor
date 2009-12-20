@@ -2,7 +2,11 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import de.waveumleditor.controller.ModelFascade;
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.EVisibility;
+	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
@@ -57,6 +61,30 @@ package de.waveumleditor.model.wao.classDiagram
 		public static function remove(delta:Delta, nodeId:String, constructorId:String):void
 		{
 			WAOClassAttribute.remove(delta, nodeId, constructorId);
+		}
+		
+		public static function getFromState(stateKey:String, stateValue:String, umlClass:UMLClass):ClassConstructorMethod
+		{
+			var constructorId:String = ModelFascade.getNodeElementIdentifier(stateKey);
+			
+			var constructorData:Object = JSON.decode(stateValue);
+			
+			var constructor:ClassConstructorMethod = new ClassConstructorMethod(
+				new Identifier(constructorId),
+				EVisibility.getEVisibilityFromVal(constructorData[VISIBILITY]));
+				
+			getParametersFromDecodedObject(constructor, constructorData[PARAMETERS]);
+			constructor.setUMLClass(umlClass);
+			
+			return constructor;	
+		}
+		
+		public static function getParametersFromDecodedObject(method:ClassConstructorMethod, parametersData:Array):void
+		{
+			for (var i:int = 0; i < parametersData.length; i++)
+			{
+				method.addVariable(WAOVariable.getFromDecodedObject(parametersData[i]));
+			}
 		}
 	}
 }

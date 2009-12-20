@@ -27,9 +27,35 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var value:String = delta.getWaveDelta()["classId" + Delta.IDS_SEPERATOR + "mId"];
 			
 			assertNotNull(value);
+			assertTrue(TestUtil.contains(value, "\"n\":\"doIt\""));
 			assertTrue(TestUtil.contains(value, "\"t\":{\"n\":\"int\"}"));
 			assertTrue(TestUtil.contains(value, "\"s\":false"));
 			assertTrue(TestUtil.contains(value, "\"a\":false"));
+		}
+		
+		public function testGetFromState():void
+		{
+			var methId:String = "M-methId";
+			var classId:String = "C-classId";
+			
+			var m:ClassMethod = new ClassMethod(new Identifier(methId), "doIt", EVisibility.PUBLIC, Type.INT);
+			m.addVariable(new Variable("a", Type.STRING));
+			m.addVariable(new Variable("b", Type.INT, "0"));
+			
+			var delta:Delta = new Delta();
+			WAOClassMethod.store(delta, classId, m);
+			
+			var key:String = classId + Delta.IDS_SEPERATOR + methId;
+			var json:String = delta.getWaveDelta()[key];
+			
+			var restoredMethod:ClassMethod = WAOClassMethod.getFromState(key, json);
+			
+			assertEquals(m.getIdentifier().getId(), restoredMethod.getIdentifier().getId());
+			assertEquals(m.getVisibility().getValue(), restoredMethod.getVisibility().getValue());
+			assertEquals(m.getVariables().length, restoredMethod.getVariables().length);
+			assertEquals(m.getReturnType().getName(), restoredMethod.getReturnType().getName());
+			assertEquals(m.isAbstract(), restoredMethod.isAbstract());
+			assertEquals(m.isStatic(), restoredMethod.isStatic());
 		}
 
 	}

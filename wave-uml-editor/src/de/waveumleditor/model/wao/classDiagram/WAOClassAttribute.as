@@ -2,7 +2,10 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import de.waveumleditor.controller.ModelFascade;
+	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.EVisibility;
 	import de.waveumleditor.model.wao.wave.Delta;
 
 	/**
@@ -36,6 +39,18 @@ package de.waveumleditor.model.wao.classDiagram
 		{
 			var key:String = nodeId + Delta.IDS_SEPERATOR + attributeId;
 			delta.setValue(key, null);
+		}
+		
+		public static function getFromState(stateKey:String, stateValue:String):ClassAttribute
+		{
+			var attributeId:String = ModelFascade.getNodeElementIdentifier(stateKey);
+			
+			var attributeData:Object = JSON.decode(stateValue);
+			
+			return new ClassAttribute(new Identifier(attributeId), 
+				WAOVariable.getFromDecodedObject(attributeData[VARIABLE]),
+				EVisibility.getEVisibilityFromVal(attributeData[VISIBILITY]),
+				attributeData[STATIC]);
 		}
 	}
 }

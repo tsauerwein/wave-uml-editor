@@ -14,6 +14,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
+	import de.waveumleditor.model.wao.wave.Delta;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	
@@ -227,6 +228,7 @@ package de.waveumleditor.controller
 		public function generateNodeIdentifier():Identifier
 		{
 			//var nodeList:List = diagram.getNodes();
+			// eigene ID: wave.getViewer().getId()
 			return new Identifier(PREFIX_CLASS + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
@@ -267,5 +269,21 @@ package de.waveumleditor.controller
 			return id.getId().substr(0, 2) == PREFIX_METHOD;
 		}
 		
+		/**
+		 * Returns the identifier for a class element (attribute, method, constructor)
+		 * from the wave state key.
+		 * 
+		 * For example:
+		 * C-001_A-002 --> A-002
+		 *
+		 *  @param key wave state key
+		 *  @returns The 2nd half of the key
+		 */  
+		public static function getNodeElementIdentifier(key:String):String
+		{
+			var seperatorPos:int = key.indexOf(Delta.IDS_SEPERATOR);
+			
+			return key.substring(seperatorPos + 1, key.length);
+		}
 	}
 }

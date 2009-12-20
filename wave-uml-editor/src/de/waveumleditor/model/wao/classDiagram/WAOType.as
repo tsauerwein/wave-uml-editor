@@ -18,6 +18,14 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			return typeData;
 		}
-
+		
+		/**
+		 * Creates a Type object from a plain object that was
+		 * decoced from a JSON-String.
+		 */ 
+		public static function getFromDecodedObject(obj:Object):Type
+		{
+			return new Type(obj[NAME]);
+		}
 	}
 }

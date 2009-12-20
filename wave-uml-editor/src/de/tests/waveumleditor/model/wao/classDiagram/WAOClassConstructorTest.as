@@ -43,5 +43,27 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var params:Array = obj[WAOClassConstructor.PARAMETERS] as Array;
 			assertEquals(2, params.length);
 		}
+		
+		public function testGetFromState():void
+		{
+			var constrId:String = "CO-constr";
+			var classId:String = "C-classId";
+			
+			var c:ClassConstructorMethod = new ClassConstructorMethod(new Identifier(constrId), EVisibility.PUBLIC);
+			c.addVariable(new Variable("a", Type.STRING));
+			c.addVariable(new Variable("b", Type.INT, "0"));
+			
+			var delta:Delta = new Delta();
+			WAOClassConstructor.store(delta, classId, c);
+			
+			var key:String = classId + Delta.IDS_SEPERATOR + constrId;
+			var json:String = delta.getWaveDelta()[key];
+			
+			var restoredConstr:ClassConstructorMethod = WAOClassConstructor.getFromState(key, json, null);
+			
+			assertEquals(c.getIdentifier().getId(), restoredConstr.getIdentifier().getId());
+			assertEquals(c.getVisibility().getValue(), restoredConstr.getVisibility().getValue());
+			assertEquals(c.getVariables().length, restoredConstr.getVariables().length);
+		}
 	}
 }

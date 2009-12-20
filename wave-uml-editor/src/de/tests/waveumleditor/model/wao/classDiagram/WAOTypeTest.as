@@ -16,5 +16,14 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			assertEquals(type.getName(), obj[WAOType.NAME]);
 		}
 
+		public function testGetFromDecodedObject():void
+		{
+			var obj:Object = new Object();
+			obj[WAOType.NAME] = "String";
+			
+			var type:Type = WAOType.getFromDecodedObject(obj);
+			
+			assertEquals(obj[WAOType.NAME], type.getName());
+		}
 	}
 }

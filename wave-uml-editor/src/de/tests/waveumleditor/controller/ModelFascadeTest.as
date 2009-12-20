@@ -10,6 +10,7 @@ package de.tests.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.wao.wave.Delta;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
 	
@@ -116,6 +117,16 @@ package de.tests.waveumleditor.controller
 			modelFascade.removeNodeAttribute(nodeModel.getIdentifier(), attribute.getIdentifier());
 			
 			assertEquals(0, nodeModel.getAttributes().length);
+		}
+		
+		public function testGetNodeElementIdentifier():void
+		{
+			var nodeId:String = "C-01";
+			var attributeId:String = "A-01";
+			
+			var key:String = nodeId + Delta.IDS_SEPERATOR + attributeId;
+			
+			assertEquals(attributeId, ModelFascade.getNodeElementIdentifier(key));
 		}
 	}
 }

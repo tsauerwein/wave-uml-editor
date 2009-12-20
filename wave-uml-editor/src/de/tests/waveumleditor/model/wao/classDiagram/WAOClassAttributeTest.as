@@ -28,5 +28,27 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			assertTrue(TestUtil.contains(json, "\"" + WAOClassAttribute.STATIC + "\":false"));
 			assertTrue(TestUtil.contains(json, "\"" + WAOClassAttribute.VARIABLE + "\":{"));
 		}
+		
+		public function testGetFromState():void
+		{
+			var delta:Delta = new Delta();
+			
+			var attributeId:String = "A-attrId";
+			var classId:String = "C-classId";
+			
+			var attribute:ClassAttribute = new ClassAttribute(new Identifier(attributeId), new Variable("a", Type.INT), EVisibility.PUBLIC);
+			
+			WAOClassAttribute.store(delta, classId, attribute);
+			
+			var key:String = classId + Delta.IDS_SEPERATOR + attributeId;
+			var json:String = delta.getWaveDelta()[key];
+			
+			var restoredAttribute:ClassAttribute = WAOClassAttribute.getFromState(key, json);
+			
+			assertEquals(attribute.getIdentifier().getId(), restoredAttribute.getIdentifier().getId());
+			assertEquals(attribute.getVisibility().getValue(), restoredAttribute.getVisibility().getValue());
+			assertEquals(attribute.isStatic(), restoredAttribute.isStatic());
+			assertEquals(attribute.getVariable().getName(), restoredAttribute.getVariable().getName());
+		}
 	}
 }

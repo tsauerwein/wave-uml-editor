@@ -20,11 +20,6 @@ package de.waveumleditor.model.classDiagram
 			return this.name;
 		}
 		
-		public function setName(name:String):void
-		{
-			this.name = name;
-		}
-		
 		public function toString():String
 		{
 			return this.name;
