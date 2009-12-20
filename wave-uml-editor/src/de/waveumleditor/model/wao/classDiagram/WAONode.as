@@ -1,6 +1,7 @@
 package de.waveumleditor.model.wao.classDiagram
 {
 	import com.nextgenapp.wave.gadget.Wave;
+	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
@@ -241,6 +242,34 @@ package de.waveumleditor.model.wao.classDiagram
 		private function setName(delta:Delta, node:ClassDiagramNode):void
 		{
 			delta.setValue(node.getIdentifier().getId() + Delta.IDS_SEPERATOR + NAME, node.getName());
+		}
+		
+		public static function getFromState(nodeId:String, state:WaveState):ClassDiagramNode
+		{
+			var type:String = state.getStringValue(nodeId);
+			var pos:String = state.getStringValue(nodeId + Delta.IDS_SEPERATOR + POSITION);
+			var name:String = state.getStringValue(nodeId + Delta.IDS_SEPERATOR + NAME, "");
+			
+			if (type == null || pos == null)
+			{
+				return null;
+			}
+			
+			var node:ClassDiagramNode = null;
+			if (type == UMLClass.TYPE)
+			{
+				node = new UMLClass(new Identifier(nodeId), 
+					WAOPosition.getFromState(pos),
+					name);
+			}
+			else if (type == Interface.TYPE) 
+			{
+				node = new Interface(new Identifier(nodeId), 
+					WAOPosition.getFromState(pos),
+					name);
+			}
+			
+			return node;
 		}
 	}
 }

@@ -63,7 +63,7 @@ package de.waveumleditor.model.wao.classDiagram
 			WAOClassAttribute.remove(delta, nodeId, constructorId);
 		}
 		
-		public static function getFromState(stateKey:String, stateValue:String, umlClass:UMLClass):ClassConstructorMethod
+		public static function getFromState(stateKey:String, stateValue:String):ClassConstructorMethod
 		{
 			var constructorId:String = ModelFascade.getNodeElementIdentifier(stateKey);
 			
@@ -74,7 +74,6 @@ package de.waveumleditor.model.wao.classDiagram
 				EVisibility.getEVisibilityFromVal(constructorData[VISIBILITY]));
 				
 			getParametersFromDecodedObject(constructor, constructorData[PARAMETERS]);
-			constructor.setUMLClass(umlClass);
 			
 			return constructor;	
 		}

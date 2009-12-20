@@ -285,7 +285,7 @@ package de.waveumleditor.controller
 			editSingleMethod.setController(this);
 			
 			var method:ClassConstructorMethod = null;
-			if (fascade.isMethod(event.getMethodId())) 
+			if (ModelFascade.isMethod(event.getMethodId())) 
 			{
 				if (event.getMethodId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER)
 				{
@@ -352,7 +352,7 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleRemoveMethod(event:NodeMethodEvent):void
 		{
-			if (fascade.isMethod(event.getMethodId()))
+			if (ModelFascade.isMethod(event.getMethodId()))
 			{
 				this.fascade.removeNodeMethod(event.getClassNode().getIdentifier(), event.getMethodId());
 			}

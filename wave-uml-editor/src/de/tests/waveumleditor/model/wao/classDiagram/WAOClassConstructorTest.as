@@ -59,7 +59,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var key:String = classId + Delta.IDS_SEPERATOR + constrId;
 			var json:String = delta.getWaveDelta()[key];
 			
-			var restoredConstr:ClassConstructorMethod = WAOClassConstructor.getFromState(key, json, null);
+			var restoredConstr:ClassConstructorMethod = WAOClassConstructor.getFromState(key, json);
 			
 			assertEquals(c.getIdentifier().getId(), restoredConstr.getIdentifier().getId());
 			assertEquals(c.getVisibility().getValue(), restoredConstr.getVisibility().getValue());

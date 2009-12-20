@@ -28,7 +28,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
+			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			
 			waoNode.setPosition(id, pos);
@@ -43,7 +43,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
+			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
@@ -62,7 +62,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
+			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
@@ -86,7 +86,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var waoLink:WAOLink = new WAOLink(wave);
 			var waoNode:WAONode = new WAONode(wave, waoLink);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_CLASS + "node");
+			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			

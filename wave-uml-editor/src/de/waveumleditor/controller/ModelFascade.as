@@ -34,8 +34,8 @@ package de.waveumleditor.controller
 		public static const PREFIX_ATTRIBUTE:String = "A" + SEPERATOR;
 		public static const PREFIX_METHOD:String = "M" + SEPERATOR;
 		public static const PREFIX_CONSTRUCTOR:String = "CO" + SEPERATOR;
-		public static const PREFIX_CLASS:String = "C" + SEPERATOR;
-		public static const PREFIX_INTERFACE:String = "I" + SEPERATOR;
+		public static const PREFIX_NODE:String = "N" + SEPERATOR;
+		public static const PREFIX_LINK:String = "L" + SEPERATOR;
 		
 		public static const DEFAULT_ATTRIBUTE_IDENTIFIER:Identifier = new Identifier(PREFIX_ATTRIBUTE + "default_attr");
 		public static const DEFAULT_METHOD_IDENTIFIER:Identifier = new Identifier(PREFIX_METHOD + "default_meth");
@@ -229,13 +229,13 @@ package de.waveumleditor.controller
 		{
 			//var nodeList:List = diagram.getNodes();
 			// eigene ID: wave.getViewer().getId()
-			return new Identifier(PREFIX_CLASS + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_NODE + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 		public function generateLinkIdentifier():Identifier
 		{
 			//var nodeList:List = diagram.getNodes();
-			return new Identifier("L" + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return new Identifier(PREFIX_LINK + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
 		public function generateAttributeIdentifier():Identifier
@@ -259,14 +259,44 @@ package de.waveumleditor.controller
 			return new Identifier(PREFIX_CONSTRUCTOR + new Number(int.MAX_VALUE * Math.random()).toString() );
 		}
 		
-		public function isConstructor(id:Identifier):Boolean
+		public static function isConstructor(id:Identifier):Boolean
 		{
 			return id.getId().substr(0, 3) == PREFIX_CONSTRUCTOR;
 		}
 		
-		public function isMethod(id:Identifier):Boolean
+		public static function isMethod(id:Identifier):Boolean
 		{
 			return id.getId().substr(0, 2) == PREFIX_METHOD;
+		}
+		
+		public static function isAttribute(id:Identifier):Boolean
+		{
+			return id.getId().substr(0, 2) == PREFIX_ATTRIBUTE;
+		}
+		
+		public static function isConstructorKey(key:String):Boolean
+		{
+			return key.substr(0, 3) == PREFIX_CONSTRUCTOR;
+		}
+		
+		public static function isMethodKey(key:String):Boolean
+		{
+			return key.substr(0, 2) == PREFIX_METHOD;
+		}
+		
+		public static function isAttributeKey(key:String):Boolean
+		{
+			return key.substr(0, 2) == PREFIX_ATTRIBUTE;
+		}
+		
+		public static function isNodeKey(key:String):Boolean
+		{
+			return key.substr(0, 2) == PREFIX_NODE;
+		}
+		
+		public static function isLinkKey(key:String):Boolean
+		{
+			return key.substr(0, 2) == PREFIX_LINK;
 		}
 		
 		/**
@@ -284,6 +314,31 @@ package de.waveumleditor.controller
 			var seperatorPos:int = key.indexOf(Delta.IDS_SEPERATOR);
 			
 			return key.substring(seperatorPos + 1, key.length);
+		}
+		
+		/**
+		 * Returns the identifier of the parent element (node or link)
+		 * from the wave state key.
+		 * 
+		 * For example:
+		 * C-001_A-002 --> C-001
+		 * C-001 --> C-001
+		 * 
+		 *  @param key wave state key
+		 *  @returns The 1st half of the key
+		 */  
+		public static function getParentIdentifier(key:String):String
+		{
+			var seperatorPos:int = key.indexOf(Delta.IDS_SEPERATOR);
+			
+			if (seperatorPos < 0)
+			{
+				return key;
+			}
+			else
+			{
+				return key.substring(0, seperatorPos); 
+			}
 		}
 	}
 }

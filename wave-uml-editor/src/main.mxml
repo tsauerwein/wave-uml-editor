@@ -28,11 +28,11 @@
 				
 
 				
-				var classData:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_CLASS + "1234567"), new Position(100, 150), "Klassenname 1");
-				var classData2:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_CLASS + "12345671"), new Position(400, 150), "Klassenname 2");
-				var interfaceData:Interface = new Interface(new Identifier(ModelFascade.PREFIX_INTERFACE + "12345672"), new Position(400, 50), "Superinterface");
-				var emptyClass:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_CLASS + "12345673"), new Position(100, 50));
-				var emptyInterface:Interface = new Interface(new Identifier(ModelFascade.PREFIX_INTERFACE + "12345674"), new Position(250, 50), "");
+				var classData:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
+				var classData2:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
+				var interfaceData:Interface = new Interface(new Identifier(ModelFascade.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
+				var emptyClass:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "12345673"), new Position(100, 50));
+				var emptyInterface:Interface = new Interface(new Identifier(ModelFascade.PREFIX_NODE + "12345674"), new Position(250, 50), "");
 				
 				classData.setAbstract(true);
 				
