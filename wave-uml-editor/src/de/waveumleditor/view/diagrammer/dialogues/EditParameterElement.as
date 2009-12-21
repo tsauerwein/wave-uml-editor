@@ -45,9 +45,17 @@ package de.waveumleditor.view.diagrammer.dialogues
 			//Typ
 			var giType:GridItem = new GridItem();
 			cbType = new ComboBox();
+			cbType.editable = true;
 			cbType.dataProvider = type;
 			giType.addChild(cbType);
 			this.addChild(giType);
+			//Typ
+			var current_type:String = variable.getType().getName();
+			if(type.indexOf(current_type)<0)
+			{
+				type.push(current_type);
+			}
+			cbType.selectedItem = current_type;
 			
 			//Name
 			var giName:GridItem = new GridItem();
@@ -80,7 +88,16 @@ package de.waveumleditor.view.diagrammer.dialogues
 		
 		public function getVariable():Variable
 		{
-			this.variable.setType(new Type(cbType.selectedItem.toString()));
+			var newType:Type;
+			if(type.indexOf(cbType.selectedItem)<0)
+			{
+				newType = new Type(cbType.text);
+			}
+			else
+			{
+				newType = new Type(cbType.selectedItem.toString());
+			}
+			this.variable.setType(newType);
 			this.variable.setName(tiName.text);
 			this.variable.setDefaultValue(tiDefaultValue.text);
 			
