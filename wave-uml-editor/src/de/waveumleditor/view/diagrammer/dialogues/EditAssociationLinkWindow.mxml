@@ -46,29 +46,23 @@
 				this.viewLink.linkAttributeTo = txLinkAttrTo.text;
 				this.viewLink.linkMultiplicityTo = txLinkMultiplicityTo.text;
 				
-				if(assoziationCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
 				{
 					this.viewLink.linkAssoziationType = EAssociationType.ASSOCIATION;
 					this.viewLink.linkNavigableTo = checkboxNaviTo.selected;
 					this.viewLink.linkNavigableFrom = checkboxNaviFrom.selected;
 				}
-				if(aggregationCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Aggregation")
 				{
 					this.viewLink.linkAssoziationType = EAssociationType.AGGREGATION;
 					this.viewLink.linkNavigableTo = false;
 					this.viewLink.linkNavigableFrom = false;
 				}
-				if(compositionCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Komposition")
 				{
 					this.viewLink.linkAssoziationType = EAssociationType.COMPOSITION;
 					this.viewLink.linkNavigableTo = false;
 					this.viewLink.linkNavigableFrom = false;
-				}
-				
-				//default Assoziation
-				if(!compositionCheckBox.selected && !aggregationCheckBox.selected && !assoziationCheckBox.selected)
-				{
-					this.viewLink.linkAssoziationType = EAssociationType.ASSOCIATION;
 				}
 				
 			}
@@ -85,13 +79,13 @@
 				
 				if(link.getType() == EAssociationType.ASSOCIATION)
 				{
-					assoziationCheckBox.selected = true;
+					associationTypeComboBox.selectedIndex = 0;
 					checkboxNaviTo.selected = link.getToNavigable();
 					checkboxNaviFrom.selected = link.getFromNavigable();
 				}
 				if(link.getType() == EAssociationType.AGGREGATION)
 				{
-					aggregationCheckBox.selected = true;
+					associationTypeComboBox.selectedIndex = 1;
 					checkboxNaviTo.selected = false;
 					checkboxNaviFrom.selected = false;
 					checkboxNaviFrom.enabled = false;
@@ -99,7 +93,7 @@
 				}
 				if(link.getType() == EAssociationType.COMPOSITION)
 				{
-					compositionCheckBox.selected = true;
+					associationTypeComboBox.selectedIndex = 2;
 					checkboxNaviTo.selected = false;
 					checkboxNaviFrom.selected = false;
 					checkboxNaviFrom.enabled = false;
@@ -116,28 +110,23 @@
 				link.setToName(txLinkAttrTo.text);
 				link.setToMultiplicity(txLinkMultiplicityTo.text);
 				
-				if(assoziationCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
 				{
 					link.setType(EAssociationType.ASSOCIATION);
 					link.setToNavigable(checkboxNaviTo.selected);
 					link.setFromNavigable(checkboxNaviFrom.selected);
 				}
-				if(aggregationCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Aggregation")
 				{
 					link.setType(EAssociationType.AGGREGATION);
 					link.setToNavigable(false);
 					link.setFromNavigable(false);
 				}
-				if(compositionCheckBox.selected)
+				if(associationTypeComboBox.selectedLabel == "Komposition")
 				{
 					link.setType(EAssociationType.COMPOSITION);
 					link.setToNavigable(false);
 					link.setFromNavigable(false);
-				}
-				//default Assoziation
-				if(!compositionCheckBox.selected && !aggregationCheckBox.selected && !assoziationCheckBox.selected)
-				{
-					link.setType(EAssociationType.ASSOCIATION);
 				}
 				
 				getController().handleSaveLink(event);				
@@ -147,33 +136,25 @@
 			
 			private function handelClick():void
 			{
-				if(assoziationCheckBox.selected)
-				{
-					aggregationCheckBox.selected = false;
-					compositionCheckBox.selected = false;
-					checkboxNaviFrom.enabled = true;
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
+            	{
+            		checkboxNaviFrom.enabled = true;
 					checkboxNaviTo.enabled = true;
-					
-				}
-				if(aggregationCheckBox.selected)
-				{
-					assoziationCheckBox.selected = false;
-					compositionCheckBox.selected = false;
-					checkboxNaviFrom.selected = false;
+            	}
+            	if(associationTypeComboBox.selectedLabel == "Aggregation")
+            	{
+            		checkboxNaviFrom.selected = false;
 					checkboxNaviTo.selected = false;
 					checkboxNaviFrom.enabled = false;
 					checkboxNaviTo.enabled = false;
-					
-				}
-				if(compositionCheckBox.selected)
-				{
-					assoziationCheckBox.selected = false;
-					aggregationCheckBox.selected = false;
-					checkboxNaviFrom.selected = false;
+            	}
+            	if(associationTypeComboBox.selectedLabel == "Komposition")
+            	{
+            		checkboxNaviFrom.selected = false;
 					checkboxNaviTo.selected = false;
 					checkboxNaviFrom.enabled = false;
 					checkboxNaviTo.enabled = false;
-				}
+            	}
 			}
 			
 		]]>
@@ -215,9 +196,13 @@
 			<mx:Button label="Speichern" click="save(); handleLinkDescription()" x="480" y="213"/>
 			<mx:Label x="10" y="189" text="Assoziationstyp" fontWeight="bold" textDecoration="underline" fontSize="12"/>
 			<mx:Canvas>
-				<mx:CheckBox id="assoziationCheckBox" click="handelClick()" x="10" y="210" label="Assoziation" width="91"/>
-				<mx:CheckBox id="aggregationCheckBox" click="handelClick()" x="109" y="210" label="Aggregation" width="91"/>
-				<mx:CheckBox id="compositionCheckBox" click="handelClick()" x="208" y="210" label="Komposition" width="98"/>
+				<mx:ComboBox id="associationTypeComboBox" x="10" y="210" editable="false" enabled="true" change="handelClick()">
+			    	<mx:ArrayCollection>
+				        <mx:Object label="Assoziation"/>
+				        <mx:Object label="Aggregation"/>
+				        <mx:Object label="Komposition"/>
+			    	</mx:ArrayCollection>
+				</mx:ComboBox>
 			</mx:Canvas>
 		</mx:Canvas>
 	</mx:TitleWindow> 
