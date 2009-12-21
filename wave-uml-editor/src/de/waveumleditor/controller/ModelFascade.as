@@ -131,8 +131,9 @@ package de.waveumleditor.controller
 			
 			var node:UMLClass = diagram.getNode(nodeId) as UMLClass;
 			var attribute:ClassAttribute = node.getAttribute(id);
-			
-			waoNode.updateClassAttribute(nodeId, attribute);
+		
+			//todo	
+			//waoNode.updateClassAttribute(nodeId, attribute);
 		}
 		
 		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void

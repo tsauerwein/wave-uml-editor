@@ -1,5 +1,6 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
+	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
 	
 	import flash.events.MouseEvent;
@@ -15,6 +16,10 @@ package de.waveumleditor.view.diagrammer.dialogues
 		public var variable:Variable;
 		private var editWindow:EditSingleMethod;
 		private static var idCounter:int = 0;
+		
+		public var cbType:ComboBox;
+		public var tiName:TextInput;
+		public var tiDefaultValue:TextInput;
 		
 		//types Combo-Box Data provider
 		[Bindable]
@@ -39,14 +44,14 @@ package de.waveumleditor.view.diagrammer.dialogues
 			
 			//Typ
 			var giType:GridItem = new GridItem();
-			var cbType:ComboBox = new ComboBox();
+			cbType = new ComboBox();
 			cbType.dataProvider = type;
 			giType.addChild(cbType);
 			this.addChild(giType);
 			
 			//Name
 			var giName:GridItem = new GridItem();
-			var tiName:TextInput = new TextInput();
+			tiName = new TextInput();
 			tiName.maxChars = 20;
 			tiName.width = 100;
 			tiName.text = variable.getName();
@@ -55,7 +60,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			
 			//Default Wert
 			var giDefaultValue:GridItem = new GridItem();
-			var tiDefaultValue:TextInput = new TextInput();
+			tiDefaultValue = new TextInput();
 			tiDefaultValue.maxChars = 20;
 			tiDefaultValue.width = 100;
 			tiDefaultValue.text = variable.getDefaultValue();
@@ -73,6 +78,14 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.addChild(deleteGridItem);
 		}
 		
+		public function getVariable():Variable
+		{
+			this.variable.setType(new Type(cbType.selectedItem.toString()));
+			this.variable.setName(tiName.text);
+			this.variable.setDefaultValue(tiDefaultValue.text);
+			
+			return this.variable;
+		}
 		
 		public function getDeleteButtonOfElement(variable:Variable):Button
 		{
@@ -93,7 +106,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			{
 				return false;
 			}
-			if(this.variable.getName()=="")
+			if(this.tiName.text=="")
 			{
 				return false;
 			}

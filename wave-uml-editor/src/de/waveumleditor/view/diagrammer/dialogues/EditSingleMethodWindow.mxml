@@ -150,9 +150,11 @@
 				for(var i:int = 0; i < gdParameterList.numChildren; i++)
 				{
 					var parameterGridRow:EditParameterElement = gdParameterList.getChildAt(i) as EditParameterElement;
+					
 					if(parameterGridRow != null && parameterGridRow is EditParameterElement && parameterGridRow.hasValidParameter())
 					{
-						method.addVariable(parameterGridRow.variable);
+						var variable:Variable = parameterGridRow.getVariable();
+						method.addVariable(variable);
 					}
 				}
 			}
