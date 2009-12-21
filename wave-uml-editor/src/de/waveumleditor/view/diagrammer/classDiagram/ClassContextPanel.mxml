@@ -8,7 +8,8 @@
 	rollOut="this.currentState=null" 
 	backgroundColor="#F7F7F2"  themeColor="#4DD2CA" alpha="0.64"
 	borderColor="#A8B1B7" cornerRadius="14" borderStyle="solid"
-	resizeEffect="{resize}">
+	resizeEffect="{resize}"
+	creationComplete="init()">
 	
 	<mx:Script>
 		<![CDATA[
@@ -18,21 +19,26 @@
 			
 			import de.waveumleditor.view.diagrammer.events.NodeEvent;
 			
+			public static var BUTTON_HEIGHT:int = 22;
+			
+			private var node:BaseClassDiagramNode;
+			
+			private function init():void
+			{
+				node = getParentNode() as BaseClassDiagramNode;
+			}
+			
 			private function handleRemoveClick(event:Event):void {
 				this.currentState = "removeQuestion";
 			}
 			
 			private function handleEditAttributesClick():void
 			{
-				var node:BaseClassDiagramNode = getParentNode() as BaseClassDiagramNode;
-				
 				ClassDiagramComponent(parent).dispatchEvent(new NodeEvent(NodeEvent.EVENT_EDIT_NODE_ATTRIBUTES, node));
 			}
 			
 			private function handleEditMethodsClick():void
 			{
-				var node:BaseClassDiagramNode = getParentNode() as BaseClassDiagramNode;
-				
 				ClassDiagramComponent(parent).dispatchEvent(new NodeEvent(NodeEvent.EVENT_EDIT_NODE_METHODS, node));
 			}
 		]]>
@@ -62,7 +68,7 @@
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="66" click="dispatchEvent(new BeginLinkEvent('linkNode', AssociationLink, event))" toolTip="Assoziation" width="20" x="2" height="20"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-dependency.png')" glowColor="#000000" y="88" click="dispatchEvent(new BeginLinkEvent('linkNode', DependencyLink, event))" toolTip="Abhängigkeit" width="20" height="20" x="2"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-emet.png')" glowColor="#000000" y="110" click="handleEditMethodsClick()" toolTip="Methoden" width="20" x="2" height="20"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="handleEditAttributesClick()" toolTip="Attribute" width="20" x="2" height="20"/>
+	<buttons:GlowButton id="editAttributesButton" source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="handleEditAttributesClick()" toolTip="Attribute" width="20" x="2" height="20"/>
 
 	
 	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>

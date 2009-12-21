@@ -55,6 +55,13 @@
 				}
 			}
 			
+			override protected function createNodeContextPanel():void
+			{
+				super.createNodeContextPanel();
+
+				// interface context panel has no attributes... removing it by reducing height (hack)
+				this.nodeContextPanel.height = this.nodeContextPanel.height - ( ClassContextPanel.BUTTON_HEIGHT + 1) ;
+			}
 			
 		]]>
 	</mx:Script>

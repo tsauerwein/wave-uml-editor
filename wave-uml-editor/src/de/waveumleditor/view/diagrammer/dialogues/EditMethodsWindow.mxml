@@ -26,7 +26,7 @@
             override public function update(nodeData:ClassDiagramNode):void 
 			{
 				trace("update editMethodsWindow method called");
-				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
+				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLClass");
 				
 				this.setClassData(nodeData as UMLClass);
 				
@@ -38,7 +38,7 @@
 				if(nodeName==""){nodeName="Neue Klasse"};//default
 				classNodeName.text = nodeName;
 				
-				// add Methods
+				// add Constructors
 				var constructors:IList = this.getClassData().getConstructors();
 				addElementsToContentGrid(constructors, constructorsList);
 				
