@@ -34,7 +34,7 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			trace(json);
 			
-			var key:String = nodeId + Delta.IDS_SEPERATOR + method.getIdentifier().getId();
+			var key:String = nodeId + WAOKeyGenerator.IDS_SEPERATOR + method.getIdentifier().getId();
 			delta.setValue(key, json);
 		}
 		
@@ -45,7 +45,7 @@ package de.waveumleditor.model.wao.classDiagram
 
 		public static function getFromState(stateKey:String, stateValue:String):ClassMethod
 		{
-			var methodId:String = ModelFascade.getNodeElementIdentifier(stateKey);
+			var methodId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var methodData:Object = JSON.decode(stateValue);
 			

@@ -2,10 +2,10 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	
 	import de.waveumleditor.controller.Controller;
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	
 	import flash.events.Event;
@@ -50,7 +50,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add attribute handler");
 			
-			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER);
+			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER);
 			controller.handleShowSingleAttribute(attributeEvent);
 			
 		    //Default Attribut

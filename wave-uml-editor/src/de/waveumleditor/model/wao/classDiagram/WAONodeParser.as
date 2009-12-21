@@ -36,17 +36,17 @@ package de.waveumleditor.model.wao.classDiagram
 
 		public function addKey(key:String):void
 		{
-			var elementKey:String = ModelFascade.getNodeElementIdentifier(key);
+			var elementKey:String = WAOKeyGenerator.getNodeElementIdentifier(key);
 			
-			if (ModelFascade.isAttributeKey(elementKey))
+			if (WAOKeyGenerator.isAttributeKey(elementKey))
 			{
 				attributeKeys.addItem(key);
 			}
-			else if (ModelFascade.isConstructorKey(elementKey))
+			else if (WAOKeyGenerator.isConstructorKey(elementKey))
 			{
 				constructorKeys.addItem(key);
 			}
-			else if (ModelFascade.isMethodKey(elementKey))
+			else if (WAOKeyGenerator.isMethodKey(elementKey))
 			{
 				methodKeys.addItem(key);
 			}

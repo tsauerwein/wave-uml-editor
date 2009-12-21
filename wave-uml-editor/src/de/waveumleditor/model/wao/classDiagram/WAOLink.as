@@ -63,7 +63,7 @@ package de.waveumleditor.model.wao.classDiagram
 			var settingsData:Object = getEncodableSettingsObject(link);			
 			var json:String = JSON.encode(settingsData);
 			
-			var key:String = link.getIdentifier().getId() + Delta.IDS_SEPERATOR + SETTINGS;
+			var key:String = link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + SETTINGS;
 			delta.setValue(key, json);
 			
 			trace(json);
@@ -88,11 +88,11 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 			
 			delta.setValue(link.getIdentifier().getId(), null);
-			delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + FROMTO, null);	
+			delta.setValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + FROMTO, null);	
 			
 			if (link is LinkDependency)
 			{
-				delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + SETTINGS, null);	
+				delta.setValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + SETTINGS, null);	
 			}
 			
 			if (executeSubmit)
@@ -140,14 +140,14 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			trace(json);
 			
-			delta.setValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + FROMTO, json);	
+			delta.setValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + FROMTO, json);	
 		}
 		
 		public static function getFromState(linkId:String, 
 			state:WaveState, diagram:ClassDiagram):ClassDiagramLink
 		{
 			var type:String = state.getStringValue(linkId);
-			var fromTo:String = state.getStringValue(linkId + Delta.IDS_SEPERATOR + FROMTO);
+			var fromTo:String = state.getStringValue(linkId + WAOKeyGenerator.IDS_SEPERATOR + FROMTO);
 			
 			if (type == null || fromTo == null)
 			{
@@ -204,7 +204,7 @@ package de.waveumleditor.model.wao.classDiagram
 		
 		private static function getLinkSettings(state:WaveState, linkId:String, link:LinkDependency):void
 		{
-			var settingsValue:String = state.getStringValue(linkId + Delta.IDS_SEPERATOR + SETTINGS);
+			var settingsValue:String = state.getStringValue(linkId + WAOKeyGenerator.IDS_SEPERATOR + SETTINGS);
 			
 			if (settingsValue == null || settingsValue == "")
 			{

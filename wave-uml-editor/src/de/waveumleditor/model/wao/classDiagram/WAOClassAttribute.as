@@ -31,19 +31,19 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			var json:String = JSON.encode(attributeData);
 			
-			var key:String = nodeId + Delta.IDS_SEPERATOR + attribute.getIdentifier().getId();
+			var key:String = nodeId + WAOKeyGenerator.IDS_SEPERATOR + attribute.getIdentifier().getId();
 			delta.setValue(key, json);
 		}
 		
 		public static function remove(delta:Delta, nodeId:String, attributeId:String):void
 		{
-			var key:String = nodeId + Delta.IDS_SEPERATOR + attributeId;
+			var key:String = nodeId + WAOKeyGenerator.IDS_SEPERATOR + attributeId;
 			delta.setValue(key, null);
 		}
 		
 		public static function getFromState(stateKey:String, stateValue:String):ClassAttribute
 		{
-			var attributeId:String = ModelFascade.getNodeElementIdentifier(stateKey);
+			var attributeId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var attributeData:Object = JSON.decode(stateValue);
 			

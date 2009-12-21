@@ -1,10 +1,10 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
 	import flash.events.Event;
@@ -52,7 +52,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add method handler");
 			
-			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, ModelFascade.DEFAULT_METHOD_IDENTIFIER);
+			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER);
 			controller.handleShowSingleMethod(methodEvent);
 			/* var newMethod:ClassMethod = new ClassMethod(new Identifier("default_meth"), "", EVisibility.PUBLIC, Type.STRING);
                 
@@ -91,7 +91,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			//TODO
 			trace("handleAddConstructor");
 			
-			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER);
+			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER);
 			controller.handleShowSingleMethod(methodEvent);
 		}
 		

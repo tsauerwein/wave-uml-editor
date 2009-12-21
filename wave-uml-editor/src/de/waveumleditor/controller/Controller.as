@@ -15,6 +15,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
@@ -198,11 +199,11 @@ package de.waveumleditor.controller
 			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
 			
 			var attribute:ClassAttribute = null;
-			if (event.getAttributeId() == ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER)
+			if (event.getAttributeId() == WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER)
 			{
 				// in case the dialog is opened to add a new attribute, create a default attribute
 				var defaultVariable:Variable = new Variable("", Type.STRING);
-        		attribute = new ClassAttribute(ModelFascade.DEFAULT_ATTRIBUTE_IDENTIFIER, 
+        		attribute = new ClassAttribute(WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER, 
         			defaultVariable, 
         			EVisibility.PUBLIC, 
         			false);
@@ -285,12 +286,12 @@ package de.waveumleditor.controller
 			editSingleMethod.setController(this);
 			
 			var method:ClassConstructorMethod = null;
-			if (ModelFascade.isMethod(event.getMethodId())) 
+			if (WAOKeyGenerator.isMethod(event.getMethodId())) 
 			{
-				if (event.getMethodId() == ModelFascade.DEFAULT_METHOD_IDENTIFIER)
+				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
-					method = new ClassMethod(ModelFascade.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
+					method = new ClassMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
 					editSingleMethod.isConstructor = false;
 				}
 				else 
@@ -301,10 +302,10 @@ package de.waveumleditor.controller
 			}
 			else 
 			{
-				if (event.getMethodId() == ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER)
+				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
-					method = new  ClassConstructorMethod(ModelFascade.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
+					method = new  ClassConstructorMethod(WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
 					editSingleMethod.isConstructor = true;
 				}
 				else 
@@ -352,7 +353,7 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleRemoveMethod(event:NodeMethodEvent):void
 		{
-			if (ModelFascade.isMethod(event.getMethodId()))
+			if (WAOKeyGenerator.isMethod(event.getMethodId()))
 			{
 				this.fascade.removeNodeMethod(event.getClassNode().getIdentifier(), event.getMethodId());
 			}

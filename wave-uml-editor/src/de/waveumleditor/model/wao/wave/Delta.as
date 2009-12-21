@@ -2,7 +2,6 @@ package de.waveumleditor.model.wao.wave
 {
 	public class Delta
 	{
-		public static const IDS_SEPERATOR:String = "_";
 		
 		private var delta:Object;
 		

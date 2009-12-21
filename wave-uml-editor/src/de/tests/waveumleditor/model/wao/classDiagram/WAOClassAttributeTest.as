@@ -7,6 +7,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.wao.classDiagram.WAOClassAttribute;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import flexunit.framework.TestCase;
@@ -40,7 +41,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			WAOClassAttribute.store(delta, classId, attribute);
 			
-			var key:String = classId + Delta.IDS_SEPERATOR + attributeId;
+			var key:String = classId + WAOKeyGenerator.IDS_SEPERATOR + attributeId;
 			var json:String = delta.getWaveDelta()[key];
 			
 			var restoredAttribute:ClassAttribute = WAOClassAttribute.getFromState(key, json);

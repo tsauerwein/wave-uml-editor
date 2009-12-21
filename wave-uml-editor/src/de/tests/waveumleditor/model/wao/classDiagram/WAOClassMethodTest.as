@@ -7,6 +7,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.wao.classDiagram.WAOClassMethod;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import flexunit.framework.TestCase;
@@ -24,7 +25,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			WAOClassMethod.store(delta, "classId", m);
 		
-			var value:String = delta.getWaveDelta()["classId" + Delta.IDS_SEPERATOR + "mId"];
+			var value:String = delta.getWaveDelta()["classId" + WAOKeyGenerator.IDS_SEPERATOR + "mId"];
 			
 			assertNotNull(value);
 			assertTrue(TestUtil.contains(value, "\"n\":\"doIt\""));
@@ -45,7 +46,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var delta:Delta = new Delta();
 			WAOClassMethod.store(delta, classId, m);
 			
-			var key:String = classId + Delta.IDS_SEPERATOR + methId;
+			var key:String = classId + WAOKeyGenerator.IDS_SEPERATOR + methId;
 			var json:String = delta.getWaveDelta()[key];
 			
 			var restoredMethod:ClassMethod = WAOClassMethod.getFromState(key, json);

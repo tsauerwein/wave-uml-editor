@@ -44,7 +44,7 @@ package de.waveumleditor.model.wao.classDiagram
 			delta.setValue(node.getIdentifier().getId(), node.getType());
 			setName(delta, node);
 			
-			WAOPosition.store(delta, node.getIdentifier().getId() + Delta.IDS_SEPERATOR + POSITION, node.getPosition());
+			WAOPosition.store(delta, node.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + POSITION, node.getPosition());
 			
 			wave.submitDelta(delta.getWaveDelta());
 		}
@@ -53,7 +53,7 @@ package de.waveumleditor.model.wao.classDiagram
 		{
 			var delta:Delta = new Delta();
 			
-			WAOPosition.store(delta, nodeId.getId() + Delta.IDS_SEPERATOR + POSITION, newPosition);
+			WAOPosition.store(delta, nodeId.getId() + WAOKeyGenerator.IDS_SEPERATOR + POSITION, newPosition);
 			
 			trace(delta.toString());
 			wave.submitDelta(delta.getWaveDelta());
@@ -74,8 +74,8 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			var key:String = node.getIdentifier().getId();
 			delta.setValue(key, null);
-			delta.setValue(key + Delta.IDS_SEPERATOR + POSITION, null);
-			delta.setValue(key + Delta.IDS_SEPERATOR + NAME, null);
+			delta.setValue(key + WAOKeyGenerator.IDS_SEPERATOR + POSITION, null);
+			delta.setValue(key + WAOKeyGenerator.IDS_SEPERATOR + NAME, null);
 			
 			removeConnectedLinks(connectedLinks, delta);
 			
@@ -241,14 +241,14 @@ package de.waveumleditor.model.wao.classDiagram
 		
 		private function setName(delta:Delta, node:ClassDiagramNode):void
 		{
-			delta.setValue(node.getIdentifier().getId() + Delta.IDS_SEPERATOR + NAME, node.getName());
+			delta.setValue(node.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + NAME, node.getName());
 		}
 		
 		public static function getFromState(nodeId:String, state:WaveState):ClassDiagramNode
 		{
 			var type:String = state.getStringValue(nodeId);
-			var pos:String = state.getStringValue(nodeId + Delta.IDS_SEPERATOR + POSITION);
-			var name:String = state.getStringValue(nodeId + Delta.IDS_SEPERATOR + NAME, "");
+			var pos:String = state.getStringValue(nodeId + WAOKeyGenerator.IDS_SEPERATOR + POSITION);
+			var name:String = state.getStringValue(nodeId + WAOKeyGenerator.IDS_SEPERATOR + NAME, "");
 			
 			if (type == null || pos == null)
 			{

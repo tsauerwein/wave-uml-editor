@@ -10,8 +10,8 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
-	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import flexunit.framework.TestCase;
 	
@@ -33,7 +33,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			assertEquals(newState.getStringValue(link.getIdentifier().getId()), link.getLinkType());
 			
-			var fromto:String = newState.getStringValue(link.getIdentifier().getId() + Delta.IDS_SEPERATOR + WAOLink.FROMTO);
+			var fromto:String = newState.getStringValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + WAOLink.FROMTO);
 			assertNotNull(fromto);
 			assertTrue(TestUtil.contains(fromto, "\"" + WAOLink.FROM + "\":\"cfrom\""));
 			assertTrue(TestUtil.contains(fromto, "\"" + WAOLink.TO + "\":\"cto\""));
@@ -58,7 +58,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			var newState:WaveState = wave.getState();
 			
-			var key:String = "lid" + Delta.IDS_SEPERATOR + WAOLink.SETTINGS;
+			var key:String = "lid" + WAOKeyGenerator.IDS_SEPERATOR + WAOLink.SETTINGS;
 			var value:String = newState.getStringValue(key);
 			
 			assertNotNull(value);	

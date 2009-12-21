@@ -8,6 +8,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;			
 			import de.waveumleditor.controller.Controller;
 			import de.waveumleditor.controller.ModelFascade;
@@ -28,27 +29,27 @@
 				
 
 				
-				var classData:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
-				var classData2:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
-				var interfaceData:Interface = new Interface(new Identifier(ModelFascade.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
-				var emptyClass:UMLClass = new UMLClass(new Identifier(ModelFascade.PREFIX_NODE + "12345673"), new Position(100, 50));
-				var emptyInterface:Interface = new Interface(new Identifier(ModelFascade.PREFIX_NODE + "12345674"), new Position(250, 50), "");
+				var classData:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
+				var classData2:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
+				var interfaceData:Interface = new Interface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
+				var emptyClass:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345673"), new Position(100, 50));
+				var emptyInterface:Interface = new Interface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345674"), new Position(250, 50), "");
 				
 				classData.setAbstract(true);
 				
   			 	//Attribut mit Variable: public static int myInteger default=0
 				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
-				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier(ModelFascade.PREFIX_ATTRIBUTE + "attr001"), integerVariable, EVisibility.PUBLIC);
+				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr001"), integerVariable, EVisibility.PUBLIC);
 				
 				//Attribut mit Variable: public customType myCustomVariable
 				var customVariable:Variable = new Variable("myCustomVariable", (new Type("customType")));
-				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier(ModelFascade.PREFIX_ATTRIBUTE + "attr_custom"), customVariable, EVisibility.PUBLIC);
+				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr_custom"), customVariable, EVisibility.PUBLIC);
 				
 				integerAttribute.setStatic(true);
 				
  				//Attribut mit Variable: private String myString
 				var stringVariable:Variable = new Variable("myString", Type.STRING);
-				var stringAttribute:ClassAttribute = new ClassAttribute(new Identifier(ModelFascade.PREFIX_ATTRIBUTE + "attr002"), stringVariable, EVisibility.PRIVATE);  
+				var stringAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr002"), stringVariable, EVisibility.PRIVATE);  
 				
  				classData.addAttribute(integerAttribute);
 				classData.addAttribute(stringAttribute);
@@ -56,16 +57,16 @@
 				classData2.addAttribute(integerAttribute);   
 				
 				//Methode public String getMyString()
-				var method:ClassMethod = new ClassMethod(new Identifier(ModelFascade.PREFIX_METHOD + "meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
+				var method:ClassMethod = new ClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
 				//Konstruktor
-				var constructor:ClassConstructorMethod = new ClassConstructorMethod(new Identifier(ModelFascade.PREFIX_CONSTRUCTOR + "meth003"), EVisibility.PUBLIC);
+				var constructor:ClassConstructorMethod = new ClassConstructorMethod(new Identifier(WAOKeyGenerator.PREFIX_CONSTRUCTOR + "meth003"), EVisibility.PUBLIC);
 				constructor.addVariable(stringVariable);
 				
 				//Interfacemethode
-				var interfaceMethod:InterfaceMethod = new InterfaceMethod(new Identifier(ModelFascade.PREFIX_METHOD + "meth005"), "superMethode", Type.DOUBLE);
+				var interfaceMethod:InterfaceMethod = new InterfaceMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth005"), "superMethode", Type.DOUBLE);
 				interfaceData.addMethod(interfaceMethod);
 				//Implementierung der Interfacemethode
-				var implementedInterfaceMethod:ClassMethod = new ClassMethod(new Identifier(ModelFascade.PREFIX_METHOD + "meth006"), "superMethode",EVisibility.PUBLIC, Type.DOUBLE);
+				var implementedInterfaceMethod:ClassMethod = new ClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth006"), "superMethode",EVisibility.PUBLIC, Type.DOUBLE);
 				
 				classData.addConstructor(constructor);
 				classData.addMethod(method);

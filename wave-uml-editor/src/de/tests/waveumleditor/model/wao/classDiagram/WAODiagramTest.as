@@ -3,7 +3,6 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveSimulator;
 	
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
@@ -17,6 +16,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	
@@ -32,11 +32,11 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			
 			var class1:UMLClass = new UMLClass(
-				new Identifier(ModelFascade.PREFIX_NODE + "001"),
+				new Identifier(WAOKeyGenerator.PREFIX_NODE + "001"),
 				new Position(1,2),
 				"A");
 			var class2:UMLClass = new UMLClass(
-				new Identifier(ModelFascade.PREFIX_NODE + "002"),
+				new Identifier(WAOKeyGenerator.PREFIX_NODE + "002"),
 				new Position(3,4),
 				"B");
 				
@@ -44,22 +44,22 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			waoNode.createNode(class2);
 				
 			var attribute1:ClassAttribute = new ClassAttribute(
-				new Identifier(ModelFascade.PREFIX_ATTRIBUTE +  "001"),
+				new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE +  "001"),
 				new Variable("a", Type.STRING),
 				EVisibility.PUBLIC);
 				
 			var attribute2:ClassAttribute = new ClassAttribute(
-				new Identifier(ModelFascade.PREFIX_ATTRIBUTE +  "002"),
+				new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE +  "002"),
 				new Variable("b", Type.STRING),
 				EVisibility.PUBLIC);
 				
 			var constructor1:ClassConstructorMethod = new ClassConstructorMethod(
-				new Identifier(ModelFascade.PREFIX_CONSTRUCTOR + "001"),
+				new Identifier(WAOKeyGenerator.PREFIX_CONSTRUCTOR + "001"),
 				EVisibility.PUBLIC);
 			class1.addConstructor(constructor1);	
 				
 			var method1:ClassMethod = new ClassMethod(
-				new Identifier(ModelFascade.PREFIX_METHOD +  "001"),
+				new Identifier(WAOKeyGenerator.PREFIX_METHOD +  "001"),
 				"doIt",
 				EVisibility.PUBLIC,
 				Type.BOOLEAN);	
@@ -70,11 +70,11 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			waoNode.updateClassMethod(class2.getIdentifier(), method1);
 			
 			var link1:LinkInheritance = new LinkInheritance(
-				new Identifier(ModelFascade.PREFIX_LINK + "001"),
+				new Identifier(WAOKeyGenerator.PREFIX_LINK + "001"),
 				class1,
 				class2);
 			var link2:LinkAssociation = new LinkAssociation(
-				new Identifier(ModelFascade.PREFIX_LINK + "002"),
+				new Identifier(WAOKeyGenerator.PREFIX_LINK + "002"),
 				class2,
 				class1);
 			link2.setName("Test");

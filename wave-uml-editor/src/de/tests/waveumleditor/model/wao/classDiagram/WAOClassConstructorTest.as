@@ -6,6 +6,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.Variable;
 	import de.waveumleditor.model.wao.classDiagram.WAOClassConstructor;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import flexunit.framework.TestCase;
@@ -24,7 +25,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			WAOClassConstructor.store(delta, "classId", c);
 		
-			assertNotNull(delta.getWaveDelta()["classId" + Delta.IDS_SEPERATOR + "coId"]);
+			assertNotNull(delta.getWaveDelta()["classId" + WAOKeyGenerator.IDS_SEPERATOR + "coId"]);
 		}
 		
 		public function testGetEncodableObject():void
@@ -56,7 +57,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var delta:Delta = new Delta();
 			WAOClassConstructor.store(delta, classId, c);
 			
-			var key:String = classId + Delta.IDS_SEPERATOR + constrId;
+			var key:String = classId + WAOKeyGenerator.IDS_SEPERATOR + constrId;
 			var json:String = delta.getWaveDelta()[key];
 			
 			var restoredConstr:ClassConstructorMethod = WAOClassConstructor.getFromState(key, json);

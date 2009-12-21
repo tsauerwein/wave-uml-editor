@@ -4,7 +4,6 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import com.nextgenapp.wave.gadget.WaveSimulator;
 	import com.nextgenapp.wave.gadget.WaveState;
 	
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
@@ -13,6 +12,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
 	import de.waveumleditor.model.wao.wave.Delta;
@@ -28,14 +28,14 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
+			var id:Identifier = new Identifier(WAOKeyGenerator.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			
 			waoNode.setPosition(id, pos);
 				
 			var newState:WaveState = wave.getState();
 			
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.POSITION), "{\"x\":1,\"y\":2}");
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.POSITION), "{\"x\":1,\"y\":2}");
 		}
 		
 		public function testCreateNode():void
@@ -43,7 +43,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
+			var id:Identifier = new Identifier(WAOKeyGenerator.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
@@ -53,8 +53,8 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var newState:WaveState = wave.getState();
 			
 			assertEquals(newState.getStringValue(id.getId()), node.getType());
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.POSITION), "{\"x\":1,\"y\":2}");
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.NAME), node.getName());
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.POSITION), "{\"x\":1,\"y\":2}");
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.NAME), node.getName());
 		}
 		
 		public function testRenameNode():void
@@ -62,7 +62,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoNode:WAONode = new WAONode(wave, null);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
+			var id:Identifier = new Identifier(WAOKeyGenerator.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
@@ -76,7 +76,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			waoNode.renameNode(node);
 			
 			var newState:WaveState = wave.getState();
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.NAME), newName);
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.NAME), newName);
 			
 		}
 		
@@ -86,7 +86,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var waoLink:WAOLink = new WAOLink(wave);
 			var waoNode:WAONode = new WAONode(wave, waoLink);
 			
-			var id:Identifier = new Identifier(ModelFascade.PREFIX_NODE + "node");
+			var id:Identifier = new Identifier(WAOKeyGenerator.PREFIX_NODE + "node");
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
@@ -101,9 +101,9 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var newState:WaveState = wave.getState();
 			
 			assertEquals(newState.getStringValue(id.getId()), null);
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.POSITION), null);
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + WAONode.NAME), null);
-			assertEquals(newState.getStringValue(id.getId() + Delta.IDS_SEPERATOR + "attrId"), null);
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.POSITION), null);
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + WAONode.NAME), null);
+			assertEquals(newState.getStringValue(id.getId() + WAOKeyGenerator.IDS_SEPERATOR + "attrId"), null);
 		}
 	}
 }

@@ -63,13 +63,13 @@ package de.waveumleditor.model.wao.classDiagram
 			for (var i:int = 0; i < keys.length; i++)
 			{
 				var key:String = keys[i];
-				var parentKey:String = ModelFascade.getParentIdentifier(key);
+				var parentKey:String = WAOKeyGenerator.getParentIdentifier(key);
 				
-				if (ModelFascade.isNodeKey(parentKey))
+				if (WAOKeyGenerator.isNodeKey(parentKey))
 				{
 					addNodeParser(nodeParsers, parentKey, key);
 				}
-				else if (ModelFascade.isLinkKey(parentKey))
+				else if (WAOKeyGenerator.isLinkKey(parentKey))
 				{
 					addLinkParser(linkParsers, parentKey, key);
 				}
