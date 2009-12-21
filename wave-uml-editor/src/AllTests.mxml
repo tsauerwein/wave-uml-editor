@@ -11,6 +11,7 @@
     </mx:Script>
     <mx:Script>
         <![CDATA[
+			import de.tests.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponentTest;
         	import de.tests.waveumleditor.model.wao.classDiagram.WAODiagramTest;
         	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
         	import de.tests.waveumleditor.model.wao.classDiagram.WAOLinkTest;
@@ -85,6 +86,7 @@
 				testSuite.addTestSuite(WAOLinkTest);
 				testSuite.addTestSuite(WAODiagramTest);
 				
+				testSuite.addTestSuite(ClassDiagramComponentTest);
   				return testSuite;
   			}	
         ]]>

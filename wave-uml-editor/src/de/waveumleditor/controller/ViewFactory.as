@@ -5,12 +5,14 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+	import de.waveumleditor.model.classDiagram.link.LinkDependency;
 	import de.waveumleditor.model.classDiagram.link.LinkImplements;
 	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
 	import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.DependencyLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.ImplementsLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
@@ -55,7 +57,10 @@ package de.waveumleditor.controller
 			{
 				link = new AssociationLink();
 			}
-			// TODO linkdependency
+			else if (linkData is LinkDependency)
+			{
+				link = new DependencyLink();
+			}
 			
 			link.setIdentifier(linkData.getIdentifier());
 			

@@ -41,6 +41,11 @@ package de.waveumleditor.controller
 			this.waoKey = new WAOKeyGenerator();
 		}
 		
+		public function setDiagram(diagram:ClassDiagram):void
+		{
+			this.diagram = diagram;
+		}
+		
 		public function addNode(node:BaseClassDiagramNode):void
 		{	
 			var id:Identifier = waoKey.generateNodeIdentifier();
@@ -121,7 +126,7 @@ package de.waveumleditor.controller
 			if (attribute.getIdentifier().getId() == WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
 			{
 				id = waoKey.generateAttributeIdentifier();
-				diagram.addAttribute(nodeId, attribute, waoKey.generateAttributeIdentifier());
+				diagram.addAttribute(nodeId, attribute, id);
 			}
 			else
 			{
@@ -131,9 +136,8 @@ package de.waveumleditor.controller
 			
 			var node:UMLClass = diagram.getNode(nodeId) as UMLClass;
 			var attribute:ClassAttribute = node.getAttribute(id);
-		
-			//todo	
-			//waoNode.updateClassAttribute(nodeId, attribute);
+			
+			waoNode.updateClassAttribute(nodeId, attribute);
 		}
 		
 		public function removeNodeAttribute(nodeId:Identifier, attributeId:Identifier):void

@@ -1,6 +1,7 @@
 package de.waveumleditor.model
 {
 	import flash.utils.Dictionary;
+	
 	import mx.collections.ArrayList;
 	
 	/**
@@ -51,6 +52,21 @@ package de.waveumleditor.model
 			}
 			
 			return list;
+		}
+		
+		public function getAsDictionary():Dictionary
+		{
+			var keys:Dictionary = new Dictionary();
+			
+			for (var key:Object in delegate)
+			{
+				if (key != null && delegate[key] != null) 
+				{
+					keys[key] = delegate[key];
+				}
+			}
+			
+			return keys;
 		}
 	}
 }

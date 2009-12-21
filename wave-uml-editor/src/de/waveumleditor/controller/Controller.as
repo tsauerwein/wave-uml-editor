@@ -2,7 +2,9 @@ package de.waveumleditor.controller
 {
 	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveSimulator;
+	import com.nextgenapp.wave.gadget.WaveState;
 	
+	import de.tests.TestUtil;
 	import de.waveumleditor.model.classDiagram.ClassAttribute;
 	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.ClassDiagram;
@@ -15,6 +17,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
 	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
@@ -67,12 +70,14 @@ package de.waveumleditor.controller
 			wave.setStateCallback(stateCallback);
 		}
 		
-		private function stateCallback():void 
+		private function stateCallback(args:Object):void 
 		{
-			//wave.getState()
-			// diagramModel:ClassDiagram = WAODiagram.parseFromState(state)
-			// fascade.setDiagram(diagramModel)
-			// diagramView.update(diagramModel)
+			var state:WaveState = wave.getState()
+			diagramModel = WAODiagram.getFromState(state)
+			fascade.setDiagram(diagramModel)
+			diagramView.update(diagramModel)
+				
+			TestUtil.printTrace(state);
 		}
 		
 		/**

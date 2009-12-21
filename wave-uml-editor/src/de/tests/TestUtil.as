@@ -1,5 +1,7 @@
 package de.tests
 {
+	import com.nextgenapp.wave.gadget.WaveState;
+
 	public class TestUtil
 	{
 		/**
@@ -12,6 +14,17 @@ package de.tests
 		public static function contains(text:String, searchTerm:String):Boolean
 		{
 			return text.indexOf(searchTerm) > -1;
+		}
+		
+		public static function printTrace(state:WaveState):void
+		{
+			var keys:Array = state.getKeys();
+			
+			for (var i:int = 0; i < keys.length; i++)
+			{
+				var key:String = keys[i];
+				trace(key + " = " + state.getStringValue(key));
+			}
 		}
 	}
 }

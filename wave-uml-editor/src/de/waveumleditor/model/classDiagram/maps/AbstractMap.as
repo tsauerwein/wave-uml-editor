@@ -3,6 +3,8 @@ package de.waveumleditor.model.classDiagram.maps
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Map;
 	
+	import flash.utils.Dictionary;
+	
 	import mx.collections.ArrayList;
 	
 	/**
@@ -31,6 +33,11 @@ package de.waveumleditor.model.classDiagram.maps
 		public function getAsList():ArrayList
 		{
 			return delegate.getAsList();
+		}
+		
+		public function getAsDictionary():Dictionary
+		{
+			return delegate.getAsDictionary();
 		}
 
 	}

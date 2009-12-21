@@ -5,12 +5,19 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import com.anotherflexdev.diagrammer.GenericDiagramContextPanel;
 	import com.anotherflexdev.diagrammer.Link;
 	
+	import de.waveumleditor.controller.ViewFactory;
 	import de.waveumleditor.model.Identifier;
+	import de.waveumleditor.model.classDiagram.ClassDiagram;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.LinkMap;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.NodeMap;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
+	import flash.utils.Dictionary;
+	
+	import mx.collections.IList;
 	import mx.events.DragEvent;
 	
 	public class ClassDiagramComponent extends Diagram
@@ -144,6 +151,95 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		public function getLink(id:Identifier):ClassLink
 		{
 			return links.getValue(id);
+		}
+		
+		public function update(classDiagram:ClassDiagram):void
+		{
+			var modelNodes:IList = classDiagram.getNodes();
+			var modelLinks:IList = classDiagram.getLinks();
+			
+			var viewNodes:Dictionary = this.nodes.getAsDictionary();
+			var viewLinks:Dictionary = this.links.getAsDictionary();
+
+			// update nodes
+			for(var i:int = 0; i < modelNodes.length; i++)
+			{
+				var modelNode:ClassDiagramNode = modelNodes.getItemAt(i) as ClassDiagramNode;
+				
+				var viewNode:BaseClassDiagramNode = this.getNode(modelNode.getIdentifier());
+				if (viewNode == null)
+				{
+					// if node was not yet in view, create new node
+					viewNode = ViewFactory.createNode(modelNode);
+					this.addNode(viewNode);
+				}
+				else
+				{
+					// if node was alread in view, mark as updated
+					viewNodes[modelNode.getIdentifier().getId()] = null;
+				}
+				
+				viewNode.update(modelNode);
+			}
+			
+			// update links
+			for(i = 0; i < modelLinks.length; i++)
+			{
+				var modelLink:ClassDiagramLink = modelLinks.getItemAt(i) as ClassDiagramLink;
+				
+				var viewLink:ClassLink = this.getLink(modelLink.getIdentifier());
+				if (viewLink == null)
+				{
+					// if link was not yet in view, create new link
+					viewLink = ViewFactory.createLink(modelLink);
+					this.addClassLink(viewLink);
+				}
+				else
+				{
+					// if link was alread in view, mark as updated
+					viewLinks[modelLink.getIdentifier().getId()] = null;
+				}
+				
+				// find matching view-node
+				viewLink.fromNode = getNode(modelLink.getLinkFrom().getIdentifier());
+				viewLink.toNode = getNode(modelLink.getLinkTo().getIdentifier());
+				viewLink.fromNode.addLeavingLink(viewLink);
+				viewLink.toNode.addArrivingLink(viewLink);
+				
+				viewLink.update(modelLink);
+			}
+			
+			// remove all nodes/link in view that are not anymore in model
+			removeNodes(viewNodes);
+			removeLinks(viewLinks);
+		}
+		
+		private function removeNodes(nodesToRemove:Dictionary):void
+		{
+			for (var key:Object in nodesToRemove)
+			{
+				if (key != null && nodesToRemove[key] != null) 
+				{
+					var id:Identifier = new Identifier(key as String);
+					var node:BaseClassDiagramNode = getNode(id);
+					super.removeNode(node);
+					nodes.removeValue(id);
+				}
+			}
+		}
+		
+		private function removeLinks(linksToRemove:Dictionary):void
+		{
+			for (var key:Object in linksToRemove)
+			{
+				if (key != null && linksToRemove[key] != null) 
+				{
+					var id:Identifier = new Identifier(key as String);
+					var link:ClassLink = getLink(id);
+					super.removeLink(link);
+					links.removeValue(link.getIdentifier());
+				}
+			}
 		}
 	}
 }
