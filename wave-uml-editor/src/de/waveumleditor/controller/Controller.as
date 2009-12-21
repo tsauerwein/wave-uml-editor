@@ -67,7 +67,7 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, handleShowAssociationLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_DEPENDENCY_LINK, handleShowDependencyLink);
 			
-			wave.setStateCallback(stateCallback);
+			//wave.setStateCallback(stateCallback);
 		}
 		
 		private function stateCallback(args:Object):void 
