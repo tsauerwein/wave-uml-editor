@@ -19,7 +19,7 @@ package de.tests.waveumleditor.model.classDiagram
 		public function testToString():void
 		{
 			var classConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("meth008"), EVisibility.PUBLIC);
-			classConstructorMethod.setUMLClass(new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse") );
+			classConstructorMethod.setClassDiagramNode(new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse") );
 			
 			assertEquals("+ DasIstKlasse()", classConstructorMethod.toString());
 			

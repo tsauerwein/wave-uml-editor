@@ -141,24 +141,28 @@ package de.waveumleditor.model.classDiagram
 		{
 				var method:ClassMethod = newMethod.clone(methodId) as ClassMethod;
 				
-				var umlClass:UMLClass = getNode(classId) as UMLClass;
+				/* var umlClass:UMLClass = getNode(classId) as UMLClass;
 				
-				umlClass.addMethod(method);
+				umlClass.addMethod(method); */
+				var classDiagramNode:ClassDiagramNode = getNode(classId);
+				
+				classDiagramNode.addMethod(method);
 		}
 		
 		public function editMethod(classId:Identifier, newMethod:ClassMethod):void
 		{
-			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			/* var umlClass:UMLClass = getNode(classId) as UMLClass; */
+			var classDiagramNode:ClassDiagramNode = getNode(classId);
 			
-			var method:ClassMethod = umlClass.getMethod(newMethod.getIdentifier());
+			var method:ClassMethod = classDiagramNode.getMethod(newMethod.getIdentifier());
 			method.updateFrom(newMethod);
 		}
 		
 		public function removeMethod(classId:Identifier, methodId:Identifier):void
 		{
-			var umlClass:UMLClass = getNode(classId) as UMLClass;
+			var classDiagramNode:ClassDiagramNode = getNode(classId);
 			
-			umlClass.removeMethodById(methodId);
+			classDiagramNode.removeMethodById(methodId);
 		}
 		
 		// Constructors

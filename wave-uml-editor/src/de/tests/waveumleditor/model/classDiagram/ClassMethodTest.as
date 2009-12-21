@@ -23,7 +23,7 @@ package de.tests.waveumleditor.model.classDiagram
 			assertEquals("+ toString():String", method.toString());
 			
 			method = new ClassMethod(new Identifier("meth002"), "superMethod", EVisibility.PUBLIC, Type.STRING, true);
-			method.setUMLClass(umlclass);			
+			method.setClassDiagramNode(umlclass);			
 			method.setStatic(true);
 			method.addVariable(new Variable("var1", Type.INT, "1"));
 			method.addVariable(new Variable("var2", Type.INT));

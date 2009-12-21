@@ -284,15 +284,16 @@ package de.waveumleditor.controller
 			trace("handleShowSingleMethod " + event.getClassNode().getName());
 			
 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
-			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
+			var classDiagramNode:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			
 			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-			editSingleMethod.setClassData(umlClass);
+			editSingleMethod.setClassData(classDiagramNode);
 			editSingleMethod.setController(this);
 			
 			var method:ClassConstructorMethod = null;
 			if (WAOKeyGenerator.isMethod(event.getMethodId())) 
 			{
+				//TODO: Unterscheidung zw. InterfaceMethod und ClassMethod
 				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
@@ -301,7 +302,7 @@ package de.waveumleditor.controller
 				}
 				else 
 				{
-					method = umlClass.getMethod(event.getMethodId());
+					method = classDiagramNode.getMethod(event.getMethodId());
 					editSingleMethod.isConstructor = false;
 				}
 			}
@@ -315,7 +316,7 @@ package de.waveumleditor.controller
 				}
 				else 
 				{
-					method = umlClass.getConstructor(event.getMethodId());
+					method = (classDiagramNode as UMLClass).getConstructor(event.getMethodId());
 					editSingleMethod.isConstructor = true;
 				}
 				

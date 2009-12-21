@@ -3,12 +3,15 @@ package de.waveumleditor.model.classDiagram
 	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
+	import de.waveumleditor.model.classDiagram.maps.MethodMap;
+	
+	import mx.collections.IList;
 	
 	public class ClassDiagramNode implements IIdentifiable
 	{
 		private var position:Position; 
 		private var name:String;
-		
+		private var methods:MethodMap;
 		private var key:Identifier;
 		
 		public function ClassDiagramNode(key:Identifier, position:Position, name:String = "") 
@@ -16,6 +19,7 @@ package de.waveumleditor.model.classDiagram
 			this.key = key;
 			this.position = position;
 			this.name = name;
+			this.methods = new MethodMap();
 		}
 
 		public function getPosition():Position
@@ -53,5 +57,31 @@ package de.waveumleditor.model.classDiagram
 			throw new Error("must be overriden in child classes");
 		}
 		
+		public function addMethod(method:ClassMethod):void
+		{
+			method.setClassDiagramNode(this);
+			methods.setValue(method);
+		}
+		
+		public function removeMethod(method:ClassMethod):void
+		{
+			method.setClassDiagramNode(null);
+			methods.removeValue(method.getIdentifier());
+		}
+		
+		public function removeMethodById(methodId:Identifier):void
+		{
+			methods.removeValue(methodId);
+		}
+		
+		public function getMethod(id:Identifier):ClassMethod
+		{
+			return methods.getValue(id);
+		}
+		
+		public function getMethods():IList
+		{
+			return this.methods.getAsList();
+		}
 	}
 }

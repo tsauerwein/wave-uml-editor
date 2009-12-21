@@ -14,7 +14,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	public class EditAttributes implements IEditWindow
 	{
-		private var classData:UMLClass;
+		private var classDiagramNode:ClassDiagramNode;
 		private var controller:Controller;
 		
 		public function EditAttributes()
@@ -31,14 +31,14 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
             
-        public function setClassData(classData:UMLClass):void
+        public function setClassData(classData:ClassDiagramNode):void
         {
-        	this.classData = classData;
+        	this.classDiagramNode = classData;
         }
         
-        public function getClassData():UMLClass
+        public function getClassData():ClassDiagramNode
         {
-        	return this.classData;
+        	return this.classDiagramNode;
         }
         
         public function update(nodeData:ClassDiagramNode):void
@@ -50,7 +50,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			trace("add attribute handler");
 			
-			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER);
+			var attributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData() as UMLClass, null, this, WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER);
 			controller.handleShowSingleAttribute(attributeEvent);
 			
 		    //Default Attribut
@@ -67,7 +67,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			var buttonClicked:Button = event.currentTarget as Button;
             trace("delete class element handler " + buttonClicked.id);
-            var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this , new Identifier(buttonClicked.id));
+            var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData() as UMLClass, null, this , new Identifier(buttonClicked.id));
             controller.handleRemoveAttribute(nodeAttributeEvent);
 		}
 		
@@ -76,7 +76,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var buttonClicked:Button = event.currentTarget as Button;
             trace("edit attribute handler:" + buttonClicked.id);
 
-            var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData(), null, this , new Identifier(buttonClicked.id));
+            var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData() as UMLClass, null, this , new Identifier(buttonClicked.id));
             controller.handleShowSingleAttribute(nodeAttributeEvent);
 			
 		}

@@ -11,7 +11,7 @@ package de.waveumleditor.model.classDiagram
 	public class UMLClass extends ClassDiagramNode implements IClassElement
 	{
 		private var constructors:ConstructorMap;
-		private var methods:MethodMap;
+		
 		private var attributes:AttributeMap;
 		
 		private var abstract:Boolean;
@@ -25,19 +25,18 @@ package de.waveumleditor.model.classDiagram
 			this.abstract = abstract;
 			
 			this.constructors = new ConstructorMap();
-			this.methods = new MethodMap();
 			this.attributes = new AttributeMap();
 		}
 
 		public function addConstructor(constructor:ClassConstructorMethod):void
 		{
-			constructor.setUMLClass(this);
+			constructor.setClassDiagramNode(this);
 			constructors.setValue(constructor);
 		}
 		
 		public function removeConstructor(constructor:ClassConstructorMethod):void
 		{
-			constructor.setUMLClass(null);
+			constructor.setClassDiagramNode(null);
 			constructors.removeValue(constructor.getIdentifier());
 		}
 		
@@ -54,33 +53,6 @@ package de.waveumleditor.model.classDiagram
 		public function getConstructors():IList
 		{
 			return this.constructors.getAsList();
-		}
-		
-		public function addMethod(method:ClassMethod):void
-		{
-			method.setUMLClass(this);
-			methods.setValue(method);
-		}
-		
-		public function removeMethod(method:ClassMethod):void
-		{
-			method.setUMLClass(null);
-			methods.removeValue(method.getIdentifier());
-		}
-		
-		public function removeMethodById(methodId:Identifier):void
-		{
-			methods.removeValue(methodId);
-		}
-		
-		public function getMethod(id:Identifier):ClassMethod
-		{
-			return methods.getValue(id);
-		}
-		
-		public function getMethods():IList
-		{
-			return this.methods.getAsList();
 		}
 		
 		public function addAttribute(attribute:ClassAttribute):void

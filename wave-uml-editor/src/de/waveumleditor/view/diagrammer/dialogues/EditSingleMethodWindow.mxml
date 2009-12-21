@@ -2,6 +2,8 @@
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
+        	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+        	import de.waveumleditor.model.classDiagram.UMLClass;
         	import mx.core.Container;
         	import de.waveumleditor.model.classDiagram.Variable;
         	import mx.collections.IList;
@@ -108,10 +110,10 @@
 						EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex)
 					)
 					
-					newClassConstructorMethod.setUMLClass(getClassData());
+					newClassConstructorMethod.setClassDiagramNode(getClassData() as UMLClass);
 					addParametersToClassConstructorMethod(newClassConstructorMethod);
 					
-		            nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassConstructorMethod, getEditMethodsWindow());
+		            nodeMethodEvent= new NodeMethodEvent(getClassData() as UMLClass, newClassConstructorMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);
 				}
 	            else 
@@ -134,9 +136,10 @@
 	            		chbAbstract.selected,
 	            		chbStatic.selected);
 	            		
-	            		newClassMethod.setUMLClass(getClassData());
+	            		newClassMethod.setClassDiagramNode(getClassData());
 	            		addParametersToClassConstructorMethod(newClassMethod);
 	            		
+	            	var test:ClassDiagramNode = getClassData();
 	            	nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);	
 	            }

@@ -9,7 +9,7 @@ package de.waveumleditor.model.classDiagram
 	{
 		private var visibility:EVisibility;
 		private var variables:ArrayList;
-		private var umlclass:UMLClass;
+		private var classDiagramNode:ClassDiagramNode;
 		private var key:Identifier;
 		
 		public function ClassConstructorMethod(key:Identifier, visibility:EVisibility)
@@ -44,14 +44,14 @@ package de.waveumleditor.model.classDiagram
 			this.visibility = visibility;
 		}
 		
-		public function getUMLClass():UMLClass
+		public function getClassDiagramNode():ClassDiagramNode
 		{
-			return this.umlclass;
+			return this.classDiagramNode;
 		}
 		
-		public function setUMLClass(umlclass:UMLClass):void
+		public function setClassDiagramNode(classDiagramNode:ClassDiagramNode):void
 		{
-			this.umlclass = umlclass;
+			this.classDiagramNode = classDiagramNode;
 		}
 		
 		public function isStatic():Boolean
@@ -75,7 +75,7 @@ package de.waveumleditor.model.classDiagram
 			
 			out += this.visibility.toString();
 			
-			out += " " + this.umlclass.getName();
+			out += " " + this.classDiagramNode.getName();
 			
 			out += "(" + this.variables.toString() + ")";
 			
@@ -84,8 +84,11 @@ package de.waveumleditor.model.classDiagram
 		
 		public function updateFrom(other:ClassConstructorMethod):void
 		{
-			setVisibility(other.getVisibility());
-			setUMLClass(other.getUMLClass());
+			if (!(this is InterfaceMethod)) 
+			{
+				setVisibility(other.getVisibility());
+			}
+			setClassDiagramNode(other.getClassDiagramNode());
 			
 			// copy all parameters
 			this.getVariables().removeAll();
@@ -107,5 +110,6 @@ package de.waveumleditor.model.classDiagram
 			
 			return constructor;
 		}
+		
 	}
 }

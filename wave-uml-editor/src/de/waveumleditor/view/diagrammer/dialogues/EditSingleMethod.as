@@ -1,18 +1,16 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
+	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	
 	import flash.events.Event;
-	
-	import mx.containers.Grid;
-	import mx.core.Container;
 	
 	public class EditSingleMethod
 	{
 
 		public var controller:Controller;
-		private var classData:UMLClass;
+		private var classData:ClassDiagramNode;
 		public var isConstructor:Boolean;
 		public var editMethodsWindow:EditMethodsWindow;
 
@@ -31,12 +29,12 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
 		
-		public function setClassData(classData:UMLClass):void
+		public function setClassData(classData:ClassDiagramNode):void
         {
         	this.classData = classData;
         }
         
-        public function getClassData():UMLClass
+        public function getClassData():ClassDiagramNode
         {
         	return this.classData;
         }

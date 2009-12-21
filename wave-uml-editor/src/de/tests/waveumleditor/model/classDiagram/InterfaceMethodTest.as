@@ -18,7 +18,7 @@ package de.tests.waveumleditor.model.classDiagram
 		{
 			var umlclass:UMLClass = new UMLClass(new Identifier("1234567"), new Position(0,0), "DasIstKlasse");
 			var ifaceMethod:InterfaceMethod = new InterfaceMethod(new Identifier("meth009"), "method", Type.INT);
-			ifaceMethod.setUMLClass(umlclass);
+			ifaceMethod.setClassDiagramNode(umlclass);
 			
 			assertEquals("+ method():int", ifaceMethod.toString());
 		}

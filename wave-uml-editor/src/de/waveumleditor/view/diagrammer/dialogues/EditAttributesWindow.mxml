@@ -39,14 +39,14 @@
 				this.setClassData(nodeData as UMLClass);
 				
 				// update class-name
-				Formatter.formatLabelOfClassElement(this.getClassData(), classNodeName);
+				Formatter.formatLabelOfClassElement(this.getClassData() as UMLClass, classNodeName);
 				var nodeName:String;
 				nodeName = nodeData.getName();
 				if(nodeName==""){nodeName="Neue Klasse"};//default
 				classNodeName.text = nodeName;
 				
 				// add attributes
-				var attributes:IList = this.getClassData().getAttributes();
+				var attributes:IList = (this.getClassData() as UMLClass).getAttributes();
 				addElementsToContentGrid(attributes, attributesList);
 			}
 			

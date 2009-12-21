@@ -3,6 +3,7 @@
 	
 	<mx:Script>
         <![CDATA[
+        	import de.waveumleditor.model.classDiagram.Interface;
 			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
 			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 			import de.waveumleditor.model.classDiagram.ClassMethod;
@@ -26,22 +27,30 @@
             override public function update(nodeData:ClassDiagramNode):void 
 			{
 				trace("update editMethodsWindow method called");
-				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLClass");
-				
-				this.setClassData(nodeData as UMLClass);
-				
-				
-				// update class-name
-				Formatter.formatLabelOfClassElement(this.getClassData(), classNodeName);
+				if (!(nodeData is ClassDiagramNode)) throw new Error("nodeData must be an instance of ClassDiagramNode");
+			
 				var nodeName:String;
 				nodeName = nodeData.getName();
-				if(nodeName==""){nodeName="Neue Klasse"};//default
+
+				// update class-name
+				if ( nodeData is UMLClass )
+				{
+					this.setClassData(nodeData as UMLClass);
+					Formatter.formatLabelOfClassElement(nodeData as UMLClass, classNodeName);
+					if(nodeName==""){nodeName="Neue Klasse"};//default
+					// add Constructors
+					var constructors:IList = (nodeData as UMLClass).getConstructors();
+					addElementsToContentGrid(constructors, constructorsList);
+				} 
+				else 
+				{
+					this.setClassData(nodeData as Interface);
+					Formatter.formatLabelOfClassElement(nodeData as Interface, classNodeName);
+					if(nodeName==""){nodeName="Neues Interface"};//default
+				}
+				
 				classNodeName.text = nodeName;
-				
-				// add Constructors
-				var constructors:IList = this.getClassData().getConstructors();
-				addElementsToContentGrid(constructors, constructorsList);
-				
+
 				// add Methods
 				var methods:IList = this.getClassData().getMethods();
 				addElementsToContentGrid(methods, methodsList);

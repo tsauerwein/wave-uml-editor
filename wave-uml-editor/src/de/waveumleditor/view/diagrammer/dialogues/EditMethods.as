@@ -14,7 +14,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditMethods implements IEditWindow
 	{
 		private var controller:Controller;
-		private var classData:ClassDiagramNode;
+		private var classDiagramNode:ClassDiagramNode;
 		
 		//public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
 
@@ -33,15 +33,15 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
 		
-		public function setClassData(classData:UMLClass):void
+		public function setClassData(classDiagramNode:ClassDiagramNode):void
         {
-        	this.classData = classData;
+        	this.classDiagramNode = classDiagramNode;
         }
         
-        public function getClassData():UMLClass
+        public function getClassData():ClassDiagramNode
         {
         	//TODO 
-        	return this.classData as UMLClass;
+        	return this.classDiagramNode;
         }
 
 		public function update(nodeData:ClassDiagramNode):void 
