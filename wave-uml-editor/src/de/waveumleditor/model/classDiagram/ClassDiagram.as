@@ -33,7 +33,7 @@ package de.waveumleditor.model.classDiagram
 		/**
 		 * Removes a node from the diagram by its id.
 		 * 
-		 * @returns A list of links that were connected to this node.
+		 * @return A list of links that were connected to this node.
 		 */ 
 		public function removeNodeById(id:Identifier):IList
 		{
@@ -43,7 +43,7 @@ package de.waveumleditor.model.classDiagram
 		/**
 		 * Removes a node from the diagram.
 		 * 
-		 * @returns A list of links that were connected to this node.
+		 * @return A list of links that were connected to this node.
 		 */ 
 		public function removeNode(node:ClassDiagramNode):IList
 		{
@@ -90,7 +90,7 @@ package de.waveumleditor.model.classDiagram
 		 * Removes all links from the diagram that are connected 
 		 * with the passed-in node.
 		 * 
-		 * @returns A list of links that were removed.
+		 * @return A list of links that were removed.
 		 */ 
 		private function removeCorrespondingLinks(node:ClassDiagramNode):IList
 		{

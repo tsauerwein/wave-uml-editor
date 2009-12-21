@@ -7,7 +7,7 @@ package de.tests
 		 * 
 		 * @param text The string in which we search
 		 * @param searchTerm The string to look for
-		 * @returns True - if searchTerm in part of text
+		 * @return True - if searchTerm is part of text
 		 */
 		public static function contains(text:String, searchTerm:String):Boolean
 		{

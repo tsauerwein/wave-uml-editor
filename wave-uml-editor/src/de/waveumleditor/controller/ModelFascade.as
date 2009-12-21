@@ -79,7 +79,7 @@ package de.waveumleditor.controller
 		/**
 		 * Removes a node from the diagram.
 		 * 
-		 * @returns A list of links that were connected to this node.
+		 * @return A list of links that were connected to this node.
 		 */ 
 		public function removeNode(node:BaseClassDiagramNode):void
 		{
@@ -307,7 +307,7 @@ package de.waveumleditor.controller
 		 * C-001_A-002 --> A-002
 		 *
 		 *  @param key wave state key
-		 *  @returns The 2nd half of the key
+		 *  @return The 2nd half of the key
 		 */  
 		public static function getNodeElementIdentifier(key:String):String
 		{
@@ -325,7 +325,7 @@ package de.waveumleditor.controller
 		 * C-001 --> C-001
 		 * 
 		 *  @param key wave state key
-		 *  @returns The 1st half of the key
+		 *  @return The 1st half of the key
 		 */  
 		public static function getParentIdentifier(key:String):String
 		{

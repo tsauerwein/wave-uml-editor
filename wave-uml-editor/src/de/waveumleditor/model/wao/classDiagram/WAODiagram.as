@@ -12,6 +12,12 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	public class WAODiagram
 	{
+		/**
+		 * Restores a model diagram from the Wave state.
+		 * 
+		 * @param state The Wave state
+		 * @return 
+		 */		
 		public static function getFromState(state:WaveState):ClassDiagram
 		{
 			var diagram:ClassDiagram = new ClassDiagram();
@@ -26,6 +32,30 @@ package de.waveumleditor.model.wao.classDiagram
 			return diagram;
 		}
 		
+		/**
+		 * Loops through all state keys and groups the keys
+		 * into NodeParser/LinkParser objects for every node/link.
+		 * 
+		 * For example:
+		 * 
+		 * Wave state:
+		 * N-001=C
+		 * N-001_p={..}
+		 * N-001_M-001={..}
+		 * N-002=C
+		 * N-002_p={..}
+		 * 
+		 * -->
+		 * 
+		 * NodeParser 1:
+		 * N-001
+		 * N-001_p
+		 * N-001_M-001
+		 * 
+		 * Node Parser 2:
+		 * N-002
+		 * N-002_p
+		 */
 		private static function scanKeys(state:WaveState, nodeParsers:Dictionary, linkParsers:Dictionary):void
 		{
 			var keys:Array = state.getKeys();
@@ -46,6 +76,15 @@ package de.waveumleditor.model.wao.classDiagram
 			}			
 		}
 		
+		/**
+		 * Stores a state key inside the NodeParser list. If there is no
+		 * NodeParser for the node the key belongs to, then a new NodeParser
+		 * is created.
+		 * 
+		 * @param nodeParsers The list of NodeParser
+		 * @param nodeKey The node to which the state key belongs (e.g. "N-001")
+		 * @param stateKey The key inside the state (e.g. "N-001" or "N-001_M-001")
+		 */ 
 		private static function addNodeParser(nodeParsers:Dictionary, nodeKey:String, stateKey:String):void
 		{
 			var nodeParser:WAONodeParser = nodeParsers[nodeKey] as WAONodeParser; 
@@ -69,6 +108,10 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
+		/**
+		 * Creates a node for every NodeParser inside the 
+		 * NodeParser list and adds this node to the diagram.
+		 */ 
 		private static function processNodes(state:WaveState, nodeParsers:Dictionary, diagram:ClassDiagram):void
 		{
 			for (var key:Object in nodeParsers)
@@ -84,6 +127,10 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
+		/**
+		 * Creates a link for every LinkParser inside the 
+		 * LinkParser list and adds this link to the diagram.
+		 */
 		private static function processLinks(state:WaveState, linkParsers:Dictionary, diagram:ClassDiagram):void
 		{
 			for (var key:Object in linkParsers)

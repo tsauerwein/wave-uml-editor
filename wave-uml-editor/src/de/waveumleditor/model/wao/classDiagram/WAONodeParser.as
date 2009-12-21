@@ -13,6 +13,13 @@ package de.waveumleditor.model.wao.classDiagram
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
 	
+	/**
+	 * This class is responsible for restoring a node from
+	 * the wave state. It keeps lists of all state keys that
+	 * belong to a node.
+	 *
+	 * @see de.waveumleditor.model.wao.classDiagram.WAODiagram
+	 */  
 	public class WAONodeParser
 	{
 		private var nodeId:String;

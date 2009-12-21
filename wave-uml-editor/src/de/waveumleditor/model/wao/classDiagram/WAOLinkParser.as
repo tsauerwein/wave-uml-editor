@@ -7,7 +7,13 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
-	
+
+	/**
+	 * This class is responsible for restoring a link from
+	 * the wave state. 
+	 *
+	 * @see de.waveumleditor.model.wao.classDiagram.WAODiagram
+	 */  
 	public class WAOLinkParser
 	{
 		private var linkId:String;		
