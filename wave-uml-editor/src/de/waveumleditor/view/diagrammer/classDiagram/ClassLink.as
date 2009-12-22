@@ -136,9 +136,9 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					var fromNodeCenterPoint:Point = new Point(this.fromNode.x+this.fromNode.width/2, this.fromNode.y+this.fromNode.height/2);
 					var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
 					var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
-					var point2:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.toNode);
+					var point2:Point = this.getBoundary(toNodeCenterPoint,fromNodeCenterPoint, this.toNode);
 					
-					ptr = Point.interpolate(point2,point1,0.05);
+					ptr = Point.interpolate(point2,point1,0.02);
 					x = ptr.x;
 					y = ptr.y;
 				}
@@ -165,9 +165,9 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					var fromNodeCenterPoint:Point = new Point(this.fromNode.x+this.fromNode.width/2, this.fromNode.y+this.fromNode.height/2);
 					var toNodeCenterPoint:Point = new Point(this.toNode.x + this.toNode.width/2, this.toNode.y + this.toNode.height/2);
 					var point1:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.fromNode);
-					var point2:Point = this.getBoundary(fromNodeCenterPoint, toNodeCenterPoint, this.toNode);
+					var point2:Point = this.getBoundary(toNodeCenterPoint,fromNodeCenterPoint, this.toNode);
 					
-					ptr = Point.interpolate(point1,point2,0.05);
+					ptr = Point.interpolate(point1,point2,0.02);
 					x = ptr.x;
 					y = ptr.y;
 				}

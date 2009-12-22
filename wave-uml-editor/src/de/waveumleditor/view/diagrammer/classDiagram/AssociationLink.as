@@ -5,6 +5,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	
 	import de.waveumleditor.model.classDiagram.link.EAssociationType;
 	
+	import flash.display.Graphics;
 	import flash.geom.Point;
 	
 	import mx.binding.utils.BindingUtils;
@@ -43,6 +44,10 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
 		}
 		
+		/**
+		 * Creates the linkContextPanel for the Assoziation Link and if the Strings have been setted 
+		 * the corresponding Labels for link discription will be created 
+		 **/
 		override protected function createChildren():void 
 		{
 			super.createChildren();
@@ -82,11 +87,9 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			}	
 		}
 		
+		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
-			var pointFromNode:Point = this.getLineStartPoint();
-			var pointToNode:Point = this.getLineEndPoint();
-			
 			if(!this.fromNode && !this.toNode) 
 			{
 				return;
@@ -107,10 +110,14 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			
 			if(this.fromNode != null && this.toNode != null)
 			{
+				var pointFromNode:Point = this.getLineStartPoint();
+				var pointToNode:Point = this.getLineEndPoint();
+				var drawDirection:String = getDrawDirection(this.fromNode,this.toNode);
+				var point:Point;
+				
 				//Positioning of the label in the middle position of the line
 				if(this.linkName != null && this.linkName != "") 
 				{
-					var point:Point;
 					if(this.toNode == this.fromNode)
 					{
 						point = new Point(fromNode.x + fromNode.width, fromNode.y + fromNode.height);
@@ -151,16 +158,48 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 					else
 					{
-						if(pointFromNode.x > pointToNode.x)
+						if(drawDirection == "TOP")
 						{
 							this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width - 10;
+							this.labelMultiplicityFrom.y = pointFromNode.y;
 						}
-						else
+						else if(drawDirection == "LEFT")
 						{
 							this.labelMultiplicityFrom.x = pointFromNode.x;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height - 10;
 						}
-						this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height;
+						else if(drawDirection == "BOTTOM")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x + 10;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height;
+						}
+						else if(drawDirection == "RIGHT")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height - 10;
+						}
+						else if(drawDirection == "RIGHT_TOP")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width - 15;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height + 10;
+						}
+						else if(drawDirection == "LEFT_BOTTOM")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height - 20;	
+						}
+						else if(drawDirection == "LEFT_TOP")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x + 20;
+							this.labelMultiplicityFrom.y = pointFromNode.y - 10;		
+						}
+						else if(drawDirection == "RIGHT_BOTTOM")
+						{
+							this.labelMultiplicityFrom.x = pointFromNode.x - labelMultiplicityFrom.width;
+							this.labelMultiplicityFrom.y = pointFromNode.y - labelMultiplicityFrom.height - 20;
+						}
 					}
+					
 					
 					setLabelStyle(labelMultiplicityFrom);
 					
@@ -189,15 +228,46 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 					else
 					{
-						if(pointFromNode.x > pointToNode.x)
+						if(drawDirection == "TOP")
 						{
-							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 10;
+							this.labelAttributeFrom.x = pointFromNode.x + 10;
+							this.labelAttributeFrom.y = pointFromNode.y;
 						}
-						else
+						else if(drawDirection == "LEFT")
 						{
 							this.labelAttributeFrom.x = pointFromNode.x;
+							this.labelAttributeFrom.y = pointFromNode.y + 10;
 						}
-						this.labelAttributeFrom.y = pointFromNode.y + labelAttributeFrom.height;
+						else if(drawDirection == "BOTTOM")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 10;
+							this.labelAttributeFrom.y = pointFromNode.y - labelAttributeFrom.height;
+						}
+						else if(drawDirection == "RIGHT")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width;
+							this.labelAttributeFrom.y = pointFromNode.y + 10;
+						}
+						else if(drawDirection == "RIGHT_TOP")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width;
+							this.labelAttributeFrom.y = pointFromNode.y + 10;
+						}
+						else if(drawDirection == "LEFT_BOTTOM")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x + 15;
+							this.labelAttributeFrom.y = pointFromNode.y - 7;
+						}
+						else if(drawDirection == "LEFT_TOP")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x;
+							this.labelAttributeFrom.y = pointFromNode.y + 20;	
+						}
+						else if(drawDirection == "RIGHT_BOTTOM")
+						{
+							this.labelAttributeFrom.x = pointFromNode.x - labelAttributeFrom.width - 15;
+							this.labelAttributeFrom.y = pointFromNode.y - 5;
+						}
 					}
 					
 					setLabelStyle(labelAttributeFrom);
@@ -227,15 +297,46 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 					else
 					{
-						if(pointFromNode.x > pointToNode.x)
-						{
-							this.labelMultiplicityTo.x = pointToNode.x;
-						}
-						else
+						if(drawDirection == "TOP")
 						{
 							this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width - 10;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height;
 						}
-						this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height;
+						else if(drawDirection == "LEFT")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height - 10;
+						}
+						else if(drawDirection == "BOTTOM")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x + 10;
+							this.labelMultiplicityTo.y = pointToNode.y;
+						}
+						else if(drawDirection == "RIGHT")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height - 10;
+						}
+						else if(drawDirection == "RIGHT_TOP")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height - 10;
+						}
+						else if(drawDirection == "LEFT_BOTTOM")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height + 5;
+						}
+						else if(drawDirection == "LEFT_TOP")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x - labelMultiplicityTo.width;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height - 10;	
+						}
+						else if(drawDirection == "RIGHT_BOTTOM")
+						{
+							this.labelMultiplicityTo.x = pointToNode.x;
+							this.labelMultiplicityTo.y = pointToNode.y - labelMultiplicityTo.height + 5;
+						}
 					}
 					
 					setLabelStyle(labelMultiplicityTo);
@@ -265,15 +366,46 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					}
 					else
 					{
-						if(pointFromNode.x > pointToNode.x)
+						if(drawDirection == "TOP")
+						{
+							this.labelAttributeTo.x = pointToNode.x + 10;
+							this.labelAttributeTo.y = pointToNode.y - labelAttributeTo.height;
+						}
+						else if(drawDirection == "LEFT")
+						{
+							this.labelAttributeTo.x = pointToNode.x - labelAttributeTo.width;
+							this.labelAttributeTo.y = pointToNode.y + 10;
+						}
+						else if(drawDirection == "BOTTOM")
+						{
+							this.labelAttributeTo.x = pointToNode.x - labelAttributeTo.width - 10;
+							this.labelAttributeTo.y = pointToNode.y;
+						}
+						else if(drawDirection == "RIGHT")
 						{
 							this.labelAttributeTo.x = pointToNode.x;
+							this.labelAttributeTo.y = pointToNode.y + 10;
 						}
-						else
+						else if(drawDirection == "RIGHT_TOP")
 						{
-							this.labelAttributeTo.x = pointToNode.x - this.labelAttributeTo.width - 10;
+							this.labelAttributeTo.x = pointToNode.x;
+							this.labelAttributeTo.y = pointToNode.y - 10;
 						}
-						this.labelAttributeTo.y = pointToNode.y + labelAttributeTo.height;
+						else if(drawDirection == "LEFT_BOTTOM")
+						{
+							this.labelAttributeTo.x = pointToNode.x - labelAttributeTo.width;
+							this.labelAttributeTo.y = pointToNode.y;
+						}
+						else if(drawDirection == "LEFT_TOP")
+						{
+							this.labelAttributeTo.x = pointToNode.x - labelAttributeTo.width;
+							this.labelAttributeTo.y = pointToNode.y - 10;	
+						}
+						else if(drawDirection == "RIGHT_BOTTOM")
+						{
+							this.labelAttributeTo.x = pointToNode.x;
+							this.labelAttributeTo.y = pointToNode.y;
+						}
 					}
 					
 					setLabelStyle(labelAttributeTo);
@@ -313,7 +445,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			if(this.linkContextPanel.parent != null) {
 				Diagram(parent).removeChild(this.linkContextPanel);
 			}
-			trace("AssoziationLink -> override protected function handleRemove()");
 		}
 		
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
@@ -362,16 +493,29 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				}
 			}
 		}
+		
+		protected function drawDiamond(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
+		{
+			var graphic:Graphics = this.graphics;
+			this.performDiamondDrawing(graphic,x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);	
+			graphics.beginFill(0xFFFFFF,1.0);	
+			this.performDiamondDrawing(graphic,x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
+			graphics.beginFill(0xFFFFFF,1.0);
+	  	}
 
 		protected function drawVoidDiamond(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
 		{
-			this.performVoidDiamondDrawing(x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);		
-			this.performVoidDiamondDrawing(x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
+			var graphic:Graphics = this.graphics;
+			this.performDiamondDrawing(graphic,x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);	
+			graphic.beginFill(0x7E949F,0.8);	
+			this.performDiamondDrawing(graphic,x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
+			graphic.beginFill(0x7E949F,0.8);
 	  	}		
 		
-		protected function performVoidDiamondDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void
+		
+		protected function performDiamondDrawing(graphic:Graphics, x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void
 		{
-			this.graphics.lineStyle(lineThickness, color, alpha);
+			graphic.lineStyle(lineThickness, color, alpha);
 			var arrowHeight:Number = 10;
 			var arrowWidth:Number = 10;
 			var point1:Point = new Point(x1,y1);
@@ -379,205 +523,90 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			var pt3:Point;
 			var distance:Number;
 			var angle:Number = Math.atan2(y2-y1, x2-x1);
-			var boxFromX2:int = fromNode.x+fromNode.width;
-		    var boxFromY2:int = fromNode.y+fromNode.height;
-		    var boxToX2:int = toNode.x+toNode.width;
-		    var boxToY2:int = toNode.y+toNode.height;
+		    var drawDirection:String = getDrawDirection(this.fromNode,this.toNode);
 			
-			graphics.moveTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+			graphic.moveTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
 			  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
-			graphics.lineTo(x2, y2);
-			graphics.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
+			graphic.lineTo(x2, y2);
+			graphic.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
 			  							y2-arrowHeight*Math.sin(angle)-arrowWidth*Math.cos(angle));				
 			
 			
 			if(this.toNode == this.fromNode)
 			{
-				graphics.lineTo(x2+20, y2);
-				graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+				graphic.lineTo(x2+20, y2);
+				graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
 				  				y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
-				graphics.beginFill(0x7E949F,0.8);
 			}
 			else
 			{
-				if (fromNode.x>boxToX2 && boxFromY2<toNode.y)
+				if (drawDirection == "RIGHT_TOP")
 				{
 					pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);
-			  		graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT_TOP";
+					graphic.lineTo(pt3.x,pt3.y);
+			  		graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (fromNode.x>boxToX2)
+			    else if (drawDirection == "RIGHT")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);
-					graphics.lineTo(pt3.x,pt3.y);
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT";
+					graphic.lineTo(pt3.x,pt3.y);
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (fromNode.x>boxToX2 && fromNode.y>boxToY2)
+			    else if (drawDirection == "RIGHT_BOTTOM")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-		  	  		graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT_BOTTOM";
+					graphic.lineTo(pt3.x,pt3.y);	
+		  	  		graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (fromNode.y>boxToY2)
+			    else if (drawDirection == "BOTTOM")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"BOTTOM";
+					graphic.lineTo(pt3.x,pt3.y);	
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
+		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (boxFromX2<toNode.x && fromNode.y>boxToY2)
+			    else if (drawDirection == "LEFT_BOTTOM")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)-arrowWidth*Math.cos(angle));//"LEFT_BOTTOM";
+					graphic.lineTo(pt3.x,pt3.y);	
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (boxFromX2<toNode.x && boxFromY2<toNode.y)
+			    else if (drawDirection == "LEFT_TOP")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"LEFT_TOP";
+					graphic.lineTo(pt3.x,pt3.y);	
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
 			    
-			    else if (boxFromY2<toNode.y)
+			    else if (drawDirection == "TOP")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"TOP";
+					graphic.lineTo(pt3.x,pt3.y);	
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-			    else if (boxFromX2<toNode.x)
+			    else if (drawDirection == "LEFT")
 			    {
 			    	pt3 = Point.interpolate(point1,point2,0.08);
 				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"LEFT";
+					graphic.lineTo(pt3.x,pt3.y);	
+			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
+				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
-		 	}
-		    
-		    graphics.beginFill(0x7E949F,0.8);
-												
+		 	}									
 		}
-		
-		
-		protected function drawDiamond(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
-		{
-			this.performDiamondDrawing(x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);		
-			this.performDiamondDrawing(x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
-	  	}		
-		
-		protected function performDiamondDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void
-		{
-			this.graphics.lineStyle(lineThickness, color, alpha);
-			var arrowHeight:Number = 10;
-			var arrowWidth:Number = 10;
-			var point1:Point = new Point(x1,y1);
-			var point2:Point = new Point(x2,y2);
-			var pt3:Point;
-			var angle:Number = Math.atan2(y2-y1, x2-x1);
-			var boxFromX2:int = fromNode.x+fromNode.width;
-		    var boxFromY2:int = fromNode.y+fromNode.height;
-		    var boxToX2:int = toNode.x+toNode.width;
-		    var boxToY2:int = toNode.y+toNode.height;
-			
-			graphics.moveTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-			  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
-			graphics.lineTo(x2, y2);
-			graphics.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
-			  							y2-arrowHeight*Math.sin(angle)-arrowWidth*Math.cos(angle));				
-			
-			
-			if(this.toNode == this.fromNode)
-			{
-				graphics.lineTo(x2+20, y2);
-				graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-				  				y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
-				graphics.beginFill(0xFFFFFF,1.0);
-			}
-			else
-			{
-				if (fromNode.x>boxToX2 && boxFromY2<toNode.y)
-				{
-					pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);
-			  		graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT_TOP";
-			    }
-			    else if (fromNode.x>boxToX2)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-					graphics.lineTo(pt3.x,pt3.y);
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT";
-			    }
-			    else if (fromNode.x>boxToX2 && fromNode.y>boxToY2)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-		  	  		graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"RIGHT_BOTTOM";
-			    }
-			    else if (fromNode.y>boxToY2)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
-		  							y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"BOTTOM";
-			    }
-			    else if (boxFromX2<toNode.x && fromNode.y>boxToY2)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)+arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)-arrowWidth*Math.cos(angle));//"LEFT_BOTTOM";
-			    }
-			    else if (boxFromX2<toNode.x && boxFromY2<toNode.y)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"LEFT_TOP";
-			    }
-			    
-			    else if (boxFromY2<toNode.y)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"TOP";
-			    }
-			    else if (boxFromX2<toNode.x)
-			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
-				
-					graphics.lineTo(pt3.x,pt3.y);	
-			    	graphics.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
-				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));//"LEFT";
-			    }
-		 	}
-		    
-		    graphics.beginFill(0xFFFFFF,1.0);
-												
-		}
-		
+
 	}
 }
