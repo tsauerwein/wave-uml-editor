@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dialog.mxml -->
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+        layout="vertical"
+        title="Observe"
+        showCloseButton="false"
+        width="150"
+        height="100">
+        
+   <mx:Script>
+   	<![CDATA[
+   		import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
+   		import de.waveumleditor.view.diagrammer.events.NodeEvent;
+   		
+   		// for testing
+   		public var classDiagramComponent:ClassDiagramComponent;
+   		
+   		private function handleChangeModeToEdit():void
+		{
+			this.classDiagramComponent.setViewModeToEdit();
+		}
+		
+   		
+   	]]>
+   </mx:Script>
+    <mx:Label text="Nur zum Testen"/>    
+	<mx:Button label="To Edit" click="handleChangeModeToEdit()" width="50" height="30" />
+
+</mx:TitleWindow>

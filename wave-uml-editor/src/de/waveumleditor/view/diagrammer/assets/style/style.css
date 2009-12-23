@@ -2,6 +2,14 @@
 
 /*------------------------------------------------------------------------------ Fonts */
 
+global 
+{
+	modalTransparencyColor: "#E6E9E5";
+	modalTrasparancy: 0;
+	modalTransparencyBlur: 0;
+    modalTransparencyDuration: 200;
+}
+
 
 Diagram
 {

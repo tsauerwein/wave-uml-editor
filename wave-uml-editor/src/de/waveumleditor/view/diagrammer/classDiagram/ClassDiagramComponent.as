@@ -12,6 +12,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.LinkMap;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.NodeMap;
+	import de.waveumleditor.view.diagrammer.dialogues.ObserveMode;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
@@ -19,11 +20,13 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	
 	import mx.collections.IList;
 	import mx.events.DragEvent;
+	import mx.managers.PopUpManager;
 	
 	public class ClassDiagramComponent extends Diagram
 	{
 		private var nodes:NodeMap;
 		private var links:LinkMap;
+		private var lockLayer:ObserveMode;
 		
 		public function ClassDiagramComponent()
 		{
@@ -31,6 +34,16 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			links = new LinkMap();
 		}
 
+		public function setViewModeToEdit():void
+		{
+			PopUpManager.removePopUp(lockLayer);
+		}
+		
+		public function setViewModeToObserve():void
+		{
+            lockLayer = PopUpManager.createPopUp(this, ObserveMode, true) as ObserveMode;  
+            this.lockLayer.classDiagramComponent = this;   
+		}
 		
 		override protected function createContextPanel():GenericDiagramContextPanel 
 		{

@@ -168,7 +168,7 @@
 					title="Link editieren"
 					titleStyleName="titleText"
 					backgroundColor="#FFFFFF"
-					backgroundAlpha="0.7"
+					backgroundAlpha="0.8"
 					borderAlpha="1.0"
 					cornerRadius="10"
 					dropShadowEnabled="true"
