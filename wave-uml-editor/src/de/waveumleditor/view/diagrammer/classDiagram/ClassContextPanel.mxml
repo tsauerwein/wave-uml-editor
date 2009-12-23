@@ -16,9 +16,8 @@
 			import com.anotherflexdev.diagrammer.Link;
 			import com.anotherflexdev.diagrammer.BeginLinkEvent;
 			import mx.effects.easing.Bounce;
-			
 			import de.waveumleditor.view.diagrammer.events.NodeEvent;
-			
+				
 			public static var BUTTON_HEIGHT:int = 22;
 			
 			private var node:BaseClassDiagramNode;
@@ -39,7 +38,7 @@
 			
 			private function handleEditMethodsClick():void
 			{
-				ClassDiagramComponent(parent).dispatchEvent(new NodeEvent(NodeEvent.EVENT_EDIT_NODE_METHODS, node));
+					ClassDiagramComponent(parent).dispatchEvent(new NodeEvent(NodeEvent.EVENT_EDIT_NODE_METHODS, node));
 			}
 		]]>
 	</mx:Script>

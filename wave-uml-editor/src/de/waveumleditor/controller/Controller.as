@@ -11,6 +11,8 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.ClassMethod;
 	import de.waveumleditor.model.classDiagram.EVisibility;
+	import de.waveumleditor.model.classDiagram.Interface;
+	import de.waveumleditor.model.classDiagram.InterfaceMethod;
 	import de.waveumleditor.model.classDiagram.Type;
 	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.classDiagram.Variable;
@@ -22,6 +24,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
 	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -269,6 +272,7 @@ package de.waveumleditor.controller
 			//TODO 
 			
 			var editMethods:EditMethodsWindow = new EditMethodsWindow();
+			
 			editMethods.setController(this);
 			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
 			editMethods.popUp();
@@ -296,8 +300,16 @@ package de.waveumleditor.controller
 				//TODO: Unterscheidung zw. InterfaceMethod und ClassMethod
 				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER)
 				{
-					// in case the dialog is opened to add a new method, create a default method
-					method = new ClassMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
+					if (event.getClassNode() is Interface)
+					{
+						method = new InterfaceMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", new Type("void"));
+					}
+					else
+					{
+						// in case the dialog is opened to add a new method, create a default method
+						method = new ClassMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
+					}
+					
 					editSingleMethod.isConstructor = false;
 				}
 				else 

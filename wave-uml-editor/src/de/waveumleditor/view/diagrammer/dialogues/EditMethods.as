@@ -3,7 +3,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.UMLClass;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
@@ -52,14 +51,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 		public function handleAdd(event:Event):void
 		{
 			trace("add method handler");
-			
 			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER);
 			controller.handleShowSingleMethod(methodEvent);
-			/* var newMethod:ClassMethod = new ClassMethod(new Identifier("default_meth"), "", EVisibility.PUBLIC, Type.STRING);
-                
-            var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-            editSingleMethod.update(newMethod);//TODO Methode über Id holen
-            editSingleMethod.popUp(); */
 		}
 		
 		public function handleDelete(event:Event):void
@@ -75,9 +68,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			var buttonClicked:Button = event.currentTarget as Button;
             trace("edit method handler: " + buttonClicked.id);
-            
-            //Mockup Methode
-			//var mockupMethod:ClassMethod = new ClassMethod(new Identifier("meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
 
 			var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
 			controller.handleShowSingleMethod(nodeMethodEvent);
@@ -111,6 +101,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 			//TODO
 			trace("handleRemoveConstructor");
 		}
-		
+
 	}
 }

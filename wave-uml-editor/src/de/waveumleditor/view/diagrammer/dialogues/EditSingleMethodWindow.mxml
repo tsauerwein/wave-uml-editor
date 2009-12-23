@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+<EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" 
+				  xmlns:mx="http://www.adobe.com/2006/mxml">
+	
 		<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-        	import de.waveumleditor.model.classDiagram.UMLClass;
-        	import mx.core.Container;
-        	import de.waveumleditor.model.classDiagram.Variable;
-        	import mx.collections.IList;
-        	import de.waveumleditor.model.classDiagram.Type;
-        	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
-        	import de.waveumleditor.model.Identifier;
+			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
 			import de.waveumleditor.model.classDiagram.ClassMethod;
 			import de.waveumleditor.model.classDiagram.EVisibility;
+			import de.waveumleditor.model.classDiagram.InterfaceMethod;
+			import de.waveumleditor.model.classDiagram.Type;
+			import de.waveumleditor.model.classDiagram.UMLClass;
+			import de.waveumleditor.model.classDiagram.Variable;
+			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 			
 			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
 			import mx.containers.TitleWindow;
 			import mx.controls.Button;
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
 			
+					
 			//visibility Combo-Box Data provider
 			[Bindable]
             public var visibility:ArrayCollection = new ArrayCollection(
@@ -40,8 +43,6 @@
 			private var methodKey:String;
 			//Methode
 			private var method:ClassConstructorMethod;
-			    
-
             
             private function close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(singleMethodWindow);
@@ -57,7 +58,30 @@
 				//key
 				methodKey = method.getIdentifier().getId();
 				
-				if (method is ClassMethod)
+				var current_type:String = null;
+				
+				if (method is InterfaceMethod)
+				{
+					var interfaceMethod:InterfaceMethod = new InterfaceMethod(method.getIdentifier(), 
+						(method as InterfaceMethod).getName(), 
+						(method as InterfaceMethod).getReturnType());
+					
+					//deactivate all components
+					cbVisibility.enabled = false;
+					chbStatic.enabled = false;
+					chbAbstract.selected = interfaceMethod.isAbstract();
+					chbAbstract.enabled = false;
+					//Typ
+					current_type = interfaceMethod.getReturnType().getName();
+					if(type.indexOf(current_type)<0)
+					{
+						type.push(current_type);
+					}
+					cbType.selectedItem = current_type;
+					//Name
+					txtMethodName.text = interfaceMethod.getName();
+				}
+				else if (method is ClassMethod)
 				{
 					var classMethod:ClassMethod =  new ClassMethod(method.getIdentifier(), 
 																	(method as ClassMethod).getName(),
@@ -71,7 +95,7 @@
 					//Abstrakt
 					chbAbstract.selected = classMethod.isAbstract();
 					//Typ
-					var current_type:String = classMethod.getReturnType().getName();
+					current_type = classMethod.getReturnType().getName();
 					if(type.indexOf(current_type)<0)
 					{
 						type.push(current_type);

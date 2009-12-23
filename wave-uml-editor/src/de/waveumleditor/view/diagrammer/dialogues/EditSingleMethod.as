@@ -2,7 +2,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.UMLClass;
 	
 	import flash.events.Event;
 	
@@ -15,7 +14,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 		public var editMethodsWindow:EditMethodsWindow;
 
 		
-		public function EditSingleMethod()
+		public function EditSingleMethod():void
 		{
 		}
 		
