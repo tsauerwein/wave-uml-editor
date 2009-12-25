@@ -1,39 +1,28 @@
 package de.waveumleditor.controller
 {
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.Interface;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-	import de.waveumleditor.model.classDiagram.link.LinkDependency;
-	import de.waveumleditor.model.classDiagram.link.LinkImplements;
-	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
-	import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
-	import de.waveumleditor.view.diagrammer.classDiagram.DependencyLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.ImplementsLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.InheritanceLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
+	import de.waveumleditor.model.classDiagram.nodes.*;
+	import de.waveumleditor.model.classDiagram.links.*;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.*;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.*;
+
 	
 	/**
 	 * Factory to build view elements from model elements
 	 */
 	public class ViewFactory
 	{
-		public static function createNode(nodeData:ClassDiagramNode):BaseClassDiagramNode
+		public static function createNode(nodeData:MClassDiagramNode):VClassDiagramNode
 		{
-			var node:BaseClassDiagramNode = null;
+			var node:VClassDiagramNode = null;
 			
-			if (nodeData is UMLClass)
+			if (nodeData is MClassNode)
 			{
-				node = new ClassNode();
+				node = new VClassNode();
 			}
 			
-			if (nodeData is Interface)
+			if (nodeData is MInterface)
 			{
-				node = new InterfaceNode();
+				node = new VInterfaceNode();
 			}
 			
 			node.setIdentifier(nodeData.getIdentifier());
@@ -41,25 +30,25 @@ package de.waveumleditor.controller
 			return node;
 		}
 		
-		public static function createLink(linkData:ClassDiagramLink):ClassLink
+		public static function createLink(linkData:MClassLink):VClassLink
 		{
-			var link:ClassLink = null;
+			var link:VClassLink = null;
 			
-			if (linkData is LinkInheritance)
+			if (linkData is MInheritanceLink)
 			{
-				link =  new InheritanceLink();
+				link =  new VInheritanceLink();
 			}
-			else if (linkData is LinkImplements)
+			else if (linkData is MImplementsLink)
 			{
-				link = new ImplementsLink();
+				link = new VImplementsLink();
 			}
-			else if (linkData is LinkAssociation)
+			else if (linkData is MAssociationLink)
 			{
-				link = new AssociationLink();
+				link = new VAssociationLink();
 			}
-			else if (linkData is LinkDependency)
+			else if (linkData is MDependencyLink)
 			{
-				link = new DependencyLink();
+				link = new VDependencyLink();
 			}
 			
 			link.setIdentifier(linkData.getIdentifier());

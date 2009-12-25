@@ -1,12 +1,12 @@
-package de.waveumleditor.view.diagrammer.classDiagram
+package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	import com.anotherflexdev.diagrammer.Diagram;
 	import com.anotherflexdev.diagrammer.Link;
 	
 	import de.waveumleditor.model.IIdentifiable;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.model.classDiagram.link.EAssociationType;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.EAssociationType;
 	
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -15,17 +15,17 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import mx.controls.Label;
 	import mx.events.ResizeEvent;
 	
-	public class ClassLink extends Link implements IIdentifiable
+	public class VClassLink extends Link implements IIdentifiable
 	{
 		
 		private var key:Identifier;
 		
-		public function ClassLink()
+		public function VClassLink()
 		{
 			super();
 		}
 
-		public function update(linkData:ClassDiagramLink):void
+		public function update(linkData:MClassLink):void
 		{
 			
 		}

@@ -1,12 +1,12 @@
-package de.waveumleditor.view.diagrammer.classDiagram
+package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
 	
 	import flash.geom.Point;
 	
-	public class DependencyLink extends ClassLink
+	public class VDependencyLink extends VClassLink
 	{
-		public function DependencyLink()
+		public function VDependencyLink()
 		{
 			super();
 		}
@@ -18,7 +18,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override protected function createLinkContextPanel():void
 		{
-			this.linkContextPanel = new DependencyLinkContextPanel;
+			this.linkContextPanel = new VDependencyLinkContextPanel;
 			this.linkContextPanel.setLink(this);
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
 		}

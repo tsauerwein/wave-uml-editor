@@ -1,9 +1,9 @@
-package de.waveumleditor.view.diagrammer.classDiagram
+package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
 	import com.anotherflexdev.diagrammer.Diagram;
 	
-	import de.waveumleditor.model.classDiagram.link.EAssociationType;
+	import de.waveumleditor.model.classDiagram.links.EAssociationType;
 	
 	import flash.display.Graphics;
 	import flash.geom.Point;
@@ -12,7 +12,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import mx.controls.Label;
 	import mx.events.ResizeEvent;
 	
-	public class AssociationLink extends ClassLink
+	public class VAssociationLink extends VClassLink
 	{
 		[Bindable] public var linkMultiplicityFrom:String;
 		[Bindable] public var linkMultiplicityTo:String;
@@ -27,7 +27,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		protected var labelAttributeFrom:Label;
 		protected var labelAttributeTo:Label;
 		
-		public function AssociationLink()
+		public function VAssociationLink()
 		{
 			super();
 		}
@@ -39,7 +39,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override protected function createLinkContextPanel():void 
 		{
-			this.linkContextPanel = new AssociationLinkContextPanel();
+			this.linkContextPanel = new VAssociationLinkContextPanel();
 			this.linkContextPanel.setLink(this);
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
 		}

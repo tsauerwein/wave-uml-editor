@@ -5,26 +5,26 @@ package de.waveumleditor.controller
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.tests.TestUtil;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.ClassDiagram;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Interface;
-	import de.waveumleditor.model.classDiagram.InterfaceMethod;
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.Variable;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+	import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
-	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.InterfaceNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -41,14 +41,14 @@ package de.waveumleditor.controller
 	
 	public class Controller
 	{
-		private var diagramView:ClassDiagramComponent;
-		private var diagramModel:ClassDiagram;
+		private var diagramView:VClassDiagram;
+		private var diagramModel:MClassDiagram;
 		
 		private var fascade:ModelFascade;
 		
 		private var wave:Wave;
 		
-		public function Controller(diagramView:ClassDiagramComponent, diagramModel:ClassDiagram)
+		public function Controller(diagramView:VClassDiagram, diagramModel:MClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
@@ -93,9 +93,9 @@ package de.waveumleditor.controller
 			var nodeDatas:ArrayList = this.diagramModel.getNodes();
 			 for(var i:int = 0; i < nodeDatas.length; i++)
 			 {
-			 	var nodeData:ClassDiagramNode = nodeDatas.getItemAt(i) as ClassDiagramNode;
+			 	var nodeData:MClassDiagramNode = nodeDatas.getItemAt(i) as MClassDiagramNode;
 			 	
-			 	var node:BaseClassDiagramNode = ViewFactory.createNode(nodeData);
+			 	var node:VClassDiagramNode = ViewFactory.createNode(nodeData);
 			 	node.update(nodeData);
 			 	
 			 	nodes.addItem(node);
@@ -105,16 +105,16 @@ package de.waveumleditor.controller
 			 // create view-links
 			 for(i = 0; i < this.diagramModel.getLinks().length; i++)
 			 {
-			 	var linkData:ClassDiagramLink = this.diagramModel.getLinks().getItemAt(i) as ClassDiagramLink;
-			 	var link:ClassLink = ViewFactory.createLink(linkData);
+			 	var linkData:MClassLink = this.diagramModel.getLinks().getItemAt(i) as MClassLink;
+			 	var link:VClassLink = ViewFactory.createLink(linkData);
 			 	link.update(linkData);
 			 	
 			 	// find matching view-node
 			 	var fromIndex:int = nodeDatas.getItemIndex(linkData.getLinkFrom());
 			 	var toIndex:int = nodeDatas.getItemIndex(linkData.getLinkTo());
 			 	
-			 	link.fromNode = nodes.getItemAt(fromIndex) as BaseClassDiagramNode;
-			 	link.toNode = nodes.getItemAt(toIndex) as BaseClassDiagramNode;
+			 	link.fromNode = nodes.getItemAt(fromIndex) as VClassDiagramNode;
+			 	link.toNode = nodes.getItemAt(toIndex) as VClassDiagramNode;
 			 	link.fromNode.addLeavingLink(link);
 				link.toNode.addArrivingLink(link);
 			 	
@@ -204,14 +204,14 @@ package de.waveumleditor.controller
 		{
 			trace("handleShowSingleAttribute " + event.getClassNode().getName());
 		
-			var umlClass:UMLClass = diagramModel.getNode(event.getClassNode().getIdentifier()) as UMLClass;
+			var umlClass:MClassNode = diagramModel.getNode(event.getClassNode().getIdentifier()) as MClassNode;
 			
-			var attribute:ClassAttribute = null;
+			var attribute:MClassAttribute = null;
 			if (event.getAttributeId() == WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER)
 			{
 				// in case the dialog is opened to add a new attribute, create a default attribute
-				var defaultVariable:Variable = new Variable("", Type.STRING);
-        		attribute = new ClassAttribute(WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER, 
+				var defaultVariable:MVariable = new MVariable("", MType.STRING);
+        		attribute = new MClassAttribute(WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER, 
         			defaultVariable, 
         			EVisibility.PUBLIC, 
         			false);
@@ -238,7 +238,7 @@ package de.waveumleditor.controller
 		{
 			this.fascade.editNodeAttribute(event.getClassNode().getIdentifier(), event.getAttribute());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
 			
 			// also update the diagram in the view
@@ -254,7 +254,7 @@ package de.waveumleditor.controller
 			trace(event.getAttributeId());
 			this.fascade.removeNodeAttribute(event.getClassNode().getIdentifier(), event.getAttributeId());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getAttributeWindow().update(updatedClass);
 			
 			// also update the diagram in the view
@@ -288,26 +288,26 @@ package de.waveumleditor.controller
 			trace("handleShowSingleMethod " + event.getClassNode().getName());
 			
 			var editMethod:EditMethodsWindow = new EditMethodsWindow();
-			var classDiagramNode:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var classDiagramNode:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			
 			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
 			editSingleMethod.setClassData(classDiagramNode);
 			editSingleMethod.setController(this);
 			
-			var method:ClassConstructorMethod = null;
+			var method:MClassConstructorMethod = null;
 			if (WAOKeyGenerator.isMethod(event.getMethodId())) 
 			{
 				//TODO: Unterscheidung zw. InterfaceMethod und ClassMethod
 				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER)
 				{
-					if (event.getClassNode() is Interface)
+					if (event.getClassNode() is MInterface)
 					{
-						method = new InterfaceMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", new Type("void"));
+						method = new MInterfaceMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", new MType("void"));
 					}
 					else
 					{
 						// in case the dialog is opened to add a new method, create a default method
-						method = new ClassMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new Type("void"));
+						method = new MClassMethod(WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER, "defaultMethod", EVisibility.PUBLIC, new MType("void"));
 					}
 					
 					editSingleMethod.isConstructor = false;
@@ -323,12 +323,12 @@ package de.waveumleditor.controller
 				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER)
 				{
 					// in case the dialog is opened to add a new method, create a default method
-					method = new  ClassConstructorMethod(WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
+					method = new  MClassConstructorMethod(WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER, EVisibility.PUBLIC);			
 					editSingleMethod.isConstructor = true;
 				}
 				else 
 				{
-					method = (classDiagramNode as UMLClass).getConstructor(event.getMethodId());
+					method = (classDiagramNode as MClassNode).getConstructor(event.getMethodId());
 					editSingleMethod.isConstructor = true;
 				}
 				
@@ -347,7 +347,7 @@ package de.waveumleditor.controller
 		{
 			this.fascade.addNodeMethod(event.getClassNode().getIdentifier(), event.getMethod());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
 		
@@ -359,7 +359,7 @@ package de.waveumleditor.controller
 		{
 			this.fascade.editNodeMethod(event.getClassNode().getIdentifier(), event.getMethod());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 
 			// also update the diagram in the view
@@ -380,7 +380,7 @@ package de.waveumleditor.controller
 				this.fascade.removeClassConstructor(event.getClassNode().getIdentifier(), event.getMethodId());
 			}
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());	
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());	
 			
 			event.getMethodWindow().update(updatedClass);
 			// also update the diagram in the view
@@ -395,7 +395,7 @@ package de.waveumleditor.controller
 		{
 			this.fascade.editClassConstructor(event.getClassNode().getIdentifier(), event.getMethod());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
 		
@@ -406,7 +406,7 @@ package de.waveumleditor.controller
 		{
 			this.fascade.removeClassConstructor(event.getClassNode().getIdentifier(), event.getMethodId());
 			
-			var updatedClass:ClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
+			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			event.getMethodWindow().update(updatedClass);
 		}
 		
@@ -417,8 +417,8 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowAssociationLink(event:LinkEvent):void 
 		{
-			var link:LinkAssociation = diagramModel.getLink(event.getAssociationLink().getIdentifier()) as LinkAssociation;
-			var linkCopy:LinkAssociation = link.clone(link.getIdentifier()) as LinkAssociation;
+			var link:MAssociationLink = diagramModel.getLink(event.getAssociationLink().getIdentifier()) as MAssociationLink;
+			var linkCopy:MAssociationLink = link.clone(link.getIdentifier()) as MAssociationLink;
 			var editLinksWindow:EditAssociationLinkWindow = new EditAssociationLinkWindow();
 			editLinksWindow.setViewLink(event.getAssociationLink());
 			editLinksWindow.update(linkCopy);
@@ -443,8 +443,8 @@ package de.waveumleditor.controller
 		 */ 
 		public function handleShowDependencyLink(event:LinkEvent):void
 		{
-			var link:LinkDependency = diagramModel.getLink(event.getDependencyLink().getIdentifier()) as LinkDependency;
-			var linkCopy:LinkDependency = link.clone(link.getIdentifier());
+			var link:MDependencyLink = diagramModel.getLink(event.getDependencyLink().getIdentifier()) as MDependencyLink;
+			var linkCopy:MDependencyLink = link.clone(link.getIdentifier());
 			
 			var editLinksWindow:EditDependencyLinkWindow = new EditDependencyLinkWindow();
 			editLinksWindow.setViewLink(event.getDependencyLink());
@@ -453,7 +453,7 @@ package de.waveumleditor.controller
 			editLinksWindow.popUp();
 		}
 		
-		private function refreshNodeInView(node:ClassDiagramNode):void
+		private function refreshNodeInView(node:MClassDiagramNode):void
 		{
 			this.diagramView.getNode(node.getIdentifier()).update(node);
 		}

@@ -2,6 +2,7 @@
 <diagrammer:GenericLinkContextPanel xmlns:diagrammer="com.anotherflexdev.diagrammer.*" xmlns:buttons="com.anotherflexdev.ui.buttons.*" xmlns:mx="http://www.adobe.com/2006/mxml" cornerRadius="10" borderStyle="solid" dropShadowEnabled="true" backgroundColor="#FFFFFF" width="48" height="25">
 	<mx:Script>
 		<![CDATA[
+			import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
 			import de.waveumleditor.view.diagrammer.events.LinkEvent;
 		
 
@@ -10,9 +11,9 @@
 			}
 			
 			private function handleEditLink(event:Event):void {
-				var link:AssociationLink = getLink() as AssociationLink;
+				var link:VAssociationLink = getLink() as VAssociationLink;
 				
-				ClassDiagramComponent(parent).dispatchEvent(new LinkEvent(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK,null,link));
+				VClassDiagram(parent).dispatchEvent(new LinkEvent(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK,null,link));
 			}
 			
 		]]>

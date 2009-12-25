@@ -1,13 +1,15 @@
-package de.waveumleditor.view.diagrammer.classDiagram
+package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
 	
 	import flash.geom.Point;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 	
 	
-	public class InheritanceLink extends ClassLink
+	public class VInheritanceLink extends VClassLink
 	{
-		public function InheritanceLink()
+		public function VInheritanceLink()
 		{
 			super();
 		}
@@ -18,11 +20,11 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			{
 				return false;
 			}
-			else if (fromNode is InterfaceNode && toNode is InterfaceNode)
+			else if (fromNode is VInterfaceNode && toNode is VInterfaceNode)
 			{
 				return true;
 			} 
-			else if (fromNode is ClassNode && toNode is ClassNode)
+			else if (fromNode is VClassNode && toNode is VClassNode)
 			{
 				return true;
 			}
@@ -32,7 +34,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override protected function createLinkContextPanel():void 
 		{
-			this.linkContextPanel = new InheritanceLinkContextPanel;
+			this.linkContextPanel = new VInheritanceLinkContextPanel;
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);				
 		}
 		

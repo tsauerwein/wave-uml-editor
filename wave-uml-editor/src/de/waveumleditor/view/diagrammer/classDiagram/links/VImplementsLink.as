@@ -1,20 +1,22 @@
-package de.waveumleditor.view.diagrammer.classDiagram
+package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	
 	import com.anotherflexdev.diagrammer.BaseNode;
 	
 	import flash.geom.Point;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 
-	public class ImplementsLink extends ClassLink
+	public class VImplementsLink extends VClassLink
 	{
-		public function ImplementsLink()
+		public function VImplementsLink()
 		{
 			super();
 		}
 		
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
-			if (fromNode is ClassNode && toNode is InterfaceNode)
+			if (fromNode is VClassNode && toNode is VInterfaceNode)
 			{
 				return true;
 			} 
@@ -23,7 +25,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		override protected function createLinkContextPanel():void
 		{
-			this.linkContextPanel = new ImplementsLinkContextPanel;
+			this.linkContextPanel = new VImplementsLinkContextPanel;
 			this.linkContextPanel.addEventListener("removeLink", handleRemoveLink);
 		}
 		
