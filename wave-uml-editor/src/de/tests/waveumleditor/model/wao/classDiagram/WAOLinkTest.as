@@ -6,10 +6,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	
 	import de.tests.TestUtil;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-	import de.waveumleditor.model.classDiagram.link.LinkDependency;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	
@@ -22,10 +22,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoLink:WAOLink = new WAOLink(wave);
 			
-			var nodeFrom:UMLClass = new UMLClass(new Identifier("cfrom"), null);
-			var nodeTo:UMLClass = new UMLClass(new Identifier("cto"), null);
+			var nodeFrom:MClassNode = new MClassNode(new Identifier("cfrom"), null);
+			var nodeTo:MClassNode = new MClassNode(new Identifier("cto"), null);
 			
-			var link:ClassDiagramLink = new LinkDependency(new Identifier("lid"), nodeFrom, nodeTo);
+			var link:MClassLink = new MDependencyLink(new Identifier("lid"), nodeFrom, nodeTo);
 						
 			waoLink.createLink(link);
 			
@@ -44,7 +44,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var wave:Wave = new WaveSimulator();
 			var waoLink:WAOLink = new WAOLink(wave);
 						
-			var link:LinkAssociation = new LinkAssociation(new Identifier("lid"), null, null);
+			var link:MAssociationLink = new MAssociationLink(new Identifier("lid"), null, null);
 			
 			link.setName("name");
 			link.setFromName("fname");

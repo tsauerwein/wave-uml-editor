@@ -3,9 +3,9 @@ package de.waveumleditor.model.wao.classDiagram
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.waveumleditor.controller.ModelFascade;
-	import de.waveumleditor.model.classDiagram.ClassDiagram;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	
 	import flash.utils.Dictionary;
 	
@@ -18,9 +18,9 @@ package de.waveumleditor.model.wao.classDiagram
 		 * @param state The Wave state
 		 * @return 
 		 */		
-		public static function getFromState(state:WaveState):ClassDiagram
+		public static function getFromState(state:WaveState):MClassDiagram
 		{
-			var diagram:ClassDiagram = new ClassDiagram();
+			var diagram:MClassDiagram = new MClassDiagram();
 			
 			var nodeParsers:Dictionary = new Dictionary();
 			var linkParsers:Dictionary = new Dictionary();
@@ -112,13 +112,13 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Creates a node for every NodeParser inside the 
 		 * NodeParser list and adds this node to the diagram.
 		 */ 
-		private static function processNodes(state:WaveState, nodeParsers:Dictionary, diagram:ClassDiagram):void
+		private static function processNodes(state:WaveState, nodeParsers:Dictionary, diagram:MClassDiagram):void
 		{
 			for (var key:Object in nodeParsers)
 			{
 				var nodeParser:WAONodeParser = nodeParsers[key];
 				
-				var node:ClassDiagramNode = nodeParser.getNode(state);
+				var node:MClassDiagramNode = nodeParser.getNode(state);
 				
 				if (node != null)
 				{
@@ -131,13 +131,13 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Creates a link for every LinkParser inside the 
 		 * LinkParser list and adds this link to the diagram.
 		 */
-		private static function processLinks(state:WaveState, linkParsers:Dictionary, diagram:ClassDiagram):void
+		private static function processLinks(state:WaveState, linkParsers:Dictionary, diagram:MClassDiagram):void
 		{
 			for (var key:Object in linkParsers)
 			{
 				var linkParser:WAOLinkParser = linkParsers[key];
 				
-				var link:ClassDiagramLink = linkParser.getLink(state, diagram);
+				var link:MClassLink = linkParser.getLink(state, diagram);
 				
 				if (link != null)
 				{

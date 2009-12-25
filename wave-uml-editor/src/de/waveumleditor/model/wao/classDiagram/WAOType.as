@@ -1,6 +1,6 @@
 package de.waveumleditor.model.wao.classDiagram
 {
-	import de.waveumleditor.model.classDiagram.Type;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
 	
 	public class WAOType
 	{
@@ -10,7 +10,7 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Returns a plain object that represents a type and that
 		 * can be encoded as JSON-String.
 		 */ 
-		public static function getEncodableObject(type:Type):Object
+		public static function getEncodableObject(type:MType):Object
 		{
 			var typeData:Object = new Object();
 			
@@ -23,9 +23,9 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Creates a Type object from a plain object that was
 		 * decoced from a JSON-String.
 		 */ 
-		public static function getFromDecodedObject(obj:Object):Type
+		public static function getFromDecodedObject(obj:Object):MType
 		{
-			return new Type(obj[NAME]);
+			return new MType(obj[NAME]);
 		}
 	}
 }

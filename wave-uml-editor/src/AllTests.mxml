@@ -6,41 +6,26 @@
 >    
     <mx:Script>
     	<![CDATA[
-    		import de.tests.waveumleditor.model.classDiagram.ClassDiagramTest;
+    		import de.tests.waveumleditor.model.classDiagram.MClassDiagramTest;
     	]]>
     </mx:Script>
     <mx:Script>
         <![CDATA[
-			import de.tests.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponentTest;
+			import de.tests.waveumleditor.view.diagrammer.classDiagram.VClassDiagramTest;
         	import de.tests.waveumleditor.model.wao.classDiagram.WAODiagramTest;
         	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
-        	import de.tests.waveumleditor.model.wao.classDiagram.WAOLinkTest;
-        	import de.tests.waveumleditor.model.wao.classDiagram.WAOClassMethodTest;
-        	import de.tests.waveumleditor.model.wao.classDiagram.WAOClassConstructorTest;
-        	import de.tests.waveumleditor.model.wao.classDiagram.WAOVariableTest;
-        	import de.tests.waveumleditor.model.wao.classDiagram.WAOTypeTest;
-			import de.tests.waveumleditor.model.wao.classDiagram.WAOClassAttributeTest;
-			import de.tests.waveumleditor.model.wao.classDiagram.WAONodeTest;
+        	import de.tests.waveumleditor.model.wao.classDiagram.*;
 			import de.tests.waveumleditor.model.wao.WAOPositionTest;
 			import de.waveumleditor.model.wao.WAOPosition;
 			import de.tests.waveumleditor.model.wao.wave.DeltaTest;
         	import de.tests.waveumleditor.controller.ModelFascadeTest;
 			import de.tests.waveumleditor.controller.ControllerTest;
         	import de.tests.waveumleditor.controller.ViewFactoryTest;
-        	import de.tests.waveumleditor.model.classDiagram.UMLClassTest;
-        	import de.tests.waveumleditor.model.classDiagram.InterfaceMethodTest;
-        	import de.tests.waveumleditor.model.classDiagram.InterfaceTest;
-        	import de.tests.waveumleditor.model.classDiagram.ConstantAttributeTest;
-        	import de.tests.waveumleditor.model.classDiagram.ClassMethodTest;
+
         	import de.tests.waveumleditor.model.PositionTest;
-        	import de.tests.waveumleditor.model.classDiagram.link.ClassDiagramLinkTest;
-        	import de.tests.waveumleditor.model.classDiagram.ClassDiagramNodeTest;
-        	import de.tests.waveumleditor.model.classDiagram.ClassConstructorMethodTest;
-        	import de.tests.waveumleditor.model.classDiagram.VariableTest;
-        	import de.tests.waveumleditor.model.classDiagram.TypeTest;
-        	import de.tests.waveumleditor.model.classDiagram.EVisibilityTest;
-        	import de.tests.waveumleditor.model.classDiagram.ClassAttributeTest;
-        	import de.tests.waveumleditor.model.classDiagram.ClassDiagramTest;
+        	import de.tests.waveumleditor.model.classDiagram.links.*;
+        	import de.tests.waveumleditor.model.classDiagram.nodes.*;
+        	import de.tests.waveumleditor.model.classDiagram.MClassDiagramTest;
         	import flexunit.framework.TestSuite;
                         
             private function onCreationComplete():void
@@ -55,20 +40,20 @@
   				var testSuite:TestSuite = new TestSuite();
   				
   				testSuite.addTestSuite(EVisibilityTest);
-  				testSuite.addTestSuite(TypeTest);
-  				testSuite.addTestSuite(VariableTest);
+  				testSuite.addTestSuite(MTypeTest);
+  				testSuite.addTestSuite(MVariableTest);
   				testSuite.addTestSuite(PositionTest);
   				
-  				testSuite.addTestSuite(ClassDiagramTest);
-  				testSuite.addTestSuite(ClassAttributeTest); 
-  				testSuite.addTestSuite(ClassConstructorMethodTest);
-  				testSuite.addTestSuite(ClassDiagramNodeTest);
+  				testSuite.addTestSuite(MClassDiagramTest);
+  				testSuite.addTestSuite(MClassAttributeTest); 
+  				testSuite.addTestSuite(MClassConstructorMethodTest);
+  				testSuite.addTestSuite(MClassDiagramNodeTest);
   				testSuite.addTestSuite(ClassDiagramLinkTest);
-  				testSuite.addTestSuite(ClassMethodTest);
-  				testSuite.addTestSuite(ConstantAttributeTest);
-  				testSuite.addTestSuite(InterfaceTest);
-  				testSuite.addTestSuite(InterfaceMethodTest);
-  				testSuite.addTestSuite(UMLClassTest);
+  				testSuite.addTestSuite(MClassMethodTest);
+  				testSuite.addTestSuite(MConstantAttributeTest);
+  				testSuite.addTestSuite(MInterfaceTest);
+  				testSuite.addTestSuite(MInterfaceMethodTest);
+  				testSuite.addTestSuite(MClassNodeTest);
   				
   				testSuite.addTestSuite(ViewFactoryTest);
   				
@@ -86,7 +71,7 @@
 				testSuite.addTestSuite(WAOLinkTest);
 				testSuite.addTestSuite(WAODiagramTest);
 				
-				testSuite.addTestSuite(ClassDiagramComponentTest);
+				testSuite.addTestSuite(VClassDiagramTest);
   				return testSuite;
   			}	
         ]]>

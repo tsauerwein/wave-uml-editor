@@ -5,13 +5,13 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.Interface;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	import de.waveumleditor.model.wao.WAOPosition;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
@@ -37,7 +37,7 @@ package de.waveumleditor.model.wao.classDiagram
 			this.waoLink = waoLink;
 		}
 		
-		public function createNode(node:ClassDiagramNode):void
+		public function createNode(node:MClassDiagramNode):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -59,7 +59,7 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
-		public function renameNode(node:ClassDiagramNode):void
+		public function renameNode(node:MClassDiagramNode):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -68,7 +68,7 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
-		public function removeNode(node:ClassDiagramNode, connectedLinks:IList):void
+		public function removeNode(node:MClassDiagramNode, connectedLinks:IList):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -79,15 +79,15 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			removeConnectedLinks(connectedLinks, delta);
 			
-			if (node is UMLClass)
+			if (node is MClassNode)
 			{
-				var classNode:UMLClass = node as UMLClass;
+				var classNode:MClassNode = node as MClassNode;
 				
 				removeAttributes(classNode, delta);
 				removeClassConstructors(classNode, delta);
 				removeClassMethods(classNode, delta);
 			} 
-			else if (node is Interface)
+			else if (node is MInterface)
 			{
 				// todo
 			}
@@ -95,35 +95,35 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
-		private function removeAttributes(classNode:UMLClass, delta:Delta):void
+		private function removeAttributes(classNode:MClassNode, delta:Delta):void
 		{
 			var attributes:IList = classNode.getAttributes();
 			
 			for (var i:int = 0; i < attributes.length; i++)
 			{
-				var attribute:ClassAttribute = attributes.getItemAt(i) as ClassAttribute;
+				var attribute:MClassAttribute = attributes.getItemAt(i) as MClassAttribute;
 				removeClassAttribute(classNode.getIdentifier(), attribute.getIdentifier(), delta);
 			}
 		}
 		
-		private function removeClassConstructors(classNode:UMLClass, delta:Delta):void
+		private function removeClassConstructors(classNode:MClassNode, delta:Delta):void
 		{
 			var constructors:IList = classNode.getConstructors();
 			
 			for (var i:int = 0; i < constructors.length; i++)
 			{
-				var constructor:ClassConstructorMethod = constructors.getItemAt(i) as ClassConstructorMethod;
+				var constructor:MClassConstructorMethod = constructors.getItemAt(i) as MClassConstructorMethod;
 				removeClassConstructor(classNode.getIdentifier(), constructor.getIdentifier(), delta);
 			}
 		}
 		
-		private function removeClassMethods(classNode:UMLClass, delta:Delta):void
+		private function removeClassMethods(classNode:MClassNode, delta:Delta):void
 		{
 			var methods:IList = classNode.getMethods();
 			
 			for (var i:int = 0; i < methods.length; i++)
 			{
-				var method:ClassMethod = methods.getItemAt(i) as ClassMethod;
+				var method:MClassMethod = methods.getItemAt(i) as MClassMethod;
 				removeClassMethod(classNode.getIdentifier(), method.getIdentifier(), delta);
 			}
 		}
@@ -132,12 +132,12 @@ package de.waveumleditor.model.wao.classDiagram
 		{
 			for (var i:int = 0; i < connectedLinks.length; i++)
 			{
-				var link:ClassDiagramLink = connectedLinks.getItemAt(0) as ClassDiagramLink;
+				var link:MClassLink = connectedLinks.getItemAt(0) as MClassLink;
 				waoLink.removeLink(link, delta);
 			}
 		}
 		
-		public function updateClassAttribute(classId:Identifier, attribute:ClassAttribute):void
+		public function updateClassAttribute(classId:Identifier, attribute:MClassAttribute):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -171,7 +171,7 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		public function updateClassConstructor(classId:Identifier, constructor:ClassConstructorMethod):void
+		public function updateClassConstructor(classId:Identifier, constructor:MClassConstructorMethod):void
 		{
 			var delta:Delta = new Delta();
 		
@@ -205,7 +205,7 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		public function updateClassMethod(classId:Identifier, method:ClassMethod):void
+		public function updateClassMethod(classId:Identifier, method:MClassMethod):void
 		{
 			var delta:Delta = new Delta();
 		
@@ -239,12 +239,12 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		private function setName(delta:Delta, node:ClassDiagramNode):void
+		private function setName(delta:Delta, node:MClassDiagramNode):void
 		{
 			delta.setValue(node.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + NAME, node.getName());
 		}
 		
-		public static function getFromState(nodeId:String, state:WaveState):ClassDiagramNode
+		public static function getFromState(nodeId:String, state:WaveState):MClassDiagramNode
 		{
 			var type:String = state.getStringValue(nodeId);
 			var pos:String = state.getStringValue(nodeId + WAOKeyGenerator.IDS_SEPERATOR + POSITION);
@@ -255,16 +255,16 @@ package de.waveumleditor.model.wao.classDiagram
 				return null;
 			}
 			
-			var node:ClassDiagramNode = null;
-			if (type == UMLClass.TYPE)
+			var node:MClassDiagramNode = null;
+			if (type == MClassNode.TYPE)
 			{
-				node = new UMLClass(new Identifier(nodeId), 
+				node = new MClassNode(new Identifier(nodeId), 
 					WAOPosition.getFromState(pos),
 					name);
 			}
-			else if (type == Interface.TYPE) 
+			else if (type == MInterface.TYPE) 
 			{
-				node = new Interface(new Identifier(nodeId), 
+				node = new MInterface(new Identifier(nodeId), 
 					WAOPosition.getFromState(pos),
 					name);
 			}

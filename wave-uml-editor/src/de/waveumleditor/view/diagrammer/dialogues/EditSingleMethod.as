@@ -1,7 +1,7 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	
 	import flash.events.Event;
 	
@@ -9,7 +9,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	{
 
 		public var controller:Controller;
-		private var classData:ClassDiagramNode;
+		private var classData:MClassDiagramNode;
 		public var isConstructor:Boolean;
 		public var editMethodsWindow:EditMethodsWindow;
 
@@ -28,12 +28,12 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
 		
-		public function setClassData(classData:ClassDiagramNode):void
+		public function setClassData(classData:MClassDiagramNode):void
         {
         	this.classData = classData;
         }
         
-        public function getClassData():ClassDiagramNode
+        public function getClassData():MClassDiagramNode
         {
         	return this.classData;
         }

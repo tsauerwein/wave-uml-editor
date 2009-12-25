@@ -1,7 +1,7 @@
 package de.waveumleditor.model.classDiagram.maps
 {
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	
 	public class AttributeMap extends AbstractMap
 	{
@@ -11,14 +11,14 @@ package de.waveumleditor.model.classDiagram.maps
 			super();
 		}
 
-		public function setValue(attribute:ClassAttribute):void
+		public function setValue(attribute:MClassAttribute):void
 		{
 			super.delegate.setValue(attribute);
 		}
 		
-		public function getValue(key:Identifier):ClassAttribute
+		public function getValue(key:Identifier):MClassAttribute
 		{
-			return super.delegate.getValue(key) as ClassAttribute;
+			return super.delegate.getValue(key) as MClassAttribute;
 		}
 	}	
 }

@@ -1,6 +1,6 @@
 package de.waveumleditor.view.diagrammer.events
 {
-	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	
 	import flash.events.Event;
 
@@ -14,15 +14,15 @@ package de.waveumleditor.view.diagrammer.events
 		public static var EVENT_EDIT_NODE_ATTRIBUTES:String = "eventEditNodeAttributes";
 		public static var EVENT_EDIT_NODE_METHODS:String = "eventEditNodeMethods";
 		
-		private var node:BaseClassDiagramNode;
+		private var node:VClassDiagramNode;
 		
-		public function NodeEvent(type:String, node:BaseClassDiagramNode)
+		public function NodeEvent(type:String, node:VClassDiagramNode)
 		{
 			super(type);
 			this.node = node;
 		}
 		
-		public function getNode():BaseClassDiagramNode
+		public function getNode():VClassDiagramNode
 		{
 			return this.node;
 		}

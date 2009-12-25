@@ -5,21 +5,21 @@ package de.waveumleditor.model.wao.classDiagram
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassDiagram;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
-	import de.waveumleditor.model.classDiagram.link.EAssociationType;
-	import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-	import de.waveumleditor.model.classDiagram.link.LinkDependency;
-	import de.waveumleditor.model.classDiagram.link.LinkImplements;
-	import de.waveumleditor.model.classDiagram.link.LinkInheritance;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.EAssociationType;
+	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
+	import de.waveumleditor.model.classDiagram.links.MImplementsLink;
+	import de.waveumleditor.model.classDiagram.links.MInheritanceLink;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	/**
 	 * This class maps ClassDiagramLink objects into key-value-pairs, which are
 	 * stored in the Wave state.
 	 * 
-	 * @see de.waveumleditor.model.classDiagram.link.ClassDiagramLink
+	 * @see de.waveumleditor.model.classDiagram.links.ClassDiagramLink
 	 */ 
 	public class WAOLink
 	{
@@ -46,7 +46,7 @@ package de.waveumleditor.model.wao.classDiagram
 			this.wave = wave;
 		}
 		
-		public function createLink(link:ClassDiagramLink):void
+		public function createLink(link:MClassLink):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -56,7 +56,7 @@ package de.waveumleditor.model.wao.classDiagram
 			wave.submitDelta(delta.getWaveDelta());
 		}
 		
-		public function updateLink(link:LinkDependency):void
+		public function updateLink(link:MDependencyLink):void
 		{
 			var delta:Delta = new Delta();
 			
@@ -77,7 +77,7 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Note that the delta is only submitted, if no delta 
 		 * was passed-in.
 		 */ 
-		public function removeLink(link:ClassDiagramLink, delta:Delta = null):void
+		public function removeLink(link:MClassLink, delta:Delta = null):void
 		{
 			var executeSubmit:Boolean = false;
 			
@@ -90,7 +90,7 @@ package de.waveumleditor.model.wao.classDiagram
 			delta.setValue(link.getIdentifier().getId(), null);
 			delta.setValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + FROMTO, null);	
 			
-			if (link is LinkDependency)
+			if (link is MDependencyLink)
 			{
 				delta.setValue(link.getIdentifier().getId() + WAOKeyGenerator.IDS_SEPERATOR + SETTINGS, null);	
 			}
@@ -102,16 +102,16 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		private function getEncodableSettingsObject(link:LinkDependency):Object
+		private function getEncodableSettingsObject(link:MDependencyLink):Object
 		{
 			// build a plain object that can be encoded as JSON
 			var settingsData:Object = new Object();
 			
 			settingsData[DEP_NAME] = link.getName();
 			
-			if (link is LinkAssociation)
+			if (link is MAssociationLink)
 			{
-				var association:LinkAssociation = link as LinkAssociation;
+				var association:MAssociationLink = link as MAssociationLink;
 				
 				settingsData[ASS_TYPE] = association.getType().getValue();
 				
@@ -129,7 +129,7 @@ package de.waveumleditor.model.wao.classDiagram
 		}
 	
 		
-		private function setFromTo(delta:Delta, link:ClassDiagramLink):void
+		private function setFromTo(delta:Delta, link:MClassLink):void
 		{
 			var fromToData:Object = new Object();
 			
@@ -144,7 +144,7 @@ package de.waveumleditor.model.wao.classDiagram
 		}
 		
 		public static function getFromState(linkId:String, 
-			state:WaveState, diagram:ClassDiagram):ClassDiagramLink
+			state:WaveState, diagram:MClassDiagram):MClassLink
 		{
 			var type:String = state.getStringValue(linkId);
 			var fromTo:String = state.getStringValue(linkId + WAOKeyGenerator.IDS_SEPERATOR + FROMTO);
@@ -154,26 +154,26 @@ package de.waveumleditor.model.wao.classDiagram
 				return null;
 			}
 						
-			var link:ClassDiagramLink = null;
+			var link:MClassLink = null;
 			var id:Identifier = new Identifier(linkId);
 			switch (type)
 			{
-				case LinkImplements.TYPE:
-					link = new LinkImplements(id, null, null);
+				case MImplementsLink.TYPE:
+					link = new MImplementsLink(id, null, null);
 					break;
 				
-				case LinkInheritance.TYPE:
-					link = new LinkInheritance(id, null, null);
+				case MInheritanceLink.TYPE:
+					link = new MInheritanceLink(id, null, null);
 					break;
 					
-				case LinkAssociation.TYPE:
-					link = new LinkAssociation(id, null, null);
-					getLinkSettings(state, linkId, link as LinkAssociation);
+				case MAssociationLink.TYPE:
+					link = new MAssociationLink(id, null, null);
+					getLinkSettings(state, linkId, link as MAssociationLink);
 					break;
 					
-				case LinkDependency.TYPE:
-					link = new LinkDependency(id, null, null);
-					getLinkSettings(state, linkId, link as LinkDependency);
+				case MDependencyLink.TYPE:
+					link = new MDependencyLink(id, null, null);
+					getLinkSettings(state, linkId, link as MDependencyLink);
 					break;
 				default:
 					return null;
@@ -182,13 +182,13 @@ package de.waveumleditor.model.wao.classDiagram
 			return getFromTo(fromTo, link, diagram);
 		}
 		
-		private static function getFromTo(fromToValue:String, link:ClassDiagramLink,
-			diagram:ClassDiagram):ClassDiagramLink
+		private static function getFromTo(fromToValue:String, link:MClassLink,
+			diagram:MClassDiagram):MClassLink
 		{
 			var fromToData:Object = JSON.decode(fromToValue);
 			
-			var nodeFrom:ClassDiagramNode = diagram.getNode(new Identifier(fromToData[FROM]));	
-			var nodeTo:ClassDiagramNode = diagram.getNode(new Identifier(fromToData[TO]));
+			var nodeFrom:MClassDiagramNode = diagram.getNode(new Identifier(fromToData[FROM]));	
+			var nodeTo:MClassDiagramNode = diagram.getNode(new Identifier(fromToData[TO]));
 			
 			if (nodeFrom == null || nodeTo == null)
 			{
@@ -202,7 +202,7 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		} 
 		
-		private static function getLinkSettings(state:WaveState, linkId:String, link:LinkDependency):void
+		private static function getLinkSettings(state:WaveState, linkId:String, link:MDependencyLink):void
 		{
 			var settingsValue:String = state.getStringValue(linkId + WAOKeyGenerator.IDS_SEPERATOR + SETTINGS);
 			
@@ -215,9 +215,9 @@ package de.waveumleditor.model.wao.classDiagram
 			
 			link.setName(settingsData[DEP_NAME]);
 			
-			if (link is LinkAssociation)
+			if (link is MAssociationLink)
 			{
-				var association:LinkAssociation = link as LinkAssociation;
+				var association:MAssociationLink = link as MAssociationLink;
 				
 				association.setType(EAssociationType.getFromValue(settingsData[ASS_TYPE]));
 				

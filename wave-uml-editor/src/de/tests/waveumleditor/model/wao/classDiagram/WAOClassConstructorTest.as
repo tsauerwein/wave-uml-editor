@@ -1,10 +1,10 @@
 package de.tests.waveumleditor.model.wao.classDiagram
 {
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOClassConstructor;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
@@ -18,10 +18,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		{
 			var delta:Delta = new Delta();
 			
-			var c:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("coId"), EVisibility.PUBLIC);
+			var c:MClassConstructorMethod = new MClassConstructorMethod(new Identifier("coId"), EVisibility.PUBLIC);
 			
-			c.addVariable(new Variable("a", Type.STRING));
-			c.addVariable(new Variable("b", Type.INT, "0"));
+			c.addVariable(new MVariable("a", MType.STRING));
+			c.addVariable(new MVariable("b", MType.INT, "0"));
 			
 			WAOClassConstructor.store(delta, "classId", c);
 		
@@ -30,10 +30,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		
 		public function testGetEncodableObject():void
 		{
-			var c:ClassConstructorMethod = new ClassConstructorMethod(new Identifier("coId"), EVisibility.PUBLIC);
+			var c:MClassConstructorMethod = new MClassConstructorMethod(new Identifier("coId"), EVisibility.PUBLIC);
 			
-			c.addVariable(new Variable("a", Type.STRING));
-			c.addVariable(new Variable("b", Type.INT, "0"));
+			c.addVariable(new MVariable("a", MType.STRING));
+			c.addVariable(new MVariable("b", MType.INT, "0"));
 			
 			var obj:Object = WAOClassConstructor.getEncodableObject(c);
 			
@@ -50,9 +50,9 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var constrId:String = "CO-constr";
 			var classId:String = "C-classId";
 			
-			var c:ClassConstructorMethod = new ClassConstructorMethod(new Identifier(constrId), EVisibility.PUBLIC);
-			c.addVariable(new Variable("a", Type.STRING));
-			c.addVariable(new Variable("b", Type.INT, "0"));
+			var c:MClassConstructorMethod = new MClassConstructorMethod(new Identifier(constrId), EVisibility.PUBLIC);
+			c.addVariable(new MVariable("a", MType.STRING));
+			c.addVariable(new MVariable("b", MType.INT, "0"));
 			
 			var delta:Delta = new Delta();
 			WAOClassConstructor.store(delta, classId, c);
@@ -60,7 +60,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var key:String = classId + WAOKeyGenerator.IDS_SEPERATOR + constrId;
 			var json:String = delta.getWaveDelta()[key];
 			
-			var restoredConstr:ClassConstructorMethod = WAOClassConstructor.getFromState(key, json);
+			var restoredConstr:MClassConstructorMethod = WAOClassConstructor.getFromState(key, json);
 			
 			assertEquals(c.getIdentifier().getId(), restoredConstr.getIdentifier().getId());
 			assertEquals(c.getVisibility().getValue(), restoredConstr.getVisibility().getValue());

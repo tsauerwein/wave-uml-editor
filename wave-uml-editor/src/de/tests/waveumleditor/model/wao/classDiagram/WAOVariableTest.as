@@ -1,7 +1,7 @@
 package de.tests.waveumleditor.model.wao.classDiagram
 {
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOType;
 	import de.waveumleditor.model.wao.classDiagram.WAOVariable;
 	
@@ -11,7 +11,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	{
 		public function testGetEncodableObject():void
 		{
-			var variable:Variable = new Variable("a", Type.STRING, "leer");
+			var variable:MVariable = new MVariable("a", MType.STRING, "leer");
 			
 			var obj:Object = WAOVariable.getEncodableObject(variable);
 			
@@ -30,7 +30,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			obj[WAOVariable.TYPE] = new Object();
 			obj[WAOVariable.TYPE][WAOType.NAME] = "String";
 			
-			var variable:Variable = WAOVariable.getFromDecodedObject(obj);
+			var variable:MVariable = WAOVariable.getFromDecodedObject(obj);
 			
 			assertEquals(obj[WAOVariable.NAME], variable.getName());
 			assertEquals(obj[WAOVariable.DEFAULT], variable.getDefaultValue());

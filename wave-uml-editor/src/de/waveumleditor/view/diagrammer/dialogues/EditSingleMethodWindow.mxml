@@ -5,14 +5,14 @@
 		<mx:Script>
         <![CDATA[
 			import de.waveumleditor.model.Identifier;
-			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-			import de.waveumleditor.model.classDiagram.ClassMethod;
-			import de.waveumleditor.model.classDiagram.EVisibility;
-			import de.waveumleditor.model.classDiagram.InterfaceMethod;
-			import de.waveumleditor.model.classDiagram.Type;
-			import de.waveumleditor.model.classDiagram.UMLClass;
-			import de.waveumleditor.model.classDiagram.Variable;
+			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+			import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MType;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+			import de.waveumleditor.model.classDiagram.nodes.MVariable;
 			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 			
 			import mx.collections.ArrayCollection;
@@ -42,12 +42,12 @@
 			//Methoden key
 			private var methodKey:String;
 			//Methode
-			private var method:ClassConstructorMethod;
+			private var method:MClassConstructorMethod;
             
             private function close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(singleMethodWindow);
             }
-            public function update(method:ClassConstructorMethod):void 
+            public function update(method:MClassConstructorMethod):void 
 			{
 				trace("update method " + method.getIdentifier().getId());
 				
@@ -60,11 +60,11 @@
 				
 				var current_type:String = null;
 				
-				if (method is InterfaceMethod)
+				if (method is MInterfaceMethod)
 				{
-					var interfaceMethod:InterfaceMethod = new InterfaceMethod(method.getIdentifier(), 
-						(method as InterfaceMethod).getName(), 
-						(method as InterfaceMethod).getReturnType());
+					var interfaceMethod:MInterfaceMethod = new MInterfaceMethod(method.getIdentifier(), 
+						(method as MInterfaceMethod).getName(), 
+						(method as MInterfaceMethod).getReturnType());
 					
 					//deactivate all components
 					cbVisibility.enabled = false;
@@ -81,14 +81,14 @@
 					//Name
 					txtMethodName.text = interfaceMethod.getName();
 				}
-				else if (method is ClassMethod)
+				else if (method is MClassMethod)
 				{
-					var classMethod:ClassMethod =  new ClassMethod(method.getIdentifier(), 
-																	(method as ClassMethod).getName(),
-																	(method as ClassMethod).getVisibility(), 
-																	(method as ClassMethod).getReturnType(), 
-																	(method as ClassMethod).isAbstract(),
-																	(method as ClassMethod).isStatic());
+					var classMethod:MClassMethod =  new MClassMethod(method.getIdentifier(), 
+																	(method as MClassMethod).getName(),
+																	(method as MClassMethod).getVisibility(), 
+																	(method as MClassMethod).getReturnType(), 
+																	(method as MClassMethod).isAbstract(),
+																	(method as MClassMethod).isStatic());
 					
 					//Static
 					chbStatic.selected = classMethod.isStatic();
@@ -129,30 +129,30 @@
 				
 				if(isConstructor)
 				{
-					var newClassConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(
+					var newClassConstructorMethod:MClassConstructorMethod = new MClassConstructorMethod(
 						new Identifier(methodKey),
 						EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex)
 					)
 					
-					newClassConstructorMethod.setClassDiagramNode(getClassData() as UMLClass);
+					newClassConstructorMethod.setClassDiagramNode(getClassData() as MClassNode);
 					addParametersToClassConstructorMethod(newClassConstructorMethod);
 					
-		            nodeMethodEvent= new NodeMethodEvent(getClassData() as UMLClass, newClassConstructorMethod, getEditMethodsWindow());
+		            nodeMethodEvent= new NodeMethodEvent(getClassData() as MClassNode, newClassConstructorMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);
 				}
 	            else 
 	            {
-	            	var newType:Type;
+	            	var newType:MType;
 					if(type.indexOf(cbType.selectedItem)<0)
 					{
-						newType = new Type(cbType.text);
+						newType = new MType(cbType.text);
 					}
 					else
 					{
-						newType = new Type(cbType.selectedItem.toString());
+						newType = new MType(cbType.selectedItem.toString());
 					}
 					
-	            	var newClassMethod:ClassMethod = new ClassMethod(
+	            	var newClassMethod:MClassMethod = new MClassMethod(
 	            		new Identifier(methodKey), 
 	            		txtMethodName.text,
 	            		EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex),
@@ -163,7 +163,7 @@
 	            		newClassMethod.setClassDiagramNode(getClassData());
 	            		addParametersToClassConstructorMethod(newClassMethod);
 	            		
-	            	var test:ClassDiagramNode = getClassData();
+	            	var test:MClassDiagramNode = getClassData();
 	            	nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassMethod, getEditMethodsWindow());
 		            controller.handleEditMethod(nodeMethodEvent);	
 	            }
@@ -171,7 +171,7 @@
 				PopUpManager.removePopUp(singleMethodWindow);
 			}
 			
-			public function addParametersToClassConstructorMethod(method:ClassConstructorMethod):void
+			public function addParametersToClassConstructorMethod(method:MClassConstructorMethod):void
 			{
 				
 				for(var i:int = 0; i < gdParameterList.numChildren; i++)
@@ -180,7 +180,7 @@
 					
 					if(parameterGridRow != null && parameterGridRow is EditParameterElement && parameterGridRow.hasValidParameter())
 					{
-						var variable:Variable = parameterGridRow.getVariable();
+						var variable:MVariable = parameterGridRow.getVariable();
 						method.addVariable(variable);
 					}
 				}
@@ -191,7 +191,7 @@
 			public function handleAddParameter(event:Event):void
 			{
 				trace("handle add parameter");
-				gdParameterList.addChild(new EditParameterElement(new Variable("", Type.STRING, ""), this));
+				gdParameterList.addChild(new EditParameterElement(new MVariable("", MType.STRING, ""), this));
 			}
 			
 			override public function handleDeleteParameter(event:Event):void
@@ -202,7 +202,7 @@
 	        	gdParameterList.removeChild(parameterGridRowToDelete);
 	        }
 			
-			public function addVariablesToContentGrid(classElement:ClassConstructorMethod, classDataGrid:Grid):void 
+			public function addVariablesToContentGrid(classElement:MClassConstructorMethod, classDataGrid:Grid):void 
 			{
 				classDataGrid.removeAllChildren();
 				
@@ -213,7 +213,7 @@
 					for(var i:int = 0; i < variables.length; i++)
 					{
 						var variable:Object = variables.getItemAt(i);
-						classDataGrid.addChild(new EditParameterElement(variable as Variable, this));
+						classDataGrid.addChild(new EditParameterElement(variable as MVariable, this));
 					}
 				}
 			}

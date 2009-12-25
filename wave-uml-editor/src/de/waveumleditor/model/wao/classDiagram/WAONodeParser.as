@@ -3,12 +3,12 @@ package de.waveumleditor.model.wao.classDiagram
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.waveumleditor.controller.ModelFascade;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.Interface;
-	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
@@ -56,24 +56,24 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		public function getNode(state:WaveState):ClassDiagramNode
+		public function getNode(state:WaveState):MClassDiagramNode
 		{
-			var node:ClassDiagramNode = WAONode.getFromState(nodeId, state);
+			var node:MClassDiagramNode = WAONode.getFromState(nodeId, state);
 			
 			if (node == null)
 			{
 				return null;
 			}
 			
-			if (node is UMLClass)
+			if (node is MClassNode)
 			{
-				var umlClass:UMLClass = node as UMLClass;
+				var umlClass:MClassNode = node as MClassNode;
 				
 				addAtttributes(umlClass, state);
 				addConstructors(umlClass, state);
 				addMethods(umlClass, state);
 			}
-			else if (node is Interface)
+			else if (node is MInterface)
 			{
 				// todo
 			}
@@ -81,39 +81,39 @@ package de.waveumleditor.model.wao.classDiagram
 			return node;
 		}
 		
-		private function addAtttributes(umlClass:UMLClass, state:WaveState):void
+		private function addAtttributes(umlClass:MClassNode, state:WaveState):void
 		{
 			for (var i:int = 0; i < attributeKeys.length; i++)
 			{
 				var key:String = attributeKeys.getItemAt(i) as String;
 				
-				var attribute:ClassAttribute = 
+				var attribute:MClassAttribute = 
 					WAOClassAttribute.getFromState(key, state.getStringValue(key));
 					
 				umlClass.addAttribute(attribute);
 			}
 		}
 		
-		private function addConstructors(umlClass:UMLClass, state:WaveState):void
+		private function addConstructors(umlClass:MClassNode, state:WaveState):void
 		{
 			for (var i:int = 0; i < constructorKeys.length; i++)
 			{
 				var key:String = constructorKeys.getItemAt(i) as String;
 				
-				var constructor:ClassConstructorMethod = 
+				var constructor:MClassConstructorMethod = 
 					WAOClassConstructor.getFromState(key, state.getStringValue(key));
 					
 				umlClass.addConstructor(constructor);
 			}
 		}
 		
-		private function addMethods(umlClass:UMLClass, state:WaveState):void
+		private function addMethods(umlClass:MClassNode, state:WaveState):void
 		{
 			for (var i:int = 0; i < methodKeys.length; i++)
 			{
 				var key:String = methodKeys.getItemAt(i) as String;
 				
-				var method:ClassMethod = 
+				var method:MClassMethod = 
 					WAOClassMethod.getFromState(key, state.getStringValue(key));
 					
 				umlClass.addMethod(method);

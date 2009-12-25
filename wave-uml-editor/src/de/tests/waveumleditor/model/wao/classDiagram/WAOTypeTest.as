@@ -1,6 +1,6 @@
 package de.tests.waveumleditor.model.wao.classDiagram
 {
-	import de.waveumleditor.model.classDiagram.Type;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
 	import de.waveumleditor.model.wao.classDiagram.WAOType;
 	
 	import flexunit.framework.TestCase;
@@ -9,7 +9,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	{
 		public function testGetEncodableObject():void
 		{
-			var type:Type = Type.STRING;
+			var type:MType = MType.STRING;
 			
 			var obj:Object = WAOType.getEncodableObject(type);
 			
@@ -21,7 +21,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var obj:Object = new Object();
 			obj[WAOType.NAME] = "String";
 			
-			var type:Type = WAOType.getFromDecodedObject(obj);
+			var type:MType = WAOType.getFromDecodedObject(obj);
 			
 			assertEquals(obj[WAOType.NAME], type.getName());
 		}

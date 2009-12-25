@@ -1,8 +1,8 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.IClassElement;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.IClassElement;
 	import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
 	
 	import flash.events.MouseEvent;

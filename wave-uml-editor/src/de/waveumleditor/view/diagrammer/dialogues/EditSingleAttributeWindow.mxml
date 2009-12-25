@@ -2,13 +2,13 @@
 <EditSingleAttribute xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.model.classDiagram.Variable;
+        	import de.waveumleditor.model.classDiagram.nodes.MVariable;
         	import de.waveumleditor.model.Identifier;
         	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
-        	import de.waveumleditor.model.classDiagram.EVisibility;
-        	import de.waveumleditor.model.classDiagram.Type;
+        	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+        	import de.waveumleditor.model.classDiagram.nodes.MType;
         	import mx.collections.ArrayCollection;
-        	import de.waveumleditor.model.classDiagram.ClassAttribute;
+        	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
         	import mx.controls.Button;
         	import mx.managers.SystemManager;
         	import mx.core.Application;
@@ -19,13 +19,13 @@
             import mx.collections.IList;
             import mx.containers.TitleWindow;
             
-            import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-            import de.waveumleditor.model.classDiagram.UMLClass;
+            import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+            import de.waveumleditor.model.classDiagram.nodes.MClassNode;
             import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-            import de.waveumleditor.model.classDiagram.IClassElement;
+            import de.waveumleditor.model.classDiagram.nodes.IClassElement;
             
 
-            public var attribute:ClassAttribute;
+            public var attribute:MClassAttribute;
 			
 			//visibility Combo-Box Data provider
 			[Bindable]
@@ -53,7 +53,7 @@
                 trace("cancel save attribute event");
                 PopUpManager.removePopUp(singleAttributeWindow);
             }
-            public function update(attribute:ClassAttribute):void 
+            public function update(attribute:MClassAttribute):void 
 			{
 				trace("update attribute " + attribute.getIdentifier().getId());
 				this.attribute = attribute;
@@ -82,20 +82,20 @@
 			public function saveAttribute(event:Event):void 
 			{
 				trace("save edited attribute event");
-				var newType:Type;
+				var newType:MType;
 				if(type.indexOf(type_comboBox.selectedItem)<0)
 				{
-					newType = new Type(type_comboBox.text);
+					newType = new MType(type_comboBox.text);
 				}
 				else
 				{
-					newType = new Type(type_comboBox.selectedItem.toString());
+					newType = new MType(type_comboBox.selectedItem.toString());
 				}
 				var newName:String = DEFAULT_ATTR_NAME;
 				if(attr_name.text.length>0){newName = attr_name.text;}
-				var newAttribute:ClassAttribute = new ClassAttribute(
+				var newAttribute:MClassAttribute = new MClassAttribute(
 					new Identifier(attr_key),
-					new Variable(
+					new MVariable(
 						newName,
 						newType,
 						attr_default_value.text),

@@ -4,16 +4,16 @@ package de.tests.waveumleditor.controller
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassDiagram;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
-	import de.waveumleditor.view.diagrammer.classDiagram.BaseClassDiagramNode;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 	
 	import flexunit.framework.TestCase;
 	
@@ -23,13 +23,13 @@ package de.tests.waveumleditor.controller
 	{
 		public function testAddNode():void
 		{
-			var diagram:ClassDiagram = new ClassDiagram();
+			var diagram:MClassDiagram = new MClassDiagram();
 			
 			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 						
 			var sizeBefore:int = diagram.getNodes().length;
 			
-			var viewNode:BaseClassDiagramNode = new ClassNode();
+			var viewNode:VClassDiagramNode = new VClassNode();
 			modelFascade.addNode(viewNode);
 						
 			var id:Identifier = viewNode.getIdentifier();
@@ -64,24 +64,24 @@ package de.tests.waveumleditor.controller
 		
 		public function testEditNodeAttribute():void
 		{
-			var diagram:ClassDiagram = new ClassDiagram();
+			var diagram:MClassDiagram = new MClassDiagram();
 			var nodeId:Identifier = new Identifier("C1");
-			var nodeModel:UMLClass = new UMLClass(nodeId, null, "");
+			var nodeModel:MClassNode = new MClassNode(nodeId, null, "");
 			diagram.addNode(nodeModel);
 			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			
-			var attribute:ClassAttribute = new ClassAttribute(
+			var attribute:MClassAttribute = new MClassAttribute(
 				new Identifier("A1"), 
-				new Variable("test", Type.STRING, "asda"), 
+				new MVariable("test", MType.STRING, "asda"), 
 				EVisibility.PUBLIC);
 			nodeModel.addAttribute(attribute);
 				
-			var nodeView:ClassNode = new ClassNode();
+			var nodeView:VClassNode = new VClassNode();
 			nodeView.setIdentifier(nodeId);
 			
-			var attributeFromView:ClassAttribute = new ClassAttribute(
+			var attributeFromView:MClassAttribute = new MClassAttribute(
 				new Identifier("A1"), 
-				new Variable("test2", Type.STRING, "a"), 
+				new MVariable("test2", MType.STRING, "a"), 
 				EVisibility.PRIVATE);
 			
 			modelFascade.editNodeAttribute(nodeModel.getIdentifier(), attributeFromView);
@@ -100,19 +100,19 @@ package de.tests.waveumleditor.controller
 		
 		public function testRemoveNodeAttribute():void
 		{
-			var diagram:ClassDiagram = new ClassDiagram();
+			var diagram:MClassDiagram = new MClassDiagram();
 			var nodeId:Identifier = new Identifier("C1");
-			var nodeModel:UMLClass = new UMLClass(nodeId, null, "");
+			var nodeModel:MClassNode = new MClassNode(nodeId, null, "");
 			diagram.addNode(nodeModel);
 			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			
-			var attribute:ClassAttribute = new ClassAttribute(
+			var attribute:MClassAttribute = new MClassAttribute(
 				new Identifier("A1"), 
-				new Variable("test", Type.STRING, "asda"), 
+				new MVariable("test", MType.STRING, "asda"), 
 				EVisibility.PUBLIC);
 			nodeModel.addAttribute(attribute);
 				
-			var nodeView:ClassNode = new ClassNode();
+			var nodeView:VClassNode = new VClassNode();
 			nodeView.setIdentifier(nodeId);
 			
 			modelFascade.removeNodeAttribute(nodeModel.getIdentifier(), attribute.getIdentifier());

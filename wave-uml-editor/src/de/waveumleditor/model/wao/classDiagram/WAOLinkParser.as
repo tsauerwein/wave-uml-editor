@@ -2,8 +2,8 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.nextgenapp.wave.gadget.WaveState;
 	
-	import de.waveumleditor.model.classDiagram.ClassDiagram;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
@@ -23,7 +23,7 @@ package de.waveumleditor.model.wao.classDiagram
 			this.linkId = linkId;
 		}
 
-		public function getLink(state:WaveState, diagram:ClassDiagram):ClassDiagramLink
+		public function getLink(state:WaveState, diagram:MClassDiagram):MClassLink
 		{
 			return WAOLink.getFromState(linkId, state, diagram);
 		}

@@ -2,7 +2,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
@@ -13,7 +13,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	public class EditMethods implements IEditWindow
 	{
 		private var controller:Controller;
-		private var classDiagramNode:ClassDiagramNode;
+		private var classDiagramNode:MClassDiagramNode;
 		
 		//public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
 
@@ -32,18 +32,18 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
 		
-		public function setClassData(classDiagramNode:ClassDiagramNode):void
+		public function setClassData(classDiagramNode:MClassDiagramNode):void
         {
         	this.classDiagramNode = classDiagramNode;
         }
         
-        public function getClassData():ClassDiagramNode
+        public function getClassData():MClassDiagramNode
         {
         	//TODO 
         	return this.classDiagramNode;
         }
 
-		public function update(nodeData:ClassDiagramNode):void 
+		public function update(nodeData:MClassDiagramNode):void 
 		{
 			
 		}

@@ -2,10 +2,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 {
 	import de.tests.TestUtil;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOClassMethod;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.wave.Delta;
@@ -18,10 +18,10 @@ package de.tests.waveumleditor.model.wao.classDiagram
 		{
 			var delta:Delta = new Delta();
 			
-			var m:ClassMethod = new ClassMethod(new Identifier("mId"), "doIt", EVisibility.PUBLIC, Type.INT);
+			var m:MClassMethod = new MClassMethod(new Identifier("mId"), "doIt", EVisibility.PUBLIC, MType.INT);
 			
-			m.addVariable(new Variable("a", Type.STRING));
-			m.addVariable(new Variable("b", Type.INT, "0"));
+			m.addVariable(new MVariable("a", MType.STRING));
+			m.addVariable(new MVariable("b", MType.INT, "0"));
 			
 			WAOClassMethod.store(delta, "classId", m);
 		
@@ -39,9 +39,9 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var methId:String = "M-methId";
 			var classId:String = "C-classId";
 			
-			var m:ClassMethod = new ClassMethod(new Identifier(methId), "doIt", EVisibility.PUBLIC, Type.INT);
-			m.addVariable(new Variable("a", Type.STRING));
-			m.addVariable(new Variable("b", Type.INT, "0"));
+			var m:MClassMethod = new MClassMethod(new Identifier(methId), "doIt", EVisibility.PUBLIC, MType.INT);
+			m.addVariable(new MVariable("a", MType.STRING));
+			m.addVariable(new MVariable("b", MType.INT, "0"));
 			
 			var delta:Delta = new Delta();
 			WAOClassMethod.store(delta, classId, m);
@@ -49,7 +49,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var key:String = classId + WAOKeyGenerator.IDS_SEPERATOR + methId;
 			var json:String = delta.getWaveDelta()[key];
 			
-			var restoredMethod:ClassMethod = WAOClassMethod.getFromState(key, json);
+			var restoredMethod:MClassMethod = WAOClassMethod.getFromState(key, json);
 			
 			assertEquals(m.getIdentifier().getId(), restoredMethod.getIdentifier().getId());
 			assertEquals(m.getVisibility().getValue(), restoredMethod.getVisibility().getValue());

@@ -1,22 +1,22 @@
 package de.waveumleditor.view.diagrammer.events
 {
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethods;
 
 	public class NodeMethodEvent
 	{
 		
-		private var method:ClassConstructorMethod;
+		private var method:MClassConstructorMethod;
 		private var methodWindow:EditMethods;
 		private var methodId:Identifier;
-		private var node:ClassDiagramNode;
+		private var node:MClassDiagramNode;
 		
 		public function NodeMethodEvent(
-			node:ClassDiagramNode, 
-			method:ClassConstructorMethod,
+			node:MClassDiagramNode, 
+			method:MClassConstructorMethod,
 			methodWindow:EditMethods,
 			methodId:Identifier = null)
 		{
@@ -34,12 +34,12 @@ package de.waveumleditor.view.diagrammer.events
 			}
 		}
 		
-		public function getClassNode():ClassDiagramNode
+		public function getClassNode():MClassDiagramNode
 		{
 			return node;
 		}
 		
-		public function getMethod():ClassConstructorMethod
+		public function getMethod():MClassConstructorMethod
 		{
 			return method;
 		}

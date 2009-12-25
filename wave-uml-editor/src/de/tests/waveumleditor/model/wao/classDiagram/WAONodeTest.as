@@ -6,12 +6,12 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
@@ -47,7 +47,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
-			var node:ClassDiagramNode = new UMLClass(id, pos, name);
+			var node:MClassDiagramNode = new MClassNode(id, pos, name);
 			
 			waoNode.createNode(node);
 			var newState:WaveState = wave.getState();
@@ -66,7 +66,7 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
-			var node:ClassDiagramNode = new UMLClass(id, pos, name);
+			var node:MClassDiagramNode = new MClassNode(id, pos, name);
 			
 			waoNode.createNode(node);
 			
@@ -90,8 +90,8 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			var pos:Position = new Position(1, 2);
 			var name:String = "Name";
 			
-			var node:UMLClass = new UMLClass(id, pos, name);
-			var attribute:ClassAttribute = new ClassAttribute(new Identifier("attrId"), new Variable("a", Type.INT), EVisibility.PUBLIC);
+			var node:MClassNode = new MClassNode(id, pos, name);
+			var attribute:MClassAttribute = new MClassAttribute(new Identifier("attrId"), new MVariable("a", MType.INT), EVisibility.PUBLIC);
 			node.addAttribute(attribute);
 			
 			waoNode.createNode(node);

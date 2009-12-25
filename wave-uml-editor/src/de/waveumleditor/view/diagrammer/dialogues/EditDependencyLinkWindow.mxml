@@ -5,22 +5,22 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import de.waveumleditor.view.diagrammer.classDiagram.DependencyLink;
-			import de.waveumleditor.model.classDiagram.link.LinkDependency;
+			import de.waveumleditor.view.diagrammer.classDiagram.links.VDependencyLink;
+			import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 			import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
 			
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
 			
-			private var link:LinkDependency = null;
-			private var viewLink:DependencyLink;
+			private var link:MDependencyLink = null;
+			private var viewLink:VDependencyLink;
 			
 			private function close():void {
 				PopUpManager.removePopUp(titleWindow);
 			}
 			
-			public function setViewLink(link:DependencyLink):void
+			public function setViewLink(link:VDependencyLink):void
 			{
 				trace("setViewLink()");
 				this.viewLink = link;
@@ -40,7 +40,7 @@
 				this.viewLink.linkName = name.text;
 			}
 			
-			public function update(link:LinkDependency):void 
+			public function update(link:MDependencyLink):void 
 			{
 				name.text = link.getName();
 				this.link = link;

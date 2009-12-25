@@ -1,7 +1,7 @@
 package de.waveumleditor.model.classDiagram.maps
 {	
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.link.ClassDiagramLink;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	
 	public class LinkMap extends AbstractMap
 	{
@@ -11,14 +11,14 @@ package de.waveumleditor.model.classDiagram.maps
 			super();
 		}
 
-		public function setValue(link:ClassDiagramLink):void
+		public function setValue(link:MClassLink):void
 		{
 			super.delegate.setValue(link);
 		}
 		
-		public function getValue(key:Identifier):ClassDiagramLink
+		public function getValue(key:Identifier):MClassLink
 		{
-			return super.delegate.getValue(key) as ClassDiagramLink;
+			return super.delegate.getValue(key) as MClassLink;
 		}
 	}
 }

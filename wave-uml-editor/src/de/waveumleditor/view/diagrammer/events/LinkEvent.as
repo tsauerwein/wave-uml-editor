@@ -1,8 +1,8 @@
 package de.waveumleditor.view.diagrammer.events
 {
-	import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.DependencyLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.VAssociationLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.VDependencyLink;
 	
 	import flash.events.Event;
 
@@ -13,11 +13,11 @@ package de.waveumleditor.view.diagrammer.events
 		public static var EVENT_EDIT_ASSOCIATION_LINK:String = "associationLink";
 		public static var EVENT_EDIT_DEPENDENCY_LINK:String = "dependencyLink";
 		
-		private var link:ClassLink;
-		private var associationLink:AssociationLink;
-		private var dependencyLink:DependencyLink;
+		private var link:VClassLink;
+		private var associationLink:VAssociationLink;
+		private var dependencyLink:VDependencyLink;
 		
-		public function LinkEvent(type:String, link:ClassLink=null, assoLink:AssociationLink=null, depenLink:DependencyLink=null)
+		public function LinkEvent(type:String, link:VClassLink=null, assoLink:VAssociationLink=null, depenLink:VDependencyLink=null)
 		{ 
 			try
 			{
@@ -45,17 +45,17 @@ package de.waveumleditor.view.diagrammer.events
 			
 		}
 		
-		public function getLink():ClassLink
+		public function getLink():VClassLink
 		{
 			return this.link;
 		}
 		
-		public function getAssociationLink():AssociationLink
+		public function getAssociationLink():VAssociationLink
 		{
 			return this.associationLink;
 		}
 		
-		public function getDependencyLink():DependencyLink
+		public function getDependencyLink():VDependencyLink
 		{
 			return this.dependencyLink;
 		}

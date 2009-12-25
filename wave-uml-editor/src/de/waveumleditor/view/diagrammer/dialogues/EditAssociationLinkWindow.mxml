@@ -5,10 +5,10 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import de.waveumleditor.model.classDiagram.link.EAssociationType;
-			import de.waveumleditor.view.diagrammer.classDiagram.ClassLink;
-			import de.waveumleditor.view.diagrammer.classDiagram.AssociationLink;
-			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
+			import de.waveumleditor.model.classDiagram.links.EAssociationType;
+			import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
+			import de.waveumleditor.view.diagrammer.classDiagram.links.VAssociationLink;
+			import de.waveumleditor.model.classDiagram.links.MAssociationLink;
 			import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
 			
 			import mx.events.CloseEvent;
@@ -17,14 +17,14 @@
 			import flash.display.DisplayObject;
 			
 			
-			private var viewLink:AssociationLink = null;
-			private var link:LinkAssociation = null;
+			private var viewLink:VAssociationLink = null;
+			private var link:MAssociationLink = null;
 			
 			private function close():void {
 				PopUpManager.removePopUp(titleWindow);
 			}
 			
-			public function setViewLink(link:AssociationLink):void
+			public function setViewLink(link:VAssociationLink):void
 			{
 				this.viewLink = link;
 			}
@@ -67,7 +67,7 @@
 				
 			}
 			
-			public function update(link:LinkAssociation):void 
+			public function update(link:MAssociationLink):void 
 			{
 				this.link = link;
 				

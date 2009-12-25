@@ -1,13 +1,13 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
 	import de.waveumleditor.controller.Controller;
-	import de.waveumleditor.model.classDiagram.UMLClass;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	
 	public class EditSingleAttribute
 	{
 
 		public var controller:Controller;
-		public var classData:UMLClass;
+		public var classData:MClassNode;
 		public var editAttributesWindow:EditAttributesWindow;
 
 		
@@ -25,12 +25,12 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.controller;
         }
 		
-		public function setClassData(classData:UMLClass):void
+		public function setClassData(classData:MClassNode):void
         {
         	this.classData = classData;
         }
         
-        public function getClassData():UMLClass
+        public function getClassData():MClassNode
         {
         	return this.classData;
         }

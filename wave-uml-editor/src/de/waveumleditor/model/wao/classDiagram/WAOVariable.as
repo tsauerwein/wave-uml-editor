@@ -1,7 +1,7 @@
 package de.waveumleditor.model.wao.classDiagram
 {
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	
 	public class WAOVariable
 	{
@@ -13,7 +13,7 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Returns a plain object that represents a variable and that
 		 * can be encoded as JSON-String.
 		 */ 
-		public static function getEncodableObject(variable:Variable):Object
+		public static function getEncodableObject(variable:MVariable):Object
 		{
 			var variableData:Object = new Object();
 			
@@ -28,9 +28,9 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Creates a Variable object from a plain object that was
 		 * decoced from a JSON-String.
 		 */ 
-		public static function getFromDecodedObject(obj:Object):Variable
+		public static function getFromDecodedObject(obj:Object):MVariable
 		{
-			return new Variable(obj[NAME], 
+			return new MVariable(obj[NAME], 
 				WAOType.getFromDecodedObject(obj[TYPE]), 
 				obj[DEFAULT]);
 		}

@@ -3,11 +3,11 @@
 	
 	<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.model.classDiagram.Interface;
-			import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-			import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-			import de.waveumleditor.model.classDiagram.ClassMethod;
-			import de.waveumleditor.model.classDiagram.UMLClass;
+        	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
 			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 			
@@ -22,28 +22,28 @@
             private function editMethodsWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(editMethodsWindow);
             }
-            override public function update(nodeData:ClassDiagramNode):void 
+            override public function update(nodeData:MClassDiagramNode):void 
 			{
 				trace("update editMethodsWindow method called");
-				if (!(nodeData is ClassDiagramNode)) throw new Error("nodeData must be an instance of ClassDiagramNode");
+				if (!(nodeData is MClassDiagramNode)) throw new Error("nodeData must be an instance of ClassDiagramNode");
 			
 				var nodeName:String;
 				nodeName = nodeData.getName();
 
 				// update class-name
-				if ( nodeData is UMLClass )
+				if ( nodeData is MClassNode )
 				{
-					this.setClassData(nodeData as UMLClass);
-					Formatter.formatLabelOfClassElement(nodeData as UMLClass, classNodeName);
+					this.setClassData(nodeData as MClassNode);
+					Formatter.formatLabelOfClassElement(nodeData as MClassNode, classNodeName);
 					if(nodeName==""){nodeName="Neue Klasse"};//default
 					// add Constructors
-					var constructors:IList = (nodeData as UMLClass).getConstructors();
+					var constructors:IList = (nodeData as MClassNode).getConstructors();
 					addElementsToContentGrid(constructors, constructorsList);
 				} 
 				else 
 				{
-					this.setClassData(nodeData as Interface);
-					Formatter.formatLabelOfClassElement(nodeData as Interface, classNodeName);
+					this.setClassData(nodeData as MInterface);
+					Formatter.formatLabelOfClassElement(nodeData as MInterface, classNodeName);
 					if(nodeName==""){nodeName="Neues Interface"};//default
 				}
 				
@@ -62,13 +62,13 @@
 					for(var i:int = 0; i < elements.length; i++)
 					{
 						var classElement:Object = elements.getItemAt(i);
-						if (classElement is ClassMethod) 
+						if (classElement is MClassMethod) 
 						{
-							classDataGrid.addChild((new EditClassNodeElement(classElement as ClassMethod, this)));
+							classDataGrid.addChild((new EditClassNodeElement(classElement as MClassMethod, this)));
 						} 
-						else if (classElement is ClassConstructorMethod)
+						else if (classElement is MClassConstructorMethod)
 						{
-							classDataGrid.addChild((new EditClassNodeElement(classElement as ClassConstructorMethod, this)));
+							classDataGrid.addChild((new EditClassNodeElement(classElement as MClassConstructorMethod, this)));
 						}
 
 					}

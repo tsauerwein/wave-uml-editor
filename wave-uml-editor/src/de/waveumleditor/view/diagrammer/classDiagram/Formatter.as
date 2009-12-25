@@ -1,7 +1,7 @@
 package de.waveumleditor.view.diagrammer.classDiagram
 {
 	import mx.controls.Label;
-	import de.waveumleditor.model.classDiagram.IClassElement;
+	import de.waveumleditor.model.classDiagram.nodes.IClassElement;
 	
 	public class Formatter
 	{

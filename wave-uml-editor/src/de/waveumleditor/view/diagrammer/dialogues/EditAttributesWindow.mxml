@@ -5,11 +5,11 @@
         <![CDATA[
         	import de.waveumleditor.controller.Controller;
         	import mx.messaging.management.Attribute;
-        	import de.waveumleditor.model.classDiagram.EVisibility;
+        	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
         	import de.waveumleditor.model.Identifier;
-        	import de.waveumleditor.model.classDiagram.Type;
-        	import de.waveumleditor.model.classDiagram.ClassAttribute;
-        	import de.waveumleditor.model.classDiagram.Variable;
+        	import de.waveumleditor.model.classDiagram.nodes.MType;
+        	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+        	import de.waveumleditor.model.classDiagram.nodes.MVariable;
         	import mx.controls.Button;
         	import mx.managers.SystemManager;
         	import mx.core.Application;
@@ -20,10 +20,10 @@
             import mx.collections.IList;
             import mx.containers.TitleWindow;
             
-            import de.waveumleditor.model.classDiagram.ClassDiagramNode;
-            import de.waveumleditor.model.classDiagram.UMLClass;
+            import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+            import de.waveumleditor.model.classDiagram.nodes.MClassNode;
             import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-            import de.waveumleditor.model.classDiagram.IClassElement;
+            import de.waveumleditor.model.classDiagram.nodes.IClassElement;
 
   
           
@@ -31,22 +31,22 @@
             private function titleWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(titleWindow);
             }
-            override public function update(nodeData:ClassDiagramNode):void 
+            override public function update(nodeData:MClassDiagramNode):void 
 			{
 				trace("update editAttributesWindow method called");
-				if (!(nodeData is UMLClass)) throw new Error("nodeData must be an instance of UMLCLass");
+				if (!(nodeData is MClassNode)) throw new Error("nodeData must be an instance of UMLCLass");
 				
-				this.setClassData(nodeData as UMLClass);
+				this.setClassData(nodeData as MClassNode);
 				
 				// update class-name
-				Formatter.formatLabelOfClassElement(this.getClassData() as UMLClass, classNodeName);
+				Formatter.formatLabelOfClassElement(this.getClassData() as MClassNode, classNodeName);
 				var nodeName:String;
 				nodeName = nodeData.getName();
 				if(nodeName==""){nodeName="Neue Klasse"};//default
 				classNodeName.text = nodeName;
 				
 				// add attributes
-				var attributes:IList = (this.getClassData() as UMLClass).getAttributes();
+				var attributes:IList = (this.getClassData() as MClassNode).getAttributes();
 				addElementsToContentGrid(attributes, attributesList);
 			}
 			
@@ -59,7 +59,7 @@
 					for(var i:int = 0; i < elements.length; i++)
 					{
 						var classElement:Object = elements.getItemAt(i);
-						attributesList.addChild(new EditClassNodeElement(classElement as ClassAttribute, this));
+						attributesList.addChild(new EditClassNodeElement(classElement as MClassAttribute, this));
 					}
 				}
 			}

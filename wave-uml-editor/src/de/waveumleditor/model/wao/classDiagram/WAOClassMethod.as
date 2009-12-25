@@ -4,8 +4,8 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 	import de.waveumleditor.model.wao.wave.Delta;
 		
 	/**
@@ -21,7 +21,7 @@ package de.waveumleditor.model.wao.classDiagram
 		public static const ABSTRACT:String = "a";
 		public static const RETURN_TYPE:String = "t";
 		
-		public static function store(delta:Delta, nodeId:String, method:ClassMethod):void
+		public static function store(delta:Delta, nodeId:String, method:MClassMethod):void
 		{
 			var methodData:Object = WAOClassConstructor.getEncodableObject(method);
 			
@@ -43,13 +43,13 @@ package de.waveumleditor.model.wao.classDiagram
 			WAOClassAttribute.remove(delta, nodeId, methodId);
 		}
 
-		public static function getFromState(stateKey:String, stateValue:String):ClassMethod
+		public static function getFromState(stateKey:String, stateValue:String):MClassMethod
 		{
 			var methodId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var methodData:Object = JSON.decode(stateValue);
 			
-			var method:ClassMethod = new ClassMethod(
+			var method:MClassMethod = new MClassMethod(
 				new Identifier(methodId),
 				methodData[NAME],
 				EVisibility.getEVisibilityFromVal(methodData[WAOClassConstructor.VISIBILITY]),

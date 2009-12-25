@@ -9,11 +9,11 @@
         
    <mx:Script>
    	<![CDATA[
-   		import de.waveumleditor.view.diagrammer.classDiagram.ClassDiagramComponent;
+   		import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
    		import de.waveumleditor.view.diagrammer.events.NodeEvent;
    		
    		// for testing
-   		public var classDiagramComponent:ClassDiagramComponent;
+   		public var classDiagramComponent:VClassDiagram;
    		
    		private function handleChangeModeToEdit():void
 		{

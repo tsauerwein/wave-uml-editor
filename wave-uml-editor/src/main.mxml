@@ -9,47 +9,46 @@
 	<mx:Script>
 		<![CDATA[
 			import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
-			import de.waveumleditor.view.diagrammer.classDiagram.ClassNode;			
+			import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;			
 			import de.waveumleditor.controller.Controller;
 			import de.waveumleditor.controller.ModelFascade;
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.Position;
 			import de.waveumleditor.model.classDiagram.*;
-			import de.waveumleditor.model.classDiagram.link.LinkAssociation;
-			import de.waveumleditor.model.classDiagram.link.LinkImplements;
-			import de.waveumleditor.model.classDiagram.link.LinkInheritance;
+			import de.waveumleditor.model.classDiagram.nodes.*;
+			import de.waveumleditor.model.classDiagram.links.*;
 
 			
-			private var classOne:ClassNode;
-			private var classTwo:ClassNode;
+			private var classOne:VClassNode;
+			private var classTwo:VClassNode;
 			private var controller:Controller;
-			private var classDiagram:ClassDiagram;
+			private var classDiagram:MClassDiagram;
 			
 		private function init():void {
 				
 
 				
-				var classData:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
-				var classData2:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
-				var interfaceData:Interface = new Interface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
-				var emptyClass:UMLClass = new UMLClass(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345673"), new Position(100, 50));
-				var emptyInterface:Interface = new Interface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345674"), new Position(250, 50), "");
+				var classData:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
+				var classData2:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
+				var interfaceData:MInterface = new MInterface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
+				var emptyClass:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345673"), new Position(100, 50));
+				var emptyInterface:MInterface = new MInterface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345674"), new Position(250, 50), "");
 				
 				classData.setAbstract(true);
 				
   			 	//Attribut mit Variable: public static int myInteger default=0
-				var integerVariable:Variable = new Variable("myInteger", Type.INT, "0");
-				var integerAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr001"), integerVariable, EVisibility.PUBLIC);
+				var integerVariable:MVariable = new MVariable("myInteger", MType.INT, "0");
+				var integerAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr001"), integerVariable, EVisibility.PUBLIC);
 				
 				//Attribut mit Variable: public customType myCustomVariable
-				var customVariable:Variable = new Variable("myCustomVariable", (new Type("customType")));
-				var customAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr_custom"), customVariable, EVisibility.PUBLIC);
+				var customVariable:MVariable = new MVariable("myCustomVariable", (new MType("customType")));
+				var customAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr_custom"), customVariable, EVisibility.PUBLIC);
 				
 				integerAttribute.setStatic(true);
 				
  				//Attribut mit Variable: private String myString
-				var stringVariable:Variable = new Variable("myString", Type.STRING);
-				var stringAttribute:ClassAttribute = new ClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr002"), stringVariable, EVisibility.PRIVATE);  
+				var stringVariable:MVariable = new MVariable("myString", MType.STRING);
+				var stringAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr002"), stringVariable, EVisibility.PRIVATE);  
 				
  				classData.addAttribute(integerAttribute);
 				classData.addAttribute(stringAttribute);
@@ -57,25 +56,25 @@
 				classData2.addAttribute(integerAttribute);   
 				
 				//Methode public String getMyString()
-				var method:ClassMethod = new ClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth004"), "getMyString", EVisibility.PUBLIC, Type.STRING);
+				var method:MClassMethod = new MClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth004"), "getMyString", EVisibility.PUBLIC, MType.STRING);
 				//Konstruktor
-				var constructor:ClassConstructorMethod = new ClassConstructorMethod(new Identifier(WAOKeyGenerator.PREFIX_CONSTRUCTOR + "meth003"), EVisibility.PUBLIC);
+				var constructor:MClassConstructorMethod = new MClassConstructorMethod(new Identifier(WAOKeyGenerator.PREFIX_CONSTRUCTOR + "meth003"), EVisibility.PUBLIC);
 				constructor.addVariable(stringVariable);
 				
 				//Interfacemethode
-				var interfaceMethod:InterfaceMethod = new InterfaceMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth005"), "superMethode", Type.DOUBLE);
+				var interfaceMethod:MInterfaceMethod = new MInterfaceMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth005"), "superMethode", MType.DOUBLE);
 				interfaceData.addMethod(interfaceMethod);
 				//Implementierung der Interfacemethode
-				var implementedInterfaceMethod:ClassMethod = new ClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth006"), "superMethode",EVisibility.PUBLIC, Type.DOUBLE);
+				var implementedInterfaceMethod:MClassMethod = new MClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth006"), "superMethode",EVisibility.PUBLIC, MType.DOUBLE);
 				
 				classData.addConstructor(constructor);
 				classData.addMethod(method);
 				classData2.addMethod(implementedInterfaceMethod);
 				classData2.addConstructor(constructor);
 				
-				var linkInheritance:LinkInheritance = new LinkInheritance(new Identifier("12345681"), classData, classData2);
-				var linkImplements:LinkImplements = new LinkImplements(new Identifier("12345682"), classData2, interfaceData);
-				var linkAssociation:LinkAssociation = new LinkAssociation(new Identifier("12345683"), classData2, classData2);
+				var linkInheritance:MInheritanceLink = new MInheritanceLink(new Identifier("12345681"), classData, classData2);
+				var linkImplements:MImplementsLink = new MImplementsLink(new Identifier("12345682"), classData2, interfaceData);
+				var linkAssociation:MAssociationLink = new MAssociationLink(new Identifier("12345683"), classData2, classData2);
 				
 				/* classOne = new ClassNode();
 				classTwo = new ClassNode();
@@ -93,7 +92,7 @@
 				this.diagram.addChild(link.toNode);
 				this.diagram.addChildAt(link, 0);	 */
 				
-				classDiagram = new ClassDiagram();
+				classDiagram = new MClassDiagram();
 				classDiagram.addNode(classData);
 				classDiagram.addNode(classData2);
 				classDiagram.addNode(emptyClass);
@@ -143,6 +142,6 @@
 		]]>
 	</mx:Script>	
 	
-	<classDiagrammer:ClassDiagramComponent id="diagram" left="0" top="0" bottom="50" right="0">
-	</classDiagrammer:ClassDiagramComponent>
+	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="50" right="0">
+	</classDiagrammer:VClassDiagram>
 </mx:Application>

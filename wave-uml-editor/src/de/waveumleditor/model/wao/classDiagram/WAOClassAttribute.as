@@ -4,8 +4,8 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassAttribute;
-	import de.waveumleditor.model.classDiagram.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 	import de.waveumleditor.model.wao.wave.Delta;
 
 	/**
@@ -20,7 +20,7 @@ package de.waveumleditor.model.wao.classDiagram
 		public static const VISIBILITY:String = "vi";
 		public static const VARIABLE:String = "va";
 		
-		public static function store(delta:Delta, nodeId:String, attribute:ClassAttribute):void
+		public static function store(delta:Delta, nodeId:String, attribute:MClassAttribute):void
 		{
 			var attributeData:Object = new Object();
 			
@@ -41,13 +41,13 @@ package de.waveumleditor.model.wao.classDiagram
 			delta.setValue(key, null);
 		}
 		
-		public static function getFromState(stateKey:String, stateValue:String):ClassAttribute
+		public static function getFromState(stateKey:String, stateValue:String):MClassAttribute
 		{
 			var attributeId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var attributeData:Object = JSON.decode(stateValue);
 			
-			return new ClassAttribute(new Identifier(attributeId), 
+			return new MClassAttribute(new Identifier(attributeId), 
 				WAOVariable.getFromDecodedObject(attributeData[VARIABLE]),
 				EVisibility.getEVisibilityFromVal(attributeData[VISIBILITY]),
 				attributeData[STATIC]);

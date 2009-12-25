@@ -1,7 +1,7 @@
 package de.waveumleditor.view.diagrammer.dialogues
 {
-	import de.waveumleditor.model.classDiagram.Type;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	
 	import flash.events.MouseEvent;
 	
@@ -13,7 +13,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 
 	public class EditParameterElement extends GridRow
 	{
-		public var variable:Variable;
+		public var variable:MVariable;
 		private var editWindow:EditSingleMethod;
 		private static var idCounter:int = 0;
 		
@@ -29,7 +29,7 @@ package de.waveumleditor.view.diagrammer.dialogues
               "int",
               "double" );
 		
-		public function EditParameterElement(variable:Variable, editWindow:EditSingleMethod)
+		public function EditParameterElement(variable:MVariable, editWindow:EditSingleMethod)
 		{
 			super();
 			
@@ -86,16 +86,16 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.addChild(deleteGridItem);
 		}
 		
-		public function getVariable():Variable
+		public function getVariable():MVariable
 		{
-			var newType:Type;
+			var newType:MType;
 			if(type.indexOf(cbType.selectedItem)<0)
 			{
-				newType = new Type(cbType.text);
+				newType = new MType(cbType.text);
 			}
 			else
 			{
-				newType = new Type(cbType.selectedItem.toString());
+				newType = new MType(cbType.selectedItem.toString());
 			}
 			this.variable.setType(newType);
 			this.variable.setName(tiName.text);
@@ -104,7 +104,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			return this.variable;
 		}
 		
-		public function getDeleteButtonOfElement(variable:Variable):Button
+		public function getDeleteButtonOfElement(variable:MVariable):Button
 		{
 			var deleteButton:Button = new Button();
 			deleteButton.label="-";

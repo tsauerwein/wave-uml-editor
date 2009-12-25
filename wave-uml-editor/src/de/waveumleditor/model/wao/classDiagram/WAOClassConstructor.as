@@ -4,10 +4,10 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.ClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.EVisibility;
-	import de.waveumleditor.model.classDiagram.UMLClass;
-	import de.waveumleditor.model.classDiagram.Variable;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
 	import mx.collections.IList;
@@ -23,7 +23,7 @@ package de.waveumleditor.model.wao.classDiagram
 		public static const VISIBILITY:String = "vi";
 		public static const PARAMETERS:String = "p";
 		
-		public static function store(delta:Delta, nodeId:String, constructor:ClassConstructorMethod):void
+		public static function store(delta:Delta, nodeId:String, constructor:MClassConstructorMethod):void
 		{
 			var constructorData:Object = getEncodableObject(constructor);
 			
@@ -39,7 +39,7 @@ package de.waveumleditor.model.wao.classDiagram
 		 * Returns a plain object that represents a constructor and that
 		 * can be encoded as JSON-String.
 		 */ 
-		public static function getEncodableObject(constructor:ClassConstructorMethod):Object
+		public static function getEncodableObject(constructor:MClassConstructorMethod):Object
 		{
 			var constructorData:Object = new Object();
 			
@@ -50,7 +50,7 @@ package de.waveumleditor.model.wao.classDiagram
 			var parametersData:Array = new Array(parameters.length);
 			for(var i:int = 0; i < parameters.length; i++)
 			{
-				var parameter:Variable = parameters.getItemAt(i) as Variable;
+				var parameter:MVariable = parameters.getItemAt(i) as MVariable;
 				parametersData[i] = WAOVariable.getEncodableObject(parameter);
 			}
 			constructorData[PARAMETERS] = parametersData;
@@ -63,13 +63,13 @@ package de.waveumleditor.model.wao.classDiagram
 			WAOClassAttribute.remove(delta, nodeId, constructorId);
 		}
 		
-		public static function getFromState(stateKey:String, stateValue:String):ClassConstructorMethod
+		public static function getFromState(stateKey:String, stateValue:String):MClassConstructorMethod
 		{
 			var constructorId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var constructorData:Object = JSON.decode(stateValue);
 			
-			var constructor:ClassConstructorMethod = new ClassConstructorMethod(
+			var constructor:MClassConstructorMethod = new MClassConstructorMethod(
 				new Identifier(constructorId),
 				EVisibility.getEVisibilityFromVal(constructorData[VISIBILITY]));
 				
@@ -78,7 +78,7 @@ package de.waveumleditor.model.wao.classDiagram
 			return constructor;	
 		}
 		
-		public static function getParametersFromDecodedObject(method:ClassConstructorMethod, parametersData:Array):void
+		public static function getParametersFromDecodedObject(method:MClassConstructorMethod, parametersData:Array):void
 		{
 			for (var i:int = 0; i < parametersData.length; i++)
 			{
