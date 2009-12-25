@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditMethods xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+        <![CDATA[
+        	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
+			
+			import mx.collections.IList;
+			import mx.containers.TitleWindow;
+			import mx.controls.Button;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.SystemManager;
+
+			
+            private function editMethodsWindow_close(evt:CloseEvent):void {
+                PopUpManager.removePopUp(editMethodsWindow);
+            }
+            override public function update(nodeData:MClassDiagramNode):void 
+			{
+				trace("update editMethodsWindow method called");
+				if (!(nodeData is MClassDiagramNode)) throw new Error("nodeData must be an instance of ClassDiagramNode");
+			
+				var nodeName:String;
+				nodeName = nodeData.getName();
+
+				// update class-name
+				if ( nodeData is MClassNode )
+				{
+					this.setClassData(nodeData as MClassNode);
+					Formatter.formatLabelOfClassElement(nodeData as MClassNode, classNodeName);
+					if(nodeName==""){nodeName="Neue Klasse"};//default
+					// add Constructors
+					var constructors:IList = (nodeData as MClassNode).getConstructors();
+					addElementsToContentGrid(constructors, constructorsList);
+				} 
+				else 
+				{
+					this.setClassData(nodeData as MInterface);
+					Formatter.formatLabelOfClassElement(nodeData as MInterface, classNodeName);
+					if(nodeName==""){nodeName="Neues Interface"};//default
+				}
+				
+				classNodeName.text = nodeName;
+
+				// add Methods
+				var methods:IList = this.getClassData().getMethods();
+				addElementsToContentGrid(methods, methodsList);
+			}
+			
+			public function addElementsToContentGrid(elements:IList, classDataGrid:Grid):void 
+			{
+				classDataGrid.removeAllChildren();
+				if(elements.length > 0)
+				{
+					for(var i:int = 0; i < elements.length; i++)
+					{
+						var classElement:Object = elements.getItemAt(i);
+						if (classElement is MClassMethod) 
+						{
+							classDataGrid.addChild((new EditClassNodeElement(classElement as MClassMethod, this)));
+						} 
+						else if (classElement is MClassConstructorMethod)
+						{
+							classDataGrid.addChild((new EditClassNodeElement(classElement as MClassConstructorMethod, this)));
+						}
+
+					}
+				}
+			}
+
+			public function popUp():void
+			{	
+		        editMethodsWindow.title = "Methoden editieren";
+		        editMethodsWindow.addChild(editMethodsGrid);
+		        
+		        mx.managers.PopUpManager.addPopUp(editMethodsWindow, SystemManager.getSWFRoot(editMethodsWindow), true);
+		        mx.managers.PopUpManager.centerPopUp(editMethodsWindow);
+			}
+        ]]>
+    </mx:Script>
+<!--	<container> -->
+	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+			id="editMethodsWindow"
+			layout="vertical" 
+			minWidth="340" 
+			minHeight="300"
+			maxHeight="500"
+	        title="Methoden editieren"
+	        titleStyleName="titleText"
+	        backgroundColor="#FFFFFF"
+	        backgroundAlpha="0.7"
+	        borderAlpha="1.0"
+	        cornerRadius="10"
+	        dropShadowEnabled="true"
+	        showCloseButton="true"
+	        close="editMethodsWindow_close(event)" borderColor="#E2E2E2"> 
+	    
+	    <mx:Grid id="editMethodsGrid" width="100%" height="100%" verticalAlign="top">
+	        <mx:GridRow width="100%" height="100%">
+	            <mx:GridItem width="100%" height="100%">
+	                <mx:Grid width="100%" height="100%">
+	                    <mx:GridRow width="100%" height="15">
+	                        <mx:GridItem width="100%">
+	                            <mx:Label id="classNodeName">
+	                        		<mx:text>
+	                        		
+	                        		</mx:text>
+	                            </mx:Label>
+	                        </mx:GridItem>
+	                    </mx:GridRow>
+	                    <mx:GridRow width="100%" height="5">
+	                        <mx:GridItem width="100%" height="0%" >
+	                       		<mx:HRule x="0" width="100%" shadowColor="#418D8E" strokeColor="#418D8E"/>
+	                        </mx:GridItem>
+	                    </mx:GridRow>
+	                    
+	                    <mx:GridRow width="100%">
+								<mx:GridItem>
+									<mx:Label text="Konstruktoren:" />	
+								</mx:GridItem>
+						</mx:GridRow>
+						
+						<mx:GridRow width="100%">
+							<mx:GridItem width="100%" height="100%">
+								<mx:Grid width="100%" id="constructorsList">
+								</mx:Grid>
+							</mx:GridItem>
+						</mx:GridRow>
+						<mx:GridRow width="100%">
+							<mx:GridItem horizontalAlign="right">
+								<mx:Button label="+" height="15" width="35" click="handleAddConstructor(event)"/>
+							</mx:GridItem>
+							<mx:GridItem>
+							</mx:GridItem>
+						</mx:GridRow>
+						
+						<mx:GridRow width="100%" >
+							<mx:GridItem width="100%" height="5">
+								<mx:HRule x="0" width="100%" shadowColor="#418D8E" strokeColor="#418D8E"/>
+							</mx:GridItem>
+						</mx:GridRow>
+						
+						<mx:GridRow width="100%">
+								<mx:GridItem>
+									<mx:Label text="Methoden:" />	
+								</mx:GridItem>
+						</mx:GridRow>
+						
+						<mx:GridRow width="100%">
+							<mx:GridItem width="100%" height="100%">
+								<mx:Grid width="100%" id="methodsList">
+								</mx:Grid>
+							</mx:GridItem>
+						</mx:GridRow>
+						<mx:GridRow width="100%">
+							<mx:GridItem horizontalAlign="right">
+								<mx:Button label="+" height="15" width="35" click="handleAdd(event)"/>
+							</mx:GridItem>
+							<mx:GridItem>
+							</mx:GridItem>
+						</mx:GridRow>
+	                </mx:Grid>
+	            </mx:GridItem>
+	        </mx:GridRow>
+	    
+	    	<mx:GridRow width="100%" height="0%">
+	    		<mx:GridItem>
+				    <mx:Grid width="100%" height="0%">
+				        <mx:GridRow width="100%" height="100%">
+				            <mx:GridItem width="100%" height="100%">
+				            </mx:GridItem>
+				            <mx:GridItem width="0%" height="100%">
+				                <mx:Button label="Schließen" click="editMethodsWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
+				            </mx:GridItem>
+				        </mx:GridRow>
+				    </mx:Grid>
+			   </mx:GridItem>
+		    </mx:GridRow>
+	    </mx:Grid>
+		
+	
+	
+	</mx:TitleWindow> 
+<!--	</container>-->
+</EditMethods>

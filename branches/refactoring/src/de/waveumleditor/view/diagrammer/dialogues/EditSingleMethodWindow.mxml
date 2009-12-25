@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" 
+				  xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+		<mx:Script>
+        <![CDATA[
+			import de.waveumleditor.model.Identifier;
+			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+			import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
+			import de.waveumleditor.model.classDiagram.nodes.MType;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+			import de.waveumleditor.model.classDiagram.nodes.MVariable;
+			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IList;
+			import mx.containers.TitleWindow;
+			import mx.controls.Button;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.SystemManager;
+			
+					
+			//visibility Combo-Box Data provider
+			[Bindable]
+            public var visibility:ArrayCollection = new ArrayCollection(
+                [ {label:"public", data:EVisibility.PUBLIC}, 
+                  {label:"private", data:EVisibility.PRIVATE}, 
+                  {label:"protected", data:EVisibility.PROTECTED},
+                  {label:"package", data:EVisibility.PACKAGE} ]);
+			
+			//types Combo-Box Data provider
+			[Bindable]
+            public var type:Array = new Array(
+                  "String", 
+                  "boolean", 
+                  "int",
+                  "double" );
+			//Methoden key
+			private var methodKey:String;
+			//Methode
+			private var method:MClassConstructorMethod;
+            
+            private function close(evt:CloseEvent):void {
+                PopUpManager.removePopUp(singleMethodWindow);
+            }
+            public function update(method:MClassConstructorMethod):void 
+			{
+				trace("update method " + method.getIdentifier().getId());
+				
+				this.method = method;
+				
+				//Sichtbarkeit
+				cbVisibility.selectedIndex = method.getVisibility().getValue();
+				//key
+				methodKey = method.getIdentifier().getId();
+				
+				var current_type:String = null;
+				
+				if (method is MInterfaceMethod)
+				{
+					var interfaceMethod:MInterfaceMethod = new MInterfaceMethod(method.getIdentifier(), 
+						(method as MInterfaceMethod).getName(), 
+						(method as MInterfaceMethod).getReturnType());
+					
+					//deactivate all components
+					cbVisibility.enabled = false;
+					chbStatic.enabled = false;
+					chbAbstract.selected = interfaceMethod.isAbstract();
+					chbAbstract.enabled = false;
+					//Typ
+					current_type = interfaceMethod.getReturnType().getName();
+					if(type.indexOf(current_type)<0)
+					{
+						type.push(current_type);
+					}
+					cbType.selectedItem = current_type;
+					//Name
+					txtMethodName.text = interfaceMethod.getName();
+				}
+				else if (method is MClassMethod)
+				{
+					var classMethod:MClassMethod =  new MClassMethod(method.getIdentifier(), 
+																	(method as MClassMethod).getName(),
+																	(method as MClassMethod).getVisibility(), 
+																	(method as MClassMethod).getReturnType(), 
+																	(method as MClassMethod).isAbstract(),
+																	(method as MClassMethod).isStatic());
+					
+					//Static
+					chbStatic.selected = classMethod.isStatic();
+					//Abstrakt
+					chbAbstract.selected = classMethod.isAbstract();
+					//Typ
+					current_type = classMethod.getReturnType().getName();
+					if(type.indexOf(current_type)<0)
+					{
+						type.push(current_type);
+					}
+					cbType.selectedItem = current_type;
+					//Name
+					txtMethodName.text = classMethod.getName();
+	
+				}
+				// ClassConstructorMethod
+				else
+				{
+					gdInput.removeChild(grStatic);
+					gdInput.removeChild(grAbstract);
+					gdInput.removeChild(grType);
+					
+					txtMethodName.text = this.getClassData().getName();
+					txtMethodName.enabled = false;
+				}
+				
+				//Übergabeparameter
+				addVariablesToContentGrid(this.method, gdParameterList);
+				
+			}
+			
+			public function saveMethod(event:Event):void 
+			{
+				trace("save method event");
+				
+				var nodeMethodEvent:NodeMethodEvent;
+				
+				if(isConstructor)
+				{
+					var newClassConstructorMethod:MClassConstructorMethod = new MClassConstructorMethod(
+						new Identifier(methodKey),
+						EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex)
+					)
+					
+					newClassConstructorMethod.setClassDiagramNode(getClassData() as MClassNode);
+					addParametersToClassConstructorMethod(newClassConstructorMethod);
+					
+		            nodeMethodEvent= new NodeMethodEvent(getClassData() as MClassNode, newClassConstructorMethod, getEditMethodsWindow());
+		            controller.handleEditMethod(nodeMethodEvent);
+				}
+	            else 
+	            {
+	            	var newType:MType;
+					if(type.indexOf(cbType.selectedItem)<0)
+					{
+						newType = new MType(cbType.text);
+					}
+					else
+					{
+						newType = new MType(cbType.selectedItem.toString());
+					}
+					
+	            	var newClassMethod:MClassMethod = new MClassMethod(
+	            		new Identifier(methodKey), 
+	            		txtMethodName.text,
+	            		EVisibility.getEVisibilityFromVal(cbVisibility.selectedIndex),
+	            		newType,
+	            		chbAbstract.selected,
+	            		chbStatic.selected);
+	            		
+	            		newClassMethod.setClassDiagramNode(getClassData());
+	            		addParametersToClassConstructorMethod(newClassMethod);
+	            		
+	            	var test:MClassDiagramNode = getClassData();
+	            	nodeMethodEvent= new NodeMethodEvent(getClassData(), newClassMethod, getEditMethodsWindow());
+		            controller.handleEditMethod(nodeMethodEvent);	
+	            }
+	            
+				PopUpManager.removePopUp(singleMethodWindow);
+			}
+			
+			public function addParametersToClassConstructorMethod(method:MClassConstructorMethod):void
+			{
+				
+				for(var i:int = 0; i < gdParameterList.numChildren; i++)
+				{
+					var parameterGridRow:EditParameterElement = gdParameterList.getChildAt(i) as EditParameterElement;
+					
+					if(parameterGridRow != null && parameterGridRow is EditParameterElement && parameterGridRow.hasValidParameter())
+					{
+						var variable:MVariable = parameterGridRow.getVariable();
+						method.addVariable(variable);
+					}
+				}
+			}
+			
+			
+			
+			public function handleAddParameter(event:Event):void
+			{
+				trace("handle add parameter");
+				gdParameterList.addChild(new EditParameterElement(new MVariable("", MType.STRING, ""), this));
+			}
+			
+			override public function handleDeleteParameter(event:Event):void
+	        {
+	        	trace("handle delete parameter");
+	        	var parameterGridRowName:String = "gr"+(event.currentTarget as Button).id;
+	        	var parameterGridRowToDelete:DisplayObject = gdParameterList.getChildByName(parameterGridRowName);
+	        	gdParameterList.removeChild(parameterGridRowToDelete);
+	        }
+			
+			public function addVariablesToContentGrid(classElement:MClassConstructorMethod, classDataGrid:Grid):void 
+			{
+				classDataGrid.removeAllChildren();
+				
+				var variables:IList = classElement.getVariables();
+				if(variables.length > 0)
+				{
+					addLabelsToContentGrid(classDataGrid);
+					for(var i:int = 0; i < variables.length; i++)
+					{
+						var variable:Object = variables.getItemAt(i);
+						classDataGrid.addChild(new EditParameterElement(variable as MVariable, this));
+					}
+				}
+			}
+			
+			public function addLabelsToContentGrid(classDataGrid:Grid):void
+			{
+				var grLabels:GridRow = new GridRow();
+				//Typ
+				var giType:GridItem = new GridItem();
+				var lbType:Label = new Label();
+				lbType.text="Typ:";
+				giType.addChild(lbType);
+				grLabels.addChild(giType);
+				
+				//Name
+				var giName:GridItem = new GridItem();
+				var lbName:Label = new Label();
+				lbName.text="Name:";
+				giName.addChild(lbName);
+				grLabels.addChild(giName);
+				
+				//Default Wert
+				var giDefaultValue:GridItem = new GridItem();
+				var lbDefaultValue:Label = new Label();
+				lbDefaultValue.text="Default-Wert:";
+				giDefaultValue.addChild(lbDefaultValue);
+				grLabels.addChild(giDefaultValue);
+				
+				classDataGrid.addChild(grLabels);
+			}
+			
+
+			public function popUp():void
+			{	
+		        singleMethodWindow.title = "Methode editieren";
+      
+		        singleMethodWindow.addChild(editMethodGrid);
+		        
+		        mx.managers.PopUpManager.addPopUp(singleMethodWindow, SystemManager.getSWFRoot(singleMethodWindow), true);
+		        mx.managers.PopUpManager.centerPopUp(singleMethodWindow);
+			}
+			
+			public function getDisplayObjectByName(id:String, grid:Grid):GridRow
+			{
+				for(var i:int = 0; i < grid.numChildren; i++)
+				{
+					if((grid.getChildAt(i)as GridRow).name == id)
+					{
+						return grid.getChildAt(i) as GridRow;
+					}
+				}
+				trace("parameter grid row not found!!!");
+				return null;
+			}
+        ]]>
+    </mx:Script>
+	 
+	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+			id="singleMethodWindow"
+			layout="vertical" 
+			minWidth="320" 
+			minHeight="400"
+			maxHeight="600"
+	        title="Methode editieren"
+	        titleStyleName="titleText"
+	        backgroundColor="#FFFFFF"
+	        backgroundAlpha="0.9"
+	        borderAlpha="1.0"
+	        cornerRadius="10"
+	        dropShadowEnabled="true"
+	        showCloseButton="true"
+	        close="close(event)" borderColor="#E2E2E2"> 
+	        
+
+	    <mx:Grid id="editMethodGrid" width="100%" height="100%" verticalAlign="top">
+	        <mx:GridRow width="100%" height="100%">
+	            <mx:GridItem width="100%">
+                    <mx:Grid id="gdInput" width="100%">
+                        <mx:GridRow id="grVisibility" width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label id="lblVisibility" text="Sichtbarkeit:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" horizontalAlign="right">
+                            	<mx:ComboBox id="cbVisibility" dataProvider="{visibility}"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow id="grStatic" width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label id="lblStatic" text="Statisch:"/>
+                            </mx:GridItem>   
+                            <mx:GridItem width="100%" horizontalAlign="right">
+                            	<mx:CheckBox id="chbStatic" label=""/>
+                            </mx:GridItem>    
+                        </mx:GridRow>
+                        <mx:GridRow id="grAbstract" width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label id="lblAbstract" text="Abstrakt:"/>
+                            </mx:GridItem>   
+                            <mx:GridItem width="100%" horizontalAlign="right">
+                            	<mx:CheckBox id="chbAbstract" label=""/>
+                            </mx:GridItem>    
+                        </mx:GridRow>
+                        <mx:GridRow id="grType" width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label id="lblType" text="Rückgabetyp:"/>
+                            </mx:GridItem>
+                            <mx:GridItem  width="100%" horizontalAlign="right">
+                            	<mx:ComboBox id="cbType" editable="true" dataProvider="{type}"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label text="Name:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" horizontalAlign="right">
+                            	<mx:TextInput id="txtMethodName" text="" maxChars="20" width="130"/>
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow width="100%">
+                            <mx:GridItem width="100%">
+                            	<mx:Label text="Übergabeparameter:"/>
+                            </mx:GridItem>
+                            <mx:GridItem width="100%" horizontalAlign="right">
+                            </mx:GridItem>
+                        </mx:GridRow>
+                        <mx:GridRow width="100%">
+	                        <mx:GridItem width="100%" colSpan="2">
+	                            	<mx:Grid width="100%" id="gdParameterList">
+	                            	
+	                          		</mx:Grid>
+	                        </mx:GridItem>
+	                    </mx:GridRow>
+	                    <mx:GridRow width="100%">
+	                    	<mx:GridItem width="100%">
+	                    	</mx:GridItem>
+	                   		<mx:GridItem horizontalAlign="right">
+	                   			<mx:Button label="+" height="15" width="35" click="handleAddParameter(event)"/>
+	                    	</mx:GridItem>
+	                    </mx:GridRow>
+                    </mx:Grid>
+	            </mx:GridItem>
+	        </mx:GridRow>
+	    
+	    	<mx:GridRow width="100%" verticalAlign="bottom">
+	    		<mx:GridItem colSpan="2">
+				    <mx:Grid width="100%">
+				        <mx:GridRow width="100%">
+				            <mx:GridItem width="100%">
+				            </mx:GridItem>
+				            
+				            <mx:GridItem>
+				                <mx:Button label="Speichern" click="saveMethod(event)"/>
+				            </mx:GridItem>
+				            <mx:GridItem>
+				                <mx:Button label="Abbrechen" click="close(CloseEvent.CLOSE as CloseEvent)"/>
+				            </mx:GridItem>
+				        </mx:GridRow>
+				    </mx:Grid>
+			   </mx:GridItem>
+		    </mx:GridRow>
+	    </mx:Grid>
+	</mx:TitleWindow> 
+</EditSingleMethod>

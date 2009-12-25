@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VClassDiagramNode xmlns="de.waveumleditor.view.diagrammer.classDiagram.nodes.*" xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#8FAEF3" borderColor="#000000" minWidth="140">
+	<mx:Text y="0" text="«Interface»" selectable="false" left="1" right="1" textAlign="center" color="0xFFFFFF"/>
+	<lblNodeName>
+		<mx:Text y="10" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="classNodeName" />
+	</lblNodeName>
+
+		<mx:Script>
+		<![CDATA[
+			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+			import de.waveumleditor.model.classDiagram.nodes.IClassElement;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import mx.controls.HRule;
+			import mx.controls.Text;
+			import mx.containers.Grid;
+			import mx.controls.Label;
+			import mx.core.*;
+			import mx.containers.GridRow;
+			import mx.containers.GridItem;
+			import mx.collections.IList;
+			import de.waveumleditor.model.classDiagram.nodes.MInterface;
+			
+			override public function update(nodeData:MClassDiagramNode):void 
+			{
+				super.update(nodeData);
+				
+				if (!(nodeData is MInterface)) throw new Error("nodeData must be an instance of Interface");
+				
+				var interfaceData:MInterface = nodeData as MInterface;
+				
+				// update interface-name
+				Formatter.formatLabelOfClassElement(interfaceData, classNodeName);
+				nodeName = interfaceData.getName();
+				if(nodeName==""){nodeName="Neues Interface"};//default
+				
+				// add methods
+				if(interfaceData.getMethods().length==0)//default
+				{
+					var defaultMethod:Label = new Label();
+					defaultMethod.text="Methoden";
+					defaultMethodGridItem.addChild(defaultMethod);
+				}
+				var methods:IList = interfaceData.getMethods();
+				addElementsToContentGrid(methods, methodGrid);
+			}
+			
+			public function addElementsToContentGrid(elements:IList, interfaceDataGrid:Grid):void 
+			{
+				if(elements.length > 0)
+				{
+					for(var i:int = 0; i < elements.length; i++)
+					{
+						var classElement:Object = elements.getItemAt(i);
+						interfaceDataGrid.addChild(new VClassNodeElement(classElement as IClassElement));
+					}
+				}
+			}
+			
+			override protected function createNodeContextPanel():void
+			{
+				super.createNodeContextPanel();
+
+				// interface context panel has no attributes... removing it by reducing height (hack)
+				this.nodeContextPanel.height = this.nodeContextPanel.height - ( VClassNodeContextPanel.BUTTON_HEIGHT + 1) ;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<grids>
+		<mx:Grid id="interfaceDataGrid" x="0" y="38" width="100%">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="100%">
+						<mx:HRule x="0" width="100%" shadowColor="#418D8E" strokeColor="#418D8E"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+						<mx:GridItem width="100%" height="100%">
+									<mx:Grid id="methodGrid" y="147" width="100%" verticalGap="0">
+										<mx:GridRow width="100%" height="100%">
+											<mx:GridItem id="defaultMethodGridItem">
+												
+											</mx:GridItem>
+										</mx:GridRow>
+									</mx:Grid>
+						</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		
+	</grids>
+
+</VClassDiagramNode>
+
+

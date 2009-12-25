@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditLinkWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns="de.waveumleditor.view.diagrammer.dialogues.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import de.waveumleditor.model.classDiagram.links.EAssociationType;
+			import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
+			import de.waveumleditor.view.diagrammer.classDiagram.links.VAssociationLink;
+			import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+			import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
+			
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.SystemManager;
+			import flash.display.DisplayObject;
+			
+			
+			private var viewLink:VAssociationLink = null;
+			private var link:MAssociationLink = null;
+			
+			private function close():void {
+				PopUpManager.removePopUp(titleWindow);
+			}
+			
+			public function setViewLink(link:VAssociationLink):void
+			{
+				this.viewLink = link;
+			}
+			
+			public function popUp():void
+			{	
+				titleWindow.title = "Link editieren";
+				titleWindow.addChild(editLinkCanvas);
+				
+				PopUpManager.addPopUp(titleWindow, SystemManager.getSWFRoot(titleWindow), true);
+				PopUpManager.centerPopUp(titleWindow);
+			}
+			
+			private function handleLinkDescription():void
+			{
+				this.viewLink.linkName = txLinkName.text;
+				this.viewLink.linkAttributeFrom = txLinkAttrFrom.text;
+				this.viewLink.linkMultiplicityFrom = txLinkMultiplicityFrom.text;
+				this.viewLink.linkAttributeTo = txLinkAttrTo.text;
+				this.viewLink.linkMultiplicityTo = txLinkMultiplicityTo.text;
+				
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.ASSOCIATION;
+					this.viewLink.linkNavigableTo = checkboxNaviTo.selected;
+					this.viewLink.linkNavigableFrom = checkboxNaviFrom.selected;
+				}
+				if(associationTypeComboBox.selectedLabel == "Aggregation")
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.AGGREGATION;
+					this.viewLink.linkNavigableTo = false;
+					this.viewLink.linkNavigableFrom = false;
+				}
+				if(associationTypeComboBox.selectedLabel == "Komposition")
+				{
+					this.viewLink.linkAssoziationType = EAssociationType.COMPOSITION;
+					this.viewLink.linkNavigableTo = false;
+					this.viewLink.linkNavigableFrom = false;
+				}
+				
+			}
+			
+			public function update(link:MAssociationLink):void 
+			{
+				this.link = link;
+				
+				txLinkName.text = link.getName();
+				txLinkAttrFrom.text = link.getFromName();
+				txLinkMultiplicityFrom.text = link.getFromMultiplicity();
+				txLinkAttrTo.text = link.getToName();
+				txLinkMultiplicityTo.text = link.getToMultiplicity();
+				
+				if(link.getType() == EAssociationType.ASSOCIATION)
+				{
+					associationTypeComboBox.selectedIndex = 0;
+					checkboxNaviTo.selected = link.getToNavigable();
+					checkboxNaviFrom.selected = link.getFromNavigable();
+				}
+				if(link.getType() == EAssociationType.AGGREGATION)
+				{
+					associationTypeComboBox.selectedIndex = 1;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+				}
+				if(link.getType() == EAssociationType.COMPOSITION)
+				{
+					associationTypeComboBox.selectedIndex = 2;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+				}
+			}
+			
+			private function save():void
+			{
+				var event:LinkEditEvent = new LinkEditEvent(link);
+				link.setName(txLinkName.text);
+				link.setFromName(txLinkAttrFrom.text);
+				link.setFromMultiplicity(txLinkMultiplicityFrom.text);
+				link.setToName(txLinkAttrTo.text);
+				link.setToMultiplicity(txLinkMultiplicityTo.text);
+				
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
+				{
+					link.setType(EAssociationType.ASSOCIATION);
+					link.setToNavigable(checkboxNaviTo.selected);
+					link.setFromNavigable(checkboxNaviFrom.selected);
+				}
+				if(associationTypeComboBox.selectedLabel == "Aggregation")
+				{
+					link.setType(EAssociationType.AGGREGATION);
+					link.setToNavigable(false);
+					link.setFromNavigable(false);
+				}
+				if(associationTypeComboBox.selectedLabel == "Komposition")
+				{
+					link.setType(EAssociationType.COMPOSITION);
+					link.setToNavigable(false);
+					link.setFromNavigable(false);
+				}
+				
+				getController().handleSaveLink(event);				
+				close();
+			}
+			
+			
+			private function handelClick():void
+			{
+				if(associationTypeComboBox.selectedLabel == "Assoziation")
+            	{
+            		checkboxNaviFrom.enabled = true;
+					checkboxNaviTo.enabled = true;
+            	}
+            	if(associationTypeComboBox.selectedLabel == "Aggregation")
+            	{
+            		checkboxNaviFrom.selected = false;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+            	}
+            	if(associationTypeComboBox.selectedLabel == "Komposition")
+            	{
+            		checkboxNaviFrom.selected = false;
+					checkboxNaviTo.selected = false;
+					checkboxNaviFrom.enabled = false;
+					checkboxNaviTo.enabled = false;
+            	}
+			}
+			
+		]]>
+	</mx:Script>
+	<!--	<container> -->
+	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+					id="titleWindow"
+					layout="vertical"
+					minWidth="240" 
+					minHeight="100"
+					title="Link editieren"
+					titleStyleName="titleText"
+					backgroundColor="#FFFFFF"
+					backgroundAlpha="0.8"
+					borderAlpha="1.0"
+					cornerRadius="10"
+					dropShadowEnabled="true"
+					showCloseButton="true"
+					close="close()" borderColor="#E2E2E2" width="697" height="287" x="10" y="10"> 
+		
+		<mx:Canvas id="editLinkCanvas" width="667" height="237">
+		<mx:Image source="de/waveumleditor/view/diagrammer/assets/images/Background_LinkDescription.png" width="651" height="173" scaleContent="true" x="10" y="10" alpha="0.5"/>
+			<mx:Canvas backgroundAlpha="1.0" top="0" right="0" left="0" bottom="61">
+				<mx:TextInput id="txLinkName" x="276.5" y="54" text="" editable="true" width="120" textAlign="center"/>
+				<mx:TextInput id="txLinkAttrTo" x="393.5" y="100" text="" editable="true" width="115" textAlign="right"/>
+				<mx:TextInput id="txLinkMultiplicityFrom" x="153.5" y="54" text="" editable="true" width="61"/>
+				<mx:TextInput id="txLinkMultiplicityTo" x="447.5" y="54" editable="true" width="61" textAlign="right"/>
+				<mx:TextInput id="txLinkAttrFrom" x="153.5" y="100" text="" editable="true" width="115"/>
+				<mx:CheckBox x="153.5" y="149" label="Navigierbar" id="checkboxNaviFrom" enabled="true"/>
+				<mx:CheckBox x="421.5" y="149" label="Navigierbar" id="checkboxNaviTo" enabled="true"/>
+				<mx:Label x="153.5" y="39" text="Multiplizität" width="71"/>
+				<mx:Label x="436.5" y="39" text="Multiplizität" width="72" textAlign="right"/>
+				<mx:Label x="153.5" y="120" text="Attribut" width="115"/>
+				<mx:Label x="393.5" y="120" text="Attribut" width="115" textAlign="right"/>
+				<mx:Label x="276.5" y="39" text="Name" width="120" textAlign="center"/>
+			</mx:Canvas>
+			
+			<mx:Button label="Abbrechen" click="close()" x="572" y="213"/>
+			<mx:Button label="Speichern" click="save(); handleLinkDescription()" x="480" y="213"/>
+			<mx:Label x="10" y="189" text="Assoziationstyp" fontWeight="bold" textDecoration="underline" fontSize="12"/>
+			<mx:Canvas>
+				<mx:ComboBox id="associationTypeComboBox" x="10" y="210" editable="false" enabled="true" change="handelClick()">
+			    	<mx:ArrayCollection>
+				        <mx:Object label="Assoziation"/>
+				        <mx:Object label="Aggregation"/>
+				        <mx:Object label="Komposition"/>
+			    	</mx:ArrayCollection>
+				</mx:ComboBox>
+			</mx:Canvas>
+		</mx:Canvas>
+	</mx:TitleWindow> 
+	<!--	</container>-->
+
+</EditLinkWindow>
