@@ -4,14 +4,14 @@ package de.tests.waveumleditor.controller
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.MClassDiagram;
 	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
-	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
 	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
-	import de.waveumleditor.model.wao.wave.Delta;
+	import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 	
@@ -24,13 +24,14 @@ package de.tests.waveumleditor.controller
 		public function testAddNode():void
 		{
 			var diagram:MClassDiagram = new MClassDiagram();
+			var diagramView:VClassDiagram = new VClassDiagram();
 			
 			var modelFascade:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 						
 			var sizeBefore:int = diagram.getNodes().length;
 			
 			var viewNode:VClassDiagramNode = new VClassNode();
-			modelFascade.addNode(viewNode);
+			modelFascade.addNode(viewNode, diagramView);
 						
 			var id:Identifier = viewNode.getIdentifier();
 			

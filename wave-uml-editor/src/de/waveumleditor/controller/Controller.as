@@ -70,7 +70,7 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, handleShowAssociationLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_DEPENDENCY_LINK, handleShowDependencyLink);
 			
-			//wave.setStateCallback(stateCallback);
+			wave.setStateCallback(stateCallback);
 		}
 		
 		private function stateCallback(args:Object):void 
@@ -129,8 +129,7 @@ package de.waveumleditor.controller
 		 */ 	
 		private function handleAddNode(event:NodeEvent):void
 		{
-			this.fascade.addNode(event.getNode());
-			this.diagramView.saveNode(event.getNode());
+			this.fascade.addNode(event.getNode(), this.diagramView);
 		}
 		
 		/**
@@ -176,8 +175,7 @@ package de.waveumleditor.controller
 		private function handleAddLink(event:LinkEvent):void
 		{
 			trace("handleAddLink ");
-			this.fascade.addLink(event.getLink());
-			this.diagramView.saveLink(event.getLink());
+			this.fascade.addLink(event.getLink(), this.diagramView);
 		}
 		
 		/**
@@ -338,19 +336,6 @@ package de.waveumleditor.controller
 			editSingleMethod.popUp();	
 		}
 		
-		/** 
-		 * This handler is supposed to be called from the 
-		 * method/constructor-dialog of a node. It opens the single-constructor-dialog
-		 * for a constructor. 
-		 */ 
-		public function handleAddMethod(event:NodeMethodEvent):void
-		{
-			this.fascade.addNodeMethod(event.getClassNode().getIdentifier(), event.getMethod());
-			
-			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
-			event.getMethodWindow().update(updatedClass);
-		}
-		
 		/**
 		 * Handler to store the changes to a method.
 		 * This method is also used to add a new method.
@@ -385,29 +370,6 @@ package de.waveumleditor.controller
 			event.getMethodWindow().update(updatedClass);
 			// also update the diagram in the view
 			refreshNodeInView(updatedClass);
-		}
-		
-		/**
-		 * Handler to store the changes to a constructor.
-		 * This method is also used to add a new constructor.
-		 */		
-		public function handleEditConstructor(event:NodeMethodEvent):void
-		{
-			this.fascade.editClassConstructor(event.getClassNode().getIdentifier(), event.getMethod());
-			
-			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
-			event.getMethodWindow().update(updatedClass);
-		}
-		
-		/**
-		 * Handler to remove a constructor.
-		 */ 
-		public function handleRemoveConstructor(event:NodeMethodEvent):void
-		{
-			this.fascade.removeClassConstructor(event.getClassNode().getIdentifier(), event.getMethodId());
-			
-			var updatedClass:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
-			event.getMethodWindow().update(updatedClass);
 		}
 		
 		/**

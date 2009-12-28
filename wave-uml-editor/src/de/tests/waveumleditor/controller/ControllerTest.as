@@ -4,6 +4,7 @@ package de.tests.waveumleditor.controller
 	
 	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 	
@@ -20,6 +21,8 @@ package de.tests.waveumleditor.controller
 		public function testAddNode():void
 		{
 			var diagram:MClassDiagram = new MClassDiagram();
+			var diagramView:VClassDiagram = new VClassDiagram();
+			
 			var list:ArrayList = diagram.getNodes();
 			
 			var sizeBefore:int = list.length;
@@ -27,7 +30,7 @@ package de.tests.waveumleditor.controller
 			var cf:ModelFascade = new ModelFascade(diagram, new WaveSimulator());
 			var bcdn:VClassDiagramNode = new VClassNode();
 			
-			cf.addNode(bcdn);
+			cf.addNode(bcdn, diagramView);
 			assertEquals(sizeBefore + 1, diagram.getNodes().length);
 		}
 		

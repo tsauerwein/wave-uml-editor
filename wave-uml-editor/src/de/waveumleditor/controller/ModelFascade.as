@@ -5,18 +5,19 @@ package de.waveumleditor.controller
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
 	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
 	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
-	import de.waveumleditor.model.classDiagram.links.MClassLink;
-	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
 	import de.waveumleditor.model.wao.classDiagram.WAONode;
-	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	
 	import mx.collections.IList;
 
@@ -46,10 +47,12 @@ package de.waveumleditor.controller
 			this.diagram = diagram;
 		}
 		
-		public function addNode(node:VClassDiagramNode):void
+		public function addNode(node:VClassDiagramNode, diagramView:VClassDiagram):void
 		{	
 			var id:Identifier = waoKey.generateNodeIdentifier();
 			node.setIdentifier(id);
+			
+			diagramView.saveNode(node);
 			
 			var modelNode:MClassDiagramNode = ModelFactory.nodeFromView(node);
 			this.diagram.addNode(modelNode);
@@ -94,10 +97,13 @@ package de.waveumleditor.controller
 		
 		
 		// Link 				
-		public function addLink(link:VClassLink):void
+		public function addLink(link:VClassLink, diagramView:VClassDiagram):void
 		{
 			var id:Identifier = waoKey.generateLinkIdentifier();
 			link.setIdentifier(id);
+			
+			diagramView.saveLink(link);
+			
 			var fromNode:MClassDiagramNode = this.diagram.getNode((link.fromNode as VClassDiagramNode).getIdentifier());
 			var toNode:MClassDiagramNode = this.diagram.getNode((link.toNode as VClassDiagramNode).getIdentifier());
 			
@@ -147,24 +153,11 @@ package de.waveumleditor.controller
 		}
 		
 		// Methods
-		
-		public function addNodeMethod(nodeId:Identifier, method:MClassConstructorMethod):void
-		{
-			var id:Identifier = waoKey.generateMethodIdentifier();
-			if(method is MClassMethod)
-			{
-				diagram.addMethod(nodeId, method as MClassMethod, waoKey.generateMethodIdentifier());
-			}
-			if(method is MClassConstructorMethod)
-			{
-				diagram.addConstructor(nodeId, method, waoKey.generateMethodIdentifier());
-			}
-			
-		}
-		
+	
 		public function removeNodeMethod(nodeId:Identifier, methodId:Identifier):void
 		{
 			diagram.removeMethod(nodeId, methodId);
+			waoNode.removeClassMethod(nodeId, methodId);
 		}
 		
 		public function editNodeMethod(nodeId:Identifier, method:MClassConstructorMethod):void
@@ -177,12 +170,14 @@ package de.waveumleditor.controller
 				if(method is MClassMethod)
 				{
 					id = waoKey.generateMethodIdentifier();
-					diagram.addMethod(nodeId, method as MClassMethod, id);	
+					var newMethod:MClassMethod = diagram.addMethod(nodeId, method as MClassMethod, id);	
+					waoNode.updateClassMethod(nodeId, newMethod);
 				}
 				else
 				{
 					id = waoKey.generateConstructorIdentifier();
-					diagram.addConstructor(nodeId, method, id);
+					var newConstructor:MClassConstructorMethod = diagram.addConstructor(nodeId, method, id);
+					waoNode.updateClassConstructor(nodeId, newConstructor);
 				}
 				
 			}
@@ -191,33 +186,21 @@ package de.waveumleditor.controller
 				if(method is MClassMethod)
 				{
 					diagram.editMethod(nodeId, method as MClassMethod);
+					waoNode.updateClassMethod(nodeId, method as MClassMethod);
 				}
 				else
 				{
 					diagram.editConstructor(nodeId, method);
+					waoNode.updateClassConstructor(nodeId, method);
 				}
 				
-			}
-		}
-		
-		// Constructors
-		
-		public function editClassConstructor(classId:Identifier, constructor:MClassConstructorMethod):void
-		{
-			if (constructor.getIdentifier().getId() == WAOKeyGenerator.DEFAULT_ATTRIBUTE_IDENTIFIER.getId())
-			{
-				var id:Identifier = waoKey.generateConstructorIdentifier();
-				diagram.addConstructor(classId, constructor, id);
-			}
-			else
-			{
-				diagram.editConstructor(classId, constructor);
 			}
 		}
 		
 		public function removeClassConstructor(classId:Identifier, constructorId:Identifier):void
 		{
 			diagram.removeConstructor(classId, constructorId);
+			waoNode.removeClassConstructor(classId, constructorId);
 		}
 		
 	}

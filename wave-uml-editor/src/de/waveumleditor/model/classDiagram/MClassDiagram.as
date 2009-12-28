@@ -142,7 +142,7 @@ package de.waveumleditor.model.classDiagram
 		}
 		
 		//Methods
-		public function addMethod(classId:Identifier, newMethod:MClassMethod, methodId:Identifier):void
+		public function addMethod(classId:Identifier, newMethod:MClassMethod, methodId:Identifier):MClassMethod
 		{
 				var method:MClassMethod = newMethod.clone(methodId) as MClassMethod;
 				
@@ -152,6 +152,8 @@ package de.waveumleditor.model.classDiagram
 				var classDiagramNode:MClassDiagramNode = getNode(classId);
 				
 				classDiagramNode.addMethod(method);
+				
+				return method;
 		}
 		
 		public function editMethod(classId:Identifier, newMethod:MClassMethod):void
@@ -173,13 +175,15 @@ package de.waveumleditor.model.classDiagram
 		// Constructors
 		public function addConstructor(classId:Identifier, 
 			newConstructor:MClassConstructorMethod, 
-			constructorId:Identifier):void
+			constructorId:Identifier):MClassConstructorMethod
 		{
 				var constructor:MClassConstructorMethod = newConstructor.clone(constructorId);
 				
 				var umlClass:MClassNode = getNode(classId) as MClassNode;
 				
 				umlClass.addConstructor(constructor);
+				
+				return constructor;
 		}
 		
 		public function editConstructor(classId:Identifier, newConstructor:MClassConstructorMethod):void

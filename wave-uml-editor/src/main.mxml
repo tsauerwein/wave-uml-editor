@@ -92,7 +92,10 @@
 				this.diagram.addChild(link.toNode);
 				this.diagram.addChildAt(link, 0);	 */
 				
+				
 				classDiagram = new MClassDiagram();
+				
+				/*
 				classDiagram.addNode(classData);
 				classDiagram.addNode(classData2);
 				classDiagram.addNode(emptyClass);
@@ -101,6 +104,7 @@
 				classDiagram.addLink(linkInheritance);
 				classDiagram.addLink(linkImplements);
 				classDiagram.addLink(linkAssociation);
+				*/
 				
 				controller = new Controller(diagram, classDiagram);
 				controller.createDiagram();

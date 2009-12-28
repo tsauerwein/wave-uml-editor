@@ -235,7 +235,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			{
 				if (key != null && nodesToRemove[key] != null) 
 				{
-					var id:Identifier = new Identifier(key as String);
+					var id:Identifier = new Identifier(key.toString());
 					var node:VClassDiagramNode = getNode(id);
 					super.removeNode(node);
 					nodes.removeValue(id);
@@ -249,9 +249,13 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			{
 				if (key != null && linksToRemove[key] != null) 
 				{
-					var id:Identifier = new Identifier(key as String);
+					var id:Identifier = new Identifier(key.toString());
 					var link:VClassLink = getLink(id);
-					super.removeLink(link);
+					
+					if (link.parent != null)
+					{
+						super.removeLink(link);
+					}
 					links.removeValue(link.getIdentifier());
 				}
 			}
