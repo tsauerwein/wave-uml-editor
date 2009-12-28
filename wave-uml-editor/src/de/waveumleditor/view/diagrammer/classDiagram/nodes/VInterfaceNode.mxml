@@ -34,11 +34,10 @@
 				if(nodeName==""){nodeName="Neues Interface"};//default
 				
 				// add methods
+				methodGrid.removeAllChildren();
 				if(interfaceData.getMethods().length==0)//default
 				{
-					var defaultMethod:Label = new Label();
-					defaultMethod.text="Methoden";
-					defaultMethodGridItem.addChild(defaultMethod);
+					methodGrid.addChild(defaultMethodGridItemRow);
 				}
 				var methods:IList = interfaceData.getMethods();
 				addElementsToContentGrid(methods, methodGrid);
@@ -77,18 +76,16 @@
 				<mx:GridRow width="100%" height="100%">
 						<mx:GridItem width="100%" height="100%">
 									<mx:Grid id="methodGrid" y="147" width="100%" verticalGap="0">
-										<mx:GridRow width="100%" height="100%">
+										<mx:GridRow width="100%" height="100%" id="defaultMethodGridItemRow">
 											<mx:GridItem id="defaultMethodGridItem">
-												
+												<mx:Label text="Methoden" />	
 											</mx:GridItem>
 										</mx:GridRow>
 									</mx:Grid>
 						</mx:GridItem>
 				</mx:GridRow>
 			</mx:Grid>
-		
 	</grids>
-
 </VClassDiagramNode>
 
 
