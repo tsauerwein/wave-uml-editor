@@ -2,10 +2,10 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.adobe.serialization.json.JSON;
 	
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
 	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
 	import de.waveumleditor.model.wao.wave.Delta;
 		
 	/**
@@ -43,20 +43,31 @@ package de.waveumleditor.model.wao.classDiagram
 			WAOClassAttribute.remove(delta, nodeId, methodId);
 		}
 
-		public static function getFromState(stateKey:String, stateValue:String):MClassMethod
+		public static function getFromState(stateKey:String, stateValue:String, isInterface:Boolean):MClassMethod
 		{
 			var methodId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
 			
 			var methodData:Object = JSON.decode(stateValue);
 			
-			var method:MClassMethod = new MClassMethod(
-				new Identifier(methodId),
-				methodData[NAME],
-				EVisibility.getEVisibilityFromVal(methodData[WAOClassConstructor.VISIBILITY]),
-				WAOType.getFromDecodedObject(methodData[RETURN_TYPE]),
-				methodData[ABSTRACT],
-				methodData[STATIC]);
-				
+			var method:MClassMethod = null
+			if (isInterface)
+			{
+				method = new MInterfaceMethod(
+					new Identifier(methodId),
+					methodData[NAME],
+					WAOType.getFromDecodedObject(methodData[RETURN_TYPE]));
+			}
+			else
+			{
+				method = new MClassMethod(
+					new Identifier(methodId),
+					methodData[NAME],
+					EVisibility.getEVisibilityFromVal(methodData[WAOClassConstructor.VISIBILITY]),
+					WAOType.getFromDecodedObject(methodData[RETURN_TYPE]),
+					methodData[ABSTRACT],
+					methodData[STATIC]);
+			}
+							
 			WAOClassConstructor.getParametersFromDecodedObject(method, methodData[WAOClassConstructor.PARAMETERS]);
 			
 			return method;	

@@ -12,15 +12,17 @@ package de.waveumleditor.model.classDiagram.nodes
 		
 		public override function setVisibility(visibility:EVisibility):void
 		{
-			// simulates private function - sorry
-			throw new Error("should not be called");
+			super.setVisibility(EVisibility.PUBLIC);
 		}
 		
 		public override function setAbstract(abstract:Boolean):void
 		{
-			// simulates private function - sorry
-			throw new Error("should not be called");
+			super.setAbstract(true);
 		}
 		
+		public override function setStatic(is_static:Boolean):void
+		{
+			super.setStatic(false);
+		}
 	}
 }

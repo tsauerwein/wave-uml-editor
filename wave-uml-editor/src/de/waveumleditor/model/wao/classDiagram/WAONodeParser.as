@@ -2,13 +2,12 @@ package de.waveumleditor.model.wao.classDiagram
 {
 	import com.nextgenapp.wave.gadget.WaveState;
 	
-	import de.waveumleditor.controller.ModelFascade;
 	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
-	import de.waveumleditor.model.classDiagram.nodes.MInterface;
 	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
@@ -71,11 +70,11 @@ package de.waveumleditor.model.wao.classDiagram
 				
 				addAtttributes(umlClass, state);
 				addConstructors(umlClass, state);
-				addMethods(umlClass, state);
+				addMethods(umlClass, state, false);
 			}
 			else if (node is MInterface)
 			{
-				// todo
+				addMethods(node, state, true);
 			}
 			
 			return node;
@@ -107,16 +106,16 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		private function addMethods(umlClass:MClassNode, state:WaveState):void
+		private function addMethods(node:MClassDiagramNode, state:WaveState, isInterface:Boolean):void
 		{
 			for (var i:int = 0; i < methodKeys.length; i++)
 			{
 				var key:String = methodKeys.getItemAt(i) as String;
 				
 				var method:MClassMethod = 
-					WAOClassMethod.getFromState(key, state.getStringValue(key));
+					WAOClassMethod.getFromState(key, state.getStringValue(key), isInterface);
 					
-				umlClass.addMethod(method);
+				node.addMethod(method);
 			}
 		}
 	}

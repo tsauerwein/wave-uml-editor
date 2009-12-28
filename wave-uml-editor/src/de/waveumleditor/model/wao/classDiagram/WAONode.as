@@ -5,13 +5,13 @@ package de.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
-	import de.waveumleditor.model.classDiagram.nodes.MInterface;
 	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
-	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
 	import de.waveumleditor.model.wao.WAOPosition;
 	import de.waveumleditor.model.wao.wave.Delta;
 	
@@ -89,7 +89,7 @@ package de.waveumleditor.model.wao.classDiagram
 			} 
 			else if (node is MInterface)
 			{
-				// todo
+				removeClassMethods(node, delta);
 			}
 			
 			wave.submitDelta(delta.getWaveDelta());
@@ -117,7 +117,7 @@ package de.waveumleditor.model.wao.classDiagram
 			}
 		}
 		
-		private function removeClassMethods(classNode:MClassNode, delta:Delta):void
+		private function removeClassMethods(classNode:MClassDiagramNode, delta:Delta):void
 		{
 			var methods:IList = classNode.getMethods();
 			

@@ -5,16 +5,18 @@ package de.tests.waveumleditor.model.wao.classDiagram
 	
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.Position;
-	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
-	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
 	import de.waveumleditor.model.classDiagram.MClassDiagram;
-	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
-	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
-	import de.waveumleditor.model.classDiagram.nodes.MType;
-	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
-	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
 	import de.waveumleditor.model.classDiagram.links.MInheritanceLink;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+	import de.waveumleditor.model.classDiagram.nodes.MInterface;
+	import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
+	import de.waveumleditor.model.classDiagram.nodes.MType;
+	import de.waveumleditor.model.classDiagram.nodes.MVariable;
 	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
 	import de.waveumleditor.model.wao.classDiagram.WAOLink;
@@ -39,9 +41,14 @@ package de.tests.waveumleditor.model.wao.classDiagram
 				new Identifier(WAOKeyGenerator.PREFIX_NODE + "002"),
 				new Position(3,4),
 				"B");
+			var interface1:MInterface = new MInterface(
+				new Identifier(WAOKeyGenerator.PREFIX_NODE + "003"),
+				new Position(5,6),
+				"ICE");
 				
 			waoNode.createNode(class1);
 			waoNode.createNode(class2);
+			waoNode.createNode(interface1);
 				
 			var attribute1:MClassAttribute = new MClassAttribute(
 				new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE +  "001"),
@@ -63,11 +70,19 @@ package de.tests.waveumleditor.model.wao.classDiagram
 				"doIt",
 				EVisibility.PUBLIC,
 				MType.BOOLEAN);	
+			class2.addMethod(method1);
+			
+			var method2:MInterfaceMethod = new MInterfaceMethod(
+				new Identifier(WAOKeyGenerator.PREFIX_METHOD +  "001"),
+				"doItNow",
+				MType.BOOLEAN);	
+			interface1.addMethod(method2);
 			
 			waoNode.updateClassAttribute(class1.getIdentifier(), attribute1);
 			waoNode.updateClassConstructor(class1.getIdentifier(), constructor1);
 			waoNode.updateClassAttribute(class2.getIdentifier(), attribute2);
 			waoNode.updateClassMethod(class2.getIdentifier(), method1);
+			waoNode.updateClassMethod(interface1.getIdentifier(), method2);
 			
 			var link1:MInheritanceLink = new MInheritanceLink(
 				new Identifier(WAOKeyGenerator.PREFIX_LINK + "001"),
@@ -86,10 +101,11 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			
 			var diagram:MClassDiagram = WAODiagram.getFromState(wave.getState());
 			
-			assertEquals(2, diagram.getNodes().length);
+			assertEquals(3, diagram.getNodes().length);
 			
 			var restoredClass1:MClassNode = diagram.getNode(class1.getIdentifier()) as MClassNode;
 			var restoredClass2:MClassNode = diagram.getNode(class2.getIdentifier()) as MClassNode;
+			var restoredInterface1:MInterface = diagram.getNode(interface1.getIdentifier()) as MInterface;
 			
 			assertEquals(1, restoredClass1.getAttributes().length);
 			assertEquals(0, restoredClass1.getMethods().length);
@@ -97,6 +113,11 @@ package de.tests.waveumleditor.model.wao.classDiagram
 			assertEquals(1, restoredClass2.getAttributes().length);
 			assertEquals(1, restoredClass2.getMethods().length);
 			assertEquals(0, restoredClass2.getConstructors().length);
+			assertEquals(1, restoredInterface1.getMethods().length);
+			
+			var restoredInterfaceMethod:MInterfaceMethod = 
+				restoredInterface1.getMethod(method2.getIdentifier()) as MInterfaceMethod;
+			assertEquals(method2.getName(), restoredInterfaceMethod.getName());
 			
 			assertEquals(2, diagram.getLinks().length);
 			
