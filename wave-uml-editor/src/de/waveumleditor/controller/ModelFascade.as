@@ -39,7 +39,7 @@ package de.waveumleditor.controller
 			this.wave = wave;
 			this.waoLink = new WAOLink(wave);
 			this.waoNode = new WAONode(wave, waoLink);
-			this.waoKey = new WAOKeyGenerator();
+			this.waoKey = new WAOKeyGenerator(wave);
 		}
 		
 		public function setDiagram(diagram:MClassDiagram):void

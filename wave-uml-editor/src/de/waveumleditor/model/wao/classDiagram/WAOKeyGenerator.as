@@ -1,12 +1,24 @@
 package de.waveumleditor.model.wao.classDiagram
 {
+	import com.nextgenapp.wave.gadget.Wave;
+	
 	import de.waveumleditor.model.Identifier;
-	import de.waveumleditor.model.wao.wave.Delta;
 	
 	public class WAOKeyGenerator
 	{
+		private var wave:Wave;
 		
+		/**
+		 * SEPERATOR seperates the several elements of an ID, for example:
+		 * N-0-123-456
+		 */ 
 		public static const SEPERATOR:String = "-";
+		
+		/**
+		 * IDS_SEPERATOR seperates cascaded ID's, for example
+		 * for an attribute:
+		 * N-0-123-456_A-0-123-456
+		 */ 
 		public static const IDS_SEPERATOR:String = "_";
 		
 		public static const PREFIX_ATTRIBUTE:String = "A" + SEPERATOR;
@@ -20,58 +32,76 @@ package de.waveumleditor.model.wao.classDiagram
 		public static const DEFAULT_CONSTRUCTOR_IDENTIFIER:Identifier = new Identifier(PREFIX_CONSTRUCTOR + "default_constr");
 	
 		
-		public function WAOKeyGenerator()
+		public function WAOKeyGenerator(wave:Wave)
 		{
+			this.wave = wave;
+		}
+		
+		/**
+		 * The identifier consists of:
+		 * 	- the prefix depending on the element for which the identifier is used
+		 * 	- the id of the user who created the element
+		 * 	- the current timestamp
+		 * 	- and random number.
+		 */ 
+		private function generateIdentifier(prefix:String):Identifier
+		{
+			return new Identifier(
+				prefix + 
+				getViewerId() + SEPERATOR +
+				new Date().getTime() + SEPERATOR + 
+				new Number(int.MAX_VALUE * Math.random()).toFixed(0) 
+			);
+		}
+		
+		private function getViewerId():String
+		{
+			return (wave.getViewer() != null) ?
+				wave.getViewer().getId() :
+				"0";
 		}
 		
 		public function generateNodeIdentifier():Identifier
 		{
-			//var nodeList:List = diagram.getNodes();
-			// eigene ID: wave.getViewer().getId()
-			return new Identifier(PREFIX_NODE + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return generateIdentifier(PREFIX_NODE);
 		}
 		
 		public function generateLinkIdentifier():Identifier
 		{
-			//var nodeList:List = diagram.getNodes();
-			return new Identifier(PREFIX_LINK + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return generateIdentifier(PREFIX_LINK);
 		}
 		
 		public function generateAttributeIdentifier():Identifier
 		{
-			// todo: abhängig von node
-			//var nodeList:List = diagram.getNodes();
-			return new Identifier(PREFIX_ATTRIBUTE + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return generateIdentifier(PREFIX_ATTRIBUTE);
 		}
 		
 		public function generateMethodIdentifier():Identifier
 		{
-			// todo: abhängig von node
-			//var nodeList:List = diagram.getNodes();
-			return new Identifier(PREFIX_METHOD + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return generateIdentifier(PREFIX_METHOD);
 		}
 		
 		public function generateConstructorIdentifier():Identifier
 		{
-			// todo: abhängig von node
-			//var nodeList:List = diagram.getNodes();
-			return new Identifier(PREFIX_CONSTRUCTOR + new Number(int.MAX_VALUE * Math.random()).toString() );
+			return generateIdentifier(PREFIX_CONSTRUCTOR);
 		}
+		
 		
 		public static function isConstructor(id:Identifier):Boolean
 		{
-			return id.getId().substr(0, 3) == PREFIX_CONSTRUCTOR;
+			return isConstructorKey(id.getId());
 		}
 		
 		public static function isMethod(id:Identifier):Boolean
 		{
-			return id.getId().substr(0, 2) == PREFIX_METHOD;
+			return isMethodKey(id.getId());
 		}
 		
 		public static function isAttribute(id:Identifier):Boolean
 		{
 			return id.getId().substr(0, 2) == PREFIX_ATTRIBUTE;
 		}
+		
 		
 		public static function isConstructorKey(key:String):Boolean
 		{
