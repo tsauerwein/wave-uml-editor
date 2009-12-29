@@ -27,7 +27,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 
 		public function update(linkData:MClassLink):void
 		{
-			
+			// can be overriden in child-classes
 		}
 		
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 

@@ -8,7 +8,7 @@ package de.waveumleditor.model.classDiagram.links
 				
 		private var name:String;
 		
-		public static const TYPE:String = "A";
+		public static const TYPE:String = "D";
 		
 		public function MDependencyLink(key:Identifier, 
 			linkFrom:MClassDiagramNode, linkTo:MClassDiagramNode, name:String = "")

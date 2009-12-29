@@ -2,6 +2,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 {
 	import com.anotherflexdev.diagrammer.BaseNode;
 	
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
+	
 	import flash.geom.Point;
 	
 	public class VDependencyLink extends VClassLink
@@ -14,6 +17,17 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
 			return true;
+		}
+		
+		override public function update(linkData:MClassLink):void
+		{
+			if (linkData is MDependencyLink)
+			{
+				var depLink:MDependencyLink = linkData as MDependencyLink;
+				this.linkName = depLink.getName();
+				
+				invalidateDisplayList();
+			}
 		}
 		
 		override protected function createLinkContextPanel():void

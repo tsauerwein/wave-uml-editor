@@ -5,26 +5,25 @@ package de.waveumleditor.controller
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.tests.TestUtil;
+	import de.waveumleditor.model.classDiagram.MClassDiagram;
+	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
+	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 	import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
-	import de.waveumleditor.model.classDiagram.MClassDiagram;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
-	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	import de.waveumleditor.model.classDiagram.nodes.MInterface;
 	import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
 	import de.waveumleditor.model.classDiagram.nodes.MType;
-	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	import de.waveumleditor.model.classDiagram.nodes.MVariable;
-	import de.waveumleditor.model.classDiagram.links.MClassLink;
-	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
-	import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 	import de.waveumleditor.model.wao.classDiagram.WAODiagram;
 	import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
-	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
 	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
@@ -381,6 +380,7 @@ package de.waveumleditor.controller
 		{
 			var link:MAssociationLink = diagramModel.getLink(event.getAssociationLink().getIdentifier()) as MAssociationLink;
 			var linkCopy:MAssociationLink = link.clone(link.getIdentifier()) as MAssociationLink;
+			
 			var editLinksWindow:EditAssociationLinkWindow = new EditAssociationLinkWindow();
 			editLinksWindow.setViewLink(event.getAssociationLink());
 			editLinksWindow.update(linkCopy);
@@ -395,6 +395,7 @@ package de.waveumleditor.controller
 		public function handleSaveLink(event:LinkEditEvent):void 
 		{
 			this.fascade.editLink(event.getLink());
+			refreshLinkInView(event.getLink());
 			
 		}
 		
@@ -415,9 +416,25 @@ package de.waveumleditor.controller
 			editLinksWindow.popUp();
 		}
 		
-		private function refreshNodeInView(node:MClassDiagramNode):void
+		private function refreshNodeInView(nodeModel:MClassDiagramNode):void
 		{
-			this.diagramView.getNode(node.getIdentifier()).update(node);
+			var nodeView:VClassDiagramNode = this.diagramView.getNode(nodeModel.getIdentifier());
+			
+			if (nodeView != null && nodeModel != null)
+			{
+				nodeView.update(nodeModel);
+			}
+		}
+		
+		private function refreshLinkInView(link:MDependencyLink):void
+		{
+			var linkView:VClassLink = this.diagramView.getLink(link.getIdentifier());
+			var linkModel:MClassLink = this.diagramModel.getLink(link.getIdentifier());
+			
+			if (linkView != null && linkModel != null)
+			{
+				linkView.update(linkModel);
+			}
 		}
 	}
 }

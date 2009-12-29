@@ -4,6 +4,8 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	import com.anotherflexdev.diagrammer.Diagram;
 	
 	import de.waveumleditor.model.classDiagram.links.EAssociationType;
+	import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+	import de.waveumleditor.model.classDiagram.links.MClassLink;
 	
 	import flash.display.Graphics;
 	import flash.geom.Point;
@@ -16,11 +18,14 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	{
 		[Bindable] public var linkMultiplicityFrom:String;
 		[Bindable] public var linkMultiplicityTo:String;
+		
 		[Bindable] public var linkAttributeFrom:String;
 		[Bindable] public var linkAttributeTo:String;
+		
 		[Bindable] public var linkNavigableFrom:Boolean;
 		[Bindable] public var linkNavigableTo:Boolean;
-		[Bindable] public var linkAssoziationType:EAssociationType;
+		
+		[Bindable] public var linkAssociationType:EAssociationType;
 		
 		protected var labelMultiplicityFrom:Label;
 		protected var labelMultiplicityTo:Label;
@@ -35,6 +40,28 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
 			return true;
+		}
+		
+		override public function update(linkData:MClassLink):void
+		{			
+			if (linkData is MAssociationLink)
+			{
+				var association:MAssociationLink = linkData as MAssociationLink;
+				
+				this.linkName = association.getName();
+				
+				this.linkAttributeFrom = association.getFromName();
+				this.linkMultiplicityFrom = association.getFromMultiplicity();
+				this.linkNavigableFrom = association.getFromNavigable();
+				
+				this.linkAttributeTo = association.getToName();
+				this.linkMultiplicityTo = association.getToMultiplicity();
+				this.linkNavigableTo = association.getToNavigable();
+				
+				this.linkAssociationType = association.getType();
+				
+				invalidateDisplayList();
+			}
 		}
 		
 		override protected function createLinkContextPanel():void 
@@ -449,7 +476,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
 		{
-			if(linkAssoziationType == EAssociationType.ASSOCIATION)
+			if(linkAssociationType == EAssociationType.ASSOCIATION)
 			{
 				if(linkNavigableFrom)
 				{
@@ -457,12 +484,12 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 				}
 			}
 			
-			if(linkAssoziationType == EAssociationType.AGGREGATION)
+			if(linkAssociationType == EAssociationType.AGGREGATION)
 			{
 				drawVoidDiamond(point2.x, point2.y, point1.x, point1.y, bottomColor, topColor);
 			}
 			
-			if(linkAssoziationType == EAssociationType.COMPOSITION)
+			if(linkAssociationType == EAssociationType.COMPOSITION)
 			{
 				drawDiamond(point2.x, point2.y, point1.x, point1.y, bottomColor, topColor);
 			}
@@ -485,7 +512,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 
 		override protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
 		{
-			if(linkAssoziationType == EAssociationType.ASSOCIATION)
+			if(linkAssociationType == EAssociationType.ASSOCIATION)
 			{
 				if(linkNavigableTo)
 				{
