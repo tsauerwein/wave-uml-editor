@@ -45,6 +45,7 @@
 					this.setClassData(nodeData as MInterface);
 					Formatter.formatLabelOfClassElement(nodeData as MInterface, classNodeName);
 					if(nodeName==""){nodeName="Neues Interface"};//default
+					removeConstructorRows();
 				}
 				
 				classNodeName.text = nodeName;
@@ -83,6 +84,18 @@
 		        mx.managers.PopUpManager.addPopUp(editMethodsWindow, SystemManager.getSWFRoot(editMethodsWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(editMethodsWindow);
 			}
+			
+			/**
+			 * This method removes the grid elements of the constructor from the view.
+			 * It is only called if the node is an interface.
+			 */
+			private function removeConstructorRows():void
+			{
+				grid.removeChild(constructorHRule);
+				grid.removeChild(constructorLabel);
+				grid.removeChild(constructorList);
+				grid.removeChild(constructorAdd);
+			}
         ]]>
     </mx:Script>
 <!--	<container> -->
@@ -105,7 +118,7 @@
 	    <mx:Grid id="editMethodsGrid" width="100%" height="100%" verticalAlign="top">
 	        <mx:GridRow width="100%" height="100%">
 	            <mx:GridItem width="100%" height="100%">
-	                <mx:Grid width="100%" height="100%">
+	                <mx:Grid width="100%" height="100%" id="grid">
 	                    <mx:GridRow width="100%" height="15">
 	                        <mx:GridItem width="100%">
 	                            <mx:Label id="classNodeName">
@@ -115,25 +128,25 @@
 	                            </mx:Label>
 	                        </mx:GridItem>
 	                    </mx:GridRow>
-	                    <mx:GridRow width="100%" height="5">
+	                    <mx:GridRow width="100%" height="5" id="constructorHRule">
 	                        <mx:GridItem width="100%" height="0%" >
 	                       		<mx:HRule x="0" width="100%" shadowColor="#418D8E" strokeColor="#418D8E"/>
 	                        </mx:GridItem>
 	                    </mx:GridRow>
 	                    
-	                    <mx:GridRow width="100%">
+	                    <mx:GridRow width="100%" id="constructorLabel">
 								<mx:GridItem>
 									<mx:Label text="Konstruktoren:" />	
 								</mx:GridItem>
 						</mx:GridRow>
 						
-						<mx:GridRow width="100%">
+						<mx:GridRow width="100%" id="constructorList">
 							<mx:GridItem width="100%" height="100%">
 								<mx:Grid width="100%" id="constructorsList">
 								</mx:Grid>
 							</mx:GridItem>
 						</mx:GridRow>
-						<mx:GridRow width="100%">
+						<mx:GridRow width="100%" id="constructorAdd">
 							<mx:GridItem horizontalAlign="right">
 								<mx:Button label="+" height="15" width="35" click="handleAddConstructor(event)"/>
 							</mx:GridItem>
