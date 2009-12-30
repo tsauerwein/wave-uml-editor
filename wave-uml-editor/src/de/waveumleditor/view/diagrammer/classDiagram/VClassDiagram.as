@@ -8,21 +8,22 @@ package de.waveumleditor.view.diagrammer.classDiagram
 	import de.waveumleditor.controller.ViewFactory;
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.MClassDiagram;
-	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	import de.waveumleditor.model.classDiagram.links.MClassLink;
+	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.LinkMap;
 	import de.waveumleditor.view.diagrammer.classDiagram.maps.NodeMap;
+	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	import de.waveumleditor.view.diagrammer.dialogues.ObserveMode;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	
+	import flash.display.DisplayObject;
 	import flash.utils.Dictionary;
 	
 	import mx.collections.IList;
 	import mx.events.DragEvent;
 	import mx.managers.PopUpManager;
-	import de.waveumleditor.view.diagrammer.classDiagram.links.VClassLink;
-	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	
 	public class VClassDiagram extends Diagram
 	{
@@ -50,6 +51,12 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override protected function createContextPanel():GenericDiagramContextPanel 
 		{
 			return new VClassDiagramContextPanel();
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			trace("addChild");
+			return super.addChild(child);
 		}
 		
 		/**

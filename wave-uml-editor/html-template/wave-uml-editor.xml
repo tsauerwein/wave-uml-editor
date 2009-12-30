@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Module>
+<ModulePrefs title="Google Wave UML Editor Gadget" height="500">
+    <Require feature="rpc" />
+    <Require feature="flash" /> 
+  </ModulePrefs>
+<Content type="html">
+<![CDATA[ 
+ 
+  <script type="text/javascript"
+      src="http://wave-api.appspot.com/public/wave.js"></script>
+  <script type="text/javascript"
+      src="http://wave-uml-editor.kenai.com/wave-as-client.js"></script>
+          
+    <object id="waveumleditor" name="waveumleditor"
+			type="application/x-shockwave-flash"
+			data="http://wave-uml-editor.kenai.com/wave-uml-editor/main.swf"
+			width="100%" height="500px">
+		<param name="movie"
+			value="http://wave-uml-editor.kenai.com/wave-uml-editor/main.swf"
+		/>		
+		<param name="quality" value="high" />
+		<param name="wmode" value="transparent" />
+		<param name="allowScriptAccess" value="always" />
+		<param name="allowNetworking" value="all" />
+	</object>
+
+  ]]> 
+  </Content>
+</Module>

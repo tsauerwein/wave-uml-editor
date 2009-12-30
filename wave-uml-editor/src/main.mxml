@@ -3,7 +3,7 @@
 				xmlns:diagrammer="com.anotherflexdev.diagrammer.*" 
 				xmlns:classDiagrammer="de.waveumleditor.view.diagrammer.classDiagram.*"
 				layout="absolute" 
-				creationComplete="init()">
+				creationComplete="init()" xmlns:links="de.waveumleditor.view.diagrammer.classDiagram.links.*">
 	<mx:Style source="/de/waveumleditor/view/diagrammer/assets/style/style.css"/>
 	
 	<mx:Script>
@@ -17,135 +17,23 @@
 			import de.waveumleditor.model.classDiagram.*;
 			import de.waveumleditor.model.classDiagram.nodes.*;
 			import de.waveumleditor.model.classDiagram.links.*;
-
 			
-			private var classOne:VClassNode;
-			private var classTwo:VClassNode;
 			private var controller:Controller;
 			private var classDiagram:MClassDiagram;
 			
 		private function init():void {
+			Application.application.id = "waveumleditor";
 				
-
+			classDiagram = new MClassDiagram();
 				
-				var classData:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "1234567"), new Position(100, 150), "Klassenname 1");
-				var classData2:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345671"), new Position(400, 150), "Klassenname 2");
-				var interfaceData:MInterface = new MInterface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345672"), new Position(400, 50), "Superinterface");
-				var emptyClass:MClassNode = new MClassNode(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345673"), new Position(100, 50));
-				var emptyInterface:MInterface = new MInterface(new Identifier(WAOKeyGenerator.PREFIX_NODE + "12345674"), new Position(250, 50), "");
-				
-				classData.setAbstract(true);
-				
-  			 	//Attribut mit Variable: public static int myInteger default=0
-				var integerVariable:MVariable = new MVariable("myInteger", MType.INT, "0");
-				var integerAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr001"), integerVariable, EVisibility.PUBLIC);
-				
-				//Attribut mit Variable: public customType myCustomVariable
-				var customVariable:MVariable = new MVariable("myCustomVariable", (new MType("customType")));
-				var customAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr_custom"), customVariable, EVisibility.PUBLIC);
-				
-				integerAttribute.setStatic(true);
-				
- 				//Attribut mit Variable: private String myString
-				var stringVariable:MVariable = new MVariable("myString", MType.STRING);
-				var stringAttribute:MClassAttribute = new MClassAttribute(new Identifier(WAOKeyGenerator.PREFIX_ATTRIBUTE + "attr002"), stringVariable, EVisibility.PRIVATE);  
-				
- 				classData.addAttribute(integerAttribute);
-				classData.addAttribute(stringAttribute);
-				classData.addAttribute(customAttribute);
-				classData2.addAttribute(integerAttribute);   
-				
-				//Methode public String getMyString()
-				var method:MClassMethod = new MClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth004"), "getMyString", EVisibility.PUBLIC, MType.STRING);
-				//Konstruktor
-				var constructor:MClassConstructorMethod = new MClassConstructorMethod(new Identifier(WAOKeyGenerator.PREFIX_CONSTRUCTOR + "meth003"), EVisibility.PUBLIC);
-				constructor.addVariable(stringVariable);
-				
-				//Interfacemethode
-				var interfaceMethod:MInterfaceMethod = new MInterfaceMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth005"), "superMethode", MType.DOUBLE);
-				interfaceData.addMethod(interfaceMethod);
-				//Implementierung der Interfacemethode
-				var implementedInterfaceMethod:MClassMethod = new MClassMethod(new Identifier(WAOKeyGenerator.PREFIX_METHOD + "meth006"), "superMethode",EVisibility.PUBLIC, MType.DOUBLE);
-				
-				classData.addConstructor(constructor);
-				classData.addMethod(method);
-				classData2.addMethod(implementedInterfaceMethod);
-				classData2.addConstructor(constructor);
-				
-				var linkInheritance:MInheritanceLink = new MInheritanceLink(new Identifier("12345681"), classData, classData2);
-				var linkImplements:MImplementsLink = new MImplementsLink(new Identifier("12345682"), classData2, interfaceData);
-				var linkAssociation:MAssociationLink = new MAssociationLink(new Identifier("12345683"), classData2, classData2);
-				
-				/* classOne = new ClassNode();
-				classTwo = new ClassNode();
-			
-				classOne.update(classData);
-				classTwo.update(classData2);
-			
-			var link:Link = new InheritanceLink();
-				link.fromNode = classOne;
-				link.toNode = classTwo;
-				link.fromNode.addLeavingLink(link);
-				link.toNode.addArrivingLink(link);
-				
-				this.diagram.addChild(link.fromNode);
-				this.diagram.addChild(link.toNode);
-				this.diagram.addChildAt(link, 0);	 */
-				
-				
-				classDiagram = new MClassDiagram();
-				
-				/*
-				classDiagram.addNode(classData);
-				classDiagram.addNode(classData2);
-				classDiagram.addNode(emptyClass);
-				classDiagram.addNode(emptyInterface);
-				classDiagram.addNode(interfaceData);
-				classDiagram.addLink(linkInheritance);
-				classDiagram.addLink(linkImplements);
-				classDiagram.addLink(linkAssociation);
-				*/
-				
-				controller = new Controller(diagram, classDiagram);
-				controller.createDiagram();
-				
-				
-				//TODO Aufruf des Editieren-Popups auslagern in Kontextmen�
-				/* var editAttributes:EditAttributesWindow = new EditAttributesWindow();
-				editAttributes.update(classData);
-				editAttributes.popUp();  */
-				
-/* 				var editMethods:EditMethodsWindow = new EditMethodsWindow();
-				editMethods.update(classData);
-				editMethods.popUp();  */
-
+			controller = new Controller(diagram, classDiagram);
+			controller.setUpCallbacks();
 		}
-			
-		 /* private function test():void
-		{
-			var type:Type = new Type("test");
-			var variable:Variable = new Variable("test", type);
-			var classConstructorMethod:ClassConstructorMethod = new ClassConstructorMethod(EVisibility.PUBLIC);
-			var classMethod:ClassMethod = new ClassMethod("test", EVisibility.PUBLIC, type);
-			var classAttribute:ClassAttribute = new ClassAttribute(variable, EVisibility.PUBLIC);
-			
-			var umlclass:UMLClass = new UMLClass(new Position(1, 2), "test");
-			var classNode:ClassDiagramNode = new ClassDiagramNode(new Position(1, 1), "test");
-			
-			var interfaceMethod:InterfaceMethod = new InterfaceMethod("test", type);
-			var constantAttribute:ConstantAttribute = new ConstantAttribute(variable);
-			
-			var linkInheritance:LinkInheritance = new LinkInheritance(classNode, classNode);
- 			var linkImplements:LinkImplements = new LinkImplements(classNode, classNode);
- 			var linkAssociation:LinkAssociation = new LinkAssociationDirected(classNode, classNode);  
-			var linkAgg:LinkAggregation = new LinkAggregation(classNode, classNode);  
-			var linkComp:LinkComposition = new LinkComposition(classNode, classNode);  
-			
-			var classDiagram:ClassDiagram = new ClassDiagram();
-		}		  */
+
 		]]>
 	</mx:Script>	
 	
 	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="50" right="0">
+		<mx:Label text="0.0.3" right="0" id="lblVersion"/>
 	</classDiagrammer:VClassDiagram>
 </mx:Application>

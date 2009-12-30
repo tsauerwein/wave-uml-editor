@@ -36,8 +36,6 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 	
-	import mx.collections.ArrayList;
-	
 	public class Controller
 	{
 		private var diagramView:VClassDiagram;
@@ -53,6 +51,7 @@ package de.waveumleditor.controller
 			this.diagramModel = diagramModel;
 			
 			this.wave = new WaveSimulator(); // todo
+			//this.wave = new Wave();
 			
 			this.fascade = new ModelFascade(this.diagramModel, this.wave);
 			
@@ -69,59 +68,25 @@ package de.waveumleditor.controller
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_ASSOCIATION_LINK, handleShowAssociationLink);
 			this.diagramView.addEventListener(LinkEvent.EVENT_EDIT_DEPENDENCY_LINK, handleShowDependencyLink);
 			
+		}
+		
+		public function setUpCallbacks():void
+		{
 			wave.setStateCallback(stateCallback);
 		}
 		
 		private function stateCallback(args:Object):void 
 		{
+			trace("stateCallback start");
 			var state:WaveState = wave.getState()
 			diagramModel = WAODiagram.getFromState(state)
 			fascade.setDiagram(diagramModel)
 			diagramView.update(diagramModel)
 				
 			TestUtil.printTrace(state);
+			trace("stateCallback end");
 		}
-		
-		/**
-		 * Builds the view-diagram from the model-digram.
-		 */ 
-		public function createDiagram():void
-		{
-			// create view-nodes
-			var nodes:ArrayList = new ArrayList();
-			var nodeDatas:ArrayList = this.diagramModel.getNodes();
-			 for(var i:int = 0; i < nodeDatas.length; i++)
-			 {
-			 	var nodeData:MClassDiagramNode = nodeDatas.getItemAt(i) as MClassDiagramNode;
-			 	
-			 	var node:VClassDiagramNode = ViewFactory.createNode(nodeData);
-			 	node.update(nodeData);
-			 	
-			 	nodes.addItem(node);
-			 	diagramView.addNode(node);
-			 }
-			 
-			 // create view-links
-			 for(i = 0; i < this.diagramModel.getLinks().length; i++)
-			 {
-			 	var linkData:MClassLink = this.diagramModel.getLinks().getItemAt(i) as MClassLink;
-			 	var link:VClassLink = ViewFactory.createLink(linkData);
-			 	link.update(linkData);
-			 	
-			 	// find matching view-node
-			 	var fromIndex:int = nodeDatas.getItemIndex(linkData.getLinkFrom());
-			 	var toIndex:int = nodeDatas.getItemIndex(linkData.getLinkTo());
-			 	
-			 	link.fromNode = nodes.getItemAt(fromIndex) as VClassDiagramNode;
-			 	link.toNode = nodes.getItemAt(toIndex) as VClassDiagramNode;
-			 	link.fromNode.addLeavingLink(link);
-				link.toNode.addArrivingLink(link);
-			 	
-			 	diagramView.addClassLink(link);
-			 }
-			 
-		}
-		
+				
 		/**
 		 * Handler which is called when a new node (class or 
 		 * interface) is added to the diagram.
