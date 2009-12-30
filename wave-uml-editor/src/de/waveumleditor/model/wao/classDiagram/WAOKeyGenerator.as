@@ -40,18 +40,25 @@ package de.waveumleditor.model.wao.classDiagram
 		/**
 		 * The identifier consists of:
 		 * 	- the prefix depending on the element for which the identifier is used
-		 * 	- the id of the user who created the element
+		 * 	- the id of the user who created the element (wave-account)
 		 * 	- the current timestamp
 		 * 	- and random number.
 		 */ 
 		private function generateIdentifier(prefix:String):Identifier
 		{
-			return new Identifier(
-				prefix + 
+			var key:String = prefix + 
 				getViewerId() + SEPERATOR +
 				new Date().getTime() + SEPERATOR + 
-				new Number(int.MAX_VALUE * Math.random()).toFixed(0) 
-			);
+				new Number(int.MAX_VALUE * Math.random()).toFixed(0);
+			
+			// replace all occurences of IDS_SEPERATOR 
+			// (the viewer id could have such characters)
+			if (key.indexOf(IDS_SEPERATOR) >= 0)
+			{
+				key = key.replace(IDS_SEPERATOR, "|");
+			}
+			
+			return new Identifier(key);
 		}
 		
 		private function getViewerId():String
