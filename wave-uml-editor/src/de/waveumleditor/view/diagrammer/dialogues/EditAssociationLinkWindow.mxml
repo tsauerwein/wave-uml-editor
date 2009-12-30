@@ -144,7 +144,7 @@
 					close="close()" borderColor="#E2E2E2" width="697" height="287" x="10" y="10"> 
 		
 		<mx:Canvas id="editLinkCanvas" width="667" height="237">
-		<mx:Image source="de/waveumleditor/view/diagrammer/assets/images/Background_LinkDescription.png" width="651" height="173" scaleContent="true" x="10" y="10" alpha="0.5"/>
+		<mx:Image source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/Background_LinkDescription.png')" width="651" height="173" scaleContent="true" x="10" y="10" alpha="0.5"/>
 			<mx:Canvas backgroundAlpha="1.0" top="0" right="0" left="0" bottom="61">
 				<mx:TextInput id="txLinkMultiplicityFrom" x="153.5" y="54" text="" editable="true" width="61"/>
 				<mx:TextInput id="txLinkAttrFrom" x="153.5" y="100" text="" editable="true" width="115"/>
