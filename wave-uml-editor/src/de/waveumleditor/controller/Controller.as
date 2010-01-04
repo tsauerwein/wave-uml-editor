@@ -78,6 +78,7 @@ package de.waveumleditor.controller
 		private function stateCallback(args:Object):void 
 		{
 			trace("stateCallback start");
+			
 			var state:WaveState = wave.getState()
 			diagramModel = WAODiagram.getFromState(state)
 			fascade.setDiagram(diagramModel)

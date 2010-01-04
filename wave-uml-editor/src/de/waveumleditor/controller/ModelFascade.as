@@ -24,9 +24,7 @@ package de.waveumleditor.controller
 	public class ModelFascade
 	{
 		private var diagram:MClassDiagram;
-		
-		private var wave:Wave;
-		
+				
 		private var waoNode:WAONode;
 		private var waoLink:WAOLink;
 		private var waoKey:WAOKeyGenerator;
@@ -36,7 +34,6 @@ package de.waveumleditor.controller
 		{
 			this.diagram = diagram;
 			
-			this.wave = wave;
 			this.waoLink = new WAOLink(wave);
 			this.waoNode = new WAONode(wave, waoLink);
 			this.waoKey = new WAOKeyGenerator(wave);
