@@ -548,7 +548,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			var point1:Point = new Point(x1,y1);
 			var point2:Point = new Point(x2,y2);
 			var pt3:Point;
-			var distance:Number;
+			var distance:Number  = Point.distance(point1,point2);
 			var angle:Number = Math.atan2(y2-y1, x2-x1);
 		    var drawDirection:String = getDrawDirection(this.fromNode,this.toNode);
 			
@@ -569,15 +569,15 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			{
 				if (drawDirection == "RIGHT_TOP")
 				{
-					pt3 = Point.interpolate(point1,point2,0.08);
-				
+					pt3 = Point.interpolate(point1,point2,21 / distance);
+				 				
 					graphic.lineTo(pt3.x,pt3.y);
 			  		graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
 				  					y2-arrowHeight*Math.sin(angle)+arrowWidth*Math.cos(angle));
 			    }
 			    else if (drawDirection == "RIGHT")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
@@ -585,7 +585,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    }
 			    else if (drawDirection == "RIGHT_BOTTOM")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 		  	  		graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
@@ -593,7 +593,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    }
 			    else if (drawDirection == "BOTTOM")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),
@@ -601,7 +601,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    }
 			    else if (drawDirection == "LEFT_BOTTOM")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
@@ -609,7 +609,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    }
 			    else if (drawDirection == "LEFT_TOP")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
@@ -618,7 +618,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    
 			    else if (drawDirection == "TOP")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
@@ -626,7 +626,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			    }
 			    else if (drawDirection == "LEFT")
 			    {
-			    	pt3 = Point.interpolate(point1,point2,0.08);
+			    	pt3 = Point.interpolate(point1,point2,21 / distance);
 				
 					graphic.lineTo(pt3.x,pt3.y);	
 			    	graphic.lineTo(x2-arrowHeight*Math.cos(angle)-arrowWidth*Math.sin(angle),	
