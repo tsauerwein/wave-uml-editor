@@ -283,7 +283,7 @@
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 			id="singleMethodWindow"
 			layout="vertical" 
-			minWidth="340" 
+			minWidth="360" 
 			minHeight="250"
 			maxHeight="450"
 	        title="Methode editieren"
