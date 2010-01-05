@@ -89,7 +89,10 @@ package de.waveumleditor.model.wao.classDiagram
 				var attribute:MClassAttribute = 
 					WAOClassAttribute.getFromState(key, state.getStringValue(key));
 					
-				umlClass.addAttribute(attribute);
+				if (attribute != null)
+				{
+					umlClass.addAttribute(attribute);
+				}
 			}
 		}
 		
@@ -102,7 +105,10 @@ package de.waveumleditor.model.wao.classDiagram
 				var constructor:MClassConstructorMethod = 
 					WAOClassConstructor.getFromState(key, state.getStringValue(key));
 					
-				umlClass.addConstructor(constructor);
+				if (constructor != null)
+				{
+					umlClass.addConstructor(constructor);
+				}
 			}
 		}
 		
@@ -115,7 +121,10 @@ package de.waveumleditor.model.wao.classDiagram
 				var method:MClassMethod = 
 					WAOClassMethod.getFromState(key, state.getStringValue(key), isInterface);
 					
-				node.addMethod(method);
+				if (method != null)
+				{
+					node.addMethod(method);
+				}
 			}
 		}
 	}

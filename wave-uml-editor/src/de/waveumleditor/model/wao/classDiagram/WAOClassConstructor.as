@@ -65,7 +65,12 @@ package de.waveumleditor.model.wao.classDiagram
 		
 		public static function getFromState(stateKey:String, stateValue:String):MClassConstructorMethod
 		{
+			if (stateValue == null)
+			{
+				return null;
+			}
 			var constructorId:String = WAOKeyGenerator.getNodeElementIdentifier(stateKey);
+			
 			
 			var constructorData:Object = JSON.decode(stateValue);
 			
