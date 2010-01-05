@@ -4,8 +4,8 @@
 
 global 
 {
-	modalTransparencyColor: "#E6E9E5";
-	modalTrasparancy: 0;
+	modalTransparencyColor: white;
+	modalTransparency: 0.2;
 	modalTransparencyBlur: 0;
     modalTransparencyDuration: 200;
 }
