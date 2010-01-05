@@ -5,13 +5,13 @@
 		<mx:Script>
         <![CDATA[
 			import de.waveumleditor.model.Identifier;
+			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
 			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 			import de.waveumleditor.model.classDiagram.nodes.MClassMethod;
-			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 			import de.waveumleditor.model.classDiagram.nodes.MInterfaceMethod;
 			import de.waveumleditor.model.classDiagram.nodes.MType;
-			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 			import de.waveumleditor.model.classDiagram.nodes.MVariable;
 			import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
 			
@@ -200,6 +200,10 @@
 	        	var parameterGridRowName:String = "gr"+(event.currentTarget as Button).id;
 	        	var parameterGridRowToDelete:DisplayObject = gdParameterList.getChildByName(parameterGridRowName);
 	        	gdParameterList.removeChild(parameterGridRowToDelete);
+				if(gdParameterList.numChildren == 1)//Es gibt nurnoch die Kopfzeile
+				{
+					gdParameterList.addChild(new EditParameterElement(new MVariable("", MType.STRING, ""), this));
+				}
 	        }
 			
 			public function addVariablesToContentGrid(classElement:MClassConstructorMethod, classDataGrid:Grid):void 
@@ -215,6 +219,11 @@
 						var variable:Object = variables.getItemAt(i);
 						classDataGrid.addChild(new EditParameterElement(variable as MVariable, this));
 					}
+				}
+				if(variables == null || variables.length == 0)
+				{
+					addLabelsToContentGrid(classDataGrid);
+					classDataGrid.addChild(new EditParameterElement(new MVariable("", MType.STRING, ""), this));
 				}
 			}
 			
@@ -274,8 +283,8 @@
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 			id="singleMethodWindow"
 			layout="vertical" 
-			minWidth="320" 
-			minHeight="400"
+			minWidth="340" 
+			minHeight="250"
 			maxHeight="600"
 	        title="Methode editieren"
 	        titleStyleName="titleText"
