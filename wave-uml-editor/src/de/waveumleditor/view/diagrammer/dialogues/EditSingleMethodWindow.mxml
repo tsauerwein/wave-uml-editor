@@ -285,7 +285,7 @@
 			layout="vertical" 
 			minWidth="340" 
 			minHeight="250"
-			maxHeight="600"
+			maxHeight="450"
 	        title="Methode editieren"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
