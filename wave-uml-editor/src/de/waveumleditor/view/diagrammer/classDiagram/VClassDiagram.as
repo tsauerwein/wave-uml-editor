@@ -109,9 +109,8 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		override public function removeNode(node:BaseNode):void
 		{
 			super.removeNode(node);
-			dispatchEvent(new NodeEvent(NodeEvent.EVENT_REMOVE_NODE, 
-				node as VClassDiagramNode)); 
-				
+			
+			// also remove from node list
 			if (node is VClassDiagramNode)
 			{
 				var classNode:VClassDiagramNode = node as VClassDiagramNode;
@@ -120,15 +119,18 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				{
 					nodes.removeValue(classNode.getIdentifier());
 				}
-			}
+			} 
+			
+			// then let the controller handle this event
+			dispatchEvent(new NodeEvent(NodeEvent.EVENT_REMOVE_NODE, 
+				node as VClassDiagramNode));
 		}
 		
 		override public function removeLink(link:Link):void
 		{
 			super.removeLink(link);
-			dispatchEvent(new LinkEvent(LinkEvent.EVENT_REMOVE_LINK, 
-				link as VClassLink));
-				
+			
+			// also remove from link list
 			if (link is VClassLink)
 			{
 				var classLink:VClassLink = link as VClassLink;
@@ -138,6 +140,10 @@ package de.waveumleditor.view.diagrammer.classDiagram
 					links.removeValue(classLink.getIdentifier());
 				}
 			}
+			
+			// then let the controller handle this event
+			dispatchEvent(new LinkEvent(LinkEvent.EVENT_REMOVE_LINK, 
+				link as VClassLink));
 		}
 		
 		override public function addedLink(link:Link):void
@@ -244,7 +250,12 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				{
 					var id:Identifier = new Identifier(key.toString());
 					var node:VClassDiagramNode = getNode(id);
-					super.removeNode(node);
+					
+					if (node.parent != null)
+					{
+						super.removeNode(node);
+					}
+					
 					nodes.removeValue(id);
 				}
 			}
