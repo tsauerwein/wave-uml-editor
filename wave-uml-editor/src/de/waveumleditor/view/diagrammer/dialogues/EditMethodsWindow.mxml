@@ -91,10 +91,13 @@
 			 */
 			private function removeConstructorRows():void
 			{
-				grid.removeChild(constructorHRule);
-				grid.removeChild(constructorLabel);
-				grid.removeChild(constructorList);
-				grid.removeChild(constructorAdd);
+				if (grid.contains(constructorHRule))
+				{
+					grid.removeChild(constructorHRule);
+					grid.removeChild(constructorLabel);
+					grid.removeChild(constructorList);
+					grid.removeChild(constructorAdd);
+				}
 			}
         ]]>
     </mx:Script>
