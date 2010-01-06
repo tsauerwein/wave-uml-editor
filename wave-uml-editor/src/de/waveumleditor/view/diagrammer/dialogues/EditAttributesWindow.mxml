@@ -29,7 +29,7 @@
           
             
             private function titleWindow_close(evt:CloseEvent):void {
-                PopUpManager.removePopUp(titleWindow);
+                PopUpManager.removePopUp(editAttributesWindow);
             }
             override public function update(nodeData:MClassDiagramNode):void 
 			{
@@ -65,17 +65,17 @@
 			}
 			public function popUp():void
 			{	
-		        titleWindow.title = "Attribute editieren";
-		        titleWindow.addChild(editAttributesGrid);
+		        editAttributesWindow.title = "Attribute editieren";
+		        editAttributesWindow.addChild(editAttributesGrid);
 		        
-		        mx.managers.PopUpManager.addPopUp(titleWindow, SystemManager.getSWFRoot(titleWindow), true);
-		        mx.managers.PopUpManager.centerPopUp(titleWindow);
+		        mx.managers.PopUpManager.addPopUp(editAttributesWindow, SystemManager.getSWFRoot(editAttributesWindow), true);
+		        mx.managers.PopUpManager.centerPopUp(editAttributesWindow);
 			}
         ]]>
     </mx:Script>
 <!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
-			id="titleWindow"
+			id="editAttributesWindow"
 			layout="vertical" 
 			minWidth="340" 
 			minHeight="200"

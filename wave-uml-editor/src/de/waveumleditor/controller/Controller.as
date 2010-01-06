@@ -28,6 +28,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditMethods;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleMethodWindow;
@@ -45,6 +46,9 @@ package de.waveumleditor.controller
 		private var fascade:ModelFascade;
 		
 		private var wave:Wave;
+		
+		private var editMethodsWindow:EditMethodsWindow = null;
+		private var editAttributesWindow:EditAttributesWindow = null;
 		
 		public function Controller(diagramView:VClassDiagram, diagramModel:MClassDiagram)
 		{
@@ -84,14 +88,17 @@ package de.waveumleditor.controller
 		{
 			trace("stateCallback start");
 			
-			var state:WaveState = wave.getState()
-			diagramModel = WAODiagram.getFromState(state)
-			fascade.setDiagram(diagramModel)
-			diagramView.update(diagramModel)
-				
+			var state:WaveState = wave.getState();
+			diagramModel = WAODiagram.getFromState(state);
+			fascade.setDiagram(diagramModel);
+			diagramView.update(diagramModel);
+			
+			this.updateOpenEditorWindow();
+	
 			TestUtil.printTrace(state);
 			trace("stateCallback end");
 		}
+		
 		
 		/**
 		 * This method is called when the gadget's mode changes.
@@ -114,6 +121,35 @@ package de.waveumleditor.controller
 			trace("modeCallback end");
 		}
 		
+		/**
+		 * Updates the content of (open) editor windows 
+		 */
+		private function updateOpenEditorWindow():void
+		{
+			var node:MClassDiagramNode = null;
+			if ( this.editMethodsWindow != null )
+			{
+				node = editMethodsWindow.getClassData();
+				editMethodsWindow.update(diagramModel.getNode(node.getIdentifier()));
+				
+				if (editMethodsWindow.editMethodsWindow.parent == null )
+				{
+					editMethodsWindow = null;
+				}
+			}
+			
+			if ( this.editAttributesWindow != null )
+			{
+				node = editAttributesWindow.getClassData();
+				editAttributesWindow.update(diagramModel.getNode(node.getIdentifier()));
+				
+				if (editAttributesWindow.editAttributesWindow.parent == null )
+				{
+					editAttributesWindow = null;
+				}
+			}
+		}
+				
 		/**
 		 * Handler which is called when a new node (class or 
 		 * interface) is added to the diagram.
@@ -178,10 +214,10 @@ package de.waveumleditor.controller
 		{
 			trace("handleEditNodeAttributes " + event.getNode().nodeName);
 			
-			var editAttributes:EditAttributesWindow = new EditAttributesWindow();
-			editAttributes.setController(this);
-			editAttributes.update(diagramModel.getNode(event.getNode().getIdentifier()));
-			editAttributes.popUp(); 
+			editAttributesWindow = new EditAttributesWindow();
+			editAttributesWindow.setController(this);
+			editAttributesWindow.update(diagramModel.getNode(event.getNode().getIdentifier()));
+			editAttributesWindow.popUp(); 
 		}
 		
 		/** 
@@ -258,13 +294,11 @@ package de.waveumleditor.controller
 		private function handleShowMethodDialog(event:NodeEvent):void
 		{
 			trace("handleEditNodeMethods " + event.getNode().nodeName);
-			//TODO 
+			editMethodsWindow = new EditMethodsWindow();
 			
-			var editMethods:EditMethodsWindow = new EditMethodsWindow();
-			
-			editMethods.setController(this);
-			editMethods.update(diagramModel.getNode(event.getNode().getIdentifier()));
-			editMethods.popUp();
+			editMethodsWindow.setController(this);
+			editMethodsWindow.update(diagramModel.getNode(event.getNode().getIdentifier()));
+			editMethodsWindow.popUp();
 		}
 		
 		/** 
@@ -276,7 +310,7 @@ package de.waveumleditor.controller
 		{
 			trace("handleShowSingleMethod " + event.getClassNode().getName());
 			
-			var editMethod:EditMethodsWindow = new EditMethodsWindow();
+			//var editMethod:EditMethodsWindow = new EditMethodsWindow();
 			var classDiagramNode:MClassDiagramNode = diagramModel.getNode(event.getClassNode().getIdentifier());
 			
 			var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
