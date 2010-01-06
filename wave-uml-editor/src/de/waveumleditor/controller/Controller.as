@@ -1,6 +1,7 @@
 package de.waveumleditor.controller
 {
 	import com.nextgenapp.wave.gadget.Wave;
+	import com.nextgenapp.wave.gadget.WaveMode;
 	import com.nextgenapp.wave.gadget.WaveSimulator;
 	import com.nextgenapp.wave.gadget.WaveState;
 	
@@ -73,8 +74,12 @@ package de.waveumleditor.controller
 		public function setUpCallbacks():void
 		{
 			wave.setStateCallback(stateCallback);
+			wave.setModeCallback(modeCallback);
 		}
 		
+		/**
+		 * This method is called when the gadget's state object changes.
+		 */ 
 		private function stateCallback(args:Object):void 
 		{
 			trace("stateCallback start");
@@ -87,7 +92,28 @@ package de.waveumleditor.controller
 			TestUtil.printTrace(state);
 			trace("stateCallback end");
 		}
-				
+		
+		/**
+		 * This method is called when the gadget's mode changes.
+		 */ 
+		private function modeCallback(mode:Object):void
+		{
+			trace("modeCallback start");
+						
+			if (mode == WaveMode.EDIT)
+			{
+				trace("Mode: edit");
+				diagramView.setViewModeToEdit();
+			}
+			else
+			{
+				trace("Mode: read-only");
+				diagramView.setViewModeToObserve();
+			}
+			
+			trace("modeCallback end");
+		}
+		
 		/**
 		 * Handler which is called when a new node (class or 
 		 * interface) is added to the diagram.

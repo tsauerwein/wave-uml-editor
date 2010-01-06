@@ -53,6 +53,29 @@ nextgenapp.wave.gadget = {
 		}
 	},
 	
+	/**
+	 * setup the callback function.
+	 * @param swfName - name of swf element on html. corresponding to Application.application.id in flex.
+	 */
+	setModeCallback: function(swfName) {
+	
+		/*
+		 * callback function for modeCallback.  
+		 * translate the object to generic object and call the function on flash.
+		 * this function is declared here to use swfName variable.  
+		 */
+		function modeCallback() {
+			// we need to pass back the entire mode object each time, is there a better way?
+			var modeCopy = nextgenapp.wave.gadget.unboxMode(wave.getMode());
+			var swfObj = document.getElementById(swfName);
+			swfObj.externalWaveModeCallback(modeCopy);
+		}
+		
+		if (wave && wave.isInWaveContainer()) {
+			wave.setModeCallback(modeCallback);
+		}
+	},
+	
 	getHost: function() {
 		var host = wave.getHost();
 		return nextgenapp.wave.gadget.unboxParticipant(host);
@@ -150,12 +173,15 @@ nextgenapp.wave.gadget = {
 	*
 	* see: http://code.google.com/p/napkin-wave-gadget/source/browse/trunk/html-template/js/waveFlashBridge.js
 	*/
-	waveStateSubmitDelta: function (keys,values) {
+	waveStateSubmitDelta: function(keys, values) {
     	var length = keys.length;
     	var delta = {};
+    	
     	for(var i = 0; i < length; i++) {
         	delta[keys[i]] = values[i];
     	}
+    	
     	wave.getState().submitDelta(delta);
 	}
+	
 }
