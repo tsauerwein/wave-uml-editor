@@ -3,8 +3,7 @@
 				xmlns:diagrammer="com.anotherflexdev.diagrammer.*" 
 				xmlns:classDiagrammer="de.waveumleditor.view.diagrammer.classDiagram.*"
 				layout="absolute" 
-				creationComplete="init()" 
-				xmlns:links="de.waveumleditor.view.diagrammer.classDiagram.links.*">
+				creationComplete="init()" >
 	<mx:Style source="/de/waveumleditor/view/diagrammer/assets/style/style.css"/>
 	
 	<mx:Script>
@@ -34,8 +33,8 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="0.0.6" right="0" id="lblVersion"/>
-	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="50" right="0">
+	<mx:Label text="0.0.7" right="0" id="lblVersion"/>
+	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="0" right="0">
 		
 	</classDiagrammer:VClassDiagram>
 </mx:Application>

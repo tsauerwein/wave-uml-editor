@@ -44,8 +44,7 @@ package de.waveumleditor.view.diagrammer.classDiagram
 		
 		public function setViewModeToObserve():void
 		{
-            lockLayer = PopUpManager.createPopUp(this, ObserveMode, true) as ObserveMode;  
-            this.lockLayer.classDiagramComponent = this;   
+            lockLayer = PopUpManager.createPopUp(this, ObserveMode, true) as ObserveMode;
 		}
 		
 		override protected function createContextPanel():GenericDiagramContextPanel 

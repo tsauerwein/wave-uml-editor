@@ -3,18 +3,7 @@
 <mx:Label xmlns:mx="http://www.adobe.com/2006/mxml"
     	text="View Mode"
     	fontWeight="bold"
-    	fontSize="14"
-    	x="90"
-    	y="1"
-        >
-        
-   <mx:Script>
-   	<![CDATA[
-   		import de.waveumleditor.view.diagrammer.classDiagram.VClassDiagram;
-   		
-   		public var classDiagramComponent:VClassDiagram;
-   		
-   	]]>
-   </mx:Script> 	
-   
+    	fontSize="10"
+		x="90"
+		y="1">   
 </mx:Label>
