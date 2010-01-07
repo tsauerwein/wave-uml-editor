@@ -127,26 +127,19 @@ package de.waveumleditor.controller
 		private function updateOpenEditorWindow():void
 		{
 			var node:MClassDiagramNode = null;
-			if ( this.editMethodsWindow != null )
+			
+			if (this.editMethodsWindow != null &&
+				this.editMethodsWindow.editMethodsWindow.parent != null)
 			{
 				node = editMethodsWindow.getClassData();
 				editMethodsWindow.update(diagramModel.getNode(node.getIdentifier()));
-				
-				if (editMethodsWindow.editMethodsWindow.parent == null )
-				{
-					editMethodsWindow = null;
-				}
 			}
 			
-			if ( this.editAttributesWindow != null )
+			if (this.editAttributesWindow != null &&
+				this.editAttributesWindow.editAttributesWindow.parent != null)
 			{
 				node = editAttributesWindow.getClassData();
 				editAttributesWindow.update(diagramModel.getNode(node.getIdentifier()));
-				
-				if (editAttributesWindow.editAttributesWindow.parent == null )
-				{
-					editAttributesWindow = null;
-				}
 			}
 		}
 				
