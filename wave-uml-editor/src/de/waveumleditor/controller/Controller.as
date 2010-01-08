@@ -2,6 +2,7 @@ package de.waveumleditor.controller
 {
 	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveMode;
+	import com.nextgenapp.wave.gadget.WaveSimulator;
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.tests.TestUtil;
@@ -27,6 +28,7 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.EditLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleMethodWindow;
@@ -53,15 +55,15 @@ package de.waveumleditor.controller
 		private var editMethodsWindow:EditMethodsWindow = null;
 		private var editAttributesWindow:EditAttributesWindow = null;
 		private var editSingleWindow:IEditSingleWindow = null;
-		
+		private var editLinkWindow:EditLinkWindow = null;
 		
 		public function Controller(diagramView:VClassDiagram, diagramModel:MClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
 			
-			//this.wave = new WaveSimulator(); // todo
-			this.wave = new Wave();
+			this.wave = new WaveSimulator(); // todo
+			//this.wave = new Wave();
 			
 			this.fascade = new ModelFascade(this.diagramModel, this.wave);
 			
@@ -141,6 +143,21 @@ package de.waveumleditor.controller
 				this.editAttributesWindow.editAttributesWindow.parent != null)
 			{
 				this.updateOrCloseEditorWindows(editAttributesWindow);
+			}
+			
+			if (this.editLinkWindow != null &&
+				this.editLinkWindow.getTitleWindow().parent != null)
+			{
+				var updatedLink:MClassLink = diagramModel.getLink(this.editLinkWindow.getLink().getIdentifier());
+				
+				if (updatedLink == null)
+				{
+					PopUpManager.removePopUp(this.editLinkWindow.getTitleWindow());
+					
+					Alert.show(
+						'Diese Verbindung wurde von einem anderen Benutzer gelöscht!',
+						'Warnung ', Alert.OK);
+				}
 			}
 		}
 		
@@ -438,6 +455,9 @@ package de.waveumleditor.controller
 			editLinksWindow.setViewLink(event.getAssociationLink());
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
+			
+			editLinkWindow = editLinksWindow;
+			
 			editLinksWindow.popUp();
 		}
 		
@@ -466,6 +486,9 @@ package de.waveumleditor.controller
 			editLinksWindow.setViewLink(event.getDependencyLink());
 			editLinksWindow.update(linkCopy);
 			editLinksWindow.setController(this);
+			
+			editLinkWindow = editLinksWindow;
+			
 			editLinksWindow.popUp();
 		}
 		

@@ -7,6 +7,7 @@
 		<![CDATA[
 			import de.waveumleditor.model.classDiagram.links.EAssociationType;
 			import de.waveumleditor.model.classDiagram.links.MAssociationLink;
+			import de.waveumleditor.model.classDiagram.links.MDependencyLink;
 			import de.waveumleditor.view.diagrammer.classDiagram.links.VAssociationLink;
 			import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
 			
@@ -123,6 +124,16 @@
 					checkboxNaviFrom.enabled = false;
 					checkboxNaviTo.enabled = false;
             	}
+			}
+			
+			override public function getTitleWindow():TitleWindow
+			{
+				return titleWindow;
+			}
+			
+			override public function getLink():MDependencyLink
+			{
+				return link;	
 			}
 			
 		]]>

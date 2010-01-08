@@ -50,6 +50,16 @@
 				close();
 			}
 			
+			override public function getTitleWindow():TitleWindow
+			{
+				return titleWindow;
+			}
+			
+			override public function getLink():MDependencyLink
+			{
+				return link;	
+			}
+			
 		]]>
 	</mx:Script>
 	
