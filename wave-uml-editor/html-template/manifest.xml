@@ -1,0 +1,7 @@
+﻿<extension name="UMLClassEditor" description="Work with your colleagues together at a UML Class-Diagrammes..." thumbnailUrl="">
+  <version>1.0</version>
+  <author name="CodeOrange" email="team.code.orange@gmail.com"/>
+  <menuHook location="newwavemenu" text="Insert UMLClassEditor Wave" iconUrl="">
+    <insertGadget url="http://wave-uml-editor.kenai.com/wave-uml-editor/main.swf"/>
+  </menuHook>
+</extension>
