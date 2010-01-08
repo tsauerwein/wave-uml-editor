@@ -131,7 +131,16 @@ package de.waveumleditor.model.classDiagram
 			var umlClass:MClassNode = getNode(classId) as MClassNode;
 			
 			var attribute:MClassAttribute = umlClass.getAttribute(newAttribute.getIdentifier());
-			attribute.updateFrom(newAttribute);
+			
+			if (attribute == null)
+			{
+				// if the attribute was deleted by another user, add it again
+				umlClass.addAttribute(newAttribute);
+			}
+			else 
+			{
+				attribute.updateFrom(newAttribute);
+			}
 		}
 		
 		public function removeAttribute(classId:Identifier, attributeId:Identifier):void
@@ -162,7 +171,16 @@ package de.waveumleditor.model.classDiagram
 			var classDiagramNode:MClassDiagramNode = getNode(classId);
 			
 			var method:MClassMethod = classDiagramNode.getMethod(newMethod.getIdentifier());
-			method.updateFrom(newMethod);
+			
+			if (method == null)
+			{
+				// if the method was deleted by another user, add it again
+				classDiagramNode.addMethod(newMethod);
+			}
+			else
+			{
+				method.updateFrom(newMethod);
+			}
 		}
 		
 		public function removeMethod(classId:Identifier, methodId:Identifier):void
@@ -191,7 +209,16 @@ package de.waveumleditor.model.classDiagram
 			var umlClass:MClassNode = getNode(classId) as MClassNode;
 			
 			var constructor:MClassConstructorMethod = umlClass.getConstructor(newConstructor.getIdentifier());
-			constructor.updateFrom(newConstructor);
+			
+			if (constructor == null)
+			{
+				// if the constructor was deleted by another user, add it again
+				umlClass.addConstructor(newConstructor);
+			}
+			else
+			{
+				constructor.updateFrom(newConstructor);
+			}
 		}
 		
 		public function removeConstructor(classId:Identifier, constructorId:Identifier):void
