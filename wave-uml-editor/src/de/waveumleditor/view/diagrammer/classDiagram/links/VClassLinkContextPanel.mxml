@@ -41,9 +41,21 @@
 			
 		]]>
 	</mx:Script>
+
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
 	<mx:Metadata>
 		[Event(name="removeLink", type="flash.events.Event")]
 		[Event(name="describeLink", type="LinkDescriptionEvent")]
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
 	</mx:Metadata>
 	<states>
 		<mx:State name="removeQuestion">

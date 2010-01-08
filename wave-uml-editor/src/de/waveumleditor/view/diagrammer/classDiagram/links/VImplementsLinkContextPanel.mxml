@@ -10,5 +10,18 @@
 			
 		]]>
 	</mx:Script>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)"  y="2" x="2"/>
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>
+	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)"  toolTip="@Resource(key='glowRemove', bundle='languages')" y="2" x="2"/>
 </diagrammer:GenericLinkContextPanel>
