@@ -32,6 +32,7 @@ package de.tests.waveumleditor.model.classDiagram
     		assertEquals(2, removedLinks.length);
     		assertEquals(1, classDiagram.getLinks().length);
     		assertEquals(2, classDiagram.getNodes().length);
+			assertTrue(null == classDiagram.getNode(class1.getIdentifier()));
 		}
 		
 		public function testGetNode():void

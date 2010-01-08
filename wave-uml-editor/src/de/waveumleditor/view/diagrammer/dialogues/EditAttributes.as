@@ -10,6 +10,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	import flash.events.Event;
 	
+	import mx.containers.TitleWindow;
 	import mx.controls.Button;
 	
 	public class EditAttributes implements IEditWindow
@@ -79,6 +80,11 @@ package de.waveumleditor.view.diagrammer.dialogues
             var nodeAttributeEvent:NodeAttributeEvent = new NodeAttributeEvent(getClassData() as MClassNode, null, this , new Identifier(buttonClicked.id));
             controller.handleShowSingleAttribute(nodeAttributeEvent);
 			
+		}
+		
+		public function getTitleWindow():TitleWindow
+		{
+			return null;
 		}
 	}
 }

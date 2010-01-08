@@ -2,7 +2,6 @@ package de.waveumleditor.controller
 {
 	import com.nextgenapp.wave.gadget.Wave;
 	import com.nextgenapp.wave.gadget.WaveMode;
-	import com.nextgenapp.wave.gadget.WaveSimulator;
 	import com.nextgenapp.wave.gadget.WaveState;
 	
 	import de.tests.TestUtil;
@@ -28,15 +27,19 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.dialogues.EditAssociationLinkWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditAttributesWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditDependencyLinkWindow;
-	import de.waveumleditor.view.diagrammer.dialogues.EditMethods;
 	import de.waveumleditor.view.diagrammer.dialogues.EditMethodsWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleAttributeWindow;
 	import de.waveumleditor.view.diagrammer.dialogues.EditSingleMethodWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.IEditSingleWindow;
+	import de.waveumleditor.view.diagrammer.dialogues.IEditWindow;
 	import de.waveumleditor.view.diagrammer.events.LinkEditEvent;
 	import de.waveumleditor.view.diagrammer.events.LinkEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeAttributeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeEvent;
 	import de.waveumleditor.view.diagrammer.events.NodeMethodEvent;
+	
+	import mx.controls.Alert;
+	import mx.managers.PopUpManager;
 	
 	public class Controller
 	{
@@ -49,14 +52,16 @@ package de.waveumleditor.controller
 		
 		private var editMethodsWindow:EditMethodsWindow = null;
 		private var editAttributesWindow:EditAttributesWindow = null;
+		private var editSingleWindow:IEditSingleWindow = null;
+		
 		
 		public function Controller(diagramView:VClassDiagram, diagramModel:MClassDiagram)
 		{
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
 			
-			this.wave = new WaveSimulator(); // todo
-			//this.wave = new Wave();
+			//this.wave = new WaveSimulator(); // todo
+			this.wave = new Wave();
 			
 			this.fascade = new ModelFascade(this.diagramModel, this.wave);
 			
@@ -93,7 +98,7 @@ package de.waveumleditor.controller
 			fascade.setDiagram(diagramModel);
 			diagramView.update(diagramModel);
 			
-			this.updateOpenEditorWindow();
+			this.refreshEditorWindows();
 	
 			TestUtil.printTrace(state);
 			trace("stateCallback end");
@@ -124,25 +129,47 @@ package de.waveumleditor.controller
 		/**
 		 * Updates the content of (open) editor windows 
 		 */
-		private function updateOpenEditorWindow():void
+		private function refreshEditorWindows():void
 		{
-			var node:MClassDiagramNode = null;
-			
 			if (this.editMethodsWindow != null &&
 				this.editMethodsWindow.editMethodsWindow.parent != null)
 			{
-				node = editMethodsWindow.getClassData();
-				editMethodsWindow.update(diagramModel.getNode(node.getIdentifier()));
+				this.updateOrCloseEditorWindows(editMethodsWindow);
 			}
 			
 			if (this.editAttributesWindow != null &&
 				this.editAttributesWindow.editAttributesWindow.parent != null)
 			{
-				node = editAttributesWindow.getClassData();
-				editAttributesWindow.update(diagramModel.getNode(node.getIdentifier()));
+				this.updateOrCloseEditorWindows(editAttributesWindow);
 			}
 		}
+		
+		private function updateOrCloseEditorWindows(editorWindow:IEditWindow):void
+		{
+			var node:MClassDiagramNode = editorWindow.getClassData();
+			
+			var updatedNode:MClassDiagramNode = diagramModel.getNode(node.getIdentifier());
+			
+			if (updatedNode == null)
+			{
+				PopUpManager.removePopUp(editorWindow.getTitleWindow());
 				
+				if (this.editSingleWindow != null && 
+					this.editSingleWindow.getTitleWindow().parent != null)
+				{
+					PopUpManager.removePopUp(editSingleWindow.getTitleWindow());
+				}
+				Alert.show(
+					node.getName() +
+					' wurde von einem anderen Benutzer gelöscht!',
+					'Warnung ', Alert.OK);
+			}
+			else
+			{
+				editorWindow.update(updatedNode);
+			}
+		}
+		
 		/**
 		 * Handler which is called when a new node (class or 
 		 * interface) is added to the diagram.
@@ -245,6 +272,8 @@ package de.waveumleditor.controller
 			editSingleAttribute.setEditAttributesWindow(event.getAttributeWindow() as EditAttributesWindow);
           	editSingleAttribute.update(attribute);
          	
+			editSingleWindow = editSingleAttribute;
+			
          	editSingleAttribute.popUp();		
 		}
 		
@@ -349,9 +378,14 @@ package de.waveumleditor.controller
 				}
 				
 			}
+			
 			editSingleMethod.setEditMethodsWindow(event.getMethodWindow() as EditMethodsWindow);
 			editSingleMethod.update(method);
+			
+			editSingleWindow = editSingleMethod;
+			
 			editSingleMethod.popUp();	
+			
 		}
 		
 		/**

@@ -3,27 +3,17 @@
 	
 	<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.controller.Controller;
-        	import mx.messaging.management.Attribute;
-        	import de.waveumleditor.model.classDiagram.nodes.EVisibility;
-        	import de.waveumleditor.model.Identifier;
-        	import de.waveumleditor.model.classDiagram.nodes.MType;
         	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
-        	import de.waveumleditor.model.classDiagram.nodes.MVariable;
+        	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+        	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+        	import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+        	
+        	import mx.collections.IList;
+        	import mx.containers.TitleWindow;
         	import mx.controls.Button;
+        	import mx.events.CloseEvent;
+        	import mx.managers.PopUpManager;
         	import mx.managers.SystemManager;
-        	import mx.core.Application;
-        	import mx.managers.PopUpManagerChildList;
-        	import adobe.utils.CustomActions;
-            import mx.events.CloseEvent;
-            import mx.managers.PopUpManager;
-            import mx.collections.IList;
-            import mx.containers.TitleWindow;
-            
-            import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
-            import de.waveumleditor.model.classDiagram.nodes.MClassNode;
-            import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-            import de.waveumleditor.model.classDiagram.nodes.IClassElement;
 
   
           
@@ -63,6 +53,7 @@
 					}
 				}
 			}
+			
 			public function popUp():void
 			{	
 		        editAttributesWindow.title = "Attribute editieren";
@@ -70,6 +61,11 @@
 		        
 		        mx.managers.PopUpManager.addPopUp(editAttributesWindow, SystemManager.getSWFRoot(editAttributesWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(editAttributesWindow);
+			}
+			
+			override public function getTitleWindow():TitleWindow
+			{
+				return this.editAttributesWindow;
 			}
         ]]>
     </mx:Script>

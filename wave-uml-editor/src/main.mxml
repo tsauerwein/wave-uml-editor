@@ -33,7 +33,7 @@
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="0.0.8" right="0" id="lblVersion"/>
+	<mx:Label text="0.0.8.3-b" right="0" id="lblVersion"/>
 	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="50" right="0">
 		
 	</classDiagrammer:VClassDiagram>

@@ -3,7 +3,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 	import de.waveumleditor.controller.Controller;
 	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 	
-	public class EditSingleAttribute
+	import mx.containers.TitleWindow;
+	
+	public class EditSingleAttribute implements IEditSingleWindow
 	{
 
 		public var controller:Controller;
@@ -44,6 +46,11 @@ package de.waveumleditor.view.diagrammer.dialogues
         {
         	return this.editAttributesWindow;
         }
+		
+		public function getTitleWindow():TitleWindow
+		{
+			return null;
+		}
 
 	}
 }

@@ -277,6 +277,13 @@
 				trace("parameter grid row not found!!!");
 				return null;
 			}
+			
+			
+			
+			override public function getTitleWindow():TitleWindow
+			{
+				return this.singleMethodWindow;
+			}
         ]]>
     </mx:Script>
 	 

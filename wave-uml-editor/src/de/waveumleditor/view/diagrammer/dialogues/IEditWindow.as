@@ -5,6 +5,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	import flash.events.Event;
 	
+	import mx.containers.TitleWindow;
+	
 	public interface IEditWindow
 	{
 		function handleAdd(event:Event):void;
@@ -17,7 +19,8 @@ package de.waveumleditor.view.diagrammer.dialogues
 		
 		function getClassData():MClassDiagramNode;
 		
+		function getTitleWindow():TitleWindow;
 		
-		
+		function update(nodeData:MClassDiagramNode):void;
 	}
 }

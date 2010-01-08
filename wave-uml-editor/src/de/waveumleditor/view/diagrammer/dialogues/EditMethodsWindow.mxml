@@ -99,6 +99,11 @@
 					grid.removeChild(constructorAdd);
 				}
 			}
+			
+			override public function getTitleWindow():TitleWindow
+			{
+				return this.editMethodsWindow;
+			}
         ]]>
     </mx:Script>
 <!--	<container> -->

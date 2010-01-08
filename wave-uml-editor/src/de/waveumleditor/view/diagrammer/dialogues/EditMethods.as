@@ -8,6 +8,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	import flash.events.Event;
 	
+	import mx.containers.TitleWindow;
 	import mx.controls.Button;
 	
 	public class EditMethods implements IEditWindow
@@ -100,6 +101,11 @@ package de.waveumleditor.view.diagrammer.dialogues
 		{
 			//TODO
 			trace("handleRemoveConstructor");
+		}
+		
+		public function getTitleWindow():TitleWindow
+		{
+			return null;
 		}
 
 	}

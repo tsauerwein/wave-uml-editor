@@ -5,7 +5,9 @@ package de.waveumleditor.view.diagrammer.dialogues
 	
 	import flash.events.Event;
 	
-	public class EditSingleMethod
+	import mx.containers.TitleWindow;
+	
+	public class EditSingleMethod implements IEditSingleWindow
 	{
 
 		public var controller:Controller;
@@ -52,6 +54,11 @@ package de.waveumleditor.view.diagrammer.dialogues
         {
         	
         }
+		
+		public function getTitleWindow():TitleWindow
+		{
+			return null;
+		}
         
 
 	}

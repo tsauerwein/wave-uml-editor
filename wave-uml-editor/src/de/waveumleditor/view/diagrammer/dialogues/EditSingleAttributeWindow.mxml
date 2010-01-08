@@ -119,6 +119,11 @@
 		        mx.managers.PopUpManager.addPopUp(singleAttributeWindow, SystemManager.getSWFRoot(singleAttributeWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(singleAttributeWindow);
 			}
+			
+			override public function getTitleWindow():TitleWindow
+			{
+				return this.singleAttributeWindow;
+			}
         ]]>
     </mx:Script>
 <!--	<container> -->
