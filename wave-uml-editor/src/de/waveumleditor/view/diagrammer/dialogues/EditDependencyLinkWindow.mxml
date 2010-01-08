@@ -63,6 +63,22 @@
 		]]>
 	</mx:Script>
 	
+	
+		<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>  
+	
+	
 	<!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 					id="titleWindow"
@@ -94,7 +110,7 @@
 						</mx:GridRow>
 						<mx:GridRow width="100%" height="100%">
 							<mx:GridItem width="100%" height="100%">
-								<mx:Label text="Name:"/>
+								<mx:Label text="@Resource(key='name', bundle='languages')"/>
 							</mx:GridItem>
 							<mx:GridItem width="100%" height="100%" horizontalAlign="right">
 								<mx:TextInput id="name" text="" maxChars="20" width="130"/>
@@ -111,10 +127,10 @@
 							<mx:GridItem width="100%" height="100%">
 							</mx:GridItem>
 							<mx:GridItem width="0%" height="100%">
-								<mx:Button label="Speichern" click="save()"/>
+								<mx:Button label="@Resource(key='labelSave', bundle='languages')" click="save()"/>
 							</mx:GridItem>
 							<mx:GridItem width="0%" height="100%">
-								<mx:Button label="Abbrechen" click="close()"/>
+								<mx:Button label="@Resource(key='labelCancel', bundle='languages')" click="close()"/>
 							</mx:GridItem>
 						</mx:GridRow>
 					</mx:Grid>

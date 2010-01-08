@@ -138,13 +138,30 @@
 			
 		]]>
 	</mx:Script>
+	
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		[Event(name="removeLink", type="flash.events.Event")]
+		[Event(name="describeLink", type="LinkDescriptionEvent")]
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>
+	
 	<!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
 					id="titleWindow"
 					layout="vertical"
 					minWidth="240" 
 					minHeight="100"
-					title="Link editieren"
+					title="@Resource(key='editLink', bundle='languages')"
 					titleStyleName="titleText"
 					backgroundColor="#FFFFFF"
 					backgroundAlpha="0.8"
@@ -162,27 +179,27 @@
 				<mx:TextInput id="txLinkName" x="276.5" y="54" text="" editable="true" width="120" textAlign="center"/>
 				<mx:TextInput id="txLinkMultiplicityTo" x="447.5" y="54" editable="true" width="61" textAlign="right"/>
 				<mx:TextInput id="txLinkAttrTo" x="393.5" y="100" text="" editable="true" width="115" textAlign="right"/>
-				<mx:CheckBox x="153.5" y="149" label="Navigierbar" id="checkboxNaviFrom" enabled="true"/>
-				<mx:CheckBox x="421.5" y="149" label="Navigierbar" id="checkboxNaviTo" enabled="true"/>
-				<mx:Label x="153.5" y="39" text="Multiplizität" width="71"/>
-				<mx:Label x="436.5" y="39" text="Multiplizität" width="72" textAlign="right"/>
-				<mx:Label x="153.5" y="120" text="Attribut" width="115"/>
-				<mx:Label x="393.5" y="120" text="Attribut" width="115" textAlign="right"/>
-				<mx:Label x="276.5" y="39" text="Name" width="120" textAlign="center"/>
+				<mx:CheckBox x="153.5" y="149" label="@Resource(key='navigable', bundle='languages')" id="checkboxNaviFrom" enabled="true"/>
+				<mx:CheckBox x="421.5" y="149" label="@Resource(key='navigable', bundle='languages')" id="checkboxNaviTo" enabled="true"/>
+				<mx:Label x="153.5" y="39" text="@Resource(key='multiplicity', bundle='languages')" width="71"/>
+				<mx:Label x="436.5" y="39" text="@Resource(key='multiplicity', bundle='languages')" width="72" textAlign="right"/>
+				<mx:Label x="153.5" y="120" text="@Resource(key='attribute', bundle='languages')" width="115"/>
+				<mx:Label x="393.5" y="120" text="@Resource(key='attribute', bundle='languages')" width="115" textAlign="right"/>
+				<mx:Label x="276.5" y="39" text="@Resource(key='name', bundle='languages')" width="120" textAlign="center"/>
 			</mx:Canvas>
 			
-			<mx:Label x="10" y="189" text="Assoziationstyp" fontWeight="bold" fontSize="12"/>
+			<mx:Label x="10" y="189" text="@Resource(key='associationtype', bundle='languages')" fontWeight="bold" fontSize="12"/>
 			<mx:Canvas>
 				<mx:ComboBox id="associationTypeComboBox" x="153.5" y="189" editable="false" enabled="true" change="handelClick()">
 					<mx:ArrayCollection>
-						<mx:Object label="Assoziation"/>
-						<mx:Object label="Aggregation"/>
-						<mx:Object label="Komposition"/>
+						<mx:Object label="@Resource(key='labelAssociation', bundle='languages')"/>
+						<mx:Object label="@Resource(key='labelAggregation', bundle='languages')"/>
+						<mx:Object label="@Resource(key='labelComposition', bundle='languages')"/>
 					</mx:ArrayCollection>
 				</mx:ComboBox>
 			</mx:Canvas>
-			<mx:Button label="Speichern" click="save()" x="480" y="189"/>
-			<mx:Button label="Abbrechen" click="close()" x="572" y="189"/>
+			<mx:Button label="@Resource(key='labelSave', bundle='languages')" click="save()" x="480" y="189"/>
+			<mx:Button label="@Resource(key='labelCancel', bundle='languages')" click="close()" x="572" y="189"/>
 		</mx:Canvas>
 	</mx:TitleWindow> 
 	<!--	</container>-->
