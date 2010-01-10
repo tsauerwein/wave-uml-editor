@@ -3,20 +3,33 @@
 	
 	<mx:Script>
         <![CDATA[
-        	import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
-        	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
-        	import de.waveumleditor.model.classDiagram.nodes.MClassNode;
-        	import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-        	
-        	import mx.collections.IList;
-        	import mx.containers.TitleWindow;
-        	import mx.controls.Button;
-        	import mx.events.CloseEvent;
-        	import mx.managers.PopUpManager;
-        	import mx.managers.SystemManager;
+			import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
+			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
+			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
+			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
+			
+			import mx.collections.IList;
+			import mx.containers.TitleWindow;
+			import mx.controls.Button;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.SystemManager;
 
   
-          
+			private function init():void{
+				editAttributesWindow.setFocus();
+				editAttributesWindow.addEventListener(KeyboardEvent.KEY_DOWN, btn_keyDown);
+			} 
+			
+			
+			public function btn_keyDown(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.ENTER)
+				{
+					btnClose.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+				}
+				trace("pressed key:" + event.keyCode.toString());
+			}
             
             private function titleWindow_close(evt:CloseEvent):void {
                 PopUpManager.removePopUp(editAttributesWindow);
@@ -38,7 +51,9 @@
 				// add attributes
 				var attributes:IList = (this.getClassData() as MClassNode).getAttributes();
 				addElementsToContentGrid(attributes, attributesList);
+				
 			}
+			
 			
 			
 			public function addElementsToContentGrid(elements:IList, classDataGrid:Grid):void 
@@ -99,6 +114,7 @@
 	        cornerRadius="10"
 	        dropShadowEnabled="true"
 	        showCloseButton="true"
+			creationComplete="init()"
 	        close="titleWindow_close(event)" borderColor="#E2E2E2"> 
 	    
 	    <mx:Grid id="editAttributesGrid" width="100%" height="100%" verticalAlign="top">
@@ -143,15 +159,14 @@
 				            <mx:GridItem width="100%" height="100%">
 				            </mx:GridItem>
 				            <mx:GridItem width="0%" height="100%">
-				                <mx:Button label="@Resource(key='labelClose', bundle='languages')" click="titleWindow_close(CloseEvent.CLOSE as CloseEvent)"/>
+				                <mx:Button id="btnClose" label="@Resource(key='labelClose', bundle='languages')" click="titleWindow_close(CloseEvent.CLOSE as CloseEvent)"
+										   keyDown="btn_keyDown(KeyboardEvent.KEY_DOWN as KeyboardEvent)"/>
 				            </mx:GridItem>
 				        </mx:GridRow>
 				    </mx:Grid>
 			   </mx:GridItem>
 		    </mx:GridRow>
 	    </mx:Grid>
-		
-	
 	
 	</mx:TitleWindow> 
 <!--	</container>-->
