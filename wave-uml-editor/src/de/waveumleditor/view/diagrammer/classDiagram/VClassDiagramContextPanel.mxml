@@ -12,15 +12,6 @@
 			import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 			import de.waveumleditor.view.diagrammer.events.NodeEvent;
 			
-			//testing view modes	
-			/*
-			private function handleChangeModeToObserve():void
-			{
-				getParentDiagram().setViewModeToObserve();
-			}
-			//testing view modes end
-			*/
-			
 			private function getParentDiagram():VClassDiagram
 			{
 				return getParentPanel() as VClassDiagram;
