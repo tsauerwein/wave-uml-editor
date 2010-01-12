@@ -8,21 +8,19 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import de.waveumleditor.model.wao.classDiagram.WAOKeyGenerator;
-			import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;			
 			import de.waveumleditor.controller.Controller;
-			import de.waveumleditor.controller.ModelFascade;
-			import de.waveumleditor.model.Identifier;
-			import de.waveumleditor.model.Position;
 			import de.waveumleditor.model.classDiagram.*;
-			import de.waveumleditor.model.classDiagram.nodes.*;
 			import de.waveumleditor.model.classDiagram.links.*;
+			import de.waveumleditor.model.classDiagram.nodes.*;
 			
 			private var controller:Controller;
 			private var classDiagram:MClassDiagram;
 			
-		private function init():void {
+		private function init():void 
+		{
 			Application.application.id = "waveumleditor";
+			
+			setLocale();
 				
 			classDiagram = new MClassDiagram();
 				
@@ -30,10 +28,21 @@
 			controller.setUpCallbacks();
 		}
 
+		private function setLocale():void
+		{
+			if (Capabilities.language == "de")
+			{
+				resourceManager.localeChain = ["de_DE", "en_US"];
+			}
+			else
+			{
+				resourceManager.localeChain = ["en_US", "de_DE"];
+			}
+		}
 		]]>
 	</mx:Script>
 	
-	<mx:Label text="0.0.12" right="0" id="lblVersion"/>
+	<mx:Label text="0.9" right="0" id="lblVersion"/>
 	<classDiagrammer:VClassDiagram id="diagram" left="0" top="0" bottom="0" right="0">
 		
 	</classDiagrammer:VClassDiagram>
