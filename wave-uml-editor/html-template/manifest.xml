@@ -1,7 +1,8 @@
-﻿<extension name="UMLClassEditor" description="Work with your colleagues together at a UML Class-Diagrammes..." thumbnailUrl="">
+<!-- location: http://wave-as-client.googlecode.com/svn/trunk/example/wave_install_creator/web/wave_install_creator_install.xml -->
+<extension name="Wave UML Editor" description="UML Class Editor" thumbnailUrl "http://wave-uml-editor.kenai.com/wave-uml-editor/iconUMLClassEditor.jpg">
   <version>1.0</version>
-  <author name="CodeOrange" email="team.code.orange@gmail.com"/>
-  <menuHook location="toolbar" text="Insert UMLClassEditor Wave" iconUrl="http://wave-uml-editor.kenai.com/wave-uml-editor/iconUMLClassEditor.jpg">
+  <author name="CodeOrange@FHZW" email="team.code.orange@googlemail.com"/>
+  <menuHook location="toolbar" text="Wave UML Editor" iconUrl="http://wave-uml-editor.kenai.com/wave-uml-editor/iconUMLClassEditor.jpg">
     <insertGadget url="http://wave-uml-editor.kenai.com/wave-uml-editor/wave-uml-editor.xml"/>
   </menuHook>
 </extension>
