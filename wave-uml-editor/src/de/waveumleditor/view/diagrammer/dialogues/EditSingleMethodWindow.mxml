@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" 
 				  xmlns:mx="http://www.adobe.com/2006/mxml">
-	
+		<mx:Metadata>
+			/* ResourceBundle for NLS */
+			[ResourceBundle("languages")]	
+			/* End of ResourceBundle for NLS */
+		</mx:Metadata>  
 		<mx:Script>
         <![CDATA[
+        	import mx.resources.ResourceBundle;
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
@@ -257,7 +262,7 @@
 
 			public function popUp():void
 			{	
-		        singleMethodWindow.title = "Methode editieren";
+		        singleMethodWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
       
 		        singleMethodWindow.addChild(editMethodGrid);
 		        
@@ -293,7 +298,7 @@
 			minWidth="360" 
 			minHeight="250"
 			maxHeight="450"
-	        title="Methode editieren"
+	        title="@Resource(key='titleEditMethod', bundle='languages')"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
 	        backgroundAlpha="0.9"
@@ -310,7 +315,7 @@
                     <mx:Grid id="gdInput" width="100%">
                         <mx:GridRow id="grVisibility" width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label id="lblVisibility" text="Sichtbarkeit:"/>
+                            	<mx:Label id="lblVisibility" text="@Resource(key='labelVisibility', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" horizontalAlign="right">
                             	<mx:ComboBox id="cbVisibility" dataProvider="{visibility}"/>
@@ -318,7 +323,7 @@
                         </mx:GridRow>
                         <mx:GridRow id="grStatic" width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label id="lblStatic" text="Statisch:"/>
+                            	<mx:Label id="lblStatic" text="@Resource(key='labelStatic', bundle='languages')"/>
                             </mx:GridItem>   
                             <mx:GridItem width="100%" horizontalAlign="right">
                             	<mx:CheckBox id="chbStatic" label=""/>
@@ -326,7 +331,7 @@
                         </mx:GridRow>
                         <mx:GridRow id="grAbstract" width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label id="lblAbstract" text="Abstrakt:"/>
+                            	<mx:Label id="lblAbstract" text="@Resource(key='labelAbstract', bundle='languages')"/>
                             </mx:GridItem>   
                             <mx:GridItem width="100%" horizontalAlign="right">
                             	<mx:CheckBox id="chbAbstract" label=""/>
@@ -334,7 +339,7 @@
                         </mx:GridRow>
                         <mx:GridRow id="grType" width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label id="lblType" text="Rückgabetyp:"/>
+                            	<mx:Label id="lblType" text="@Resource(key='lblReturnType', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem  width="100%" horizontalAlign="right">
                             	<mx:ComboBox id="cbType" editable="true" dataProvider="{type}"/>
@@ -342,7 +347,7 @@
                         </mx:GridRow>
                         <mx:GridRow width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label text="Name:"/>
+                            	<mx:Label text="@Resource(key='labelName', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" horizontalAlign="right">
                             	<mx:TextInput id="txtMethodName" text="" maxChars="20" width="130"/>
@@ -350,7 +355,7 @@
                         </mx:GridRow>
                         <mx:GridRow width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label text="Übergabeparameter:"/>
+                            	<mx:Label text="@Resource(key='lblParameter', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" horizontalAlign="right">
                             </mx:GridItem>
@@ -381,10 +386,10 @@
 				            </mx:GridItem>
 				            
 				            <mx:GridItem>
-				                <mx:Button label="Speichern" click="saveMethod(event)"/>
+				                <mx:Button label="@Resource(key='labelSave', bundle='languages')" click="saveMethod(event)"/>
 				            </mx:GridItem>
 				            <mx:GridItem>
-				                <mx:Button label="Abbrechen" click="close(CloseEvent.CLOSE as CloseEvent)"/>
+				                <mx:Button label="@Resource(key='labelCancel', bundle='languages')" click="close(CloseEvent.CLOSE as CloseEvent)"/>
 				            </mx:GridItem>
 				        </mx:GridRow>
 				    </mx:Grid>
