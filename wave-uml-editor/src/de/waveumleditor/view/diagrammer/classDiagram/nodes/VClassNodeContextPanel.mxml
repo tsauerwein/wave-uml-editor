@@ -93,7 +93,7 @@
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-relation.png')" glowColor="#000000" y="66" click="dispatchEvent(new BeginLinkEvent('linkNode', VAssociationLink, event))" toolTip="@Resource(key='glowAssociation', bundle='languages')" width="20" x="2" height="20"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-dependency.png')" glowColor="#000000" y="88" click="dispatchEvent(new BeginLinkEvent('linkNode', VDependencyLink, event))" toolTip="@Resource(key='glowDependency', bundle='languages')" width="20" height="20" x="2"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-emet.png')" glowColor="#000000" y="110" click="handleEditMethodsClick()" toolTip="@Resource(key='glowMethod', bundle='languages')" width="20" x="2" height="20"/>
-	<buttons:GlowButton id="editAttributesButton" source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="handleEditAttributesClick()" toolTip="@Resource(key='attribute', bundle='languages')" width="20" x="2" height="20"/>
+	<buttons:GlowButton id="editAttributesButton" source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-eatr.png')" glowColor="#000000" y="132" click="handleEditAttributesClick()" toolTip="@Resource(key='glowAttribute', bundle='languages')" width="20" x="2" height="20"/>
 	
 	<mx:Resize id="resize" easingFunction="{Bounce.easeOut}"/>
 </GenericNodeContextPanel>

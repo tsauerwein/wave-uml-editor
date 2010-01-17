@@ -3,7 +3,7 @@
 	xmlns="com.anotherflexdev.diagrammer.*" 
 	xmlns:buttons="com.anotherflexdev.ui.buttons.*"
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	width="55.995697" height="28" backgroundColor="#FCF7F7" cornerRadius="10" borderColor="#B7BABC" borderStyle="solid">
+	width="54.5" height="27.5" backgroundColor="#FCF7F7" cornerRadius="10" borderColor="#B7BABC" borderStyle="solid">
 	
 	<mx:Script>
 		<![CDATA[
