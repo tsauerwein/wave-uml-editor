@@ -55,6 +55,13 @@
 				addElementsToContentGrid(methods, methodsList);
 			}
 			
+			/**
+			 * This method adds methods or constructors to a content grid.
+			 *  
+			 * @param elements IList of methods or constructors
+			 * @param classDataGrid Grid
+			 * 
+			 */
 			public function addElementsToContentGrid(elements:IList, classDataGrid:Grid):void 
 			{
 				classDataGrid.removeAllChildren();

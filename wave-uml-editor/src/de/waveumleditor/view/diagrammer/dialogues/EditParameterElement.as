@@ -29,6 +29,11 @@ package de.waveumleditor.view.diagrammer.dialogues
               "int",
               "double" );
 		
+		/**
+		 * An EditParameterElement is a GridRow, containing information about a parameter (variable)
+		 * and the buttons "edit" and "delete"
+		 * 
+		 */
 		public function EditParameterElement(variable:MVariable, editWindow:EditSingleMethod)
 		{
 			super();
@@ -42,14 +47,14 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.id = "gr"+(idCounter).toString();
 			
 			
-			//Typ
+			//Type
 			var giType:GridItem = new GridItem();
 			cbType = new ComboBox();
 			cbType.editable = true;
 			cbType.dataProvider = type;
 			giType.addChild(cbType);
 			this.addChild(giType);
-			//Typ
+
 			var current_type:String = variable.getType().getName();
 			if(type.indexOf(current_type)<0)
 			{
@@ -66,7 +71,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 			giName.addChild(tiName);
 			this.addChild(giName);
 			
-			//Default Wert
+			//Default value
 			var giDefaultValue:GridItem = new GridItem();
 			tiDefaultValue = new TextInput();
 			tiDefaultValue.maxChars = 20;
@@ -86,6 +91,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.addChild(deleteGridItem);
 		}
 		
+		
+		/**
+		 * This method reads the currently edited variable out of the dialog controls.
+		 * @return Variable
+		 * 
+		 */
 		public function getVariable():MVariable
 		{
 			var newType:MType;
@@ -104,6 +115,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 			return this.variable;
 		}
 		
+		/**
+		 * This method returns a delete button with its handler according to the given parameter variable. 
+		 * @param element
+		 * @return deleteButton Button
+		 * 
+		 */
 		public function getDeleteButtonOfElement(variable:MVariable):Button
 		{
 			var deleteButton:Button = new Button();
@@ -117,6 +134,10 @@ package de.waveumleditor.view.diagrammer.dialogues
 			return deleteButton;
 		}
 		
+		/**
+		 * This method checks if the containing variable exists and has a name. 
+		 * 
+		 */
 		public function hasValidParameter():Boolean
 		{
 			if(this.variable == null)

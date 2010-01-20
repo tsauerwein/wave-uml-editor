@@ -47,6 +47,12 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.editAttributesWindow;
         }
 		
+		/**
+		 * This method returns the reference of the parent window.
+		 * It should be implemented by derived classes. 
+		 * @return 
+		 * 
+		 */
 		public function getTitleWindow():TitleWindow
 		{
 			return null;

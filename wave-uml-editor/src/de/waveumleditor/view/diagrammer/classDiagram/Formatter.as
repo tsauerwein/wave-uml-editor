@@ -10,6 +10,14 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			
 		}
 
+		/**
+		 * This method formats a class element (e.g. method-gridrow) according to its modifiers (static, abstract)
+		 * and sets the text of its label. 
+		 * 
+		 * @param element 
+		 * @param label
+		 * 
+		 */
 		public static function formatLabelOfClassElement(element:IClassElement, label:Label):void
 		{
 			

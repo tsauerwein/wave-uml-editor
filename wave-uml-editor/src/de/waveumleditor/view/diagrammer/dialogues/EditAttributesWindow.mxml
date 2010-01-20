@@ -55,7 +55,13 @@
 			}
 			
 			
-			
+			/**
+			 * This method adds attributes to a content grid.
+			 *  
+			 * @param elements Attributes
+			 * @param classDataGrid Grid
+			 * 
+			 */
 			public function addElementsToContentGrid(elements:IList, classDataGrid:Grid):void 
 			{
 				classDataGrid.removeAllChildren();

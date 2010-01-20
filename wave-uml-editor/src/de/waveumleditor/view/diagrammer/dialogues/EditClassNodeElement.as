@@ -12,6 +12,11 @@ package de.waveumleditor.view.diagrammer.dialogues
 	import mx.controls.Button;
 	import mx.controls.Label;
 
+	/**
+	 * An EditClassNodeElement is a GridRow, containing information about a class element
+	 * and the buttons "edit" and "delete"
+	 * 
+	 */
 	public class EditClassNodeElement extends GridRow
 	{
 		private var element:IClassElement;
@@ -45,6 +50,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 			this.addChild(deleteGridItem);
 		}
 		
+		/**
+		 * This method returns an edit button with its handler according to the given class element. 
+		 * @param element
+		 * @return editButton Button
+		 * 
+		 */
 		public function getEditButtonOfElement(element:IClassElement):Button
 		{
 			var editButton:Button = new Button();
@@ -57,6 +68,12 @@ package de.waveumleditor.view.diagrammer.dialogues
 			return editButton;
 		}
 		
+		/**
+		 * This method returns a delete button with its handler according to the given class element. 
+		 * @param element
+		 * @return deleteButton Button
+		 * 
+		 */
 		public function getDeleteButtonOfElement(element:IClassElement):Button
 		{
 			var deleteButton:Button = new Button();

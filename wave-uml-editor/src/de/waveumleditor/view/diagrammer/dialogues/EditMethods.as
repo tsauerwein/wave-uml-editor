@@ -44,11 +44,25 @@ package de.waveumleditor.view.diagrammer.dialogues
         	return this.classDiagramNode;
         }
 
+		/**
+		 * This method updates the dialog according to the content of the given MClassDiagramNode object.
+		 * It should be implemented by the derived class.
+		 *  
+		 * @param nodeData
+		 * 
+		 */
 		public function update(nodeData:MClassDiagramNode):void 
 		{
-			
+			trace("wrong update method called");
 		}
 		
+		/**
+		 * This method calls the appropriate handler of the controller to add a new method
+		 * to the edit methods dialog
+		 *  
+		 * @param event
+		 * 
+		 */
 		public function handleAdd(event:Event):void
 		{
 			trace("add method handler");
@@ -56,6 +70,13 @@ package de.waveumleditor.view.diagrammer.dialogues
 			controller.handleShowSingleMethod(methodEvent);
 		}
 		
+		/**
+		 * This method calls the appropriate handler of the controller to remove a method
+		 * from the edit methods dialog
+		 *  
+		 * @param event
+		 * 
+		 */
 		public function handleDelete(event:Event):void
 		{
 			var buttonClicked:Button = event.currentTarget as Button;
@@ -65,6 +86,13 @@ package de.waveumleditor.view.diagrammer.dialogues
 			controller.handleRemoveMethod(nodeMethodEvent);
 		}
 		
+		/**
+		 * This method calls the appropriate handler of the controller to edit a method
+		 * and open an edit single method dialog
+		 *  
+		 * @param event
+		 * 
+		 */
 		public function handleEdit(event:Event):void
 		{
 			var buttonClicked:Button = event.currentTarget as Button;
@@ -73,11 +101,15 @@ package de.waveumleditor.view.diagrammer.dialogues
 			var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
 			controller.handleShowSingleMethod(nodeMethodEvent);
 			
-            /*var editSingleMethod:EditSingleMethodWindow = new EditSingleMethodWindow();
-            editSingleMethod.update(mockupMethod);//TODO Attribut über Id holen
-            editSingleMethod.popUp(); */
 		}
 		
+		/**
+		 * This method calls the appropriate handler of the controller to edit a constructor
+		 * and open an edit single method dialog
+		 *  
+		 * @param event
+		 * 
+		 */
 		public function handleAddConstructor(event:Event):void
 		{
 			//TODO
@@ -85,16 +117,6 @@ package de.waveumleditor.view.diagrammer.dialogues
 			
 			var methodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, WAOKeyGenerator.DEFAULT_CONSTRUCTOR_IDENTIFIER);
 			controller.handleShowSingleMethod(methodEvent);
-		}
-		
-		public function handleEditConstructor(event:Event):void
-		{
-			//TODO DELETE -> wird mit handleEdit aufgerufen
-/*			trace("handleEditConstructor");
-			var buttonClicked:Button = event.currentTarget as Button;
-			
-			var nodeMethodEvent:NodeMethodEvent = new NodeMethodEvent(getClassData(), null, this, new Identifier(buttonClicked.id));
-			controller.handleShowSingleConstructor(nodeMethodEvent);*/
 		}
 		
 		public function handleRemoveConstructor(event:Event):void
