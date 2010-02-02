@@ -62,7 +62,8 @@ package de.waveumleditor.controller
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
 			
-			this.wave = new WaveSimulator(); // todo
+			
+			this.wave = new WaveSimulator(); 
 			//this.wave = new Wave();
 			
 			this.fascade = new ModelFascade(this.diagramModel, this.wave);
@@ -359,7 +360,6 @@ package de.waveumleditor.controller
 			var method:MClassConstructorMethod = null;
 			if (WAOKeyGenerator.isMethod(event.getMethodId())) 
 			{
-				//TODO: Unterscheidung zw. InterfaceMethod und ClassMethod
 				if (event.getMethodId() == WAOKeyGenerator.DEFAULT_METHOD_IDENTIFIER)
 				{
 					if (event.getClassNode() is MInterface)

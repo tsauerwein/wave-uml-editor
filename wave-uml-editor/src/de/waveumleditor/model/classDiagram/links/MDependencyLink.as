@@ -3,6 +3,9 @@ package de.waveumleditor.model.classDiagram.links
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	
+	/**
+	 * Dependency Link class
+	 */
 	public class MDependencyLink extends MClassLink
 	{
 				

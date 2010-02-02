@@ -39,6 +39,11 @@ package de.waveumleditor.model
 			delegate[key.getId()] = null;
 		}
 		
+		/**
+		 * Return the Dictionary as a list
+		 * 
+		 * @return Arraylist of elements
+		 **/
 		public function getAsList():ArrayList
 		{
 			var list:ArrayList = new ArrayList();
@@ -54,6 +59,11 @@ package de.waveumleditor.model
 			return list;
 		}
 		
+		/**
+		 * Get a copy of the Dictionary
+		 * 
+		 * @return copy of dictionary
+		 **/
 		public function getAsDictionary():Dictionary
 		{
 			var keys:Dictionary = new Dictionary();

@@ -1,5 +1,14 @@
 package de.waveumleditor.model.classDiagram.nodes
 {
+	/**
+	 * Enumeration for visibility. 
+	 * Possible values are:
+	 * 	- PUBLIC
+	 * 	- PRIVATE
+	 *  - PROTECTED
+	 *  - PACKAGE
+	 * 
+	 */ 
 	public class EVisibility
 	{
 		private var value:int;

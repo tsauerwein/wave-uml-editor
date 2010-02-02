@@ -1,5 +1,14 @@
 package de.waveumleditor.model.classDiagram.nodes
 {
+	/**
+	 * Type of a variable
+	 * 
+	 * predefined types:
+	 * 	- STRING
+	 * 	- BOOLEAN
+	 * 	- INT
+	 * 	- DOUBLE
+	 */
 	public class MType
 	{
 		private var name:String;

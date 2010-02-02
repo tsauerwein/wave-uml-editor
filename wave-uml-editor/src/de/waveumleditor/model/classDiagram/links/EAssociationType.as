@@ -19,7 +19,7 @@ package de.waveumleditor.model.classDiagram.links
 		
 		/**
 		 * Do not call!
-		*/
+		 */
 		public function EAssociationType(value:int)
 		{
 			this.value = value;

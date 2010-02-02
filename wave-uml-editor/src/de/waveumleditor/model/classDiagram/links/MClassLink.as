@@ -23,7 +23,10 @@ package de.waveumleditor.model.classDiagram.links
 			this.linkFrom = linkFrom;
 			this.linkTo = linkTo;
 		}
-	
+		
+		/**
+		 * Should not be called! Simulates abstract method!
+		 */
 		public function canLink(linkFrom:MClassDiagramNode, linkTo:MClassDiagramNode):Boolean 
 		{	
 			//simulates abstract method
@@ -50,6 +53,9 @@ package de.waveumleditor.model.classDiagram.links
 			return "from: " + this.linkFrom + " to: " + this.linkTo;
 		}
 		
+		/**
+		 * Should not be called! Simulates abstract method!
+		 */
 		public function getLinkType():String
 		{
 			throw new Error("must be overriden in child classes");

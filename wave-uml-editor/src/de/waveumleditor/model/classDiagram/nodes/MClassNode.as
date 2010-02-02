@@ -8,15 +8,15 @@ package de.waveumleditor.model.classDiagram.nodes
 	
 	import mx.collections.IList;
 	
+
 	public class MClassNode extends MClassDiagramNode implements IClassElement
 	{
-		private var constructors:ConstructorMap;
-		
-		private var attributes:AttributeMap;
-		
+		private var constructors:ConstructorMap;	
+		private var attributes:AttributeMap;		
 		private var abstract:Boolean;
 		
 		public static const TYPE:String = "C";
+		
 		
 		public function MClassNode(key:Identifier, position:Position, name:String = "", abstract:Boolean = false) 
 		{

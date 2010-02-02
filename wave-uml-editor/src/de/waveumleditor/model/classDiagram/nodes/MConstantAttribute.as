@@ -4,7 +4,6 @@ package de.waveumleditor.model.classDiagram.nodes
 		
 	public class MConstantAttribute extends MClassAttribute implements IClassElement
 	{
-		/* private var modifiers:ArrayList; */
 		
 		public function MConstantAttribute(key:Identifier, variable:MVariable)
 		{
@@ -13,12 +12,18 @@ package de.waveumleditor.model.classDiagram.nodes
 			super.setStatic(true);
 		}
 		
+		/**
+		 * Simulates private function. Should not be called!
+		 */
 		override public function setVisibility(visibility:EVisibility):void
 		{
 			// simulates private function - sorry
 			throw new Error("should not be called");
 		}
 		
+		/**
+		 * Simulates private function. Should not be called!
+		 */
 		override public function setStatic(is_static:Boolean):void
 		{
 			// simulates private function - sorry

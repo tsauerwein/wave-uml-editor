@@ -74,8 +74,6 @@ package de.waveumleditor.controller
 		
 		/**
 		 * Removes a node from the diagram.
-		 * 
-		 * @return A list of links that were connected to this node.
 		 */ 
 		public function removeNode(node:VClassDiagramNode):void
 		{
@@ -93,7 +91,7 @@ package de.waveumleditor.controller
 		}
 		
 		
-		// Link 				
+		// Links 				
 		public function addLink(link:VClassLink, diagramView:VClassDiagram):void
 		{
 			var id:Identifier = waoKey.generateLinkIdentifier();

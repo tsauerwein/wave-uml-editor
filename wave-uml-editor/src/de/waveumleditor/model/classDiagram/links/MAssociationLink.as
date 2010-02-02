@@ -3,12 +3,13 @@ package de.waveumleditor.model.classDiagram.links
 	import de.waveumleditor.model.Identifier;
 	import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 	
-	
+	/**
+	 * Association Link class
+	 */
 	public class MAssociationLink extends MDependencyLink
 	{
 		private var toName:String = "";
-		private var fromName:String = "";
-		
+		private var fromName:String = "";		
 		private var toMultiplicity:String = "";
 		private var fromMultiplicity:String = "";
 		
@@ -18,6 +19,8 @@ package de.waveumleditor.model.classDiagram.links
 		private var type:EAssociationType = EAssociationType.ASSOCIATION;
 		
 		public static const TYPE:String = "A";
+		
+		
 		
 		public function MAssociationLink(key:Identifier, 
 			linkFrom:MClassDiagramNode, linkTo:MClassDiagramNode, name:String = "")
@@ -118,6 +121,11 @@ package de.waveumleditor.model.classDiagram.links
 			type = linkAssocation.getType();
 		}
 		
+		/**
+		 * Builds a copy by using the passed in Identifier
+		 * 
+		 * @param id
+		 */
 		override public function clone(id:Identifier):MDependencyLink
 		{
 			var copy:MAssociationLink = new MAssociationLink(id, getLinkFrom(), getLinkTo(), getName());
