@@ -36,6 +36,9 @@
 				PopUpManager.centerPopUp(titleWindow);
 			}
 			
+			/**
+			 * Methode to update the displayed link from the model
+			 */
 			public function update(link:MAssociationLink):void 
 			{
 				this.link = link;
@@ -70,6 +73,9 @@
 				}
 			}
 			
+			/**
+			 * Methode to save the changes at the displayed link in the model
+			 */
 			private function save():void
 			{
 				var event:LinkEditEvent = new LinkEditEvent(link);
@@ -102,7 +108,9 @@
 				close();
 			}
 			
-			
+			/**
+			 * Methode to check if the selected options are possible in this assoziation-type
+			 */
 			private function handelClick():void
 			{
 				if(associationTypeComboBox.selectedIndex == EAssociationType.ASSOCIATION.getValue())

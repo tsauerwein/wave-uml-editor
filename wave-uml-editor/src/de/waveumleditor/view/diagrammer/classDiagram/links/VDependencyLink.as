@@ -7,6 +7,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	
 	import flash.geom.Point;
 	
+	/**
+	 * This class provides functionality for dependency-links
+	 */
 	public class VDependencyLink extends VClassLink
 	{
 		public function VDependencyLink()

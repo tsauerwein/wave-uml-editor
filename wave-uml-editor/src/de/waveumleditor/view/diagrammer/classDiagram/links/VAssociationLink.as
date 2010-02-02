@@ -14,6 +14,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	import mx.controls.Label;
 	import mx.events.ResizeEvent;
 	
+	/**
+	 * This class provides additional functionality and attributes for assoziation-links
+	 */
 	public class VAssociationLink extends VClassLink
 	{
 		[Bindable] public var linkMultiplicityFrom:String;
@@ -48,6 +51,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			{
 				var association:MAssociationLink = linkData as MAssociationLink;
 				
+				// linkName is an attribute from Link.as
 				this.linkName = association.getName();
 				
 				this.linkAttributeFrom = association.getFromName();
@@ -114,7 +118,10 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			}	
 		}
 		
-		
+		/**
+		 * This method is call every Time when the link is moving. 
+		 * It is responsable for the Label positioning at the assoziation-link.
+		 */
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
 			if(!this.fromNode && !this.toNode) 
@@ -452,6 +459,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			}
 		}
 		
+		/**
+		 * Method to remove labels and link
+		 */
 		override protected function handleRemove(event:Event):void 
 		{
 			if(this.label.parent != null) {
@@ -474,6 +484,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			}
 		}
 		
+		/**
+		 * This method draws the startsymbol of the link depending on the association-type 
+		 */
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
 		{
 			if(linkAssociationType == EAssociationType.ASSOCIATION)
@@ -495,21 +508,10 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			}
 			
 		}
-		
+
 		/**
-		 * Helper Method for calculate the angle between two points
-		 * 
+		 * This method draws the endsymbol of the link depending on the association-type 
 		 */
-		protected function lineAngle(point1:Point, point2:Point):Number
-		{ 
-			var angle:Number;
-			var rad:Number = 180 / Math.PI;
-
-			angle = Math.atan2(point2.y - point1.y, point2.x - point1.x);
-			
-			return angle * rad;
-		}
-
 		override protected function drawEndSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
 		{
 			if(linkAssociationType == EAssociationType.ASSOCIATION)
@@ -521,6 +523,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			}
 		}
 		
+		/**
+		 * Method to draw the symbol of an composition-link
+		 */
 		protected function drawDiamond(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
 		{
 			var graphic:Graphics = this.graphics;
@@ -530,6 +535,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			graphics.beginFill(0xFFFFFF,1.0);
 	  	}
 
+		/**
+		 * Method to draw the symbol of an aggregation-link 
+		 */
 		protected function drawVoidDiamond(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
 		{
 			var graphic:Graphics = this.graphics;
@@ -538,7 +546,6 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			this.performDiamondDrawing(graphic,x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
 			graphic.beginFill(0x7E949F,0.8);
 	  	}		
-		
 		
 		protected function performDiamondDrawing(graphic:Graphics, x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void
 		{

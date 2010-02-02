@@ -7,6 +7,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 
+	/**
+	 * This class provides functionality for implements-links
+	 */
 	public class VImplementsLink extends VClassLink
 	{
 		public function VImplementsLink()
@@ -14,6 +17,10 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			super();
 		}
 		
+		/**
+		 * This method is called when a connection is made to the target node.
+		 * Only when the target node is an Interface, the connection can be made.
+		 */
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
 			if (fromNode is VClassNode && toNode is VInterfaceNode)

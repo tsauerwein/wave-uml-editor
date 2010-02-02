@@ -15,6 +15,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	import mx.controls.Label;
 	import mx.events.ResizeEvent;
 	
+	/**
+	 * This class provides additional basic functionality for Links
+	 */
 	public class VClassLink extends Link implements IIdentifiable
 	{
 		
@@ -31,18 +34,19 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		}
 		
 		override protected function drawStartSymbol(point1:Point, point2:Point, bottomColor:Number, topColor:Number):void 
-		{}
+		{
+			// can be overriden in child-classes
+		}
 		
 		/**
-		 * Helper method which can be used in child-classes to draw a triangle.
-		 * 
+		 * Helper method which can be used in child-classes to draw a triangle. 
 		 */ 
 		protected function drawTriangle(x1:Number, y1:Number, x2:Number, y2:Number, bottomColor:Number, topColor:Number):void
 		{
 			this.performTriangleDrawing(x1,y1,x2,y2,this.getStyle("lineThickness")+2,bottomColor,0.70);		
 			this.performTriangleDrawing(x1,y1,x2,y2,this.getStyle("lineThickness"),topColor,0.70);		
 		}
-
+		
 		protected function performTriangleDrawing(x1:Number, y1:Number, x2:Number, y2:Number, lineThickness:Number, color:Number, alpha:Number):void 
 		{
 			this.graphics.lineStyle(lineThickness, color, alpha);
@@ -60,8 +64,7 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		}
 		
 		/**
-		 * Helper method which can be used in child-classes to draw a dashed line.
-		 * 
+		 * Helper method which can be used in child-classes to draw a dashed line. 
 		 */
 		protected function dashLine(x1:Number, y1:Number, x2:Number, y2:Number, onLength:Number = 0, offLength:Number = 0):void
 		{
@@ -105,17 +108,10 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 		        this.graphics.lineTo(x2,y2);
 		    }
 		}
-
-		public function getIdentifier():Identifier
-		{
-			return this.key;
-		}
 		
-		public function setIdentifier(key:Identifier):void
-		{
-			this.key = key;
-		}
-		
+		/**
+		 * Specifies the starting point of a link
+		 */
 		protected function getLineStartPoint():Point
 		{
 			var x:Number = 0;
@@ -148,6 +144,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			return new Point(x,y);		
 		}
 		
+		/**
+		 * Specifies the ending point of a link
+		 */
 		protected function getLineEndPoint():Point
 		{
 			var x:Number = 0;
@@ -176,6 +175,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 					
 		}
 		
+		/**
+		 * Method to set the label style of a link
+		 */
 		protected function setLabelStyle(lab:Label):void
 		{
 			lab.setStyle("fontFamily", this.getStyle("labelFontFamily"));
@@ -185,7 +187,16 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			lab.setStyle("align","left");
 		}
 		
-				
+		//Setter and Getter
 		
+		public function getIdentifier():Identifier
+		{
+			return this.key;
+		}
+		
+		public function setIdentifier(key:Identifier):void
+		{
+			this.key = key;
+		}
 	}
 }

@@ -6,7 +6,9 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassNode;
 	
-	
+	/**
+	 * This class provides functionality for inheritance-links
+	 */
 	public class VInheritanceLink extends VClassLink
 	{
 		public function VInheritanceLink()
@@ -14,6 +16,12 @@ package de.waveumleditor.view.diagrammer.classDiagram.links
 			super();
 		}
 		
+		/**
+		 * This method is called when a connection is made to the target node.
+		 * Connections can be made between :
+		 * 		1. Interface and Interface
+		 * 		2. Class and Class
+		 */
 		override public function canLink(fromNode:BaseNode, toNode:BaseNode):Boolean 
 		{
 			if (fromNode == toNode) 

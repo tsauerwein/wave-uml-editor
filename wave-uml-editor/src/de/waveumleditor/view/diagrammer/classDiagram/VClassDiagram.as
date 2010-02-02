@@ -36,12 +36,18 @@ package de.waveumleditor.view.diagrammer.classDiagram
 			nodes = new NodeMap();
 			links = new LinkMap();
 		}
-
+	
+		/**
+		 * This method sets the Google Wave Mode for the gadget to reading (read only)
+		 */
 		public function setViewModeToEdit():void
 		{
 			PopUpManager.removePopUp(lockLayer);
 		}
 		
+		/**
+		 * This method sets the Google Wave Mode for the gadget to editing
+		 */
 		public function setViewModeToObserve():void
 		{
             lockLayer = PopUpManager.createPopUp(this, ObserveMode, true) as ObserveMode;
@@ -277,5 +283,6 @@ package de.waveumleditor.view.diagrammer.classDiagram
 				}
 			}
 		}
+		
 	}
 }
