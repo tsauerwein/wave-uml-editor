@@ -3,6 +3,21 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns="de.waveumleditor.view.diagrammer.dialogues.*">
 	
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>  
+	
+	
 	<mx:Script>
 		<![CDATA[
 			import de.waveumleditor.view.diagrammer.classDiagram.links.VDependencyLink;
@@ -28,8 +43,8 @@
 			
 			public function popUp():void
 			{	
-				titleWindow.title = "Link editieren";
-				titleWindow.addChild(editLinkGrid);
+/* 				titleWindow.title = "@Resource(key='editLink', bundle='languages')";
+ */				titleWindow.addChild(editLinkGrid);
 				
 				PopUpManager.addPopUp(titleWindow, SystemManager.getSWFRoot(titleWindow), true);
 				PopUpManager.centerPopUp(titleWindow);
@@ -64,19 +79,7 @@
 	</mx:Script>
 	
 	
-		<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
-	<mx:Metadata>
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
-	</mx:Metadata>  
+
 	
 	
 	<!--	<container> -->
@@ -85,7 +88,7 @@
 					layout="vertical" 
 					minWidth="240" 
 					minHeight="100"
-					title="Link editieren"
+					title="@Resource(key='editLink', bundle='languages')"
 					titleStyleName="titleText"
 					backgroundColor="#FFFFFF"
 					backgroundAlpha="0.7"

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditMethods xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+		<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
 	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>  
 	<mx:Script>
         <![CDATA[
         	import de.waveumleditor.model.classDiagram.nodes.MInterface;
@@ -85,8 +97,8 @@
 
 			public function popUp():void
 			{	
-		        editMethodsWindow.title = "Methoden editieren";
-		        editMethodsWindow.addChild(editMethodsGrid);
+/* 		        editMethodsWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
+ */		        editMethodsWindow.addChild(editMethodsGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(editMethodsWindow, SystemManager.getSWFRoot(editMethodsWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(editMethodsWindow);
@@ -114,19 +126,7 @@
         ]]>
     </mx:Script>
     
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
-	<mx:Metadata>
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
-	</mx:Metadata>  
+
 	
     
 <!--	<container> -->
@@ -136,7 +136,7 @@
 			minWidth="340" 
 			minHeight="300"
 			maxHeight="500"
-	        title="Methoden editieren"
+	        title="@Resource(key='titleEditMethod', bundle='languages')"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
 	        backgroundAlpha="0.7"

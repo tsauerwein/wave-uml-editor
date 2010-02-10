@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditAttributes xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+	    
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
 	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>    
 	<mx:Script>
         <![CDATA[
 			import de.waveumleditor.model.classDiagram.nodes.MClassAttribute;
 			import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
 			import de.waveumleditor.model.classDiagram.nodes.MClassNode;
 			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
-			
+
 			import mx.collections.IList;
 			import mx.containers.TitleWindow;
 			import mx.controls.Button;
@@ -77,8 +90,8 @@
 			
 			public function popUp():void
 			{	
-		        editAttributesWindow.title = "Attribute editieren";
-		        editAttributesWindow.addChild(editAttributesGrid);
+/* 		        editAttributesWindow.title = "@Resource(key='titleEditAttribute', bundle='languages')";
+ */		        editAttributesWindow.addChild(editAttributesGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(editAttributesWindow, SystemManager.getSWFRoot(editAttributesWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(editAttributesWindow);
@@ -90,20 +103,7 @@
 			}
         ]]>
     </mx:Script>
-    
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
-	<mx:Metadata>
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
-	</mx:Metadata>    
+
     
 <!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
@@ -112,7 +112,7 @@
 			minWidth="340" 
 			minHeight="200"
 			maxHeight="500"
-	        title="Attribute editieren"
+	        title="@Resource(key='titleEditAttribute', bundle='languages')"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
 	        backgroundAlpha="0.7"

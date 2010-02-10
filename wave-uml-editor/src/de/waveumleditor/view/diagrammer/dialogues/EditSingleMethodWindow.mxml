@@ -262,8 +262,8 @@
 
 			public function popUp():void
 			{	
-		        singleMethodWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
-      
+/* 		        singleMethodWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
+ */      
 		        singleMethodWindow.addChild(editMethodGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(singleMethodWindow, SystemManager.getSWFRoot(singleMethodWindow), true);

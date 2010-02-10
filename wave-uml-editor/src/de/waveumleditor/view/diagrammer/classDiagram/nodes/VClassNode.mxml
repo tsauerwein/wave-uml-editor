@@ -3,7 +3,7 @@
 	<lblNodeName>
 		<mx:Text y="0" text="{nodeName}" selectable="false" left="1" right="1" textAlign="center" id="classNodeName" />
 	</lblNodeName>
-
+ 
 		<mx:Script>
 		<![CDATA[
 			import de.waveumleditor.view.diagrammer.classDiagram.Formatter;
@@ -73,7 +73,20 @@
 			}
 		]]>
 	</mx:Script>
-
+	<!-- ActionScript for NLS -->	
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>   
+	
 	<grids>
 		<mx:Grid id="classDataGrid" x="0" y="38" width="100%">
 					
@@ -87,7 +100,7 @@
 							<mx:Grid id="attributeGrid"  y="147" width="100%" verticalGap="0">
 								<mx:GridRow width="100%" height="100%" id="defaultAttributeGridItemRow">
 									<mx:GridItem id="defaultAttributeGridItem">
-										<mx:Label text="Attribute" />	
+										<mx:Label text="@Resource(key='labelAttribute', bundle='languages')" />	
 									</mx:GridItem>
 								</mx:GridRow>
 							</mx:Grid>
@@ -103,7 +116,7 @@
 									<mx:Grid id="methodGrid" y="147" width="100%" verticalGap="0">
 										<mx:GridRow width="100%" height="100%" id="defaultMethodGridItemRow">
 											<mx:GridItem id="defaultMethodGridItem">
-												<mx:Label text="Methoden" />	
+												<mx:Label text="@Resource(key='labelMethod', bundle='languages')" />	
 											</mx:GridItem>
 										</mx:GridRow>
 									</mx:Grid>

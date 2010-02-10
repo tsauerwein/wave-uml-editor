@@ -2,6 +2,22 @@
 <EditLinkWindow 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns="de.waveumleditor.view.diagrammer.dialogues.*">
+		
+	<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		[Event(name="removeLink", type="flash.events.Event")]
+		[Event(name="describeLink", type="LinkDescriptionEvent")]
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>
 	
 	<mx:Script>
 		<![CDATA[
@@ -29,8 +45,8 @@
 			
 			public function popUp():void
 			{	
-				titleWindow.title = "Link editieren";
-				titleWindow.addChild(editLinkCanvas);
+/* 				titleWindow.title = "@Resource(key='editLink', bundle='languages')";
+ */				titleWindow.addChild(editLinkCanvas);
 				
 				PopUpManager.addPopUp(titleWindow, SystemManager.getSWFRoot(titleWindow), true);
 				PopUpManager.centerPopUp(titleWindow);
@@ -146,22 +162,7 @@
 			
 		]]>
 	</mx:Script>
-	
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
-	<mx:Metadata>
-		[Event(name="removeLink", type="flash.events.Event")]
-		[Event(name="describeLink", type="LinkDescriptionEvent")]
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
-	</mx:Metadata>
+
 	
 	<!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 

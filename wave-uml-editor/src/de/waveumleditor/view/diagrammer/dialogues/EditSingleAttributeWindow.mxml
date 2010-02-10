@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditSingleAttribute xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
+		
+		<!-- ActionScript for NLS -->
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceBundle;
+		]]>
+	</mx:Script>
+	<!-- End of ActionScript for NLS -->
+	
+	<mx:Metadata>
+		/* ResourceBundle for NLS */
+		[ResourceBundle("languages")]	
+		/* End of ResourceBundle for NLS */
+	</mx:Metadata>  
+		
 		<mx:Script>
         <![CDATA[
         	import de.waveumleditor.model.classDiagram.nodes.MVariable;
@@ -112,7 +127,7 @@
 
 			public function popUp():void
 			{	
-		        singleAttributeWindow.title = "Attribut editieren";
+//		        singleAttributeWindow.title = "@Resource(key='titleEditAttribute', bundle='languages')";
       
 		        singleAttributeWindow.addChild(editAttributeGrid);
 		        
@@ -127,19 +142,7 @@
         ]]>
     </mx:Script>
     
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
 	
-	<mx:Metadata>
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
-	</mx:Metadata>  
 
 <!--	<container> -->
 	<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
@@ -147,7 +150,7 @@
 			layout="vertical" 
 			width="280" 
 			height="220"
-	        title="Attribute editieren"
+	        title="@Resource(key='titleEditAttribute', bundle='languages')"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
 	        backgroundAlpha="0.9"
