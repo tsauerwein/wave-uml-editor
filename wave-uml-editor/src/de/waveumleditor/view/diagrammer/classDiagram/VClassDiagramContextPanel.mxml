@@ -11,6 +11,7 @@
 			import de.waveumleditor.view.diagrammer.classDiagram.nodes.VInterfaceNode;
 			import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 			import de.waveumleditor.view.diagrammer.events.NodeEvent;
+			import mx.resources.ResourceBundle;
 			
 			private function getParentDiagram():VClassDiagram
 			{
@@ -27,31 +28,13 @@
 		]]>
 	</mx:Script>
 	
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
 	<mx:Metadata>
 		[Event(name=NodeEvent.EVENT_ADD_NODE, type="de.waveumleditor.view.diagrammer.events.NodeEvent")]
-		
-		/* ResourceBundle for NLS */
 		[ResourceBundle("languages")]
-		
-		/* End of ResourceBundle for NLS */
 	</mx:Metadata>
-<!--<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_class.png')" glowColor="#000000" y="1" click="addNode(VClassNode)" toolTip="Klasse hinzufügen" width="22" x="2"/>
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_interface.png')" glowColor="#000000" y="1" click="addNode(VInterfaceNode)" toolTip="Interface hinzufügen" width="22" x="27"/> -->
-	<!-- testing view modes -->
-	<!-- <buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_interface.png')" glowColor="#000000" y="1" click="handleChangeModeToObserve()" toolTip="Beobachtungsmodus" width="22" x="60"/>
-	-->
+
 	
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_class.png')" glowColor="#000000" y="2.85" click="addNode(VClassNode)" toolTip="@Resource(key='addClass', bundle='languages')" width="22" x="3.7"/>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_interface.png')" glowColor="#000000" y="2.85" click="addNode(VInterfaceNode)" toolTip="@Resource(key='addInterface', bundle='languages')" width="22" x="28.55"/>
-	<!-- testing view modes 
-	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/new_interface.png')" glowColor="#000000" y="1" click="handleChangeModeToObserve()" toolTip="@Resource(key='viewMode', bundle='languages')" width="22" x="60"/>
-	-->
+	
 </GenericDiagramContextPanel>

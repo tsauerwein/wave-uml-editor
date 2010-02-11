@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditSingleAttribute xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
-		
-		<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
 	
 	<mx:Metadata>
-		/* ResourceBundle for NLS */
 		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
 	</mx:Metadata>  
 		
 		<mx:Script>
@@ -33,6 +23,7 @@
             import mx.managers.PopUpManager;
             import mx.collections.IList;
             import mx.containers.TitleWindow;
+			import mx.resources.ResourceBundle;
             
             import de.waveumleditor.model.classDiagram.nodes.MClassDiagramNode;
             import de.waveumleditor.model.classDiagram.nodes.MClassNode;
@@ -62,7 +53,6 @@
 			
 			public static const DEFAULT_ATTR_NAME:String = "attributeName";
                 
-
             
             private function singleAttributeWindow_close(evt:CloseEvent):void {
                 trace("cancel save attribute event");
@@ -126,9 +116,7 @@
 			
 
 			public function popUp():void
-			{	
-//		        singleAttributeWindow.title = "@Resource(key='titleEditAttribute', bundle='languages')";
-      
+			{	      
 		        singleAttributeWindow.addChild(editAttributeGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(singleAttributeWindow, SystemManager.getSWFRoot(singleAttributeWindow), true);
@@ -198,7 +186,7 @@
                         </mx:GridRow>
                         <mx:GridRow width="100%" height="100%">
                             <mx:GridItem width="100%" height="100%">
-                            	<mx:Label text="@Resource(key='name', bundle='languages')"/>
+                            	<mx:Label text="@Resource(key='labelName', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" height="100%" horizontalAlign="right">
                             	<mx:TextInput id="attr_name" text="" maxChars="20" width="130"/>

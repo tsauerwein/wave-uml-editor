@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <EditMethods xmlns="de.waveumleditor.view.diagrammer.dialogues.*" xmlns:mx="http://www.adobe.com/2006/mxml">
-		<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
-	<mx:Metadata>
-		/* ResourceBundle for NLS */
-		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
+
+	<mx:Metadata>		
+		[ResourceBundle("languages")]			
 	</mx:Metadata>  
+	
 	<mx:Script>
         <![CDATA[
         	import de.waveumleditor.model.classDiagram.nodes.MInterface;
@@ -29,6 +21,7 @@
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
+			import mx.resources.ResourceBundle;
 
 			
             private function editMethodsWindow_close(evt:CloseEvent):void {
@@ -97,8 +90,7 @@
 
 			public function popUp():void
 			{	
-/* 		        editMethodsWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
- */		        editMethodsWindow.addChild(editMethodsGrid);
+		        editMethodsWindow.addChild(editMethodsGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(editMethodsWindow, SystemManager.getSWFRoot(editMethodsWindow), true);
 		        mx.managers.PopUpManager.centerPopUp(editMethodsWindow);
@@ -136,7 +128,7 @@
 			minWidth="340" 
 			minHeight="300"
 			maxHeight="500"
-	        title="@Resource(key='titleEditMethod', bundle='languages')"
+	        title="@Resource(key='titleEditMethods', bundle='languages')"
 	        titleStyleName="titleText"
 	        backgroundColor="#FFFFFF"
 	        backgroundAlpha="0.7"
@@ -167,7 +159,7 @@
 	                    
 	                    <mx:GridRow width="100%" id="constructorLabel">
 								<mx:GridItem>
-									<mx:Label text="@Resource(key='labelConstructor', bundle='languages')" />	
+									<mx:Label text="@Resource(key='labelConstructors', bundle='languages')" />	
 								</mx:GridItem>
 						</mx:GridRow>
 						
@@ -193,7 +185,7 @@
 						
 						<mx:GridRow width="100%">
 								<mx:GridItem>
-									<mx:Label text="@Resource(key='method', bundle='languages')" />	
+									<mx:Label text="@Resource(key='methods', bundle='languages')" />	
 								</mx:GridItem>
 						</mx:GridRow>
 						

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Dialog.mxml -->
+
 <mx:Label xmlns:mx="http://www.adobe.com/2006/mxml"
-    	text="View Mode"
+    	text="@Resource(key='viewMode', bundle='languages')"
     	fontWeight="bold"
     	fontSize="10"
 		x="90"
-		y="1">   
+		y="1">
+	
+	<mx:Metadata>
+		[ResourceBundle("languages")]	
+	</mx:Metadata>  
+	<mx:Script>
+		<![CDATA[
+			import mx.resources.ResourceManager;
+		]]>
+	</mx:Script>
+	
 </mx:Label>

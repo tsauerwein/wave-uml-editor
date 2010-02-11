@@ -38,6 +38,8 @@
 			{
 				resourceManager.localeChain = ["en_US", "de_DE"];
 			}
+			
+			resourceManager.localeChain = ["de_DE", "en_US"];
 		}
 		]]>
 	</mx:Script>

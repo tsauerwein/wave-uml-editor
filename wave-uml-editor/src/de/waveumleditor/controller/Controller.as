@@ -42,6 +42,7 @@ package de.waveumleditor.controller
 	
 	import mx.controls.Alert;
 	import mx.managers.PopUpManager;
+	import mx.resources.ResourceManager;
 	
 	public class Controller
 	{
@@ -156,8 +157,9 @@ package de.waveumleditor.controller
 					PopUpManager.removePopUp(this.editLinkWindow.getTitleWindow());
 					
 					Alert.show(
-						'Diese Verbindung wurde von einem anderen Benutzer gelöscht!',
-						'Warnung ', Alert.OK);
+						ResourceManager.getInstance().getString('languages', 'warningLink'),
+						ResourceManager.getInstance().getString('languages', 'warning'),
+						Alert.OK);
 				}
 			}
 		}
@@ -179,8 +181,9 @@ package de.waveumleditor.controller
 				}
 				Alert.show(
 					node.getName() +
-					' wurde von einem anderen Benutzer gelöscht!',
-					'Warnung ', Alert.OK);
+					ResourceManager.getInstance().getString('languages', 'warningNode'),
+					ResourceManager.getInstance().getString('languages', 'warning'),
+					Alert.OK);
 			}
 			else
 			{

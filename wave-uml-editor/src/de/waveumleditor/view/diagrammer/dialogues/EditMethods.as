@@ -15,10 +15,7 @@ package de.waveumleditor.view.diagrammer.dialogues
 	{
 		private var controller:Controller;
 		private var classDiagramNode:MClassDiagramNode;
-		
-		//public static const DEFAULT_IDENTIFIER:Identifier = new Identifier("default_meth");
-
-		
+	
 		public function EditMethods()
 		{
 		}

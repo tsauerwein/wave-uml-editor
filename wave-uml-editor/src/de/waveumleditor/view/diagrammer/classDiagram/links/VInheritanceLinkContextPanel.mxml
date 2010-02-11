@@ -2,7 +2,8 @@
 <diagrammer:GenericLinkContextPanel xmlns:diagrammer="com.anotherflexdev.diagrammer.*" xmlns:buttons="com.anotherflexdev.ui.buttons.*" xmlns:mx="http://www.adobe.com/2006/mxml" cornerRadius="10" borderStyle="solid" dropShadowEnabled="true" backgroundColor="#FFFFFF" width="26" height="26">
 	<mx:Script>
 		<![CDATA[
-		
+			
+			import mx.resources.ResourceBundle;
 
 			private function handleRemoveMe(event:MouseEvent):void {
 				dispatchEvent(new Event('removeLink'));
@@ -10,18 +11,9 @@
 			
 		]]>
 	</mx:Script>
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
 	
 	<mx:Metadata>
-		/* ResourceBundle for NLS */
 		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
 	</mx:Metadata>
 	<buttons:GlowButton source="@Embed(source='/de/waveumleditor/view/diagrammer/assets/images/btn-remove.png')" glowColor="#000000" click="handleRemoveMe(event)" toolTip="@Resource(key='glowRemove', bundle='languages')" y="2" x="2"/>
 </diagrammer:GenericLinkContextPanel>

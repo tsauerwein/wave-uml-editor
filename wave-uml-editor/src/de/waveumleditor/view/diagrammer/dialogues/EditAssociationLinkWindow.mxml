@@ -2,21 +2,11 @@
 <EditLinkWindow 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns="de.waveumleditor.view.diagrammer.dialogues.*">
-		
-	<!-- ActionScript for NLS -->
-	<mx:Script>
-		<![CDATA[
-			import mx.resources.ResourceBundle;
-		]]>
-	</mx:Script>
-	<!-- End of ActionScript for NLS -->
-	
+
 	<mx:Metadata>
 		[Event(name="removeLink", type="flash.events.Event")]
 		[Event(name="describeLink", type="LinkDescriptionEvent")]
-		/* ResourceBundle for NLS */
 		[ResourceBundle("languages")]	
-		/* End of ResourceBundle for NLS */
 	</mx:Metadata>
 	
 	<mx:Script>
@@ -29,6 +19,7 @@
 			
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
+			import mx.resources.ResourceBundle;
 			
 			
 			private var viewLink:VAssociationLink = null;
@@ -45,8 +36,7 @@
 			
 			public function popUp():void
 			{	
-/* 				titleWindow.title = "@Resource(key='editLink', bundle='languages')";
- */				titleWindow.addChild(editLinkCanvas);
+ 				titleWindow.addChild(editLinkCanvas);
 				
 				PopUpManager.addPopUp(titleWindow, SystemManager.getSWFRoot(titleWindow), true);
 				PopUpManager.centerPopUp(titleWindow);
@@ -207,8 +197,10 @@
 					</mx:ArrayCollection>
 				</mx:ComboBox>
 			</mx:Canvas>
-			<mx:Button label="@Resource(key='labelSave', bundle='languages')" click="save()" x="480" y="189"/>
-			<mx:Button label="@Resource(key='labelCancel', bundle='languages')" click="close()" x="572" y="189"/>
+			<mx:HBox width="100%" right="0" bottom="0" textAlign="right" horizontalAlign="right">
+				<mx:Button label="@Resource(key='labelSave', bundle='languages')" click="save()" />
+				<mx:Button label="@Resource(key='labelCancel', bundle='languages')" click="close()"/>
+			</mx:HBox>
 		</mx:Canvas>
 	</mx:TitleWindow> 
 	<!--	</container>-->

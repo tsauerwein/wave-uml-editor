@@ -2,13 +2,11 @@
 <EditSingleMethod xmlns="de.waveumleditor.view.diagrammer.dialogues.*" 
 				  xmlns:mx="http://www.adobe.com/2006/mxml">
 		<mx:Metadata>
-			/* ResourceBundle for NLS */
 			[ResourceBundle("languages")]	
-			/* End of ResourceBundle for NLS */
 		</mx:Metadata>  
+	
 		<mx:Script>
         <![CDATA[
-        	import mx.resources.ResourceBundle;
 			import de.waveumleditor.model.Identifier;
 			import de.waveumleditor.model.classDiagram.nodes.EVisibility;
 			import de.waveumleditor.model.classDiagram.nodes.MClassConstructorMethod;
@@ -27,6 +25,8 @@
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.SystemManager;
+			import mx.resources.ResourceBundle;
+			import mx.resources.ResourceManager;
 			
 					
 			//visibility Combo-Box Data provider
@@ -238,21 +238,22 @@
 				//Typ
 				var giType:GridItem = new GridItem();
 				var lbType:Label = new Label();
-				lbType.text="Typ:";
+				
+				lbType.text = ResourceManager.getInstance().getString('languages', 'type');
 				giType.addChild(lbType);
 				grLabels.addChild(giType);
 				
 				//Name
 				var giName:GridItem = new GridItem();
 				var lbName:Label = new Label();
-				lbName.text="Name:";
+				lbName.text = ResourceManager.getInstance().getString('languages', 'name');
 				giName.addChild(lbName);
 				grLabels.addChild(giName);
 				
 				//Default Wert
 				var giDefaultValue:GridItem = new GridItem();
 				var lbDefaultValue:Label = new Label();
-				lbDefaultValue.text="Default-Wert:";
+				lbDefaultValue.text = ResourceManager.getInstance().getString('languages', 'defaultValue');
 				giDefaultValue.addChild(lbDefaultValue);
 				grLabels.addChild(giDefaultValue);
 				
@@ -262,8 +263,6 @@
 
 			public function popUp():void
 			{	
-/* 		        singleMethodWindow.title = "@Resource(key='titleEditMethod', bundle='languages')";
- */      
 		        singleMethodWindow.addChild(editMethodGrid);
 		        
 		        mx.managers.PopUpManager.addPopUp(singleMethodWindow, SystemManager.getSWFRoot(singleMethodWindow), true);
@@ -339,7 +338,7 @@
                         </mx:GridRow>
                         <mx:GridRow id="grType" width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label id="lblType" text="@Resource(key='lblReturnType', bundle='languages')"/>
+                            	<mx:Label id="lblType" text="@Resource(key='labelReturnType', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem  width="100%" horizontalAlign="right">
                             	<mx:ComboBox id="cbType" editable="true" dataProvider="{type}"/>
@@ -355,7 +354,7 @@
                         </mx:GridRow>
                         <mx:GridRow width="100%">
                             <mx:GridItem width="100%">
-                            	<mx:Label text="@Resource(key='lblParameter', bundle='languages')"/>
+                            	<mx:Label text="@Resource(key='labelParameter', bundle='languages')"/>
                             </mx:GridItem>
                             <mx:GridItem width="100%" horizontalAlign="right">
                             </mx:GridItem>
