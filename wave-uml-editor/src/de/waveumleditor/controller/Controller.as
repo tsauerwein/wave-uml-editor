@@ -180,7 +180,7 @@ package de.waveumleditor.controller
 					PopUpManager.removePopUp(editSingleWindow.getTitleWindow());
 				}
 				Alert.show(
-					node.getName() +
+					node.getName() + " " + 
 					ResourceManager.getInstance().getString('languages', 'warningNode'),
 					ResourceManager.getInstance().getString('languages', 'warning'),
 					Alert.OK);
