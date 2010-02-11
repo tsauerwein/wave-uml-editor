@@ -175,6 +175,14 @@ package com.anotherflexdev.diagrammer {
 				}
 				nodeLink.fromNode.removeLink(nodeLink);
 			}
+			
+			// if currently a link is being created from the node which
+			// is supposed to be deleted, cancel linking
+			if (isLinking) {
+				if (this.templateLine.fromNode == node) {
+					cancelLink();
+				}
+			}
 		}
 				
 		public function removeLink(link:Link):void {
