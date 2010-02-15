@@ -4,12 +4,12 @@
 	thumbnailUrl="http://wave-uml-editor.googlecode.com/svn/web/wave-uml-editor-thumbnail.png">
   <version>1.0</version>
   <author 
-  	name="" 
+  	name="code.google.com/p/wave-uml-editor" 
   	email=""/>
   <menuHook 
   	location="toolbar" 
   	text="Google Wave UML Editor Gadget" 
-  	iconUrl="http://wave-uml-editor.googlecode.com/svn/web/">
-    <insertGadget url="http://wave-uml-editor.googlecode.com/svn/web/wave-uml-editor-icon.png"/>
+  	iconUrl="http://wave-uml-editor.googlecode.com/svn/web/wave-uml-editor-icon.png">
+    <insertGadget url="http://wave-uml-editor.googlecode.com/svn/web/wave-uml-editor.xml"/>
   </menuHook>
 </extension>
