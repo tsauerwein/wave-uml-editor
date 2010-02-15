@@ -11,14 +11,14 @@
   <script type="text/javascript"
       src="http://wave-api.appspot.com/public/wave.js"></script>
   <script type="text/javascript"
-      src="http://wave-uml-editor.kenai.com/wave-as-client.js"></script>
+      src="http://wave-uml-editor.googlecode.com/svn/web/wave-as-client.js"></script>
           
     <object id="waveumleditor" name="waveumleditor"
 			type="application/x-shockwave-flash"
-			data="http://wave-uml-editor.kenai.com/wave-uml-editor/main.swf"
+			data="http://wave-uml-editor.googlecode.com/svn/web/main.swf"
 			width="100%" height="500px">
 		<param name="movie"
-			value="http://wave-uml-editor.kenai.com/wave-uml-editor/main.swf"
+			value="http://wave-uml-editor.googlecode.com/svn/web/main.swf"
 		/>		
 		<param name="quality" value="high" />
 		<param name="wmode" value="transparent" />
