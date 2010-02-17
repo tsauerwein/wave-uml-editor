@@ -63,7 +63,7 @@ package de.waveumleditor.controller
 			this.diagramView = diagramView;
 			this.diagramModel = diagramModel;
 			
-			
+			// when testing local, use WaveSimulator otherwise Wave
 			this.wave = new WaveSimulator(); 
 			//this.wave = new Wave();
 			
@@ -84,6 +84,9 @@ package de.waveumleditor.controller
 			
 		}
 		
+		/**
+		 * Set up the callback methods for the Google Wave API
+		 */ 
 		public function setUpCallbacks():void
 		{
 			wave.setStateCallback(stateCallback);
@@ -131,29 +134,36 @@ package de.waveumleditor.controller
 		}
 		
 		/**
-		 * Updates the content of (open) editor windows 
+		 * Updates the content of (open) editor windows.
+		 * 
+		 * If a node/link, that we are editing at the moment, was deleted by another user,
+		 * close the window and show a dialog. 
 		 */
 		private function refreshEditorWindows():void
 		{
 			if (this.editMethodsWindow != null &&
 				this.editMethodsWindow.editMethodsWindow.parent != null)
 			{
+				// there is an open method window
 				this.updateOrCloseEditorWindows(editMethodsWindow);
 			}
 			
 			if (this.editAttributesWindow != null &&
 				this.editAttributesWindow.editAttributesWindow.parent != null)
 			{
+				// there is an open attribute window
 				this.updateOrCloseEditorWindows(editAttributesWindow);
 			}
 			
 			if (this.editLinkWindow != null &&
 				this.editLinkWindow.getTitleWindow().parent != null)
 			{
+				// there is an open link editor window
 				var updatedLink:MClassLink = diagramModel.getLink(this.editLinkWindow.getLink().getIdentifier());
 				
 				if (updatedLink == null)
 				{
+					// link was deleted, close window
 					PopUpManager.removePopUp(this.editLinkWindow.getTitleWindow());
 					
 					Alert.show(
@@ -172,6 +182,7 @@ package de.waveumleditor.controller
 			
 			if (updatedNode == null)
 			{
+				// node was deleted, close window
 				PopUpManager.removePopUp(editorWindow.getTitleWindow());
 				
 				if (this.editSingleWindow != null && 
@@ -187,6 +198,7 @@ package de.waveumleditor.controller
 			}
 			else
 			{
+				// update the window: refresh the attribute/method list
 				editorWindow.update(updatedNode);
 			}
 		}

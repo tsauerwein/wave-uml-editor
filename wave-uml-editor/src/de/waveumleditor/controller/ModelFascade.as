@@ -20,7 +20,13 @@ package de.waveumleditor.controller
 	import de.waveumleditor.view.diagrammer.classDiagram.nodes.VClassDiagramNode;
 	
 	import mx.collections.IList;
-
+	
+	/**
+	 * Encapsulates the model.
+	 * 
+	 * All changes at the model should be made through this class. 
+	 * Changes are also sent to the Shared State.
+	 */
 	public class ModelFascade
 	{
 		private var diagram:MClassDiagram;

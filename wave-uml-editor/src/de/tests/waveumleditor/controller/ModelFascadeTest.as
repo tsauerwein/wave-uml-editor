@@ -40,29 +40,6 @@ package de.tests.waveumleditor.controller
 			assertThat(diagram.getNode(id) != null);
 		}
 		
-/* 		public function testAddNodeAttribute():void
-		{
-			var diagram:ClassDiagram = new ClassDiagram();
-			var nodeId:Identifier = new Identifier("C1");
-			var nodeModel:UMLClass = new UMLClass(nodeId, null, "");
-			diagram.addNode(nodeModel);
-			var modelFascade:ModelFascade = new ModelFascade(diagram);
-			
-			var newAttribute:ClassAttribute = new ClassAttribute(
-				new Identifier("default"), 
-				new Variable("test", Type.STRING, "asda"), 
-				EVisibility.PUBLIC);
-				
-			var nodeView:ClassNode = new ClassNode();
-			nodeView.setIdentifier(nodeId);
-			
-			modelFascade.addNodeAttribute(nodeModel.getIdentifier(), newAttribute);
-			
-			assertEquals(1, nodeModel.getAttributes().length);
-			assertThat(null != (nodeModel.getAttributes().getItemAt(0) as ClassAttribute).getIdentifier())
-			
-		} */
-		
 		public function testEditNodeAttribute():void
 		{
 			var diagram:MClassDiagram = new MClassDiagram();
